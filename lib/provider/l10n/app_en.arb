@@ -1,0 +1,10 @@
+{
+    "appName": "CALMS Parent App",
+    "version": "v0.0.1",
+    "scanYourQrcode": "Scan your QRcode",
+    "pleaseContactAdmin": "Please scan the activation QR code to activate the app,",
+    "ifYouHaveAnyIssue": "please contact service provider if you have any issue on the activation",
+    "loginNote": "Note: Please contact the system administrator if you have any issues with the login.",
+    "noPermission": "no Permission",
+    "logOut": "Log Out"
+}
