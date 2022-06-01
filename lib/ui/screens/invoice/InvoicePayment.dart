@@ -267,7 +267,7 @@ class _InvoicePaymentState extends State<InvoicePayment> {
                                     // width: 300,
                                     height: 100,
                                     fit: BoxFit.fill)
-                                : Image.asset("images/user.png"),
+                                : Image.asset("assets/images/user.png"),
                           ),
                           title: Text(
                             _foundInvoice[index]['name'],

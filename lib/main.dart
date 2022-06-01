@@ -1,7 +1,10 @@
 import 'package:calms_parent/common/listener/settings_listener.dart';
 import 'package:calms_parent/ui/screens/activities/Activities.dart';
 import 'package:calms_parent/ui/screens/activities/activity_details/ActivityDetails.dart';
+import 'package:calms_parent/ui/screens/attendance/attendance.dart';
+import 'package:calms_parent/ui/screens/cart/cart.dart';
 import 'package:calms_parent/ui/screens/detail_transaction/DetailTransaction.dart';
+import 'package:calms_parent/ui/screens/details/outstanding_details.dart';
 import 'package:calms_parent/ui/screens/donation/Donation.dart';
 import 'package:calms_parent/ui/screens/home/tab_view.dart';
 import 'package:calms_parent/ui/screens/invoice/InvoicePayment.dart';
@@ -11,12 +14,17 @@ import 'package:calms_parent/ui/screens/merchant_transaction/MerchantTransaction
 import 'package:calms_parent/ui/screens/mfp_topup/MFPTopup.dart';
 import 'package:calms_parent/ui/screens/notifications/notification-view/notification-view.dart';
 import 'package:calms_parent/ui/screens/notifications/notifications.dart';
+import 'package:calms_parent/ui/screens/parent_pickup/parent_pickup.dart';
 import 'package:calms_parent/ui/screens/profile/ProfilePage.dart';
+import 'package:calms_parent/ui/screens/profile/profile_main.dart';
 import 'package:calms_parent/ui/screens/settings/Settings.dart';
 import 'package:calms_parent/ui/screens/settings/app_settings.dart';
 import 'package:calms_parent/ui/screens/share_money/ShareMoney.dart';
 import 'package:calms_parent/ui/screens/stores/Store.dart';
 import 'package:calms_parent/ui/screens/stores/details/StoreDetails.dart';
+import 'package:calms_parent/ui/screens/student_tracking/bus_tracking/bus_tracking.dart';
+import 'package:calms_parent/ui/screens/student_tracking/campus_tracking/campus_tracking.dart';
+import 'package:calms_parent/ui/screens/student_tracking/student_tracking.dart';
 import 'package:calms_parent/ui/screens/topup/TopupPage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -161,7 +169,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
         "/DetailTransaction": (context) => new DetailTransaction(),
         "/Settings": (context) => new Settings(),
         "/MFPTopup": (context) => new MFPTopup(),
-        "/ShareMoney": (context) => new ShareMoney(),
+        "/TransferMoney": (context) => new ShareMoney(),
         "/Stores": (context) => new Stores(),
         "/StoreDetails": (context) => StoreDetails(),
         "/InvoicePayment": (context) => InvoicePayment(),
@@ -171,7 +179,15 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
         "/MealOrder": (context) => MealOrder(),
         "/Notifications": (context) => Notifications(),
         "/NotificationView": (context) => NotificationView(),
-        "/AppSettingsPage": (context) => AppSettingsPage()
+        "/AppSettingsPage": (context) => AppSettingsPage(),
+        "/CartPage": (context) => CartPage(),
+        "/ParentPickup": (context) => ParentPickup(),
+        "/StudentTracking": (context) => StudentTracking(),
+        "/BusTracking": (context) => BusTracking(),
+        "/CampusTracking": (context) => CampusTracking(),
+        "/StudentAttendance": (context) => StudentAttendance(),
+        "/ProfileMain": (context) => ProfileMain(),
+        "/OutStandingDetails": (context) => OutStandingDetails()
       },
     );
   }

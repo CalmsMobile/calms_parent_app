@@ -4,7 +4,7 @@ import 'package:calms_parent/common/app_settings.dart';
 import 'package:calms_parent/common/listener/settings_listener.dart';
 import 'package:calms_parent/common/my_shared_pref.dart';
 import 'package:calms_parent/provider/rest_api.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class CommonUtil {

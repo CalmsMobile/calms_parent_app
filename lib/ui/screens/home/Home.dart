@@ -3,6 +3,7 @@ import 'package:calms_parent/model/HolidayModel.dart';
 import 'package:calms_parent/model/_AppointmentDataSource.dart';
 import 'package:calms_parent/model/moduleModel.dart';
 import 'package:calms_parent/ui/screens/calendar/calendar_page.dart';
+import 'package:calms_parent/ui/screens/cart/cart.dart';
 import 'package:calms_parent/ui/screens/notifications/notifications.dart';
 import 'package:calms_parent/ui/screens/settings/app_settings.dart';
 import 'package:calms_parent/ui/screens/widgets/HolidayCalendar.dart';
@@ -16,7 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   String color = "#35438e".replaceAll('#', '0xff');
 
   HomePage(this.familyPos, this.familyList, this.pageSwiped);
@@ -29,41 +30,66 @@ class HomePage extends StatelessWidget {
   final List<Map> outstandingList = [
     {
       "name": "James",
+      "id": "CALMS001",
+      "invoiceNo": "INV001",
       "category": "Bill Pay",
       "last_date": "30/11/2021",
+      "invoice_date": "30/11/2021",
       "amount": "34950.00",
+      "desc":
+          "Attempts to create a new object that represents the amalgamation of this border and the other border",
       "image":
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTI2iHiAT-ICPyezz_uJzuUWArjKnNDaruP-DbfLD0CWrT-oqjcpe2RfBLDl9DTRbFw9qQ&usqp=CAU"
     },
     {
       "name": "James",
+      "id": "CALMS002",
+      "invoiceNo": "INV002",
       "category": "Bill Pay",
       "last_date": "30/11/2021",
+      "invoice_date": "30/11/2021",
       "amount": "450.00",
+      "desc":
+          "Attempts to create a new object that represents the amalgamation of this border and the other border",
       "image":
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpway9lZBTwtk500jCpu4BGAxHOnY0Pc6ElELDrc95Z7U3j9R6hf1h-rxZIKkJ9p_1rhA&usqp=CAU"
     },
     {
       "name": "Olivia",
+      "id": "CALMS003",
+      "invoiceNo": "INV003",
       "category": "Bill Pay",
       "last_date": "30/11/2021",
+      "invoice_date": "30/11/2021",
       "amount": "100.00",
+      "desc":
+          "Attempts to create a new object that represents the amalgamation of this border and the other border",
       "image":
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTI2iHiAT-ICPyezz_uJzuUWArjKnNDaruP-DbfLD0CWrT-oqjcpe2RfBLDl9DTRbFw9qQ&usqp=CAU"
     },
     {
       "name": "James",
+      "id": "CALMS004",
+      "invoiceNo": "INV004",
       "category": "Bill Pay",
       "last_date": "30/11/2021",
+      "invoice_date": "30/11/2021",
       "amount": "23.00",
+      "desc":
+          "Attempts to create a new object that represents the amalgamation of this border and the other border",
       "image":
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpway9lZBTwtk500jCpu4BGAxHOnY0Pc6ElELDrc95Z7U3j9R6hf1h-rxZIKkJ9p_1rhA&usqp=CAU"
     },
     {
       "name": "James",
+      "id": "CALMS005",
+      "invoiceNo": "INV005",
       "category": "Bill Pay",
       "last_date": "30/11/2021",
+      "invoice_date": "30/11/2021",
       "amount": "2043.50",
+      "desc":
+          "Attempts to create a new object that represents the amalgamation of this border and the other border",
       "image":
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTI2iHiAT-ICPyezz_uJzuUWArjKnNDaruP-DbfLD0CWrT-oqjcpe2RfBLDl9DTRbFw9qQ&usqp=CAU"
     }
@@ -72,7 +98,7 @@ class HomePage extends StatelessWidget {
     {
       "name": "James",
       "mode_of_topup": "Photocopier",
-      "date": "30/11/2021",
+      "date": "30/11/2021 12:30 am",
       "amount": "950.00",
       "image":
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTI2iHiAT-ICPyezz_uJzuUWArjKnNDaruP-DbfLD0CWrT-oqjcpe2RfBLDl9DTRbFw9qQ&usqp=CAU"
@@ -80,7 +106,7 @@ class HomePage extends StatelessWidget {
     {
       "name": "James",
       "mode_of_topup": "Counter-topup",
-      "date": "30/11/2021",
+      "date": "30/11/2021 12:30 am",
       "amount": "450.00",
       "image":
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpway9lZBTwtk500jCpu4BGAxHOnY0Pc6ElELDrc95Z7U3j9R6hf1h-rxZIKkJ9p_1rhA&usqp=CAU"
@@ -88,7 +114,7 @@ class HomePage extends StatelessWidget {
     {
       "name": "Olivia",
       "mode_of_topup": "Online",
-      "date": "30/11/2021",
+      "date": "30/11/2021 02:30 pm",
       "amount": "100.00",
       "image":
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTI2iHiAT-ICPyezz_uJzuUWArjKnNDaruP-DbfLD0CWrT-oqjcpe2RfBLDl9DTRbFw9qQ&usqp=CAU"
@@ -96,7 +122,7 @@ class HomePage extends StatelessWidget {
     {
       "name": "James",
       "mode_of_topup": "Counter-topup",
-      "date": "30/11/2021",
+      "date": "30/11/2021 02:30 pm",
       "amount": "23.00",
       "image":
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpway9lZBTwtk500jCpu4BGAxHOnY0Pc6ElELDrc95Z7U3j9R6hf1h-rxZIKkJ9p_1rhA&usqp=CAU"
@@ -104,7 +130,7 @@ class HomePage extends StatelessWidget {
     {
       "name": "James",
       "mode_of_topup": "Online",
-      "date": "30/11/2021",
+      "date": "30/11/2021 03:30 pm",
       "amount": "2043.50",
       "image":
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTI2iHiAT-ICPyezz_uJzuUWArjKnNDaruP-DbfLD0CWrT-oqjcpe2RfBLDl9DTRbFw9qQ&usqp=CAU"
@@ -114,7 +140,8 @@ class HomePage extends StatelessWidget {
     {
       "name": "James",
       "pay_for": "Meal",
-      "date": "30/11/2021",
+      "orderID": "ORD001",
+      "date": "30/11/2021 01:00 pm",
       "amount": "950.00",
       "image":
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTI2iHiAT-ICPyezz_uJzuUWArjKnNDaruP-DbfLD0CWrT-oqjcpe2RfBLDl9DTRbFw9qQ&usqp=CAU"
@@ -122,7 +149,8 @@ class HomePage extends StatelessWidget {
     {
       "name": "James",
       "pay_for": "Canteen",
-      "date": "30/11/2021",
+      "orderID": "ORD002",
+      "date": "30/11/2021 10:00 am",
       "amount": "450.00",
       "image":
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpway9lZBTwtk500jCpu4BGAxHOnY0Pc6ElELDrc95Z7U3j9R6hf1h-rxZIKkJ9p_1rhA&usqp=CAU"
@@ -130,7 +158,8 @@ class HomePage extends StatelessWidget {
     {
       "name": "Olivia",
       "pay_for": "Meal",
-      "date": "30/11/2021",
+      "orderID": "ORD003",
+      "date": "30/11/2021 01:30 pm",
       "amount": "100.00",
       "image":
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTI2iHiAT-ICPyezz_uJzuUWArjKnNDaruP-DbfLD0CWrT-oqjcpe2RfBLDl9DTRbFw9qQ&usqp=CAU"
@@ -138,7 +167,8 @@ class HomePage extends StatelessWidget {
     {
       "name": "James",
       "pay_for": "Canteen",
-      "date": "30/11/2021",
+      "orderID": "ORD004",
+      "date": "30/11/2021 04:00 pm",
       "amount": "23.00",
       "image":
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpway9lZBTwtk500jCpu4BGAxHOnY0Pc6ElELDrc95Z7U3j9R6hf1h-rxZIKkJ9p_1rhA&usqp=CAU"
@@ -146,7 +176,8 @@ class HomePage extends StatelessWidget {
     {
       "name": "James",
       "pay_for": "Meal",
-      "date": "30/11/2021",
+      "orderID": "ORD005",
+      "date": "30/11/2021 08:00 pm",
       "amount": "2043.50",
       "image":
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTI2iHiAT-ICPyezz_uJzuUWArjKnNDaruP-DbfLD0CWrT-oqjcpe2RfBLDl9DTRbFw9qQ&usqp=CAU"
@@ -215,9 +246,18 @@ class HomePage extends StatelessWidget {
     }
   ];
   @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  bool topupCollapse = true;
+  bool purchaseCollapse = true;
+  bool storeCollapse = true;
+  bool activitiesCollapse = true;
+  @override
   Widget build(BuildContext context) {
-    print(familyPos);
-    print(familyList);
+    print(widget.familyPos);
+    print(widget.familyList);
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: SizedBox(
@@ -236,67 +276,102 @@ class HomePage extends StatelessWidget {
                           borderRadius: BorderRadius.only(
                               bottomLeft: Radius.circular(200.0),
                               bottomRight: Radius.circular(200.0)),
-                          color: Color(int.parse(color))),
+                          color: Color(int.parse(widget.color))),
                       child: Container(
                         width: double.infinity,
                         height: 220,
-                        padding: EdgeInsets.only(left: 10, right: 10),
+                        padding: EdgeInsets.only(left: 0, right: 0),
                         child: Column(children: [
                           SizedBox(
                             height: 20,
                           ),
                           CarouselSlider(
-                            items: familyList
+                            items: widget.familyList
                                 .map((item) => InkWell(
                                       child: Container(
-                                        width: 85,
-                                        height: 85,
-                                        child: CircleAvatar(
-                                          backgroundImage:
-                                              NetworkImage(item["image"]),
-                                        ),
-                                        decoration: BoxDecoration(
-                                          //DecprationImage
-                                          border: Border.all(
-                                              color: Theme.of(context)
-                                                  .primaryColor,
-                                              width: 4.0,
-                                              style: BorderStyle
-                                                  .solid), //Border.all
-
-                                          borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(60.0),
-                                            topRight: Radius.circular(60.0),
-                                            bottomLeft: Radius.circular(60.0),
-                                            bottomRight: Radius.circular(60.0),
-                                          ),
-                                          //BorderRadius.only
-                                          /************************************/
-                                          /* The BoxShadow widget  is here */
-                                          /************************************/
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Theme.of(context)
-                                                  .primaryColor,
-                                              offset: const Offset(
-                                                5.0,
-                                                5.0,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
+                                          children: [
+                                            if (widget.familyList[
+                                                    widget.familyPos]['name'] ==
+                                                item["name"])
+                                              Image.asset(
+                                                "assets/images/swipe_left.png",
+                                                width: 25,
                                               ),
-                                              blurRadius: 10.0,
-                                              spreadRadius: 2.0,
-                                            ), //BoxShadow
-                                            BoxShadow(
-                                              color: Colors.white,
-                                              offset: const Offset(0.0, 0.0),
-                                              blurRadius: 0.0,
-                                              spreadRadius: 0.0,
-                                            ), //BoxShadow
+                                            Container(
+                                              width: (widget.familyList[widget
+                                                          .familyPos]['name'] ==
+                                                      item["name"])
+                                                  ? 92
+                                                  : 62,
+                                              height: (widget.familyList[widget
+                                                          .familyPos]['name'] ==
+                                                      item["name"])
+                                                  ? 92
+                                                  : 62,
+                                              child: CircleAvatar(
+                                                backgroundImage:
+                                                    NetworkImage(item["image"]),
+                                              ),
+                                              decoration: BoxDecoration(
+                                                //DecprationImage
+                                                border: Border.all(
+                                                    color: Theme.of(context)
+                                                        .primaryColor,
+                                                    width: 4.0,
+                                                    style: BorderStyle
+                                                        .solid), //Border.all
+
+                                                borderRadius: BorderRadius.only(
+                                                  topLeft:
+                                                      Radius.circular(60.0),
+                                                  topRight:
+                                                      Radius.circular(60.0),
+                                                  bottomLeft:
+                                                      Radius.circular(60.0),
+                                                  bottomRight:
+                                                      Radius.circular(60.0),
+                                                ),
+                                                //BorderRadius.only
+                                                /************************************/
+                                                /* The BoxShadow widget  is here */
+                                                /************************************/
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Theme.of(context)
+                                                        .primaryColor,
+                                                    offset: const Offset(
+                                                      0.0,
+                                                      0.0,
+                                                    ),
+                                                    blurRadius: 10.0,
+                                                    spreadRadius: 2.0,
+                                                  ), //BoxShadow
+                                                  BoxShadow(
+                                                    color: Colors.white,
+                                                    offset:
+                                                        const Offset(0.0, 0.0),
+                                                    blurRadius: 0.0,
+                                                    spreadRadius: 0.0,
+                                                  ), //BoxShadow
+                                                ],
+                                              ),
+                                            ),
+                                            if (widget.familyList[
+                                                    widget.familyPos]['name'] ==
+                                                item["name"])
+                                              Image.asset(
+                                                "assets/images/swipe_right.png",
+                                                width: 25,
+                                              )
                                           ],
                                         ),
                                       ),
                                       onTap: () => {
                                         Navigator.of(context).pushNamed(
-                                            '/ProfilePage',
+                                            '/ProfileMain',
                                             arguments: item)
                                       },
                                     ))
@@ -316,20 +391,17 @@ class HomePage extends StatelessWidget {
                                     Duration(milliseconds: 800),
                                 viewportFraction: 0.35,
                                 onPageChanged: (index, reason) {
-                                  pageSwiped(index);
+                                  widget.pageSwiped(index);
                                 },
-                                initialPage: familyPos),
+                                initialPage: widget.familyPos),
                           ),
                           Text(
-                            familyList[familyPos]['name'],
+                            widget.familyList[widget.familyPos]['name'],
                             style: TextStyle(
                                 fontSize: 22.0,
                                 color: Colors.white,
                                 letterSpacing: 2.0,
                                 fontWeight: FontWeight.w400),
-                          ),
-                          SizedBox(
-                            height: 10,
                           ),
                           Text(
                             "Wallet Ballance",
@@ -340,7 +412,7 @@ class HomePage extends StatelessWidget {
                                 fontWeight: FontWeight.w300),
                           ),
                           Text(
-                            'MYR ${double.parse(familyList[familyPos]['balance']).toStringAsFixed(2)}',
+                            'MYR ${double.parse(widget.familyList[widget.familyPos]['balance']).toStringAsFixed(2)}',
                             style: TextStyle(
                                 fontSize: 18.0,
                                 color: Colors.white,
@@ -351,7 +423,7 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                     Positioned(
-                      bottom: 10,
+                      bottom: 35,
                       left: 15, //give the values according to your requirement
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -379,14 +451,21 @@ class HomePage extends StatelessWidget {
                     ),
                     Positioned(
                       bottom:
-                          -15, //give the values according to your requirement
+                          -20, //give the values according to your requirement
                       left: 0,
                       right: 0,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           MaterialButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => CartPage(),
+                                ),
+                              );
+                            },
                             color: Colors.greenAccent.shade700,
                             textColor: Colors.white,
                             child: Icon(
@@ -400,7 +479,7 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                     Positioned(
-                      bottom: 10,
+                      bottom: 30,
                       right: 15, //give the values according to your requirement
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -431,7 +510,7 @@ class HomePage extends StatelessWidget {
                 Column(
                   children: <Widget>[
                     GridView.builder(
-                      itemCount: items.length,
+                      itemCount: widget.items.length,
                       shrinkWrap: true,
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: MediaQuery.of(context).orientation ==
@@ -448,7 +527,7 @@ class HomePage extends StatelessWidget {
                       ) {
                         return GestureDetector(
                           onTap: () {
-                            ModuleModel moduleModel = items[index];
+                            ModuleModel moduleModel = widget.items[index];
                             print(moduleModel.label);
                             switch (moduleModel.module) {
                               case "HolidayCalendar":
@@ -469,8 +548,9 @@ class HomePage extends StatelessWidget {
                                 Navigator.of(context)
                                     .pushNamed('/DonationPage');
                                 break;
-                              case "ShareMoney":
-                                Navigator.of(context).pushNamed('/ShareMoney');
+                              case "TransferMoney":
+                                Navigator.of(context)
+                                    .pushNamed('/TransferMoney');
                                 break;
                               case "Store":
                                 Navigator.of(context).pushNamed('/Stores');
@@ -482,8 +562,20 @@ class HomePage extends StatelessWidget {
                               case "Activities":
                                 Navigator.of(context).pushNamed('/Activities');
                                 break;
+                              case "StudentAttendance":
+                                Navigator.of(context)
+                                    .pushNamed('/StudentAttendance');
+                                break;
                               case "OrderMeal":
                                 Navigator.of(context).pushNamed('/MealOrder');
+                                break;
+                              case "ParentPickup":
+                                Navigator.of(context)
+                                    .pushNamed('/ParentPickup');
+                                break;
+                              case "StudentTracking":
+                                Navigator.of(context)
+                                    .pushNamed('/StudentTracking');
                                 break;
                             }
                           },
@@ -503,10 +595,10 @@ class HomePage extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 Icon(
-                                  items[index].icon,
-                                  color: items[index].color,
+                                  widget.items[index].icon,
+                                  color: widget.items[index].color,
                                 ),
-                                Text(items[index].label,
+                                Text(widget.items[index].label,
                                     style: TextStyle(
                                         fontSize: 12, color: Colors.black),
                                     textAlign: TextAlign.center),
@@ -541,14 +633,86 @@ class HomePage extends StatelessWidget {
                               shrinkWrap: true,
                               physics: NeverScrollableScrollPhysics(
                                   parent: AlwaysScrollableScrollPhysics()),
-                              itemCount: outstandingList.length,
+                              itemCount: widget.outstandingList.length,
                               itemBuilder: (BuildContext context, int index) {
                                 return userList(
-                                    context, index, outstandingList);
+                                    context, index, widget.outstandingList);
                               }),
                         ),
                       ],
                     ),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Container(
+                          padding: EdgeInsets.only(
+                              left: 10.0, top: 10.0, bottom: 10.0),
+                          width: double.infinity,
+                          color: Colors.grey.shade200,
+                          child: Text(
+                            "PURCHASE SUGGESTION",
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          )),
+                    ),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: InkWell(
+                        child: Container(
+                            padding: EdgeInsets.only(
+                                left: 10.0, top: 10.0, bottom: 10.0, right: 20),
+                            width: double.infinity,
+                            color: Colors.grey.shade100,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "STORE ITEM(S)",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Icon(storeCollapse
+                                    ? Icons.arrow_drop_down
+                                    : Icons.arrow_drop_up)
+                              ],
+                            )),
+                        onTap: () {
+                          storeCollapse = !storeCollapse;
+                          setState(() {});
+                        },
+                      ),
+                    ),
+                    if (storeCollapse) StoreItemListView(widget.storeItem),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: InkWell(
+                        child: Container(
+                            padding: EdgeInsets.only(
+                                left: 10.0, top: 10.0, bottom: 10.0, right: 20),
+                            width: double.infinity,
+                            color: Colors.grey.shade100,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "UPCOMING ACTIVITIES",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Icon(activitiesCollapse
+                                    ? Icons.arrow_drop_down
+                                    : Icons.arrow_drop_up)
+                              ],
+                            )),
+                        onTap: () {
+                          activitiesCollapse = !activitiesCollapse;
+                          setState(() {});
+                        },
+                      ),
+                    ),
+                    if (activitiesCollapse)
+                      UpcomingActivityListView(widget.upcomingActivities),
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Container(
@@ -565,34 +729,64 @@ class HomePage extends StatelessWidget {
                     ),
                     Align(
                       alignment: Alignment.centerLeft,
-                      child: Container(
-                          padding: EdgeInsets.only(
-                              left: 10.0, top: 10.0, bottom: 10.0),
-                          margin: EdgeInsets.zero,
-                          width: double.infinity,
-                          color: Colors.grey.shade100,
-                          child: Text(
-                            "TOPUP",
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                          )),
+                      child: InkWell(
+                        child: Container(
+                            padding: EdgeInsets.only(
+                                left: 10.0, top: 10.0, bottom: 10.0, right: 20),
+                            margin: EdgeInsets.zero,
+                            width: double.infinity,
+                            color: Colors.grey.shade100,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "TOPUP",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Icon(topupCollapse
+                                    ? Icons.arrow_drop_down
+                                    : Icons.arrow_drop_up)
+                              ],
+                            )),
+                        onTap: () {
+                          topupCollapse = !topupCollapse;
+                          setState(() {});
+                        },
+                      ),
                     ),
-                    TopupListView(topupList),
+                    if (topupCollapse) TopupListView(widget.topupList),
                     Align(
                       alignment: Alignment.centerLeft,
-                      child: Container(
-                          padding: EdgeInsets.only(
-                              left: 10.0, top: 10.0, bottom: 10.0),
-                          margin: EdgeInsets.zero,
-                          width: double.infinity,
-                          color: Colors.grey.shade100,
-                          child: Text(
-                            "PURCHASE",
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                          )),
+                      child: InkWell(
+                        child: Container(
+                            padding: EdgeInsets.only(
+                                left: 10.0, top: 10.0, bottom: 10.0, right: 20),
+                            margin: EdgeInsets.zero,
+                            width: double.infinity,
+                            color: Colors.grey.shade100,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "PURCHASE",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Icon(purchaseCollapse
+                                    ? Icons.arrow_drop_down
+                                    : Icons.arrow_drop_up)
+                              ],
+                            )),
+                        onTap: () {
+                          purchaseCollapse = !purchaseCollapse;
+                          setState(() {});
+                        },
+                      ),
                     ),
-                    PurchaseListView(purchaseList),
+                    if (purchaseCollapse) PurchaseListView(widget.purchaseList),
                   ],
                 ),
                 SizedBox(
@@ -600,47 +794,6 @@ class HomePage extends StatelessWidget {
                 ),
                 Column(
                   children: <Widget>[
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Container(
-                          padding: EdgeInsets.only(
-                              left: 10.0, top: 10.0, bottom: 10.0),
-                          width: double.infinity,
-                          color: Colors.grey.shade200,
-                          child: Text(
-                            "PURCHASE SUGGESTION",
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                          )),
-                    ),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Container(
-                          padding: EdgeInsets.only(
-                              left: 10.0, top: 10.0, bottom: 10.0),
-                          width: double.infinity,
-                          color: Colors.grey.shade100,
-                          child: Text(
-                            "STORE ITEM(S)",
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                          )),
-                    ),
-                    StoreItemListView(storeItem),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Container(
-                          padding: EdgeInsets.only(
-                              left: 10.0, top: 10.0, bottom: 10.0),
-                          width: double.infinity,
-                          color: Colors.grey.shade100,
-                          child: Text(
-                            "UPCOMING ACTIVITIES",
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                          )),
-                    ),
-                    UpcomingActivityListView(upcomingActivities),
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Container(
@@ -744,10 +897,20 @@ class RandomColorModel {
         true, 'My invoice', Icons.cloud_upload_outlined));
     monitorList.add(new ModuleModel('Activities', _getColorFromHex("#34495E"),
         true, 'Activities', Icons.pedal_bike_outlined));
+    monitorList.add(new ModuleModel(
+        'StudentAttendance',
+        _getColorFromHex("#008080"),
+        true,
+        'Attendance',
+        Icons.fact_check_outlined));
     monitorList.add(new ModuleModel('Topup', _getColorFromHex("#FF7F50"), true,
         'Topup', Icons.phone_android_outlined));
-    monitorList.add(new ModuleModel('ShareMoney', _getColorFromHex("#CB4335"),
-        true, 'Share money', Icons.attach_money));
+    monitorList.add(new ModuleModel(
+        'TransferMoney',
+        _getColorFromHex("#CB4335"),
+        true,
+        'Transfer money',
+        Icons.attach_money));
     monitorList.add(new ModuleModel('MFPTopup', _getColorFromHex("#2980B9"),
         true, 'MFP Topup', Icons.print));
     monitorList.add(new ModuleModel('Donation', _getColorFromHex("#008080"),

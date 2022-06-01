@@ -36,27 +36,11 @@ class UpcomingActivityListView extends StatelessWidget {
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 14),
                           ),
-                          new RichText(
-                            text: new TextSpan(
-                              // Note: Styles for TextSpans must be explicitly defined.
-                              // Child text spans will inherit styles from parent
-                              style: new TextStyle(
-                                fontSize: 14.0,
-                                color: Colors.black,
-                              ),
-                              children: <TextSpan>[
-                                new TextSpan(
-                                    text: 'RM: ',
-                                    style: new TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.red.shade500,
-                                        fontSize: 12)),
-                                new TextSpan(
-                                    text: upcomingActivityList[index]
-                                        ['amount']),
-                              ],
-                            ),
-                          ),
+                          Text(
+                            "Due date: " + upcomingActivityList[index]['date'],
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 12),
+                          )
                         ],
                       ),
                       subtitle: Column(
@@ -65,16 +49,33 @@ class UpcomingActivityListView extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "Category: " +
-                                    upcomingActivityList[index]['category'],
+                                "Type: " +
+                                    upcomingActivityList[index]
+                                        ['activity_type'],
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold, fontSize: 12),
                               ),
-                              Text(
-                                "Date: " + upcomingActivityList[index]['date'],
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 12),
-                              )
+                              new RichText(
+                                text: new TextSpan(
+                                  // Note: Styles for TextSpans must be explicitly defined.
+                                  // Child text spans will inherit styles from parent
+                                  style: new TextStyle(
+                                    fontSize: 16.0,
+                                    color: Colors.black,
+                                  ),
+                                  children: <TextSpan>[
+                                    new TextSpan(
+                                        text: 'RM: ',
+                                        style: new TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.red.shade500,
+                                            fontSize: 16)),
+                                    new TextSpan(
+                                        text: upcomingActivityList[index]
+                                            ['amount']),
+                                  ],
+                                ),
+                              ),
                             ],
                           ),
                           SizedBox(
@@ -84,9 +85,8 @@ class UpcomingActivityListView extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "Activity Type: " +
-                                    upcomingActivityList[index]
-                                        ['activity_type'],
+                                "Category: " +
+                                    upcomingActivityList[index]['category'],
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold, fontSize: 12),
                               ),

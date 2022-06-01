@@ -29,7 +29,7 @@ class TopupListView extends StatelessWidget {
                         backgroundColor: Colors.white,
                         backgroundImage:
                             NetworkImage(recentActivities[index]['image']),
-                        radius: 30,
+                        radius: 20,
                       ),
                       title: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -49,7 +49,7 @@ class TopupListView extends StatelessWidget {
                               ),
                               children: <TextSpan>[
                                 new TextSpan(
-                                    text: 'Date: ',
+                                    text: '',
                                     style: new TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Colors.grey,
@@ -66,7 +66,7 @@ class TopupListView extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "Mode of Topup: " +
+                            "Topup via: " +
                                 recentActivities[index]['mode_of_topup'],
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 12),
@@ -76,7 +76,7 @@ class TopupListView extends StatelessWidget {
                               // Note: Styles for TextSpans must be explicitly defined.
                               // Child text spans will inherit styles from parent
                               style: new TextStyle(
-                                fontSize: 14.0,
+                                fontSize: 16.0,
                                 color: Colors.black,
                               ),
                               children: <TextSpan>[
@@ -85,7 +85,7 @@ class TopupListView extends StatelessWidget {
                                     style: new TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Colors.red.shade500,
-                                        fontSize: 12)),
+                                        fontSize: 16)),
                                 new TextSpan(
                                     text: recentActivities[index]['amount']),
                               ],

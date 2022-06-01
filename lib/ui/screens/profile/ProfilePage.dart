@@ -150,31 +150,6 @@ class ProfileSLPage extends StatelessWidget {
             ),
           ],
         ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.soap_sharp),
-            onPressed: () {
-              Navigator.of(context)
-                  .pushNamed('/MerchantTransaction', arguments: profileData);
-            },
-          ),
-          IconButton(
-            icon: Icon(Icons.description_outlined),
-            onPressed: () {
-              Navigator.of(context)
-                  .pushNamed('/DetailTransaction', arguments: profileData);
-            },
-          ),
-          IconButton(
-            icon: Icon(
-              Icons.settings,
-            ),
-            onPressed: () {
-              Navigator.of(context)
-                  .pushNamed('/Settings', arguments: profileData);
-            },
-          )
-        ],
       ),
       body: Container(
         child: Column(

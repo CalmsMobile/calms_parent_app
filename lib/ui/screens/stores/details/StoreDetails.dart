@@ -107,7 +107,7 @@ class _StoreDetailsState extends State<StoreDetails> {
                               height: 50,
                               fit: BoxFit.fill)
                           : Image.asset(
-                              "images/user.png",
+                              "assets/images/user.png",
                               height: 50,
                             ),
                     ),

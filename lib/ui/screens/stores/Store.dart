@@ -274,7 +274,7 @@ class _StoresState extends State<Stores> {
                                       // width: 300,
                                       height: 100,
                                       fit: BoxFit.fill)
-                                  : Image.asset("images/user.png"),
+                                  : Image.asset("assets/images/user.png"),
                             ),
                             title: Text(
                               _foundStoreList[index]['item_name'],
@@ -293,6 +293,28 @@ class _StoresState extends State<Stores> {
                                 ),
                                 SizedBox(
                                   height: 5,
+                                ),
+                              ],
+                            ),
+                            isThreeLine: true,
+                            trailing: Column(
+                              children: [
+                                new RichText(
+                                  text: new TextSpan(
+                                    text: '',
+                                    style: new TextStyle(
+                                      fontSize: 12.0,
+                                    ),
+                                    children: <TextSpan>[
+                                      new TextSpan(
+                                          text:
+                                              'MYR ${double.parse(_foundStoreList[index]["price"]).toStringAsFixed(2)}',
+                                          style: new TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.green)),
+                                    ],
+                                  ),
                                 ),
                                 new RichText(
                                   text: new TextSpan(
@@ -320,39 +342,8 @@ class _StoresState extends State<Stores> {
                                               fontSize: 12,
                                               color: Colors.black,
                                               fontWeight: FontWeight.bold)),
-                                      new TextSpan(
-                                          text:
-                                              'MYR ${double.parse(_foundStoreList[index]["price"]).toStringAsFixed(2)}',
-                                          style: new TextStyle(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.green)),
                                     ],
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                              ],
-                            ),
-                            isThreeLine: true,
-                            trailing: Column(
-                              children: [
-                                SizedBox(
-                                  height: 25,
-                                  width: 80,
-                                  child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                        primary: Colors.red,
-                                        padding: EdgeInsets.zero),
-                                    onPressed: () => {},
-                                    child: Text(
-                                      'Qty ${_foundStoreList[index]['available_quantity']?.toString() ?? _foundStoreList[index]['available_quantity']}',
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 6,
                                 ),
                                 SizedBox(
                                   height: 25,

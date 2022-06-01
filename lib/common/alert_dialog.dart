@@ -16,7 +16,7 @@ class MyCustomAlertDialog {
       title: title,
       desc: description,
       onWillPopActive: true,
-      closeFunction: _cancelPress != null ? _cancelPress : _okPress,
+      // closeFunction: _cancelPress != null ? _cancelPress : _okPress,
       buttons: [
         if (_cancelPress != null)
           DialogButton(

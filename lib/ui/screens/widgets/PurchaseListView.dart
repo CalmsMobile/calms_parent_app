@@ -29,7 +29,7 @@ class PurchaseListView extends StatelessWidget {
                         backgroundColor: Colors.white,
                         backgroundImage:
                             NetworkImage(purchaseList[index]['image']),
-                        radius: 30,
+                        radius: 20,
                       ),
                       title: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -49,7 +49,7 @@ class PurchaseListView extends StatelessWidget {
                               ),
                               children: <TextSpan>[
                                 new TextSpan(
-                                    text: 'Date: ',
+                                    text: '',
                                     style: new TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Colors.grey,
@@ -65,10 +65,21 @@ class PurchaseListView extends StatelessWidget {
                       subtitle: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            "Payment for: " + purchaseList[index]['pay_for'],
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 12),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "# " + purchaseList[index]['orderID'],
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 12),
+                              ),
+                              Text(
+                                "Payment for: " +
+                                    purchaseList[index]['pay_for'],
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 12),
+                              ),
+                            ],
                           ),
                           new RichText(
                             text: new TextSpan(

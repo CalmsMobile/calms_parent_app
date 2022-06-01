@@ -36,7 +36,7 @@ class _ActivityDetailsState extends State<ActivityDetails> {
               child: activityInfo['image'] != null
                   ? Image.network(activityInfo['image'],
                       width: double.infinity, height: 180, fit: BoxFit.cover)
-                  : Image.asset("images/user.png"),
+                  : Image.asset("assets/images/user.png"),
             ),
           ),
           Container(

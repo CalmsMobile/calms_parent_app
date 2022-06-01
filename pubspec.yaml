@@ -58,6 +58,10 @@ dependencies:
   flutter_local_notifications: ^9.4.0
   sn_progress_dialog: ^1.0.3
   connectivity_plus: ^2.2.1
+  footer: ^0.0.4
+  geolocator: ^8.2.1
+  google_maps_flutter: ^2.1.4
+  flutter_polyline_points: ^1.0.0
 
 dependency_overrides:
   charts_flutter:

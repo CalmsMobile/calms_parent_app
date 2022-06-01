@@ -11,11 +11,26 @@ class DateUtil {
     return DateFormat(format).format(todayDate);
   }
 
+  getDaysOfDate(date) {
+    print(date);
+    DateTime todayDate = DateFormat("yyyy/MM/dd").parse(date);
+    var item = {
+      "dayString": DateFormat('EE').format(todayDate),
+      "day": todayDate.day
+    };
+    return item;
+  }
+
   convertStringFromDateObject(DateTime givenDate, String format) {
     DateFormat dateFormat = DateFormat(format);
     String string = dateFormat.format(DateTime.now());
     DateTime givenDate2 = DateTime.parse(string);
     return DateFormat(format).format(givenDate2);
+  }
+
+  convertDateNow(DateTime now, String format) {
+    String formattedDate = DateFormat(format).format(now);
+    return formattedDate;
   }
 
   isDateGreater(DateTime givenDate, String compareDate) {

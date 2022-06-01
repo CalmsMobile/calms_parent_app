@@ -40,7 +40,7 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
               child: activityInfo['image'] != null
                   ? Image.network(activityInfo['image'][0],
                       width: double.infinity, height: 180, fit: BoxFit.cover)
-                  : Image.asset("images/user.png"),
+                  : Image.asset("assets/images/user.png"),
             ),
           ),
           SizedBox(
@@ -60,7 +60,7 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
                         // width: 300,
                         height: 100,
                         fit: BoxFit.fill)
-                    : Image.asset("images/user.png"),
+                    : Image.asset("assets/images/user.png"),
               ),
               title: Text(
                 activityInfo['name'],

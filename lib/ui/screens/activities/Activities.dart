@@ -1,3 +1,4 @@
+import 'package:calms_parent/common/util/my_alert_popup.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -230,6 +231,38 @@ class _ActivitiesState extends State<Activities> {
   ];
   List<Map<dynamic, dynamic>> _foundActivities = [];
 
+  List<Map> familyList = [
+    {
+      "name": "HAZIM",
+      "category": "STUDENT",
+      "email": "",
+      "balance": "100.00",
+      "class": "Class3",
+      "contact": "0123467589",
+      "desc": "Member account does not exist in MFP software",
+      "image": "https://randomuser.me/api/portraits/men/2.jpg"
+    },
+    {
+      "name": "MARIE LIM",
+      "category": "STUDENT",
+      "email": "",
+      "balance": "0.00",
+      "class": "Class4",
+      "contact": "1345657",
+      "desc": "",
+      "image": "https://randomuser.me/api/portraits/men/3.jpg"
+    },
+    {
+      "name": "Danny",
+      "category": "STUDENT",
+      "email": "",
+      "balance": "30.00",
+      "contact": "565467898",
+      "class": "Class6",
+      "desc": "",
+      "image": "https://randomuser.me/api/portraits/men/4.jpg"
+    },
+  ];
   @override
   void initState() {
     _foundActivities = activityList;
@@ -307,58 +340,11 @@ class _ActivitiesState extends State<Activities> {
                         new Divider(
                           height: 0.1,
                         ),
-                        Container(
-                            margin: EdgeInsets.symmetric(horizontal: 10),
-                            child: Stack(
-                              alignment: Alignment.topLeft,
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(8.0),
-                                    topRight: Radius.circular(8.0),
-                                    bottomLeft: Radius.circular(8.0),
-                                    bottomRight: Radius.circular(8.0),
-                                  ),
-                                  child:
-                                      _foundActivities[index]['image'] != null
-                                          ? Image.network(
-                                              _foundActivities[index]['image'],
-                                              width: double.infinity,
-                                              height: 150,
-                                              fit: BoxFit.cover)
-                                          : Image.asset("images/user.png"),
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    SizedBox(
-                                      height: 25,
-                                      width: 80,
-                                      child: ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                            primary: Colors.red,
-                                            padding: EdgeInsets.zero),
-                                        onPressed: () => {},
-                                        child: Text("Allowed 1"),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 25,
-                                      child: ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                            primary: Colors.green,
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 3)),
-                                        onPressed: () => {},
-                                        child: Text("Available Unlimitted"),
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            )),
                         ListTile(
+                          leading: _foundActivities[index]['image'] != null
+                              ? Image.network(_foundActivities[index]['image'],
+                                  width: 80, height: 80, fit: BoxFit.cover)
+                              : Image.asset("assets/images/user.png"),
                           title: Text(
                             _foundActivities[index]['title'],
                             overflow: TextOverflow.ellipsis,
@@ -382,7 +368,7 @@ class _ActivitiesState extends State<Activities> {
                                 height: 5,
                               ),
 
-                              new RichText(
+                              RichText(
                                 text: new TextSpan(
                                   text: "End date :",
                                   style: new TextStyle(
@@ -430,8 +416,30 @@ class _ActivitiesState extends State<Activities> {
                                     child: InkWell(
                                       splashColor: Colors.red, // Splash color
                                       onTap: () {
-                                        openDonationBottomSheet(
-                                            context, _foundActivities[index]);
+                                        showDialog(
+                                          context: context,
+                                          barrierDismissible: false,
+                                          builder:
+                                              (BuildContext dialogContext) {
+                                            // holding this dialog context
+                                            return MyAlertPopupDialog()
+                                                .showAlert(
+                                                    "Select Children",
+                                                    familyList,
+                                                    "",
+                                                    context, () {
+                                              Navigator.of(context,
+                                                      rootNavigator: true)
+                                                  .pop();
+                                            }, () {
+                                              Navigator.of(context,
+                                                      rootNavigator: true)
+                                                  .pop();
+                                              openDonationBottomSheet(context,
+                                                  _foundActivities[index]);
+                                            });
+                                          },
+                                        );
                                       },
                                       child: Icon(
                                         Icons.shopping_cart_outlined,
@@ -488,6 +496,7 @@ void openDonationBottomSheet(BuildContext buildContext, invoice) {
                 padding: EdgeInsets.symmetric(vertical: 10),
                 child: Text(
                   invoice["description"],
+                  maxLines: 2,
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 ),
               ),
@@ -498,11 +507,11 @@ void openDonationBottomSheet(BuildContext buildContext, invoice) {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Invoice Amount",
+                    "Amount",
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
                   ),
                   Text(
-                    'MYR ${double.parse(invoice['invoice_amount']).toStringAsFixed(2)}',
+                    'MYR ${double.parse(invoice['price']).toStringAsFixed(2)}',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
                   ),
                 ],
@@ -518,7 +527,7 @@ void openDonationBottomSheet(BuildContext buildContext, invoice) {
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
                   ),
                   Text(
-                    'MYR ${double.parse(invoice['paid_to_date']).toStringAsFixed(2)}',
+                    'MYR 0.00',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
                   ),
                 ],
