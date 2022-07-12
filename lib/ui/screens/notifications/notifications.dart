@@ -40,7 +40,7 @@ class _NotificationsState extends State<Notifications> {
 
   Future<void> initValues() async {
     String appSettings =
-        await MySharedPref().getData(AppSettings.driverAppSettings);
+        await MySharedPref().getData(AppSettings.parentAppSettings);
 
     if (appSettings != "") {
       var appSett = jsonDecode(appSettings);
@@ -78,7 +78,9 @@ class _NotificationsState extends State<Notifications> {
                 "StudentId": null,
                 "RefDriverSeqId": 101.0,
                 "PushSeqId": 672.0,
-                "HtmlContent": "test",
+                "Title": "General notification",
+                "HtmlContent": "Hi parent, tomorrow will be holiday",
+                "image": "https://randomuser.me/api/portraits/women/11.jpg",
                 "NotificationType": 10,
                 "CreatedBy": 100043.0,
                 "CreatedOn": "2022-04-25T11:54:46.483",
@@ -96,7 +98,129 @@ class _NotificationsState extends State<Notifications> {
                 "StudentId": null,
                 "RefDriverSeqId": 101.0,
                 "PushSeqId": 668.0,
-                "HtmlContent": "Test 10",
+                "image": "https://randomuser.me/api/portraits/men/1.jpg",
+                "Title": "Purchase transaction",
+                "HtmlContent": "Your product has been purchased for 5.00 MYR",
+                "NotificationType": 10,
+                "CreatedBy": 100043.0,
+                "CreatedOn": "2022-04-15T20:57:01.23",
+                "MAppId": null,
+                "ReaderName": null,
+                "IsAlarmStopped": false,
+                "RowRank": 2
+              },
+              {
+                "PNHistory": 652.0,
+                "RefPushSeqId": 668.0,
+                "RefUserSeqId": null,
+                "IsRead": false,
+                "isDeleted": false,
+                "StudentId": null,
+                "RefDriverSeqId": 101.0,
+                "PushSeqId": 668.0,
+                "image": "https://randomuser.me/api/portraits/men/2.jpg",
+                "Title": "Wallet transaction",
+                "HtmlContent": "Your product has been purchased for 5.00 MYR",
+                "NotificationType": 10,
+                "CreatedBy": 100043.0,
+                "CreatedOn": "2022-04-15T20:57:01.23",
+                "MAppId": null,
+                "ReaderName": null,
+                "IsAlarmStopped": false,
+                "RowRank": 2
+              },
+              {
+                "PNHistory": 652.0,
+                "RefPushSeqId": 668.0,
+                "RefUserSeqId": null,
+                "IsRead": false,
+                "isDeleted": false,
+                "StudentId": null,
+                "RefDriverSeqId": 101.0,
+                "PushSeqId": 668.0,
+                "image": "https://randomuser.me/api/portraits/women/8.jpg",
+                "Title": "Low balance alert",
+                "HtmlContent": "Your balance is very low. please topup",
+                "NotificationType": 10,
+                "CreatedBy": 100043.0,
+                "CreatedOn": "2022-04-15T20:57:01.23",
+                "MAppId": null,
+                "ReaderName": null,
+                "IsAlarmStopped": false,
+                "RowRank": 2
+              },
+              {
+                "PNHistory": 659.0,
+                "RefPushSeqId": 672.0,
+                "RefUserSeqId": null,
+                "IsRead": false,
+                "isDeleted": false,
+                "StudentId": null,
+                "RefDriverSeqId": 101.0,
+                "PushSeqId": 672.0,
+                "Title": "General notification",
+                "image": "https://randomuser.me/api/portraits/men/1.jpg",
+                "HtmlContent": "Hi parent, tomorrow will be holiday",
+                "NotificationType": 10,
+                "CreatedBy": 100043.0,
+                "CreatedOn": "2022-04-25T11:54:46.483",
+                "MAppId": null,
+                "ReaderName": null,
+                "IsAlarmStopped": false,
+                "RowRank": 1
+              },
+              {
+                "PNHistory": 655.0,
+                "RefPushSeqId": 668.0,
+                "RefUserSeqId": null,
+                "IsRead": false,
+                "isDeleted": false,
+                "StudentId": null,
+                "RefDriverSeqId": 101.0,
+                "PushSeqId": 668.0,
+                "image": "https://randomuser.me/api/portraits/men/2.jpg",
+                "Title": "Purchase transaction",
+                "HtmlContent": "Your product has been purchased for 5.00 MYR",
+                "NotificationType": 10,
+                "CreatedBy": 100043.0,
+                "CreatedOn": "2022-04-15T20:57:01.23",
+                "MAppId": null,
+                "ReaderName": null,
+                "IsAlarmStopped": false,
+                "RowRank": 2
+              },
+              {
+                "PNHistory": 652.0,
+                "RefPushSeqId": 668.0,
+                "RefUserSeqId": null,
+                "IsRead": false,
+                "isDeleted": false,
+                "StudentId": null,
+                "RefDriverSeqId": 101.0,
+                "PushSeqId": 668.0,
+                "image": "https://randomuser.me/api/portraits/men/6.jpg",
+                "Title": "Wallet transaction",
+                "HtmlContent": "Your product has been purchased for 5.00 MYR",
+                "NotificationType": 10,
+                "CreatedBy": 100043.0,
+                "CreatedOn": "2022-04-15T20:57:01.23",
+                "MAppId": null,
+                "ReaderName": null,
+                "IsAlarmStopped": false,
+                "RowRank": 2
+              },
+              {
+                "PNHistory": 652.0,
+                "RefPushSeqId": 668.0,
+                "RefUserSeqId": null,
+                "IsRead": false,
+                "isDeleted": false,
+                "StudentId": null,
+                "RefDriverSeqId": 101.0,
+                "PushSeqId": 668.0,
+                "Title": "Low balance alert",
+                "image": "https://randomuser.me/api/portraits/men/1.jpg",
+                "HtmlContent": "Your balance is very low. please topup",
                 "NotificationType": 10,
                 "CreatedBy": 100043.0,
                 "CreatedOn": "2022-04-15T20:57:01.23",
@@ -183,10 +307,10 @@ class _NotificationsState extends State<Notifications> {
                 context.read<MySettingsListener>().notificationList.length;
             // CommonUtil().getAllNotification(context, startPosition);
           },
-          child: Column(
-            children: [
-              SingleChildScrollView(
-                child: Container(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Container(
                   padding: EdgeInsets.symmetric(horizontal: 10),
                   child: Column(
                     children: [
@@ -205,8 +329,8 @@ class _NotificationsState extends State<Notifications> {
                     ],
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -260,11 +384,11 @@ class _NotificationsState extends State<Notifications> {
                           Container(
                             height: 60,
                             child: ListTile(
-                              horizontalTitleGap: 0,
+                              // horizontalTitleGap: 0,
                               minVerticalPadding: -4,
-                              leading: SizedBox(
-                                width: 30,
-                                height: 30,
+                              trailing: SizedBox(
+                                width: 20,
+                                height: 20,
                                 child: ClipPath(
                                     clipper: ShapeBorderClipper(
                                         shape: RoundedRectangleBorder(
@@ -275,7 +399,23 @@ class _NotificationsState extends State<Notifications> {
                                         ? "assets/images/read_message.png"
                                         : "assets/images/unread_message.png")),
                               ),
+                              leading: SizedBox(
+                                width: 45,
+                                height: 45,
+                                child: ClipPath(
+                                  clipper: ShapeBorderClipper(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10))),
+                                  child: Image.network(
+                                      notificationList[index1]["image"]),
+                                ),
+                              ),
                               title: Text(
+                                "${notificationList[index1]["Title"]}",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              subtitle: Text(
                                   "${notificationList[index1]["HtmlContent"]}"),
                               // Html(
                               //   data:

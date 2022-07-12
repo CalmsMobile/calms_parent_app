@@ -1,4 +1,5 @@
 import 'package:calms_parent/common/alert_dialog.dart';
+import 'package:calms_parent/common/widgets/select_member.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -12,10 +13,11 @@ class ParentPickup extends StatefulWidget {
 class _ParentPickupState extends State<ParentPickup> {
   List<Map> familyList = [
     {
-      "name": "Desmond",
+      "name": "Desmond Mohammad John Abraham Bismoi",
       "category": "PARENT",
       "desc": "",
       "class": "Class1",
+      "year": "Year1",
       "balance": "250.00",
       "email": "makame147@gmail.com",
       "image": "https://randomuser.me/api/portraits/men/1.jpg"
@@ -25,6 +27,7 @@ class _ParentPickupState extends State<ParentPickup> {
       "category": "PARENT",
       "desc": "",
       "class": "Class2",
+      "year": "Year2",
       "balance": "50.00",
       "email": "calms.rnd@gmail.com",
       "image": "https://randomuser.me/api/portraits/women/1.jpg"
@@ -35,6 +38,7 @@ class _ParentPickupState extends State<ParentPickup> {
       "email": "",
       "balance": "100.00",
       "class": "Class3",
+      "year": "Year1",
       "contact": "0123467589",
       "desc": "Member account does not exist in MFP software",
       "image": "https://randomuser.me/api/portraits/men/2.jpg"
@@ -45,6 +49,7 @@ class _ParentPickupState extends State<ParentPickup> {
       "email": "",
       "balance": "0.00",
       "class": "Class4",
+      "year": "Year2",
       "contact": "",
       "desc": "",
       "image": "https://randomuser.me/api/portraits/men/3.jpg"
@@ -56,6 +61,7 @@ class _ParentPickupState extends State<ParentPickup> {
       "balance": "30.00",
       "contact": "",
       "class": "Class6",
+      "year": "Year1",
       "desc": "",
       "image": "https://randomuser.me/api/portraits/men/4.jpg"
     },
@@ -106,144 +112,328 @@ class _ParentPickupState extends State<ParentPickup> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Parent Pickup")),
-      body: Column(children: [
-        Container(
-          width: double.infinity,
-          margin: EdgeInsets.zero,
-          padding: EdgeInsets.zero,
-          child: ListView.builder(
-              padding: EdgeInsets.zero,
-              shrinkWrap: true,
-              itemCount: familyList.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Column(children: <Widget>[
-                  new Divider(
-                    height: 0.1,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.18,
-                        height: MediaQuery.of(context).size.width * 0.18,
-                        margin: EdgeInsets.all(5),
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: Colors.black,
-                          borderRadius: BorderRadius.circular(20.0),
-                          image: DecorationImage(
-                            fit: BoxFit.contain,
-                            image: NetworkImage(familyList[index]['image']),
-                          ),
-                        ),
+      appBar: getMyAppbar("Student Pickup", []),
+      body: Container(
+        color: Colors.white,
+        width: double.infinity,
+        margin: EdgeInsets.zero,
+        padding: EdgeInsets.zero,
+        child: Column(
+          children: [
+            Flexible(
+              child: ListView.builder(
+                  padding: EdgeInsets.zero,
+                  shrinkWrap: true,
+                  itemCount: familyList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Column(children: <Widget>[
+                      new Divider(
+                        height: 0.1,
                       ),
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.75,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    familyList[index]["name"],
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 14),
-                                  ),
-                                  SizedBox(
-                                    height: 3,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Icon(
-                                        Icons.filter,
-                                        size: 16,
-                                      ),
-                                      SizedBox(
-                                        width: 4,
-                                      ),
-                                      Text(
-                                        familyList[index]["class"],
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 14),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 3,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Icon(
-                                        Icons.nordic_walking,
-                                        size: 16,
-                                      ),
-                                      SizedBox(
-                                        width: 4,
-                                      ),
-                                      Text(
-                                        index % 2 == 0 ? "Present" : "Absent",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 14,
-                                            color: index % 2 == 0
-                                                ? Colors.green
-                                                : Colors.redAccent),
-                                      ),
-                                    ],
-                                  )
-                                ],
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: MediaQuery.of(context).size.width * 0.12,
+                            height: MediaQuery.of(context).size.width * 0.12,
+                            margin: EdgeInsets.all(5),
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(60.0),
+                              image: DecorationImage(
+                                fit: BoxFit.contain,
+                                image: NetworkImage(familyList[index]['image']),
                               ),
                             ),
-                            if (index % 2 == 0)
-                              InkWell(
-                                onTap: () {
-                                  requestPickup(context);
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 5, vertical: 2),
-                                  margin: EdgeInsets.only(bottom: 2),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(8.0),
-                                    border: Border.all(
-                                        color: Colors.greenAccent, width: 2),
-                                  ),
-                                  child: Text(
-                                    "Request Pickup",
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 1,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15,
-                                        color: Colors.greenAccent),
+                          ),
+                          Container(
+                            width: MediaQuery.of(context).size.width * 0.85,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 8.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          familyList[index]["name"],
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 14),
+                                        ),
+                                        SizedBox(
+                                          height: 3,
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            RichText(
+                                              textAlign: TextAlign.left,
+                                              text: TextSpan(
+                                                children: [
+                                                  WidgetSpan(
+                                                    child: Icon(
+                                                      Icons.filter,
+                                                      size: 16,
+                                                    ),
+                                                  ),
+                                                  WidgetSpan(
+                                                      child: Container(
+                                                    padding: EdgeInsets.only(
+                                                        bottom: 0, left: 5),
+                                                    child: Text(
+                                                      familyList[index]
+                                                          ["class"],
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.normal,
+                                                          fontSize: 12),
+                                                    ),
+                                                  )),
+                                                  WidgetSpan(
+                                                      child: Row(
+                                                    children: [
+                                                      SizedBox(
+                                                        width: 5,
+                                                      ),
+                                                      Container(
+                                                        width: 1,
+                                                        height: 10,
+                                                        color: Colors.grey,
+                                                      ),
+                                                      SizedBox(
+                                                        width: 5,
+                                                      ),
+                                                    ],
+                                                  )),
+                                                  WidgetSpan(
+                                                    child: Icon(
+                                                      Icons.calendar_month,
+                                                      size: 16,
+                                                    ),
+                                                  ),
+                                                  WidgetSpan(
+                                                    child: Container(
+                                                      padding: EdgeInsets.only(
+                                                          bottom: 0, left: 5),
+                                                      child: Text(
+                                                        familyList[index]
+                                                            ["year"],
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .normal,
+                                                            fontSize: 12),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          height: 3,
+                                        ),
+                                        if (index % 2 == 0)
+                                          RichText(
+                                            textAlign: TextAlign.left,
+                                            text: TextSpan(
+                                              children: [
+                                                WidgetSpan(
+                                                  child: Icon(
+                                                    Icons.timelapse,
+                                                    color: Colors.redAccent,
+                                                    size: 16,
+                                                  ),
+                                                ),
+                                                WidgetSpan(
+                                                  child: Container(
+                                                    padding: EdgeInsets.only(
+                                                        bottom: 0, left: 5),
+                                                    child: Text(
+                                                      "Last requested : ",
+                                                      style: TextStyle(
+                                                          color:
+                                                              Colors.redAccent,
+                                                          fontWeight:
+                                                              FontWeight.normal,
+                                                          fontSize: 12),
+                                                    ),
+                                                  ),
+                                                ),
+                                                WidgetSpan(
+                                                    child: Container(
+                                                  padding: EdgeInsets.only(
+                                                      bottom: 0, left: 5),
+                                                  child: Text(
+                                                    "05:00 PM",
+                                                    style: TextStyle(
+                                                        color: Colors.redAccent,
+                                                        fontWeight:
+                                                            FontWeight.normal,
+                                                        fontSize: 12),
+                                                  ),
+                                                )),
+                                              ],
+                                            ),
+                                          ),
+                                        Row(
+                                          children: [
+                                            Flexible(
+                                              child: RichText(
+                                                textAlign: TextAlign.left,
+                                                text: TextSpan(
+                                                  children: [
+                                                    WidgetSpan(
+                                                      child: Container(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                bottom: 5,
+                                                                top: 5),
+                                                        child: Icon(
+                                                          Icons.map,
+                                                          color: Colors.black,
+                                                          size: 16,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    WidgetSpan(
+                                                      child: Container(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                bottom: 5,
+                                                                top: 5),
+                                                        child: Text(
+                                                          "Navigate me to pick-up point",
+                                                          style: TextStyle(
+                                                              decoration:
+                                                                  TextDecoration
+                                                                      .underline,
+                                                              color: Colors
+                                                                  .blueAccent,
+                                                              decorationThickness:
+                                                                  3,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .normal,
+                                                              fontSize: 12),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                            Flexible(
+                                              child: InkWell(
+                                                onTap: () {
+                                                  if (index % 2 == 0) {
+                                                    MyCustomAlertDialog()
+                                                        .showCustomAlert(
+                                                            context,
+                                                            "Notification",
+                                                            "Do you like to request for pickup now?",
+                                                            false, () {
+                                                      requestPickup(context);
+                                                    }, () {
+                                                      Navigator.of(context,
+                                                              rootNavigator:
+                                                                  true)
+                                                          .pop();
+                                                    });
+                                                  } else {
+                                                    MyCustomAlertDialog()
+                                                        .showCustomAlert(
+                                                      context,
+                                                      "Notification",
+                                                      "You are not authorized to pickup",
+                                                      false,
+                                                      null,
+                                                      () => Navigator.of(
+                                                              context,
+                                                              rootNavigator:
+                                                                  true)
+                                                          .pop(),
+                                                    );
+                                                  }
+                                                },
+                                                child: RichText(
+                                                  textAlign: TextAlign.left,
+                                                  text: TextSpan(
+                                                    children: [
+                                                      WidgetSpan(
+                                                        child: Container(
+                                                          padding:
+                                                              EdgeInsets.only(
+                                                                  bottom: 5,
+                                                                  top: 5,
+                                                                  left: 5),
+                                                          child: Icon(
+                                                            Icons
+                                                                .emoji_transportation,
+                                                            color: Colors.black,
+                                                            size: 16,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      WidgetSpan(
+                                                        child: Container(
+                                                          padding:
+                                                              EdgeInsets.only(
+                                                                  bottom: 5,
+                                                                  top: 5),
+                                                          child: Text(
+                                                            "Send a request for pick-up",
+                                                            style: TextStyle(
+                                                                decoration:
+                                                                    TextDecoration
+                                                                        .underline,
+                                                                color: Colors
+                                                                    .blueAccent,
+                                                                decorationThickness:
+                                                                    3,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .normal,
+                                                                fontSize: 12),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              )
-                          ],
-                        ),
+                              ],
+                            ),
+                          )
+                        ],
                       )
-                    ],
-                  )
-                ]);
-              }),
+                    ]);
+                  }),
+            ),
+          ],
         ),
-      ]),
+      ),
     );
   }
 
@@ -255,11 +445,12 @@ class _ParentPickupState extends State<ParentPickup> {
 
   void dismissAlert() {
     MyCustomAlertDialog().showCustomAlert(
-        context,
-        "Notification",
-        "Requested successfully",
-        false,
-        () => Navigator.of(context, rootNavigator: true).pop(),
-        null);
+      context,
+      "Notification",
+      "Request successfully submitted",
+      false,
+      null,
+      () => Navigator.of(context, rootNavigator: true).pop(),
+    );
   }
 }

@@ -1,3 +1,6 @@
+import 'package:calms_parent/common/alert_dialog.dart';
+import 'package:calms_parent/common/my_shared_pref.dart';
+import 'package:calms_parent/ui/screens/scan_qr_registration/QRRegistration.dart';
 import 'package:flutter/material.dart';
 
 class AppSettingsPage extends StatefulWidget {
@@ -121,7 +124,7 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
                     ),
                     Divider(
                       height: 15,
-                      color: Colors.grey,
+                      color: Colors.grey.shade300,
                     ),
                     Container(
                       height: 40.0,
@@ -157,6 +160,40 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
                     SizedBox(
                       height: 5,
                     ),
+                    Divider(
+                      height: 15,
+                      color: Colors.grey.shade300,
+                    ),
+                    Container(
+                      height: 40.0,
+                      child: InkWell(
+                        onTap: () {
+                          logoutDevice();
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: ListTile(
+                                contentPadding: EdgeInsets.symmetric(
+                                    vertical: 0.0, horizontal: 0.0),
+                                minLeadingWidth: 10,
+                                minVerticalPadding: -4,
+                                dense: true,
+                                leading: Icon(
+                                  Icons.logout_outlined,
+                                  size: 24,
+                                ),
+                                title: Text(
+                                  "Unregister device",
+                                  style: TextStyle(fontSize: 14),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ]),
             ),
           ),
@@ -164,4 +201,17 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
   }
 
   getAppSettings() {}
+
+  logoutDevice() {
+    MyCustomAlertDialog().showCustomAlert(
+        context, "Notification", "Do you want to logout?", false, () {
+      Navigator.of(context, rootNavigator: true).pop();
+      MySharedPref().clearAllData();
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => QRRegistration()));
+    }, () {
+      print("Close alert");
+      Navigator.of(context, rootNavigator: true).pop();
+    });
+  }
 }

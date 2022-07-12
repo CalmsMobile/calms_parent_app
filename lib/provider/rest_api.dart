@@ -21,7 +21,7 @@ class RestApiProvider {
   Future<Map<String, dynamic>> postMethod(
       data, apiURL, endPoint, context, showProgress, allowAuth) async {
     ProgressDialog _progressDialog = ProgressDialog(context: context);
-    if (showProgress == true) {
+    if (showProgress) {
       _progressDialog.show(max: 100, msg: 'Loading...please wait...');
     }
 
@@ -31,7 +31,7 @@ class RestApiProvider {
     }
 
     String driverDetails =
-        await MySharedPref().getData(AppSettings.driverDetails);
+        await MySharedPref().getData(AppSettings.parentDetails);
 
     var driverData_;
     if (driverDetails != "") {
@@ -88,7 +88,7 @@ class RestApiProvider {
 
         if (json.decode(outputResponse.body) is Map<String, dynamic>) {
           print("No HTTP resource was found");
-          if (showProgress == true) {
+          if (showProgress) {
             _progressDialog.close();
           }
           Map<String, dynamic> resObj = {
@@ -104,13 +104,13 @@ class RestApiProvider {
               List<dynamic> tableList = dataObj['Table'];
               Map<String, dynamic> tableObj = tableList[0];
               if (tableObj['Code'] == 10) {
-                if (showProgress == true) {
+                if (showProgress) {
                   _progressDialog.close();
                 }
                 return Future<Map<String, dynamic>>.value(dataObj);
               } else {
                 print("failed ${tableObj['Code']}");
-                if (showProgress == true) {
+                if (showProgress) {
                   _progressDialog.close();
                 }
                 if (tableObj['Code'] == 20 &&
@@ -141,7 +141,7 @@ class RestApiProvider {
                 return Future<Map<String, dynamic>>.value(tableObj);
               }
             } else {
-              if (showProgress == true) {
+              if (showProgress) {
                 _progressDialog.close();
               }
               Map<String, dynamic> resObj = {
@@ -151,7 +151,7 @@ class RestApiProvider {
               return Future<Map<String, dynamic>>.value(resObj);
             }
           } else {
-            if (showProgress == true) {
+            if (showProgress) {
               _progressDialog.close();
             }
             Map<String, dynamic> dataErrorObj = qrJson[0];
@@ -173,7 +173,7 @@ class RestApiProvider {
           }
         }
       } on SocketException {
-        if (showProgress == true) {
+        if (showProgress) {
           _progressDialog.close();
         }
         Map<String, dynamic> resObj = {
@@ -183,7 +183,7 @@ class RestApiProvider {
         return Future<Map<String, dynamic>>.value(resObj);
       } catch (err) {
         print("Error catch api $err");
-        if (showProgress == true) {
+        if (showProgress) {
           _progressDialog.close();
         }
         Map<String, dynamic> resObj = {
@@ -193,7 +193,7 @@ class RestApiProvider {
         return Future<Map<String, dynamic>>.value(resObj);
       }
     } else {
-      if (showProgress == true) {
+      if (showProgress) {
         _progressDialog.close();
       }
       Map<String, dynamic> resObj = {

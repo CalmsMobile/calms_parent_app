@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 import 'package:calms_parent/model/HolidayModel.dart';
 import 'package:calms_parent/model/_AppointmentDataSource.dart';
@@ -14,7 +15,6 @@ import 'package:calms_parent/ui/screens/widgets/UpcomingActivityListView.dart';
 import 'package:calms_parent/ui/screens/widgets/outstandingView.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class HomePage extends StatefulWidget {
@@ -100,6 +100,8 @@ class HomePage extends StatefulWidget {
       "mode_of_topup": "Photocopier",
       "date": "30/11/2021 12:30 am",
       "amount": "950.00",
+      "receipt_no": "RCPT001",
+      "topupby": "John Abraham",
       "image":
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTI2iHiAT-ICPyezz_uJzuUWArjKnNDaruP-DbfLD0CWrT-oqjcpe2RfBLDl9DTRbFw9qQ&usqp=CAU"
     },
@@ -108,6 +110,8 @@ class HomePage extends StatefulWidget {
       "mode_of_topup": "Counter-topup",
       "date": "30/11/2021 12:30 am",
       "amount": "450.00",
+      "receipt_no": "RCPT001",
+      "topupby": "John Abraham",
       "image":
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpway9lZBTwtk500jCpu4BGAxHOnY0Pc6ElELDrc95Z7U3j9R6hf1h-rxZIKkJ9p_1rhA&usqp=CAU"
     },
@@ -116,6 +120,8 @@ class HomePage extends StatefulWidget {
       "mode_of_topup": "Online",
       "date": "30/11/2021 02:30 pm",
       "amount": "100.00",
+      "receipt_no": "RCPT001",
+      "topupby": "John Abraham",
       "image":
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTI2iHiAT-ICPyezz_uJzuUWArjKnNDaruP-DbfLD0CWrT-oqjcpe2RfBLDl9DTRbFw9qQ&usqp=CAU"
     },
@@ -124,6 +130,8 @@ class HomePage extends StatefulWidget {
       "mode_of_topup": "Counter-topup",
       "date": "30/11/2021 02:30 pm",
       "amount": "23.00",
+      "receipt_no": "RCPT001",
+      "topupby": "John Abraham",
       "image":
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpway9lZBTwtk500jCpu4BGAxHOnY0Pc6ElELDrc95Z7U3j9R6hf1h-rxZIKkJ9p_1rhA&usqp=CAU"
     },
@@ -132,6 +140,8 @@ class HomePage extends StatefulWidget {
       "mode_of_topup": "Online",
       "date": "30/11/2021 03:30 pm",
       "amount": "2043.50",
+      "receipt_no": "RCPT001",
+      "topupby": "John Abraham",
       "image":
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTI2iHiAT-ICPyezz_uJzuUWArjKnNDaruP-DbfLD0CWrT-oqjcpe2RfBLDl9DTRbFw9qQ&usqp=CAU"
     }
@@ -143,6 +153,7 @@ class HomePage extends StatefulWidget {
       "orderID": "ORD001",
       "date": "30/11/2021 01:00 pm",
       "amount": "950.00",
+      "purchaseby": "John Abraham",
       "image":
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTI2iHiAT-ICPyezz_uJzuUWArjKnNDaruP-DbfLD0CWrT-oqjcpe2RfBLDl9DTRbFw9qQ&usqp=CAU"
     },
@@ -152,6 +163,7 @@ class HomePage extends StatefulWidget {
       "orderID": "ORD002",
       "date": "30/11/2021 10:00 am",
       "amount": "450.00",
+      "purchaseby": "John Abraham",
       "image":
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpway9lZBTwtk500jCpu4BGAxHOnY0Pc6ElELDrc95Z7U3j9R6hf1h-rxZIKkJ9p_1rhA&usqp=CAU"
     },
@@ -161,6 +173,7 @@ class HomePage extends StatefulWidget {
       "orderID": "ORD003",
       "date": "30/11/2021 01:30 pm",
       "amount": "100.00",
+      "purchaseby": "John Abraham",
       "image":
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTI2iHiAT-ICPyezz_uJzuUWArjKnNDaruP-DbfLD0CWrT-oqjcpe2RfBLDl9DTRbFw9qQ&usqp=CAU"
     },
@@ -170,6 +183,7 @@ class HomePage extends StatefulWidget {
       "orderID": "ORD004",
       "date": "30/11/2021 04:00 pm",
       "amount": "23.00",
+      "purchaseby": "John Abraham",
       "image":
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpway9lZBTwtk500jCpu4BGAxHOnY0Pc6ElELDrc95Z7U3j9R6hf1h-rxZIKkJ9p_1rhA&usqp=CAU"
     },
@@ -179,6 +193,7 @@ class HomePage extends StatefulWidget {
       "orderID": "ORD005",
       "date": "30/11/2021 08:00 pm",
       "amount": "2043.50",
+      "purchaseby": "John Abraham",
       "image":
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTI2iHiAT-ICPyezz_uJzuUWArjKnNDaruP-DbfLD0CWrT-oqjcpe2RfBLDl9DTRbFw9qQ&usqp=CAU"
     }
@@ -186,63 +201,226 @@ class HomePage extends StatefulWidget {
   final List<Map> familyList;
   final List<Map> storeItem = [
     {
-      "name": "student-plastic-id-card",
-      "category": "Request ID Card",
-      "amount": "20.00",
-      "image":
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRb6Wne7m0LraBtZlgFjD5U2b-O8mF7W6-BZg&usqp=CAU"
+      "category": "Stationery",
+      "item_name": "Color Box",
+      "inventory_code": "S1011",
+      "description":
+          "46 PCS Color Set has a lot of fun features to keep your baby engaged. It has 42 pieces It contain 12 water color, 6 sketch color, a sharpner, an eraser, 10 crayons color, 8 oil pastel colors, a glue, a paper clip and a box. Very nice product for your kid It improves creative power of your dear ones. Improves visual skills, creative skills and coordination skills of your child Designed keeping safety of your child on priority basis Always choose Happiesta for your kids Happiness",
+      "is_dress": 1,
+      "price": "10.00",
+      "discount": "5%",
+      "available_quantity": 50,
+      "applicable_group": "YEAR1, YEAR2",
+      "image": [
+        "http://124.217.235.107:2008/Handler/ImagePathHandler.ashx?ImagePath=StoreItems/b6fa-e4c2-2021-11-25-11-32-18-810/71-zpNFAyTL._SL1080_.jpg&Default=60&PROUrl=http://124.217.235.107:2008/&StoreageUrl=http://124.217.235.107:2008/FS/",
+        "http://124.217.235.107:2008/FS/StoreItems/4adc-e4c2-2021-11-25-11-32-55-924/student-plastic-id-card-holder-500x500.jpg"
+      ],
+      "colors": ["White", "Black", "Red", "Blue"],
+      "size": ["S", "M", "L", "XL", "XXL"],
+      "merchantimage":
+          "http://124.217.235.107:2008/FS/Merchant/1569-e4c2-2021-11-25-10-18-28-567/CALMS_Technologies_Sdn_Bhd_Logo.png"
     },
     {
-      "name": "Color Box",
-      "category": "Purchase",
-      "amount": "145.00",
-      "image":
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0sq6Ut-brPLyZ15tFpjEkOSdJik1U2eYpIg&usqp=CAU"
+      "category": "Stationery",
+      "item_name": "student-plastic-id-card-holder-500x500",
+      "inventory_code": "S1011",
+      "description": "student-plastic-id-card-holder-500x500",
+      "is_dress": "0",
+      "price": "10.00",
+      "discount": "5%",
+      "available_quantity": 50,
+      "applicable_group": "All",
+      "image": [
+        "http://124.217.235.107:2008/FS/StoreItems/4adc-e4c2-2021-11-25-11-32-55-924/student-plastic-id-card-holder-500x500.jpg",
+        "http://124.217.235.107:2008/FS/StoreItems/4adc-e4c2-2021-11-25-11-32-55-924/student-plastic-id-card-holder-500x500.jpg"
+      ],
+      "merchantimage":
+          "http://124.217.235.107:2008/FS/Merchant/1569-e4c2-2021-11-25-10-18-28-567/CALMS_Technologies_Sdn_Bhd_Logo.png"
     },
     {
-      "name": "standard notepad",
-      "category": "Purchase",
-      "amount": "80.00",
-      "image":
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0sq6Ut-brPLyZ15tFpjEkOSdJik1U2eYpIg&usqp=CAU"
+      "category": "Stationery",
+      "item_name": "student-plastic-id-card-holder-500x500",
+      "inventory_code": "S1011",
+      "description": "student-plastic-id-card-holder-500x500",
+      "is_dress": "0",
+      "price": "10.00",
+      "discount": "5%",
+      "available_quantity": 50,
+      "applicable_group": "All",
+      "image": [
+        "http://124.217.235.107:2008/FS/StoreItems/4adc-e4c2-2021-11-25-11-32-55-924/student-plastic-id-card-holder-500x500.jpg",
+        "http://124.217.235.107:2008/FS/StoreItems/4adc-e4c2-2021-11-25-11-32-55-924/student-plastic-id-card-holder-500x500.jpg"
+      ],
+      "merchantimage":
+          "http://124.217.235.107:2008/FS/Merchant/1569-e4c2-2021-11-25-10-18-28-567/CALMS_Technologies_Sdn_Bhd_Logo.png"
+    },
+    {
+      "category": "Stationery",
+      "item_name": "student-plastic-id-card-holder-500x500",
+      "inventory_code": "S1011",
+      "description": "student-plastic-id-card-holder-500x500",
+      "is_dress": "0",
+      "price": "10.00",
+      "discount": "5%",
+      "available_quantity": 50,
+      "applicable_group": "All",
+      "image": [
+        "http://124.217.235.107:2008/FS/StoreItems/4adc-e4c2-2021-11-25-11-32-55-924/student-plastic-id-card-holder-500x500.jpg",
+        "http://124.217.235.107:2008/FS/StoreItems/4adc-e4c2-2021-11-25-11-32-55-924/student-plastic-id-card-holder-500x500.jpg"
+      ],
+      "merchantimage":
+          "http://124.217.235.107:2008/FS/Merchant/1569-e4c2-2021-11-25-10-18-28-567/CALMS_Technologies_Sdn_Bhd_Logo.png"
+    },
+    {
+      "category": "Stationery",
+      "item_name": "student-plastic-id-card-holder-500x500",
+      "inventory_code": "S1011",
+      "description": "student-plastic-id-card-holder-500x500",
+      "is_dress": "0",
+      "price": "10.00",
+      "discount": "5%",
+      "available_quantity": 50,
+      "applicable_group": "All",
+      "image": [
+        "http://124.217.235.107:2008/FS/StoreItems/4adc-e4c2-2021-11-25-11-32-55-924/student-plastic-id-card-holder-500x500.jpg",
+        "http://124.217.235.107:2008/FS/StoreItems/4adc-e4c2-2021-11-25-11-32-55-924/student-plastic-id-card-holder-500x500.jpg"
+      ],
+      "merchantimage":
+          "http://124.217.235.107:2008/FS/Merchant/1569-e4c2-2021-11-25-10-18-28-567/CALMS_Technologies_Sdn_Bhd_Logo.png"
     }
   ];
   final List<Map> upcomingActivities = [
     {
-      "name": "School Trip",
+      "acitivity_type": "EDU00001_EVENT_EVNT-1001",
+      "_rev": "15-5f8395a893f523756908f0d48b073a03",
+      "createdby": "Daniel Dennis [SYSADMIN001]",
+      "modifiedby": "Daniel Dennis [SYSADMIN001]",
+      "receipt_no": "RCPT001-12111",
+      "companyid": "EDU00001",
+      "doctype": "EVENT",
+      "eventid": "EVNT-1001",
+      "quantity_limit": "Unlimtted",
+      "available_quantity": "10",
+      "title": "School Music Festival 2019",
+      "price": "100",
+      "description":
+          "46 PCS Color Set has a lot of fun features to keep your baby engaged. It has 42 pieces It contain 12 water color, 6 sketch color, a sharpner, an eraser, 10 crayons color, 8 oil pastel colors, a glue, a paper clip and a box. Very nice product for your kid It improves creative power of your dear ones. Improves visual skills, creative skills and coordination skills of your child Designed keeping safety of your child on priority basis Always choose Happiesta for your kids Happiness",
+      "yeargroup": ["YEAR 4", "YEAR 1", "YEAR 3"],
+      "accessgroup": ["R001"],
+      "isactive": true,
       "category": "School Trip",
-      "amount": "20.00",
-      "date": "30/11/2022",
-      "activity_type": "Trip",
       "image":
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRb6Wne7m0LraBtZlgFjD5U2b-O8mF7W6-BZg&usqp=CAU"
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUEh7oY40Jmp5SSbhKf-CEef3PiPaPXMn8GA&usqp=CAU",
+      "startdate": "2019/07/02",
+      "enddate": "2019/07/31",
+      "modifieddate": "2019/09/22 04:45:04 PM",
+      "attachmentlist": [
+        {"id": "0", "type": "application/pdf", "name": "slip_AB489665.pdf"},
+        {"id": "1", "type": "image/png", "name": "dollar-icon.png"}
+      ]
     },
     {
-      "name": "Zoom Negara Visit",
+      "_id": "EDU00001_EVENT_EVNT-1003",
+      "receipt_no": "RCPT001-12111",
+      "_rev": "6-3ab176b0ae96039e73b0aabc39d56221",
+      "createdby": "Daniel Dennis [SYSADMIN001]",
+      "modifiedby": "Daniel Dennis [SYSADMIN001]",
+      "companyid": "EDU00001",
+      "doctype": "EVENT",
+      "eventid": "EVNT-1003",
+      "quantity_limit": "Unlimtted",
+      "available_quantity": "10",
+      "title": "Dancing Competition 2019",
+      "price": "20",
+      "description":
+          "As dance teams head into competition season, when the pressure and excitement are at an all time high, everyone could use a little extra motivation and encouragement!  To inspire your team, here are our 10 favorite motivational quotes for dancers",
+      "yeargroup": ["YEAR 4", "YEAR 3"],
+      "accessgroup": ["R001"],
+      "isactive": true,
       "category": "School Trip",
-      "amount": "145.00",
-      "date": "27/01/2022",
-      "activity_type": "Trip",
       "image":
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0sq6Ut-brPLyZ15tFpjEkOSdJik1U2eYpIg&usqp=CAU"
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXMc_d-ufS996dH12Hw1y421z3a8fVa26eEg&usqp=CAU",
+      "startdate": "2019/07/02",
+      "enddate": "2019/11/01",
+      "modifieddate": "2019/07/23 02:06:48 AM"
     },
     {
-      "name": "Local",
-      "category": "School Trip",
-      "date": "03/05/2022",
-      "amount": "80.00",
-      "activity_type": "Trip",
+      "_id": "EDU00001_EVENT_EVNT-1004",
+      "receipt_no": "RCPT001-12111",
+      "_rev": "16-72f60d2c9fa59caeab2b71da69342780",
+      "createdby": "Daniel Dennis [SYSADMIN001]",
+      "modifiedby": "Daniel Dennis [SYSADMIN001]",
+      "companyid": "EDU00001",
+      "doctype": "EVENT",
+      "eventid": "EVNT-1004",
+      "quantity_limit": "Unlimtted",
+      "available_quantity": "10",
+      "title": "Sing Loud",
+      "price": "50",
       "image":
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0sq6Ut-brPLyZ15tFpjEkOSdJik1U2eYpIg&usqp=CAU"
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTg-kqVxSbcllyyg6BPkuUZGB9ib4Yo5WHJEg&usqp=CAU",
+      "description":
+          "I think music in itself is healing. It’s an explosive expression of humanity. It’s something we are all touched by. No matter what culture we’re from, everyone loves music.",
+      "yeargroup": ["YEAR 4", "YEAR 3", "YEAR 1"],
+      "accessgroup": ["R001"],
+      "isactive": true,
+      "category": "School Trip",
+      "startdate": "2019/07/02",
+      "enddate": "2019/08/01",
+      "modifieddate": "2019/08/04 09:50:10 PM"
     },
     {
-      "name": "Trip",
-      "category": "School Trip",
-      "date": "03/05/2022",
-      "amount": "80.00",
-      "activity_type": "Trip",
+      "acitivity_type": "EDU00001_EVENT_EVNT-1001",
+      "receipt_no": "RCPT001-12111",
+      "_rev": "15-5f8395a893f523756908f0d48b073a03",
+      "createdby": "Daniel Dennis [SYSADMIN001]",
+      "modifiedby": "Daniel Dennis [SYSADMIN001]",
+      "companyid": "EDU00001",
+      "doctype": "EVENT",
+      "eventid": "EVNT-1001",
+      "quantity_limit": "Unlimtted",
+      "available_quantity": "10",
+      "title": "School Music Festival 2019",
+      "price": "100",
+      "description": "Music is life",
+      "yeargroup": ["YEAR 4", "YEAR 1", "YEAR 3"],
+      "accessgroup": ["R001"],
+      "isactive": true,
       "image":
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0sq6Ut-brPLyZ15tFpjEkOSdJik1U2eYpIg&usqp=CAU"
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUEh7oY40Jmp5SSbhKf-CEef3PiPaPXMn8GA&usqp=CAU",
+      "startdate": "2019/07/02",
+      "enddate": "2019/07/31",
+      "category": "School Trip",
+      "modifieddate": "2019/09/22 04:45:04 PM",
+      "attachmentlist": [
+        {"id": "0", "type": "application/pdf", "name": "slip_AB489665.pdf"},
+        {"id": "1", "type": "image/png", "name": "dollar-icon.png"}
+      ]
+    },
+    {
+      "_id": "EDU00001_EVENT_EVNT-1003",
+      "receipt_no": "RCPT001-12111",
+      "_rev": "6-3ab176b0ae96039e73b0aabc39d56221",
+      "createdby": "Daniel Dennis [SYSADMIN001]",
+      "modifiedby": "Daniel Dennis [SYSADMIN001]",
+      "companyid": "EDU00001",
+      "doctype": "EVENT",
+      "eventid": "EVNT-1003",
+      "quantity_limit": "Unlimtted",
+      "available_quantity": "10",
+      "title": "Dancing Competition 2019",
+      "price": "20",
+      "description":
+          "As dance teams head into competition season, when the pressure and excitement are at an all time high, everyone could use a little extra motivation and encouragement!  To inspire your team, here are our 10 favorite motivational quotes for dancers",
+      "yeargroup": ["YEAR 4", "YEAR 3"],
+      "accessgroup": ["R001"],
+      "isactive": true,
+      "category": "School Trip",
+      "image":
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXMc_d-ufS996dH12Hw1y421z3a8fVa26eEg&usqp=CAU",
+      "startdate": "2019/07/02",
+      "enddate": "2019/11/01",
+      "modifieddate": "2019/07/23 02:06:48 AM"
     }
   ];
   @override
@@ -254,6 +432,18 @@ class _HomePageState extends State<HomePage> {
   bool purchaseCollapse = true;
   bool storeCollapse = true;
   bool activitiesCollapse = true;
+  CalendarController _controller = CalendarController();
+  List<Appointment> _appointmentDetails = <Appointment>[];
+
+  void calendarTapped(CalendarTapDetails calendarTapDetails) {
+    if (calendarTapDetails.targetElement == CalendarElement.calendarCell) {
+      setState(() {
+        _appointmentDetails =
+            calendarTapDetails.appointments!.cast<Appointment>();
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     print(widget.familyPos);
@@ -512,6 +702,8 @@ class _HomePageState extends State<HomePage> {
                     GridView.builder(
                       itemCount: widget.items.length,
                       shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(
+                          parent: AlwaysScrollableScrollPhysics()),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: MediaQuery.of(context).orientation ==
                                 Orientation.landscape
@@ -857,13 +1049,19 @@ class _HomePageState extends State<HomePage> {
                           width: double.infinity,
                           color: Colors.grey.shade200,
                           child: Text(
-                            "HOLIDAY CALENDAR",
+                            "SCHOOL CALENDAR",
                             style: TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.bold),
                           )),
                     ),
-                    getCalendarView(context,
-                        new RandomColorModel()._getCalendarDataSource()),
+                    Container(
+                      height: 525,
+                      child: getCalendarView(
+                          context,
+                          new RandomColorModel()._getCalendarDataSource(),
+                          calendarTapped,
+                          _appointmentDetails),
+                    ),
                   ],
                 ),
               ],
@@ -916,20 +1114,20 @@ class RandomColorModel {
     monitorList.add(new ModuleModel('Donation', _getColorFromHex("#008080"),
         true, 'Donation', Icons.money));
     monitorList.add(new ModuleModel('ParentPickup', _getColorFromHex("#8E44AD"),
-        true, 'Parent Pickup', Icons.directions_walk));
-    monitorList.add(new ModuleModel(
-        'IDCardRequest',
-        _getColorFromHex("#2874A6"),
-        true,
-        'ID card request',
-        Icons.card_travel));
+        true, 'Student Pickup', Icons.directions_walk));
+    // monitorList.add(new ModuleModel(
+    //     'IDCardRequest',
+    //     _getColorFromHex("#2874A6"),
+    //     true,
+    //     'ID card request',
+    //     Icons.card_travel));
     monitorList.add(new ModuleModel('StudentTracking',
         _getColorFromHex("#34495E"), true, 'Student tracking', Icons.map));
     monitorList.add(new ModuleModel(
         'HolidayCalendar',
         _getColorFromHex("#8E44AD"),
         true,
-        'Holiday Calendar',
+        'School Calendar',
         Icons.calendar_today));
     return monitorList;
   }
@@ -937,29 +1135,50 @@ class RandomColorModel {
   AppointmentDataSource _getCalendarDataSource() {
     List<Appointment> appointments = <Appointment>[];
     appointments.add(Appointment(
-      startTime: DateTime.now(),
-      endTime: DateTime.now().add(Duration(minutes: 10)),
-      subject: 'Public Holiday',
-      color: Colors.blue,
-      startTimeZone: '',
-      endTimeZone: '',
-    ));
+        startTime: DateTime.now(),
+        endTime: DateTime.now().add(Duration(minutes: 10)),
+        subject: 'Public Holiday',
+        color: Colors.greenAccent,
+        startTimeZone: '',
+        endTimeZone: '',
+        notes: jsonEncode({
+          "type": "Holiday",
+          "actual_start_time":
+              DateTime.now().add(Duration(hours: 1)).toString(),
+          "actual_end_time": DateTime.now().add(Duration(hours: 8)).toString(),
+          "clockin_time": DateTime.now().add(Duration(hours: 1)).toString(),
+          "clock_out_time": DateTime.now().add(Duration(hours: 8)).toString()
+        })));
     appointments.add(Appointment(
-      startTime: DateTime.now(),
-      endTime: DateTime.now().add(Duration(minutes: 10)),
-      subject: 'School Holiday',
-      color: Colors.red,
-      startTimeZone: '',
-      endTimeZone: '',
-    ));
+        startTime: DateTime.now().add(Duration(days: 1)),
+        endTime: DateTime.now().add(Duration(days: 1)),
+        subject: 'School Holiday',
+        color: Colors.redAccent,
+        startTimeZone: '',
+        endTimeZone: '',
+        notes: jsonEncode({
+          "type": "Holiday",
+          "actual_start_time":
+              DateTime.now().add(Duration(hours: 1)).toString(),
+          "actual_end_time": DateTime.now().add(Duration(hours: 8)).toString(),
+          "clockin_time": DateTime.now().add(Duration(hours: 1)).toString(),
+          "clock_out_time": DateTime.now().add(Duration(hours: 8)).toString()
+        })));
     appointments.add(Appointment(
-      startTime: DateTime.now().add(Duration(days: 1)),
-      endTime: DateTime.now().add(Duration(days: 1)),
-      subject: 'School Holiday',
-      color: Colors.red,
-      startTimeZone: '',
-      endTimeZone: '',
-    ));
+        startTime: DateTime.now().add(Duration(days: 5)),
+        endTime: DateTime.now().add(Duration(days: 6)),
+        subject: 'Term Holiday',
+        color: Colors.orangeAccent,
+        startTimeZone: '',
+        endTimeZone: '',
+        notes: jsonEncode({
+          "type": "Holiday",
+          "actual_start_time":
+              DateTime.now().add(Duration(hours: 1)).toString(),
+          "actual_end_time": DateTime.now().add(Duration(hours: 8)).toString(),
+          "clockin_time": DateTime.now().add(Duration(hours: 1)).toString(),
+          "clock_out_time": DateTime.now().add(Duration(hours: 8)).toString()
+        })));
 
     return AppointmentDataSource(appointments);
   }

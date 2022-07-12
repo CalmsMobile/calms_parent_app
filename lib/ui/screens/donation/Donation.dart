@@ -1,4 +1,9 @@
+import 'package:calms_parent/common/alert_dialog.dart';
+import 'package:calms_parent/common/widgets/select_member.dart';
+import 'package:calms_parent/main.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class DonationPage extends StatefulWidget {
   @override
@@ -44,263 +49,310 @@ class _DonationPageState extends State<DonationPage> {
               "https://akm-img-a-in.tosshub.com/indiatoday/images/story/201810/online-3412473_1920.jpeg?meGHIUut1mybIL3pem8eWqk34osmW3Zi"
         },
       ];
-  List<Map> get getfamilyList => [
-        {
-          "name": "Desmond",
-          "category": "PARENT",
-          "desc": "",
-          "balance": "250.00",
-          "email": "makame147@gmail.com",
-          "image": "https://randomuser.me/api/portraits/men/1.jpg"
-        },
-        {
-          "name": "SITI KHALIDA",
-          "category": "PARENT",
-          "desc": "",
-          "balance": "50.00",
-          "email": "calms.rnd@gmail.com",
-          "image": "https://randomuser.me/api/portraits/women/1.jpg"
-        },
-        {
-          "name": "HAZIM",
-          "category": "STUDENT",
-          "email": "",
-          "balance": "100.00",
-          "contact": "0123467589",
-          "desc": "Member account does not exist in MFP software",
-          "image": "https://randomuser.me/api/portraits/men/2.jpg"
-        },
-        {
-          "name": "MARIE LIM",
-          "category": "STUDENT",
-          "email": "",
-          "balance": "0.00",
-          "contact": "",
-          "desc": "",
-          "image": "https://randomuser.me/api/portraits/men/3.jpg"
-        },
-        {
-          "name": "Danny",
-          "category": "STUDENT",
-          "email": "",
-          "balance": "30.00",
-          "contact": "",
-          "desc": "",
-          "image": "https://randomuser.me/api/portraits/men/4.jpg"
-        },
-      ];
+
+  var donationList = ["Test", "Donation 01", "Donation 02"];
+
+  var selectedModalValue = "Test";
+  var senderIndex = 0;
 
   @override
   Widget build(BuildContext context) {
+    List<Map> familyList = [
+      {
+        "name":
+            "Desmond Henry King Luther Martin John Abraham Luther Martin John Abraham",
+        "category": "PARENT",
+        "memberId": "M1001",
+        "desc": "",
+        "balance": "25",
+        "familtid": "FMY0001",
+        "relationship": "Father",
+        "email": "makame147@gmail.com",
+        "image": "https://randomuser.me/api/portraits/men/11.jpg"
+      },
+      {
+        "name": "SITI KHALIDA",
+        "category": "PARENT",
+        "memberId": "M1002",
+        "desc": "",
+        "balance": "500010000",
+        "familtid": "FMY0001",
+        "relationship": "Mother",
+        "email": "calms.rnd@gmail.com",
+        "image": "https://randomuser.me/api/portraits/women/11.jpg"
+      },
+      {
+        "name": "HAZIM",
+        "category": "STUDENT",
+        "email": "",
+        "balance": "100.00",
+        "class": "Class3",
+        "contact": "0123467589",
+        "memberId": "M1001",
+        "desc": "Member account does not exist in MFP software",
+        "image": "https://randomuser.me/api/portraits/men/2.jpg"
+      },
+      {
+        "name": "MARIE LIM",
+        "category": "STUDENT",
+        "email": "",
+        "balance": "0.00",
+        "class": "Class4",
+        "memberId": "M1001",
+        "contact": "1345657",
+        "desc": "",
+        "image": "https://randomuser.me/api/portraits/men/3.jpg"
+      },
+    ];
     print(selectedUser);
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Donation"),
-      ),
+      appBar: getMyAppbar("Donation", []),
       body: Container(
-          padding: EdgeInsets.all(20),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "PAID BY",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        border: Border.all(color: Colors.grey)),
-                    child: InkWell(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                              (selectedUser != null && selectedUser != "")
-                                  ? selectedUser
-                                  : "Select Member",
-                              style: new TextStyle(fontSize: 12)),
-                          Icon(
-                            Icons.arrow_drop_down_outlined,
-                            color: Colors.grey,
-                          ),
-                        ],
-                      ),
-                      onTap: () => openMemberBottomSheet(context),
-                    ),
-                  )
-                ],
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              new Divider(
-                height: 0.1,
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "DONATION TYPE",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        border: Border.all(color: Colors.grey)),
-                    child: InkWell(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                              (donationType != null && donationType != "")
-                                  ? donationType
-                                  : "Select Donation Type",
-                              style: new TextStyle(fontSize: 12)),
-                          Icon(
-                            Icons.arrow_drop_down_outlined,
-                            color: Colors.grey,
-                          ),
-                        ],
-                      ),
-                      onTap: () => openDonationTypeBottomSheet(context),
-                    ),
-                  )
-                ],
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              new Divider(
-                height: 0.1,
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "AMOUNT",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          SizedBox(
-                            width: 100,
-                            height: 40,
-                            child: TextField(
-                                style: TextStyle(fontSize: 14),
-                                keyboardType: TextInputType.number,
-                                textAlign: TextAlign.center,
-                                decoration: const InputDecoration(
-                                    hintText: 'Amount',
-                                    border: OutlineInputBorder(),
-                                    contentPadding: EdgeInsets.only(
-                                        left: 0, right: 0, top: 0, bottom: 0))),
-                          )
-                        ],
+        margin: EdgeInsets.only(left: 0),
+        color: Colors.white,
+        width: double.infinity,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              margin: EdgeInsets.only(top: 15, bottom: 5),
+              height: 30,
+              child: getBottomSheetActionBar(context, "Member", false),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 0, left: 20, right: 20),
+              padding: EdgeInsets.only(left: 10),
+              color: Colors.grey.shade300,
+              child: ListTile(
+                minVerticalPadding: 0,
+                contentPadding: EdgeInsets.zero,
+                onTap: () => {openMemberBottomSheet(context, familyList)},
+                leading: CircleAvatar(
+                  backgroundColor: Colors.white,
+                  backgroundImage:
+                      NetworkImage(familyList[senderIndex]['image']),
+                  radius: 24,
+                ),
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Flexible(
+                      child: Text(
+                        familyList[senderIndex]['name'],
+                        maxLines: 1,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 14),
                       ),
                     ),
-                  )
-                ],
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              new Divider(
-                height: 0.1,
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "MODE OF PAYMENT",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        border: Border.all(color: Colors.grey)),
-                    child: InkWell(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                              (modeOfPayment != null && modeOfPayment != "")
-                                  ? modeOfPayment
-                                  : "Select mode of payment",
-                              style: new TextStyle(fontSize: 12)),
-                          Icon(
-                            Icons.arrow_drop_down_outlined,
-                            color: Colors.grey,
-                          ),
-                        ],
-                      ),
-                      onTap: () => openModeOfPaymentBottomSheet(context),
+                  ],
+                ),
+                subtitle: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'MYR ${double.parse(familyList[senderIndex]["balance"]).toStringAsFixed(2)}',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
                     ),
-                  )
-                ],
+                  ],
+                ),
+                trailing: Container(
+                  child: Icon(
+                    Icons.arrow_drop_down,
+                    size: 30,
+                  ),
+                ),
               ),
-              SizedBox(
-                height: 10,
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 15, bottom: 5),
+              height: 30,
+              child: getBottomSheetActionBar(context, "Donation Type", false),
+            ),
+            Container(
+              width: double.infinity,
+              color: Colors.grey.shade300,
+              margin: EdgeInsets.only(top: 0, left: 20, right: 20),
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton2(
+                  hint: Text(
+                    'Select Donation Type',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Theme.of(context).hintColor,
+                    ),
+                  ),
+                  items: donationList
+                      .map((item) => DropdownMenuItem<String>(
+                            value: item,
+                            child: Text(
+                              item,
+                              style: const TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
+                          ))
+                      .toList(),
+                  value: selectedModalValue,
+                  onChanged: (value) {
+                    setState(() {
+                      selectedModalValue = value as String;
+                    });
+                  },
+                  buttonHeight: 70,
+                  buttonWidth: 140,
+                  itemHeight: 70,
+                ),
               ),
-              new Divider(
-                height: 0.1,
+            ),
+            Container(
+              margin: EdgeInsets.only(
+                top: 20,
               ),
-              SizedBox(
-                height: 10,
-              ),
-              Expanded(
-                child: Align(
-                    alignment: FractionalOffset.bottomCenter,
-                    child: Align(
-                      alignment: FractionalOffset.bottomRight,
-                      child: Container(
-                        width: double.infinity,
-                        margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                        child: OutlinedButton(
-                          onPressed: () => {},
-                          style: OutlinedButton.styleFrom(
-                            primary: Colors.teal,
-                            side: BorderSide(color: Colors.teal, width: 2),
-                            shape: const RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10))),
-                          ),
-                          child: Text('PROCEED'),
+              height: 30,
+              child: getBottomSheetActionBar(context, "Amount", false),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 0, left: 10, right: 10),
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              width: double.infinity,
+              child: Row(children: [
+                Icon(
+                  Icons.currency_exchange,
+                  size: 14,
+                  color: Colors.black,
+                ),
+                Flexible(
+                  child: Container(
+                    child: TextField(
+                      style: TextStyle(fontSize: 16),
+                      textAlign: TextAlign.left,
+                      decoration: const InputDecoration(
+                        hintText: '0.00',
+                        isDense: true,
+                        prefixIconConstraints:
+                            BoxConstraints(minWidth: 0, minHeight: 0),
+                        prefixIcon: Text(
+                          ' MYR ',
+                          style: TextStyle(
+                              color: Colors.black54,
+                              fontSize: 16,
+                              fontWeight: FontWeight.normal),
                         ),
                       ),
-                    )),
+                      keyboardType:
+                          TextInputType.numberWithOptions(decimal: true),
+                      inputFormatters: [
+                        // Allow Decimal Number With Precision of 2 Only
+                        FilteringTextInputFormatter.allow(
+                            RegExp(r'^\d*\.?\d{0,2}')),
+                      ],
+                    ),
+                  ),
+                ),
+              ]),
+            )
+          ],
+        ),
+      ),
+      bottomNavigationBar: SizedBox(
+        height: 110,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Flexible(
+              child: Container(
+                margin: EdgeInsets.only(top: 10, left: 10, right: 10),
+                child: RichText(
+                    textAlign: TextAlign.left,
+                    text: TextSpan(children: [
+                      WidgetSpan(
+                          child: Image.asset(
+                        "assets/images/alert.png",
+                        width: 15,
+                        height: 15,
+                      )),
+                      TextSpan(
+                          text:
+                              " Minimun donation amount is MYR 1.00.  Maximum donation amount is MYR 1000.00",
+                          style: TextStyle(fontSize: 14, color: Colors.grey)),
+                    ])),
               ),
-            ],
-          )),
+            ),
+            InkWell(
+              onTap: () {
+                Navigator.of(context).pop();
+                MyCustomAlertDialog().showToast(context, "Item added to cart ");
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.pinkAccent,
+                  borderRadius: BorderRadius.circular(1),
+                  border: Border(
+                    bottom: BorderSide(color: Colors.pinkAccent, width: 1),
+                    right: BorderSide(color: Colors.pinkAccent, width: 1),
+                    top: BorderSide(color: Colors.pinkAccent, width: 1),
+                    left: BorderSide(color: Colors.pinkAccent, width: 1),
+                  ),
+                  boxShadow: [
+                    new BoxShadow(
+                      color: Colors.pinkAccent,
+                      blurRadius: 1.0,
+                    ),
+                  ],
+                ),
+                padding: EdgeInsets.symmetric(vertical: 10),
+                margin:
+                    EdgeInsets.only(top: 25, left: 10, right: 10, bottom: 0),
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Container(
+                      color: Colors.pinkAccent,
+                      padding: EdgeInsets.only(left: 15, right: 15),
+                      child: Text(
+                        "Proceed",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold),
+                      )),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 
-  void openMemberBottomSheet(BuildContext buildContext) {
+  void openMemberBottomSheet(BuildContext buildContext, getfamilyList) {
     showModalBottomSheet(
         context: buildContext,
         builder: (context) {
           return Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
+              AppBar(
+                title: Text(
+                  "Select",
+                  style: TextStyle(color: Colors.black, fontSize: 16),
+                ),
+                elevation: 1,
+                backgroundColor: Colors.white,
+                automaticallyImplyLeading: false,
+                actions: [
+                  IconButton(
+                    icon: Icon(Icons.close_sharp, color: Colors.black),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
+              ),
               ListView.builder(
                   shrinkWrap: true,
                   itemCount: getfamilyList.length,
@@ -316,12 +368,48 @@ class _DonationPageState extends State<DonationPage> {
                               NetworkImage(getfamilyList[index]['image']),
                           radius: 20,
                         ),
-                        title: new Text(getfamilyList[index]["name"]),
+                        title: new Text(
+                          getfamilyList[index]["name"],
+                          style: TextStyle(fontSize: 14, color: Colors.black),
+                        ),
+                        subtitle: Container(
+                          padding: EdgeInsets.fromLTRB(0, 3, 0, 0),
+                          child: RichText(
+                            textAlign: TextAlign.left,
+                            text: TextSpan(children: [
+                              WidgetSpan(
+                                  child: Icon(
+                                Icons.account_balance_wallet,
+                                size: 18,
+                                color: Colors.grey.shade500,
+                              )),
+                              TextSpan(
+                                text: " balance",
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.black54,
+                                ),
+                              ),
+                              TextSpan(
+                                text: " MYR  ",
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.redAccent,
+                                ),
+                              ),
+                              TextSpan(
+                                text:
+                                    "${double.parse(getfamilyList[index]['balance']).toStringAsFixed(2)}",
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
+                              )
+                            ]),
+                          ),
+                        ),
                         onTap: () {
                           Navigator.pop(context);
-                          setState(() {
-                            selectedUser = getfamilyList[index]["name"];
-                          });
                         },
                       ),
                     ]);

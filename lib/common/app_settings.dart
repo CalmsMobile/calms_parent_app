@@ -3,10 +3,11 @@ class AppSettings {
   static String qrCodeData = 'CPA_QRCODE';
   static String mobileDeviceInfo = 'CPA_MOBILE_DEVICE_INFO';
   static String deviceDetails = 'CPA_DEVICE_DETAILS';
-  static String driverDetails = 'CPA_DRIVER_DETAILS';
+  static String parentAppPIN = 'CPA_PIN_LOCK';
+  static String parentDetails = 'CPA_DRIVER_DETAILS';
   static String deviceUID = 'CPA_DEVICE_UID';
-  static String driverLogin = 'CPA_DRIVER_LOGIN';
-  static String driverAppSettings = 'CPA_APP_SETTINGS';
+  static String parentLogin = 'CPA_DRIVER_LOGIN';
+  static String parentAppSettings = 'CPA_APP_SETTINGS';
   static String dropOffNotifiactionList = 'CPA_DROP_NOTI_LIST';
   static String pickNotifiactionList = 'CPA_PICK_NOTI_LIST';
   static String dropOffNotComingList = 'CPA_DROP_NOT_COMING_LIST';

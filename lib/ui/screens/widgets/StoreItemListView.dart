@@ -25,16 +25,21 @@ class StoreItemListView extends StatelessWidget {
                       leading: CircleAvatar(
                         backgroundColor: Colors.white,
                         backgroundImage:
-                            NetworkImage(storeItemList[index]['image']),
+                            NetworkImage(storeItemList[index]['image'][0]),
                         radius: 30,
                       ),
                       title: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            storeItemList[index]['name'],
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 14),
+                          Flexible(
+                            child: Container(
+                              child: Text(
+                                storeItemList[index]['item_name'],
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 14),
+                              ),
+                            ),
                           ),
                           new RichText(
                             text: new TextSpan(
@@ -52,7 +57,7 @@ class StoreItemListView extends StatelessWidget {
                                         color: Colors.red.shade500,
                                         fontSize: 16)),
                                 new TextSpan(
-                                    text: storeItemList[index]['amount']),
+                                    text: storeItemList[index]['price']),
                               ],
                             ),
                           ),
@@ -68,6 +73,10 @@ class StoreItemListView extends StatelessWidget {
                           )
                         ],
                       ),
+                      onTap: () {
+                        Navigator.of(context).pushNamed('/StoreDetails',
+                            arguments: storeItemList[index]);
+                      },
                     )
                   ]);
                 }),

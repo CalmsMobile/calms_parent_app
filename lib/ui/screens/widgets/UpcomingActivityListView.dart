@@ -32,12 +32,13 @@ class UpcomingActivityListView extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            upcomingActivityList[index]['name'],
+                            upcomingActivityList[index]['title'],
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 14),
                           ),
                           Text(
-                            "Due date: " + upcomingActivityList[index]['date'],
+                            "Due date: " +
+                                upcomingActivityList[index]['enddate'],
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 12),
                           )
@@ -50,8 +51,7 @@ class UpcomingActivityListView extends StatelessWidget {
                             children: [
                               Text(
                                 "Type: " +
-                                    upcomingActivityList[index]
-                                        ['activity_type'],
+                                    upcomingActivityList[index]['doctype'],
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold, fontSize: 12),
                               ),
@@ -72,14 +72,14 @@ class UpcomingActivityListView extends StatelessWidget {
                                             fontSize: 16)),
                                     new TextSpan(
                                         text: upcomingActivityList[index]
-                                            ['amount']),
+                                            ['price']),
                                   ],
                                 ),
                               ),
                             ],
                           ),
                           SizedBox(
-                            height: 7,
+                            height: 2,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -95,6 +95,10 @@ class UpcomingActivityListView extends StatelessWidget {
                         ],
                       ),
                       isThreeLine: true,
+                      onTap: () => {
+                        Navigator.of(context).pushNamed('/ActivityDetails',
+                            arguments: upcomingActivityList[index])
+                      },
                     )
                   ]);
                 }),

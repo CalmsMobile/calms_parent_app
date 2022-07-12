@@ -93,6 +93,10 @@ class TopupListView extends StatelessWidget {
                           ),
                         ],
                       ),
+                      onTap: () {
+                        Navigator.of(context).pushNamed('/TopupDetails',
+                            arguments: recentActivities[index]);
+                      },
                     )
                   ]);
                 }),

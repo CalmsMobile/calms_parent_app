@@ -1,0 +1,125 @@
+{
+  "project_info": {
+    "project_number": "746458534934",
+    "firebase_url": "https://parent-portal-app-36b77.firebaseio.com",
+    "project_id": "parent-portal-app-36b77",
+    "storage_bucket": "parent-portal-app-36b77.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:746458534934:android:745ce7d3dd39cb99159137",
+        "android_client_info": {
+          "package_name": "com.calms.calms_parent"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-B7jICiNpUde4wwWbqbZeoVyt1pjXDQ8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "746458534934-0bmv636vqb91uk3hka9aq52ni9gldhgn.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "746458534934-5f6f9u5fllhlnihg7t8edfanv8pufiau.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.calms.parentapp",
+                "app_store_id": "1554720889"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:746458534934:android:2bfd97616f9d6949159137",
+        "android_client_info": {
+          "package_name": "com.calms.parentapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "746458534934-95fb0u6f19qagurf0ni2l9ijquc1k991.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.calms.parentapp",
+            "certificate_hash": "8be771d5dfdc79d979f294bbee6febbefdf2f6fa"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-B7jICiNpUde4wwWbqbZeoVyt1pjXDQ8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "746458534934-0bmv636vqb91uk3hka9aq52ni9gldhgn.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "746458534934-5f6f9u5fllhlnihg7t8edfanv8pufiau.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.calms.parentapp",
+                "app_store_id": "1554720889"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:746458534934:android:23456e5d0df19300159137",
+        "android_client_info": {
+          "package_name": "com.calms.parentportal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "746458534934-ab19m2staanef7d22lgqsg5nq45g9lql.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.calms.parentportal",
+            "certificate_hash": "a2f863e585758fdb0706784104ea7d26ebc74040"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-B7jICiNpUde4wwWbqbZeoVyt1pjXDQ8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "746458534934-0bmv636vqb91uk3hka9aq52ni9gldhgn.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "746458534934-5f6f9u5fllhlnihg7t8edfanv8pufiau.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.calms.parentapp",
+                "app_store_id": "1554720889"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

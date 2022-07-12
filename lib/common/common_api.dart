@@ -22,7 +22,7 @@ class CommonUtil {
   Future<void> getAllNotification(
       BuildContext context, int startPosition) async {
     String driverDetails =
-        await MySharedPref().getData(AppSettings.driverDetails);
+        await MySharedPref().getData(AppSettings.parentDetails);
     if (driverDetails != "") {
       var driverDataList_ = jsonDecode(driverDetails);
       List<dynamic> tableList = driverDataList_['Table'];

@@ -4,7 +4,7 @@ Widget CustomRadioButton(
     String text, int index, Function callback, selectedBoxIndex) {
   return Padding(
     padding: const EdgeInsets.all(8.0),
-    child: OutlineButton(
+    child: OutlinedButton(
       onPressed: () {
         callback(index);
       },
@@ -14,9 +14,6 @@ Widget CustomRadioButton(
           color: (selectedBoxIndex == index) ? Colors.green : Colors.black,
         ),
       ),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      borderSide: BorderSide(
-          color: (selectedBoxIndex == index) ? Colors.green : Colors.black),
     ),
   );
 }

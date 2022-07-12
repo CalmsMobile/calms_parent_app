@@ -103,6 +103,10 @@ class PurchaseListView extends StatelessWidget {
                           ),
                         ],
                       ),
+                      onTap: () {
+                        Navigator.of(context).pushNamed('/PurchaseDetails',
+                            arguments: purchaseList[index]);
+                      },
                     )
                   ]);
                 }),

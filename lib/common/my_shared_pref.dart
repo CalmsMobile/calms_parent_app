@@ -41,9 +41,8 @@ class MySharedPref {
 
   clearAllData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString(AppSettings.driverDetails, "");
-    prefs.setString(AppSettings.driverAppSettings, "");
-    prefs.setString(AppSettings.driverLogin, "");
+    prefs.setString(AppSettings.parentDetails, "");
+    prefs.setString(AppSettings.parentAppSettings, "");
     //remove below 2 line
     // prefs.setString(AppSettings.deviceDetails, "");
     // prefs.setString(AppSettings.qrCodeData, "");

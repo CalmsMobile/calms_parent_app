@@ -23,231 +23,143 @@ class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Cart")),
-      resizeToAvoidBottomInset: false,
-      body: FooterView(
-          footer: new Footer(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-                padding: new EdgeInsets.all(10.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Total checkout',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        RichText(
-                          text: new TextSpan(
-                            text: '',
-                            style: new TextStyle(
-                              fontSize: 12.0,
-                            ),
-                            children: <TextSpan>[
-                              new TextSpan(
-                                  text:
-                                      'MYR ${double.parse("30").toStringAsFixed(2)}',
-                                  style: new TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black54)),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    Divider(
-                      height: 1,
-                      color: Colors.grey.shade400,
-                    ),
-                    Row(
-                      // shrinkWrap: true,
-                      children: <Widget>[
-                        CustomRadioButton("iPay88", 1, (result) {
-                          setState(() {
-                            selectedBoxIndex = result;
-                          });
-                        }, selectedBoxIndex),
-                        CustomRadioButton("DuitKu", 2, (result) {
-                          setState(() {
-                            selectedBoxIndex = result;
-                          });
-                        }, selectedBoxIndex),
-                        CustomRadioButton("Test", 3, (result) {
-                          setState(() {
-                            selectedBoxIndex = result;
-                          });
-                        }, selectedBoxIndex),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        CustomRadioButton("FPX Online Payment", 4, (result) {
-                          setState(() {
-                            selectedBoxIndex = result;
-                          });
-                        }, selectedBoxIndex),
-                        CustomRadioButton("Boost", 5, (result) {
-                          setState(() {
-                            selectedBoxIndex = result;
-                          });
-                        }, selectedBoxIndex)
-                      ],
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    SizedBox(
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            primary: Colors.red,
-                            padding: EdgeInsets.symmetric(horizontal: 10)),
-                        onPressed: () => {},
-                        child: Text(
-                          'Checkout',
-                          style: TextStyle(fontSize: 18),
-                        ),
-                      ),
-                    ),
-                  ],
-                )),
+      appBar: AppBar(
+          iconTheme: IconThemeData(
+            color: Colors.black, //change your color here
           ),
-          flex: 6,
-          children: [
-            Container(
-              child: Container(
-                width: double.infinity,
-                margin: EdgeInsets.zero,
+          elevation: 0,
+          title: Text(
+            "CART",
+            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+          ),
+          backgroundColor: Colors.white),
+      resizeToAvoidBottomInset: false,
+      body: Column(children: [
+        Container(
+          child: Container(
+            width: double.infinity,
+            margin: EdgeInsets.zero,
+            color: Colors.white,
+            padding: EdgeInsets.zero,
+            child: ListView.builder(
                 padding: EdgeInsets.zero,
-                child: ListView.builder(
-                    padding: EdgeInsets.zero,
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(
-                        parent: AlwaysScrollableScrollPhysics()),
-                    itemCount: cartList.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Column(children: <Widget>[
-                        new Divider(
-                          height: 0.1,
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(
+                    parent: AlwaysScrollableScrollPhysics()),
+                itemCount: cartList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Column(children: <Widget>[
+                    new Divider(
+                      height: 0.1,
+                    ),
+                    ListTile(
+                      leading: ClipRRect(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(8.0),
+                          topRight: Radius.circular(8.0),
+                          bottomLeft: Radius.circular(8.0),
+                          bottomRight: Radius.circular(8.0),
                         ),
-                        ListTile(
-                          leading: ClipRRect(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(8.0),
-                              topRight: Radius.circular(8.0),
-                              bottomLeft: Radius.circular(8.0),
-                              bottomRight: Radius.circular(8.0),
+                        child: cartList[index]['image'].length > 0
+                            ? Image.network(cartList[index]['image'][0],
+                                // width: 300,
+                                height: 100,
+                                fit: BoxFit.fill)
+                            : Image.asset("assets/images/meal_default.png"),
+                      ),
+                      title: Text(
+                        cartList[index]['item_name'],
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 14),
+                      ),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(right: 80),
+                            child: Text(
+                              cartList[index]["description"],
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              style: TextStyle(),
                             ),
-                            child: cartList[index]['image'].length > 0
-                                ? Image.network(cartList[index]['image'][0],
-                                    // width: 300,
-                                    height: 100,
-                                    fit: BoxFit.fill)
-                                : Image.asset("assets/images/meal_default.png"),
                           ),
-                          title: Text(
-                            cartList[index]['item_name'],
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 14),
+                          SizedBox(
+                            height: 5,
                           ),
-                          subtitle: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Container(
-                                margin: EdgeInsets.only(right: 80),
-                                child: Text(
-                                  cartList[index]["description"],
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                  style: TextStyle(),
+                              new RichText(
+                                text: new TextSpan(
+                                  text: '',
+                                  style: new TextStyle(
+                                    fontSize: 12.0,
+                                  ),
+                                  children: <TextSpan>[
+                                    new TextSpan(
+                                        text:
+                                            'MYR ${double.parse(cartList[index]["price"]).toStringAsFixed(2)}',
+                                        style: new TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.green)),
+                                  ],
                                 ),
                               ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  new RichText(
-                                    text: new TextSpan(
-                                      text: '',
-                                      style: new TextStyle(
-                                        fontSize: 12.0,
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.blue,
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    Container(
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 3, horizontal: 5),
+                                      child: Icon(
+                                        Icons.remove,
+                                        size: 18,
+                                        color: Colors.white,
                                       ),
-                                      children: <TextSpan>[
-                                        new TextSpan(
-                                            text:
-                                                'MYR ${double.parse(cartList[index]["price"]).toStringAsFixed(2)}',
-                                            style: new TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.green)),
-                                      ],
                                     ),
-                                  ),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      color: Colors.blue,
-                                      borderRadius: BorderRadius.circular(8.0),
+                                    Container(
+                                      color: Colors.grey.shade200,
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 5, horizontal: 10),
+                                      child: Text("1"),
                                     ),
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 0),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: <Widget>[
-                                        Container(
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: 3, horizontal: 5),
-                                          child: Icon(
-                                            Icons.remove,
-                                            size: 18,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                        Container(
-                                          color: Colors.grey.shade200,
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: 5, horizontal: 10),
-                                          child: Text("1"),
-                                        ),
-                                        Container(
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: 3, horizontal: 5),
-                                          child: Icon(
-                                            Icons.add,
-                                            size: 18,
-                                            color: Colors.white,
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 5,
+                                    Container(
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 3, horizontal: 5),
+                                      child: Icon(
+                                        Icons.add,
+                                        size: 18,
+                                        color: Colors.white,
+                                      ),
+                                    )
+                                  ],
+                                ),
                               ),
                             ],
                           ),
-                          isThreeLine: true,
-                        ),
-                      ]);
-                    }),
-              ),
-            ),
-          ]),
+                          SizedBox(
+                            height: 5,
+                          ),
+                        ],
+                      ),
+                      isThreeLine: true,
+                    ),
+                  ]);
+                }),
+          ),
+        ),
+      ]),
     );
   }
 

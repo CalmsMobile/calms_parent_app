@@ -95,7 +95,37 @@ class NotificationView extends StatelessWidget {
                     child: ClipPath(
                       child: Container(
                         padding: EdgeInsets.symmetric(vertical: 8),
-                        child: Text("${passData["HtmlContent"]}"),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ListTile(
+                              leading: SizedBox(
+                                width: 45,
+                                height: 45,
+                                child: ClipPath(
+                                  clipper: ShapeBorderClipper(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10))),
+                                  child: Image.network(passData["image"]),
+                                ),
+                              ),
+                              title: Text(
+                                "${passData["Title"]}",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 18),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                "${passData["HtmlContent"]}",
+                                textAlign: TextAlign.left,
+                              ),
+                            ),
+                          ],
+                        ),
                         // Html(
                         //   data: "${passData["HtmlContent"]}",
                         //   style: {
