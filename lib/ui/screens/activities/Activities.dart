@@ -1130,7 +1130,7 @@ void openCartBottomSheet(
                         child: Align(
                           alignment: Alignment.center,
                           child: Container(
-                              color: Colors.redAccent,
+                              color: Colors.pinkAccent,
                               padding: EdgeInsets.only(left: 15, right: 15),
                               child: Text(
                                 "DONE",

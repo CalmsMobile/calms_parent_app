@@ -291,8 +291,7 @@ class _StoreDetailsState extends State<StoreDetails> {
                         child: Container(
                           margin: EdgeInsets.only(right: 10),
                           child: Text(
-                            storeInfo["item_name"] +
-                                " Hi how are you my friend then u are ok with this test Copywrite problem is coming last few days ",
+                            storeInfo["item_name"],
                             // overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.bold),

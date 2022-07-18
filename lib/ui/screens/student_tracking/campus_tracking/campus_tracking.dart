@@ -37,7 +37,7 @@ class _CampusTrackingState extends State<CampusTracking> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(
-                    height: 30,
+                    height: 10,
                   ),
                   ClipRRect(
                     borderRadius: BorderRadius.only(
@@ -165,7 +165,7 @@ class _CampusTrackingState extends State<CampusTracking> {
                     ),
                   ),
                   SizedBox(
-                    height: 25,
+                    height: 15,
                   ),
                   Container(
                     margin: EdgeInsets.symmetric(horizontal: 70),
@@ -205,135 +205,175 @@ class _CampusTrackingState extends State<CampusTracking> {
                         TextStyle(fontWeight: FontWeight.normal, fontSize: 14),
                   ),
                   Text(
-                    "Block A, UPM, Serdang",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                  ),
+                      rcvdData['type'] == 'BusTracking'
+                          ? "10.000122 : 7.324565"
+                          : "Block A, UPM, Serdang",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          color: Colors.blueAccent,
+                          decoration: TextDecoration.underline,
+                          decorationColor: Colors.blueAccent,
+                          decorationThickness: 3)),
                   SizedBox(
                     height: 15,
                   ),
-                  Container(
-                    padding:
-                        EdgeInsets.only(left: 10.0, top: 10.0, bottom: 10.0),
-                    width: double.infinity,
-                    color: Colors.grey.shade200,
-                    child: Text(
-                      "Vehicle Info",
-                      textAlign: TextAlign.center,
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  if (rcvdData['type'] == 'BusTracking')
+                    Container(
+                      margin: EdgeInsets.symmetric(horizontal: 70),
+                      child: Divider(
+                        height: 0.8,
+                        color: Colors.grey.shade300,
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        RichText(
-                          textAlign: TextAlign.center,
-                          text: TextSpan(children: [
-                            WidgetSpan(
-                              child: Icon(
-                                Icons.directions_bus,
-                                size: 18,
+                  if (rcvdData['type'] == 'BusTracking')
+                    SizedBox(
+                      height: 15,
+                    ),
+                  if (rcvdData['type'] == 'BusTracking')
+                    Text(
+                      "Estimated time to reach",
+                      style: TextStyle(
+                          fontWeight: FontWeight.normal, fontSize: 14),
+                    ),
+                  if (rcvdData['type'] == 'BusTracking')
+                    Text("1 Hrs 30 Min",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          color: Colors.greenAccent,
+                        )),
+                  if (rcvdData['type'] == 'BusTracking')
+                    SizedBox(
+                      height: 15,
+                    ),
+                  if (rcvdData['type'] == 'BusTracking')
+                    Container(
+                      padding:
+                          EdgeInsets.only(left: 10.0, top: 10.0, bottom: 10.0),
+                      width: double.infinity,
+                      color: Colors.grey.shade200,
+                      child: Text(
+                        "Vehicle Info",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  if (rcvdData['type'] == 'BusTracking')
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          RichText(
+                            textAlign: TextAlign.center,
+                            text: TextSpan(children: [
+                              WidgetSpan(
+                                child: Icon(
+                                  Icons.directions_bus,
+                                  size: 18,
+                                ),
                               ),
-                            ),
-                            WidgetSpan(
-                                child: Container(
-                              padding: EdgeInsets.only(bottom: 0, left: 8),
-                              child: Text(
-                                "Vehicle No#",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 16),
-                              ),
-                            )),
-                          ]),
-                        ),
-                        Container(
-                          padding: EdgeInsets.only(bottom: 0, left: 8),
-                          child: Text(
-                            "BN1234",
-                            style: TextStyle(
-                                fontWeight: FontWeight.normal, fontSize: 16),
+                              WidgetSpan(
+                                  child: Container(
+                                padding: EdgeInsets.only(bottom: 0, left: 8),
+                                child: Text(
+                                  "Vehicle No#",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.normal,
+                                      fontSize: 16),
+                                ),
+                              )),
+                            ]),
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        RichText(
-                          textAlign: TextAlign.center,
-                          text: TextSpan(children: [
-                            WidgetSpan(
-                              child: Icon(
-                                Icons.emoji_transportation,
-                                size: 18,
-                              ),
+                          Container(
+                            padding: EdgeInsets.only(bottom: 0, left: 8),
+                            child: Text(
+                              "BN1234",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.normal, fontSize: 16),
                             ),
-                            WidgetSpan(
-                                child: Container(
-                              padding: EdgeInsets.only(bottom: 0, left: 8),
-                              child: Text(
-                                "Vehicle Type",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 16),
-                              ),
-                            )),
-                          ]),
-                        ),
-                        Container(
-                          padding: EdgeInsets.only(bottom: 0, left: 8),
-                          child: Text(
-                            "Bus",
-                            style: TextStyle(
-                                fontWeight: FontWeight.normal, fontSize: 16),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        RichText(
-                          textAlign: TextAlign.center,
-                          text: TextSpan(children: [
-                            WidgetSpan(
-                              child: Icon(
-                                Icons.person,
-                                size: 18,
+                  if (rcvdData['type'] == 'BusTracking')
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          RichText(
+                            textAlign: TextAlign.center,
+                            text: TextSpan(children: [
+                              WidgetSpan(
+                                child: Icon(
+                                  Icons.emoji_transportation,
+                                  size: 18,
+                                ),
                               ),
+                              WidgetSpan(
+                                  child: Container(
+                                padding: EdgeInsets.only(bottom: 0, left: 8),
+                                child: Text(
+                                  "Vehicle Type",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.normal,
+                                      fontSize: 16),
+                                ),
+                              )),
+                            ]),
+                          ),
+                          Container(
+                            padding: EdgeInsets.only(bottom: 0, left: 8),
+                            child: Text(
+                              "Bus",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.normal, fontSize: 16),
                             ),
-                            WidgetSpan(
-                                child: Container(
-                              padding: EdgeInsets.only(bottom: 0, left: 8),
-                              child: Text(
-                                "Driver Name",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 16),
-                              ),
-                            )),
-                          ]),
-                        ),
-                        Container(
-                          padding: EdgeInsets.only(bottom: 0, left: 8),
-                          child: Text(
-                            "ADAM HENDRY JOHN",
-                            style: TextStyle(
-                                fontWeight: FontWeight.normal, fontSize: 16),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  )
+                  if (rcvdData['type'] == 'BusTracking')
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          RichText(
+                            textAlign: TextAlign.center,
+                            text: TextSpan(children: [
+                              WidgetSpan(
+                                child: Icon(
+                                  Icons.person,
+                                  size: 18,
+                                ),
+                              ),
+                              WidgetSpan(
+                                  child: Container(
+                                padding: EdgeInsets.only(bottom: 0, left: 8),
+                                child: Text(
+                                  "Driver Name",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.normal,
+                                      fontSize: 16),
+                                ),
+                              )),
+                            ]),
+                          ),
+                          Container(
+                            padding: EdgeInsets.only(bottom: 0, left: 8),
+                            child: Text(
+                              "ADAM HENDRY JOHN",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.normal, fontSize: 16),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
                 ],
               ),
             ),

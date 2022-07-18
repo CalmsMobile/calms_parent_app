@@ -1,15 +1,22 @@
+import 'package:calms_parent/common/alert_dialog.dart';
+import 'package:calms_parent/common/widgets/select_member.dart';
+import 'package:calms_parent/ui/screens/activities/Activities.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class InvoicePayment extends StatefulWidget {
   const InvoicePayment();
   List<Map<dynamic, dynamic>> getStoreList() {
     return [
       {
-        "invoice_no": "TRA",
+        "invoice_no": "TF-X01-11032022-33",
         "name": "James",
+        "memberId": "M0001",
         "user_image": "https://randomuser.me/api/portraits/men/2.jpg",
         "class": "Y5C1",
-        "description": "School fees",
+        "title": "School fees",
+        "description":
+            "A school fee is money that parents pay to schools, aimed at improving the quality of education of learners",
         "invoice_amount": "5",
         "paid_to_date": "2",
         "outstanding_amount": "3",
@@ -17,15 +24,19 @@ class InvoicePayment extends StatefulWidget {
           "http://124.217.235.107:2008/Handler/ImagePathHandler.ashx?ImagePath=StoreItems/b6fa-e4c2-2021-11-25-11-32-18-810/71-zpNFAyTL._SL1080_.jpg&Default=60&PROUrl=http://124.217.235.107:2008/&StoreageUrl=http://124.217.235.107:2008/FS/",
           "http://124.217.235.107:2008/FS/StoreItems/4adc-e4c2-2021-11-25-11-32-55-924/student-plastic-id-card-holder-500x500.jpg"
         ],
-        "penalty_amount": 0,
-        "invoice_date": "01-12-2021"
+        "penalty_amount": "4",
+        "invoice_date": "01-12-2021",
+        "installment": false,
       },
       {
-        "invoice_no": "REFF",
+        "invoice_no": "TF-X01-11032022-23",
         "name": "James",
+        "memberId": "M0001",
         "user_image": "https://randomuser.me/api/portraits/men/2.jpg",
         "class": "Y5C1",
-        "description": "Transportation Fee",
+        "title": "Transportation Fee",
+        "description":
+            "A school fee is money that parents pay to schools, aimed at improving the quality of education of learners",
         "invoice_amount": "56.50",
         "paid_to_date": "6",
         "outstanding_amount": "0",
@@ -33,15 +44,19 @@ class InvoicePayment extends StatefulWidget {
           "http://124.217.235.107:2008/Handler/ImagePathHandler.ashx?ImagePath=StoreItems/b6fa-e4c2-2021-11-25-11-32-18-810/71-zpNFAyTL._SL1080_.jpg&Default=60&PROUrl=http://124.217.235.107:2008/&StoreageUrl=http://124.217.235.107:2008/FS/",
           "http://124.217.235.107:2008/FS/StoreItems/4adc-e4c2-2021-11-25-11-32-55-924/student-plastic-id-card-holder-500x500.jpg"
         ],
-        "penalty_amount": 0,
-        "invoice_date": "31-12-2021"
+        "penalty_amount": "10",
+        "invoice_date": "31-12-2021",
+        "installment": true
       },
       {
-        "invoice_no": "TRA",
+        "invoice_no": "TF-X01-11032022-22",
         "name": "James",
+        "memberId": "M0001",
         "user_image": "https://randomuser.me/api/portraits/men/2.jpg",
         "class": "Y5C1",
-        "description": "School fees",
+        "title": "School Fee",
+        "description":
+            "A school fee is money that parents pay to schools, aimed at improving the quality of education of learners",
         "invoice_amount": "20",
         "paid_to_date": "20",
         "outstanding_amount": "3",
@@ -49,15 +64,19 @@ class InvoicePayment extends StatefulWidget {
           "http://124.217.235.107:2008/Handler/ImagePathHandler.ashx?ImagePath=StoreItems/b6fa-e4c2-2021-11-25-11-32-18-810/71-zpNFAyTL._SL1080_.jpg&Default=60&PROUrl=http://124.217.235.107:2008/&StoreageUrl=http://124.217.235.107:2008/FS/",
           "http://124.217.235.107:2008/FS/StoreItems/4adc-e4c2-2021-11-25-11-32-55-924/student-plastic-id-card-holder-500x500.jpg"
         ],
-        "penalty_amount": 0,
-        "invoice_date": "01-12-2021"
+        "penalty_amount": "4",
+        "invoice_date": "01-12-2021",
+        "installment": false
       },
       {
-        "invoice_no": "TRA",
+        "invoice_no": "TF-X01-11032022-12",
         "name": "James",
+        "memberId": "M0001",
         "user_image": "https://randomuser.me/api/portraits/men/2.jpg",
         "class": "Y5C1",
-        "description": "Book fees",
+        "title": "Book Fee",
+        "description":
+            "A school fee is money that parents pay to schools, aimed at improving the quality of education of learners",
         "invoice_amount": "5",
         "paid_to_date": "2",
         "outstanding_amount": "3",
@@ -65,15 +84,19 @@ class InvoicePayment extends StatefulWidget {
           "http://124.217.235.107:2008/Handler/ImagePathHandler.ashx?ImagePath=StoreItems/b6fa-e4c2-2021-11-25-11-32-18-810/71-zpNFAyTL._SL1080_.jpg&Default=60&PROUrl=http://124.217.235.107:2008/&StoreageUrl=http://124.217.235.107:2008/FS/",
           "http://124.217.235.107:2008/FS/StoreItems/4adc-e4c2-2021-11-25-11-32-55-924/student-plastic-id-card-holder-500x500.jpg"
         ],
-        "penalty_amount": 0,
-        "invoice_date": "01-12-2021"
+        "penalty_amount": "10",
+        "invoice_date": "01-12-2021",
+        "installment": false
       },
       {
-        "invoice_no": "TRA",
+        "invoice_no": "TF-X01-11032022-11",
         "name": "James",
+        "memberId": "M0001",
         "user_image": "https://randomuser.me/api/portraits/men/2.jpg",
         "class": "Y5C1",
-        "description": "School fees",
+        "title": "School Fee",
+        "description":
+            "A school fee is money that parents pay to schools, aimed at improving the quality of education of learners",
         "invoice_amount": "5",
         "paid_to_date": "2",
         "outstanding_amount": "3",
@@ -81,15 +104,19 @@ class InvoicePayment extends StatefulWidget {
           "http://124.217.235.107:2008/Handler/ImagePathHandler.ashx?ImagePath=StoreItems/b6fa-e4c2-2021-11-25-11-32-18-810/71-zpNFAyTL._SL1080_.jpg&Default=60&PROUrl=http://124.217.235.107:2008/&StoreageUrl=http://124.217.235.107:2008/FS/",
           "http://124.217.235.107:2008/FS/StoreItems/4adc-e4c2-2021-11-25-11-32-55-924/student-plastic-id-card-holder-500x500.jpg"
         ],
-        "penalty_amount": 0,
-        "invoice_date": "01-12-2021"
+        "penalty_amount": "4",
+        "invoice_date": "01-12-2021",
+        "installment": false
       },
       {
-        "invoice_no": "TRA",
+        "invoice_no": "TF-X01-11032022-00",
         "name": "James",
+        "memberId": "M0001",
         "user_image": "https://randomuser.me/api/portraits/men/2.jpg",
         "class": "Y5C1",
-        "description": "Transportation Fee",
+        "title": "Transportation Fee",
+        "description":
+            "A school fee is money that parents pay to schools, aimed at improving the quality of education of learners",
         "invoice_amount": "5",
         "paid_to_date": "2",
         "outstanding_amount": "3",
@@ -97,15 +124,19 @@ class InvoicePayment extends StatefulWidget {
           "http://124.217.235.107:2008/Handler/ImagePathHandler.ashx?ImagePath=StoreItems/b6fa-e4c2-2021-11-25-11-32-18-810/71-zpNFAyTL._SL1080_.jpg&Default=60&PROUrl=http://124.217.235.107:2008/&StoreageUrl=http://124.217.235.107:2008/FS/",
           "http://124.217.235.107:2008/FS/StoreItems/4adc-e4c2-2021-11-25-11-32-55-924/student-plastic-id-card-holder-500x500.jpg"
         ],
-        "penalty_amount": 0,
-        "invoice_date": "01-12-2021"
+        "penalty_amount": "12",
+        "invoice_date": "01-12-2021",
+        "installment": false
       },
       {
-        "invoice_no": "TRA",
+        "invoice_no": "TF-X01-11032022-01",
         "name": "James",
+        "memberId": "M0001",
         "user_image": "https://randomuser.me/api/portraits/men/2.jpg",
         "class": "Y5C1",
-        "description": "Book fees",
+        "title": "Book Fee",
+        "description":
+            "A school fee is money that parents pay to schools, aimed at improving the quality of education of learners",
         "invoice_amount": "5",
         "paid_to_date": "2",
         "outstanding_amount": "3",
@@ -113,15 +144,19 @@ class InvoicePayment extends StatefulWidget {
           "http://124.217.235.107:2008/Handler/ImagePathHandler.ashx?ImagePath=StoreItems/b6fa-e4c2-2021-11-25-11-32-18-810/71-zpNFAyTL._SL1080_.jpg&Default=60&PROUrl=http://124.217.235.107:2008/&StoreageUrl=http://124.217.235.107:2008/FS/",
           "http://124.217.235.107:2008/FS/StoreItems/4adc-e4c2-2021-11-25-11-32-55-924/student-plastic-id-card-holder-500x500.jpg"
         ],
-        "penalty_amount": 0,
-        "invoice_date": "01-12-2021"
+        "penalty_amount": "4",
+        "invoice_date": "01-12-2021",
+        "installment": false
       },
       {
-        "invoice_no": "TRA",
+        "invoice_no": "TF-X01-11032022-02",
         "name": "James",
+        "memberId": "M0001",
         "user_image": "https://randomuser.me/api/portraits/men/2.jpg",
         "class": "Y5C1",
-        "description": "Tution fees",
+        "title": "Tution Fee",
+        "description":
+            "A school fee is money that parents pay to schools, aimed at improving the quality of education of learners",
         "invoice_amount": "5",
         "paid_to_date": "2",
         "outstanding_amount": "3",
@@ -129,15 +164,19 @@ class InvoicePayment extends StatefulWidget {
           "http://124.217.235.107:2008/Handler/ImagePathHandler.ashx?ImagePath=StoreItems/b6fa-e4c2-2021-11-25-11-32-18-810/71-zpNFAyTL._SL1080_.jpg&Default=60&PROUrl=http://124.217.235.107:2008/&StoreageUrl=http://124.217.235.107:2008/FS/",
           "http://124.217.235.107:2008/FS/StoreItems/4adc-e4c2-2021-11-25-11-32-55-924/student-plastic-id-card-holder-500x500.jpg"
         ],
-        "penalty_amount": 0,
-        "invoice_date": "01-12-2021"
+        "penalty_amount": "40",
+        "invoice_date": "01-12-2021",
+        "installment": true
       },
       {
-        "invoice_no": "TRA",
+        "invoice_no": "TF-X01-11032022-03",
         "name": "James",
+        "memberId": "M0001",
         "user_image": "https://randomuser.me/api/portraits/men/2.jpg",
         "class": "Y5C1",
-        "description": "School fees",
+        "title": "School fees",
+        "description":
+            "A school fee is money that parents pay to schools, aimed at improving the quality of education of learners",
         "invoice_amount": "5",
         "paid_to_date": "2",
         "outstanding_amount": "3",
@@ -145,15 +184,19 @@ class InvoicePayment extends StatefulWidget {
           "http://124.217.235.107:2008/Handler/ImagePathHandler.ashx?ImagePath=StoreItems/b6fa-e4c2-2021-11-25-11-32-18-810/71-zpNFAyTL._SL1080_.jpg&Default=60&PROUrl=http://124.217.235.107:2008/&StoreageUrl=http://124.217.235.107:2008/FS/",
           "http://124.217.235.107:2008/FS/StoreItems/4adc-e4c2-2021-11-25-11-32-55-924/student-plastic-id-card-holder-500x500.jpg"
         ],
-        "penalty_amount": 0,
-        "invoice_date": "01-12-2021"
+        "penalty_amount": "4",
+        "invoice_date": "01-12-2021",
+        "installment": false
       },
       {
-        "invoice_no": "TRA",
+        "invoice_no": "TRA1234",
+        "memberId": "M0001",
         "name": "James",
         "user_image": "https://randomuser.me/api/portraits/men/2.jpg",
         "class": "Y5C1",
-        "description": "Transportation Fee",
+        "title": "Transportation Fee",
+        "description":
+            "A school fee is money that parents pay to schools, aimed at improving the quality of education of learners",
         "invoice_amount": "15",
         "paid_to_date": "8",
         "outstanding_amount": "3",
@@ -161,8 +204,9 @@ class InvoicePayment extends StatefulWidget {
           "http://124.217.235.107:2008/Handler/ImagePathHandler.ashx?ImagePath=StoreItems/b6fa-e4c2-2021-11-25-11-32-18-810/71-zpNFAyTL._SL1080_.jpg&Default=60&PROUrl=http://124.217.235.107:2008/&StoreageUrl=http://124.217.235.107:2008/FS/",
           "http://124.217.235.107:2008/FS/StoreItems/4adc-e4c2-2021-11-25-11-32-55-924/student-plastic-id-card-holder-500x500.jpg"
         ],
-        "penalty_amount": 0,
-        "invoice_date": "01-12-2021"
+        "penalty_amount": "3",
+        "invoice_date": "01-12-2021",
+        "installment": false
       },
     ];
   }
@@ -174,12 +218,78 @@ class InvoicePayment extends StatefulWidget {
 class _InvoicePaymentState extends State<InvoicePayment> {
   // This list holds the data for the list view
   List<Map<dynamic, dynamic>> _foundInvoice = [];
+  var sortList = ["Paid", "Pending"];
+
+  var selectedSortby = "Paid";
+  bool searchEnable = false;
+
+  int cartCount = 0;
+
+  int senderIndex = 2;
 
   @override
   void initState() {
     _foundInvoice = widget.getStoreList();
     super.initState();
   }
+
+  List<Map> familyList = [
+    {
+      "name": "Desmond",
+      "category": "PARENT",
+      "memberId": "M1001",
+      "desc": "",
+      "balance": "250",
+      "familtid": "FMY0001",
+      "relationship": "Father",
+      "email": "makame147@gmail.com",
+      "image": "https://randomuser.me/api/portraits/men/11.jpg"
+    },
+    {
+      "name": "SITI KHALIDA",
+      "category": "PARENT",
+      "memberId": "M1002",
+      "desc": "",
+      "balance": "50",
+      "familtid": "FMY0001",
+      "relationship": "Mother",
+      "email": "calms.rnd@gmail.com",
+      "image": "https://randomuser.me/api/portraits/women/11.jpg"
+    },
+    {
+      "name": "HAZIM",
+      "category": "STUDENT",
+      "email": "",
+      "balance": "100.00",
+      "class": "Class3",
+      "contact": "0123467589",
+      "memberId": "M1001",
+      "desc": "Member account does not exist in MFP software",
+      "image": "https://randomuser.me/api/portraits/men/2.jpg"
+    },
+    {
+      "name": "MARIE LIM",
+      "category": "STUDENT",
+      "email": "",
+      "balance": "0.00",
+      "class": "Class4",
+      "memberId": "M1001",
+      "contact": "1345657",
+      "desc": "",
+      "image": "https://randomuser.me/api/portraits/men/3.jpg"
+    },
+    {
+      "name": "Danny",
+      "category": "STUDENT",
+      "email": "",
+      "balance": "30.00",
+      "contact": "565467898",
+      "memberId": "M1001",
+      "class": "Class6",
+      "desc": "",
+      "image": "https://randomuser.me/api/portraits/men/4.jpg"
+    },
+  ];
 
   // This function is called whenever the text field changes
   void _runFilter(String enteredKeyword) {
@@ -190,7 +300,7 @@ class _InvoicePaymentState extends State<InvoicePayment> {
     } else {
       results = widget
           .getStoreList()
-          .where((user) => user["description"]
+          .where((user) => user["title"]
               .toLowerCase()
               .contains(enteredKeyword.toLowerCase()))
           .toList();
@@ -207,36 +317,191 @@ class _InvoicePaymentState extends State<InvoicePayment> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Invoice Payment"),
+          iconTheme: IconThemeData(
+            color: Colors.black, //change your color here
+          ),
+          elevation: 0,
+          backgroundColor: Colors.white,
+          titleSpacing: -5,
+          title: searchEnable
+              ? Container(
+                  width: double.infinity,
+                  height: 40,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(5)),
+                  child: Center(
+                    child: TextField(
+                      autofocus: true,
+                      onChanged: (value) => _runFilter(value),
+                      decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.search),
+                          suffixIcon: IconButton(
+                            icon: Icon(Icons.clear),
+                            onPressed: () {
+                              searchEnable = !searchEnable;
+                              setState(() {});
+                            },
+                          ),
+                          hintText: 'Search by Item name',
+                          border: InputBorder.none),
+                    ),
+                  ),
+                )
+              : Text(
+                  "Invoice Payment",
+                  style: TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.bold),
+                ),
           actions: [
-            IconButton(
-                icon: Icon(Icons.filter_alt_outlined),
-                onPressed: () => {openFilterBottomSheet(context)})
+            if (!searchEnable)
+              if (familyList.length > 0 && senderIndex > -1)
+                Container(
+                  height: 30,
+                  width: 140,
+                  child: Row(
+                    children: [
+                      Flexible(
+                        child: ListTile(
+                          onTap: () => {
+                            openMemberBottomSheet(context, familyList, (index) {
+                              Navigator.pop(context);
+                              senderIndex = index;
+                              setState(() {});
+                            })
+                          },
+                          title: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
+                                familyList[senderIndex]['name'],
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                familyList[senderIndex]['memberId'],
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                          trailing: CircleAvatar(
+                            backgroundColor: Colors.white,
+                            backgroundImage:
+                                NetworkImage(familyList[senderIndex]['image']),
+                            radius: 20,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+            // if (!searchEnable)
+            //   IconButton(
+            //     onPressed: () {
+            //       searchEnable = !searchEnable;
+            //       setState(() {});
+            //     },
+            //     icon: Icon(Icons.search),
+            //   ),
+            // if (!searchEnable)
+            //   IconButton(
+            //     onPressed: () {
+            //       Navigator.of(context)
+            //           .pushNamed('/FilterActivities', arguments: "");
+            //     },
+            //     icon: Icon(Icons.filter_alt_outlined),
+            //   ),
           ],
         ),
-        body: Container(
-          child: Column(children: [
-            Container(
-              margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-              child: TextField(
-                onChanged: (value) => _runFilter(value),
-                decoration: const InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderSide:
-                          const BorderSide(color: Colors.blue, width: 2.0),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide:
-                          const BorderSide(color: Colors.blue, width: 2.0),
-                    ),
-                    labelText: 'Search',
-                    hintText: 'Type here to search',
-                    suffixIcon: Icon(
-                      Icons.search,
-                      color: Colors.blue,
-                    )),
+        bottomNavigationBar: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(0),
+            boxShadow: [
+              new BoxShadow(
+                color: Colors.grey,
+                blurRadius: 1.0,
               ),
-            ),
+            ],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              InkWell(
+                onTap: () {
+                  openSortByBottomSheet(context, sortList, (index1) {
+                    selectedSortby = sortList[index1];
+                    setState(() {});
+                    Navigator.of(context).pop();
+                  }, selectedSortby);
+                },
+                child: Container(
+                  height: 45,
+                  child: Center(
+                    child: RichText(
+                      textAlign: TextAlign.center,
+                      text: TextSpan(children: [
+                        WidgetSpan(
+                            child: Icon(
+                          Icons.sort,
+                          size: 18,
+                          color: Colors.black54,
+                        )),
+                        TextSpan(
+                          text: " SORT BY",
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.black54,
+                          ),
+                        )
+                      ]),
+                    ),
+                  ),
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  searchEnable = !searchEnable;
+                  setState(() {});
+                },
+                child: Container(
+                  height: 45,
+                  child: Center(
+                    child: RichText(
+                      textAlign: TextAlign.center,
+                      text: TextSpan(children: [
+                        WidgetSpan(
+                            child: Icon(
+                          Icons.search_rounded,
+                          size: 18,
+                          color: Colors.black54,
+                        )),
+                        TextSpan(
+                          text: " SEARCH",
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.black54,
+                          ),
+                        )
+                      ]),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        body: Container(
+          color: Colors.white,
+          child: Column(children: [
             Expanded(
               child: Container(
                 width: double.infinity,
@@ -254,13 +519,10 @@ class _InvoicePaymentState extends State<InvoicePayment> {
                           height: 0.1,
                         ),
                         ListTile(
+                          horizontalTitleGap: 5,
                           leading: ClipRRect(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(8.0),
-                              topRight: Radius.circular(8.0),
-                              bottomLeft: Radius.circular(8.0),
-                              bottomRight: Radius.circular(8.0),
-                            ),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(60.0)),
                             child: _foundInvoice[index]['user_image'] != null
                                 ? Image.network(
                                     _foundInvoice[index]['user_image'],
@@ -269,120 +531,200 @@ class _InvoicePaymentState extends State<InvoicePayment> {
                                     fit: BoxFit.fill)
                                 : Image.asset("assets/images/user.png"),
                           ),
-                          title: Text(
-                            _foundInvoice[index]['name'],
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 14),
+                          title: RichText(
+                            textAlign: TextAlign.left,
+                            text: TextSpan(
+                              children: [
+                                WidgetSpan(
+                                  child: Container(
+                                    padding: EdgeInsets.only(top: 5),
+                                    child: Text(
+                                      "Invoice #:",
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14),
+                                    ),
+                                  ),
+                                ),
+                                WidgetSpan(
+                                  child: Container(
+                                    padding: EdgeInsets.only(top: 5, left: 3),
+                                    child: Text(
+                                      _foundInvoice[index]['invoice_no'],
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.normal,
+                                          fontSize: 14),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                           subtitle: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Text(
-                                _foundInvoice[index]['description'],
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 2,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 12),
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-
-                              Text(
-                                'MYR ${double.parse(_foundInvoice[index]['invoice_amount']).toStringAsFixed(2)}',
-                                style: TextStyle(
-                                    fontSize: 14, fontWeight: FontWeight.bold),
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-
-                              new RichText(
-                                text: new TextSpan(
-                                  text: "Due date :",
-                                  style: new TextStyle(
-                                    fontSize: 12.0,
-                                    color: isPaid(
-                                            _foundInvoice[index]
-                                                ["invoice_amount"],
-                                            _foundInvoice[index]
-                                                ["paid_to_date"])
-                                        ? Colors.green
-                                        : Colors.red,
-                                  ),
-                                  children: <TextSpan>[
-                                    new TextSpan(
-                                        text: _foundInvoice[index]
-                                                    ['invoice_date']
-                                                ?.toString() ??
-                                            _foundInvoice[index]
-                                                ['invoice_date'],
-                                        style: new TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.bold)),
+                              RichText(
+                                textAlign: TextAlign.left,
+                                text: TextSpan(
+                                  children: [
+                                    WidgetSpan(
+                                      child: Container(
+                                        padding: EdgeInsets.only(top: 5),
+                                        child: Icon(
+                                          Icons.emoji_transportation,
+                                          color: Colors.black,
+                                          size: 16,
+                                        ),
+                                      ),
+                                    ),
+                                    WidgetSpan(
+                                      child: Container(
+                                        padding:
+                                            EdgeInsets.only(top: 5, left: 3),
+                                        child: Text(
+                                          _foundInvoice[index]['title'],
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 1,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 12),
+                                        ),
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),
+                              RichText(
+                                textAlign: TextAlign.left,
+                                text: TextSpan(
+                                  children: [
+                                    WidgetSpan(
+                                      child: Container(
+                                        padding: EdgeInsets.only(
+                                          top: 5,
+                                        ),
+                                        child: Icon(
+                                          Icons.account_balance_wallet,
+                                          color: Colors.black,
+                                          size: 16,
+                                        ),
+                                      ),
+                                    ),
+                                    WidgetSpan(
+                                      child: Container(
+                                        padding:
+                                            EdgeInsets.only(top: 5, left: 3),
+                                        child: Text(
+                                          'MYR ${double.parse(_foundInvoice[index]['invoice_amount']).toStringAsFixed(2)}',
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 2,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 12),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+
+                              RichText(
+                                textAlign: TextAlign.left,
+                                text: TextSpan(
+                                  children: [
+                                    WidgetSpan(
+                                      child: Container(
+                                        padding: EdgeInsets.only(
+                                          top: 5,
+                                        ),
+                                        child: Icon(
+                                          Icons.calendar_month,
+                                          color: Colors.black,
+                                          size: 16,
+                                        ),
+                                      ),
+                                    ),
+                                    WidgetSpan(
+                                      child: Container(
+                                        padding:
+                                            EdgeInsets.only(top: 5, left: 3),
+                                        child: Text(
+                                          'Due date : ${_foundInvoice[index]['invoice_date']?.toString() ?? _foundInvoice[index]['invoice_date']}',
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 2,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 12,
+                                            color: isPaid(
+                                                    _foundInvoice[index]
+                                                        ["invoice_amount"],
+                                                    _foundInvoice[index]
+                                                        ["paid_to_date"])
+                                                ? Color.fromARGB(
+                                                    255, 72, 214, 87)
+                                                : Colors.redAccent,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+
                               // Text(storeList[index]['invoice_date'])
                             ],
                           ),
                           isThreeLine: true,
                           trailing: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              SizedBox(
-                                height: 25,
-                                width: 80,
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                      primary: isPaid(
-                                              _foundInvoice[index]
-                                                  ["invoice_amount"],
-                                              _foundInvoice[index]
-                                                  ["paid_to_date"])
-                                          ? Colors.green
-                                          : Colors.red,
-                                      padding: EdgeInsets.zero),
-                                  onPressed: () => {},
-                                  child: Text(isPaid(
+                              Text(
+                                isPaid(_foundInvoice[index]["invoice_amount"],
+                                        _foundInvoice[index]["paid_to_date"])
+                                    ? "PAID"
+                                    : "PENDING",
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                  color: isPaid(
                                           _foundInvoice[index]
                                               ["invoice_amount"],
                                           _foundInvoice[index]["paid_to_date"])
-                                      ? "Paid"
-                                      : "Pending"),
+                                      ? Color.fromARGB(255, 72, 214, 87)
+                                      : Colors.redAccent,
                                 ),
                               ),
                               SizedBox(
-                                height: 6,
+                                height: 1,
                               ),
                               isPaid(_foundInvoice[index]["invoice_amount"],
                                       _foundInvoice[index]["paid_to_date"])
-                                  ? Text("")
-                                  : SizedBox(
-                                      height: 25,
-                                      width: 25,
-                                      child: ClipOval(
-                                        child: Material(
-                                          color: Colors
-                                              .transparent, // Button color
-                                          child: InkWell(
-                                            splashColor:
-                                                Colors.red, // Splash color
-                                            onTap: () {
-                                              openDonationBottomSheet(context,
-                                                  _foundInvoice[index]);
-                                            },
-                                            child: Icon(
-                                              Icons.shopping_cart_outlined,
-                                              color: Theme.of(context)
-                                                  .primaryColor,
-                                              size: 18,
-                                            ),
-                                          ),
-                                        ),
+                                  ? Text(
+                                      "Dummy",
+                                      style: TextStyle(color: Colors.white),
+                                    )
+                                  : InkWell(
+                                      onTap: () {
+                                        openDonationBottomSheet(
+                                            context, _foundInvoice[index]);
+                                      },
+                                      child: Container(
+                                        width: 30,
+                                        height: 30,
+                                        margin:
+                                            EdgeInsets.only(right: 3, top: 2),
+                                        padding: EdgeInsets.all(0),
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            border: Border.all(
+                                                color: Colors.black, width: 2)),
+                                        child: Image.asset(
+                                            "assets/images/cart_round.png"),
                                       ),
                                     ),
                             ],
@@ -458,6 +800,8 @@ bool isPaid(String totalAmount, String paidAmount) {
 }
 
 void openDonationBottomSheet(BuildContext buildContext, invoice) {
+  TextEditingController amountController = TextEditingController();
+
   showModalBottomSheet(
       context: buildContext,
       builder: (context) {
@@ -466,11 +810,16 @@ void openDonationBottomSheet(BuildContext buildContext, invoice) {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             AppBar(
-              title: Text("Payment Summary"),
+              title: Text(
+                "Payment Summary",
+                style: TextStyle(color: Colors.black, fontSize: 16),
+              ),
+              elevation: 1,
+              backgroundColor: Colors.white,
               automaticallyImplyLeading: false,
               actions: [
                 IconButton(
-                  icon: Icon(Icons.close_sharp),
+                  icon: Icon(Icons.close_sharp, color: Colors.black),
                   onPressed: () {
                     Navigator.pop(context);
                   },
@@ -478,9 +827,9 @@ void openDonationBottomSheet(BuildContext buildContext, invoice) {
               ],
             ),
             Align(
-              alignment: Alignment.center,
+              alignment: Alignment.topLeft,
               child: Container(
-                padding: EdgeInsets.symmetric(vertical: 10),
+                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                 child: Text(
                   invoice["description"],
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
@@ -528,42 +877,92 @@ void openDonationBottomSheet(BuildContext buildContext, invoice) {
                     "Pay amount",
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
                   ),
-                  Container(
-                    height: 40,
-                    width: 150,
+                  SizedBox(
+                    width: 15,
+                  ),
+                  Flexible(
                     child: TextField(
-                      style: TextStyle(fontSize: 14),
-                      keyboardType: TextInputType.number,
-                      textAlign: TextAlign.center,
+                      textInputAction: TextInputAction.done,
+                      controller: amountController,
+                      // keyboardType: TextInputType.number,
+                      style: TextStyle(fontSize: 16),
+                      textAlign: TextAlign.left,
+                      onChanged: (text) {
+                        if (int.parse(amountController.text) >
+                            (int.parse(invoice['invoice_amount']) -
+                                int.parse(invoice['paid_to_date'])))
+                          amountController.text = amountController.text
+                              .substring(0, amountController.text.length - 1);
+                        amountController.selection = TextSelection.fromPosition(
+                            TextPosition(offset: amountController.text.length));
+                      },
                       decoration: const InputDecoration(
-                        hintText: 'Amount',
-                        border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.only(
-                            left: 10, right: 0, top: 0, bottom: 0),
+                        hintText: '0.00',
+                        isDense: true,
+                        prefixIconConstraints:
+                            BoxConstraints(minWidth: 0, minHeight: 0),
+                        prefixIcon: Text(
+                          ' MYR ',
+                          style: TextStyle(
+                              color: Colors.black54,
+                              fontSize: 16,
+                              fontWeight: FontWeight.normal),
+                        ),
                       ),
+                      keyboardType:
+                          TextInputType.numberWithOptions(decimal: true),
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                        LengthLimitingTextInputFormatter(10),
+                        // Allow Decimal Number With Precision of 2 Only
+                        FilteringTextInputFormatter.allow(
+                            RegExp(r'^\d*\.?\d{0,2}')),
+                      ],
                     ),
                   ),
                 ],
               ),
             ),
-            AppBar(
-              title: Align(
-                alignment: Alignment.centerRight,
-                child: Text(
-                  "Done",
-                  textAlign: TextAlign.end,
+            InkWell(
+              onTap: () {
+                Navigator.of(context).pop();
+                MyCustomAlertDialog().showToast(context, "Item added to cart ");
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.pinkAccent,
+                  borderRadius: BorderRadius.circular(1),
+                  border: Border(
+                    bottom: BorderSide(color: Colors.pinkAccent, width: 1),
+                    right: BorderSide(color: Colors.pinkAccent, width: 1),
+                    top: BorderSide(color: Colors.pinkAccent, width: 1),
+                    left: BorderSide(color: Colors.pinkAccent, width: 1),
+                  ),
+                  boxShadow: [
+                    new BoxShadow(
+                      color: Colors.pinkAccent,
+                      blurRadius: 1.0,
+                    ),
+                  ],
+                ),
+                padding: EdgeInsets.symmetric(vertical: 10),
+                margin:
+                    EdgeInsets.only(top: 20, left: 10, right: 10, bottom: 20),
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Container(
+                      padding: EdgeInsets.only(left: 15, right: 15),
+                      child: Text(
+                        "Proceed",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold),
+                      )),
                 ),
               ),
-              automaticallyImplyLeading: false,
-              actions: [
-                IconButton(
-                  icon: Icon(Icons.check_sharp),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ],
-            ),
+            )
           ],
         );
       });

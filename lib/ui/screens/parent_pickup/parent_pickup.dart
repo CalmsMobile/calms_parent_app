@@ -302,11 +302,10 @@ class _ParentPickupState extends State<ParentPickup> {
                                                         padding:
                                                             EdgeInsets.only(
                                                                 bottom: 5,
-                                                                top: 5),
-                                                        child: Icon(
-                                                          Icons.map,
-                                                          color: Colors.black,
-                                                          size: 16,
+                                                                top: 0),
+                                                        child: Image.asset(
+                                                          "assets/images/pickup.png",
+                                                          width: 18,
                                                         ),
                                                       ),
                                                     ),
@@ -315,7 +314,8 @@ class _ParentPickupState extends State<ParentPickup> {
                                                         padding:
                                                             EdgeInsets.only(
                                                                 bottom: 5,
-                                                                top: 5),
+                                                                top: 0,
+                                                                left: 2),
                                                         child: Text(
                                                           "Navigate me to pick-up point",
                                                           style: TextStyle(
@@ -379,13 +379,11 @@ class _ParentPickupState extends State<ParentPickup> {
                                                           padding:
                                                               EdgeInsets.only(
                                                                   bottom: 5,
-                                                                  top: 5,
+                                                                  top: 0,
                                                                   left: 5),
-                                                          child: Icon(
-                                                            Icons
-                                                                .emoji_transportation,
-                                                            color: Colors.black,
-                                                            size: 16,
+                                                          child: Image.asset(
+                                                            "assets/images/navigate.png",
+                                                            width: 18,
                                                           ),
                                                         ),
                                                       ),
@@ -394,7 +392,8 @@ class _ParentPickupState extends State<ParentPickup> {
                                                           padding:
                                                               EdgeInsets.only(
                                                                   bottom: 5,
-                                                                  top: 5),
+                                                                  top: 0,
+                                                                  left: 2),
                                                           child: Text(
                                                             "Send a request for pick-up",
                                                             style: TextStyle(
