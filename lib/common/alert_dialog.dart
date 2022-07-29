@@ -22,7 +22,7 @@ class MyCustomAlertDialog {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              getBottomSheetActionBar(context, title, true),
+              getBottomSheetActionBar(context, title, true, Colors.white),
               Expanded(
                 child: Container(
                   margin: EdgeInsets.only(top: 0),

@@ -52,11 +52,13 @@ class PurchaseListView extends StatelessWidget {
                                     text: '',
                                     style: new TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        color: Colors.grey,
-                                        fontSize: 12)),
+                                        color: Colors.grey.shade500,
+                                        fontSize: 10)),
                                 new TextSpan(
                                     text: purchaseList[index]['date'],
-                                    style: new TextStyle(fontSize: 12)),
+                                    style: new TextStyle(
+                                        color: Colors.grey.shade500,
+                                        fontSize: 10)),
                               ],
                             ),
                           ),
@@ -71,13 +73,17 @@ class PurchaseListView extends StatelessWidget {
                               Text(
                                 "# " + purchaseList[index]['orderID'],
                                 style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 12),
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.grey.shade500,
+                                    fontSize: 10),
                               ),
                               Text(
                                 "Payment for: " +
                                     purchaseList[index]['pay_for'],
                                 style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 12),
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.grey.shade500,
+                                    fontSize: 10),
                               ),
                             ],
                           ),
@@ -97,7 +103,8 @@ class PurchaseListView extends StatelessWidget {
                                         color: Colors.red.shade500,
                                         fontSize: 12)),
                                 new TextSpan(
-                                    text: purchaseList[index]['amount']),
+                                    text: purchaseList[index]['amount'],
+                                    style: TextStyle(fontSize: 14)),
                               ],
                             ),
                           ),

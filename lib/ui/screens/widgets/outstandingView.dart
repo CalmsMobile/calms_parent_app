@@ -31,11 +31,12 @@ Widget userList(BuildContext context, int index, List<Map> details) {
                     text: 'Due date: ',
                     style: new TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: Colors.grey,
-                        fontSize: 12)),
+                        color: Colors.grey.shade500,
+                        fontSize: 10)),
                 new TextSpan(
                     text: details[index]['last_date'],
-                    style: new TextStyle(fontSize: 12)),
+                    style: new TextStyle(
+                        color: Colors.grey.shade500, fontSize: 10)),
               ],
             ),
           ),
@@ -50,7 +51,10 @@ Widget userList(BuildContext context, int index, List<Map> details) {
             children: [
               Text(
                 "Invoice No: " + details[index]['invoiceNo'],
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 10,
+                    color: Colors.grey.shade500),
               ),
               new RichText(
                 text: new TextSpan(
@@ -66,8 +70,10 @@ Widget userList(BuildContext context, int index, List<Map> details) {
                         style: new TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.red.shade500,
-                            fontSize: 16)),
-                    new TextSpan(text: details[index]['amount']),
+                            fontSize: 14)),
+                    new TextSpan(
+                        text: details[index]['amount'],
+                        style: new TextStyle(fontSize: 14)),
                   ],
                 ),
               ),
@@ -75,7 +81,10 @@ Widget userList(BuildContext context, int index, List<Map> details) {
           ),
           Text(
             "Category: " + details[index]['category'],
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 10,
+                color: Colors.grey.shade500),
           )
         ],
       ),

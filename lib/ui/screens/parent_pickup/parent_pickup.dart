@@ -1,3 +1,4 @@
+import 'package:calms_parent/common/HexColor.dart';
 import 'package:calms_parent/common/alert_dialog.dart';
 import 'package:calms_parent/common/widgets/select_member.dart';
 import 'package:flutter/material.dart';
@@ -114,7 +115,7 @@ class _ParentPickupState extends State<ParentPickup> {
     return Scaffold(
       appBar: getMyAppbar("Student Pickup", []),
       body: Container(
-        color: Colors.white,
+        color: HexColor("#f5f8fd"),
         width: double.infinity,
         margin: EdgeInsets.zero,
         padding: EdgeInsets.zero,
@@ -124,310 +125,254 @@ class _ParentPickupState extends State<ParentPickup> {
               child: ListView.builder(
                   padding: EdgeInsets.zero,
                   shrinkWrap: true,
+                  physics: BouncingScrollPhysics(
+                      parent: AlwaysScrollableScrollPhysics()),
                   itemCount: familyList.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return Column(children: <Widget>[
-                      new Divider(
-                        height: 0.1,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                    return Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20)),
+                      margin: EdgeInsets.symmetric(horizontal: 25, vertical: 5),
+                      child: Row(
                         children: [
                           Container(
-                            width: MediaQuery.of(context).size.width * 0.12,
-                            height: MediaQuery.of(context).size.width * 0.12,
-                            margin: EdgeInsets.all(5),
+                            width: 60,
+                            height: 60,
+                            margin: EdgeInsets.only(left: 10, right: 5),
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               color: Colors.black,
                               borderRadius: BorderRadius.circular(60.0),
                               image: DecorationImage(
-                                fit: BoxFit.contain,
+                                fit: BoxFit.cover,
                                 image: NetworkImage(familyList[index]['image']),
                               ),
                             ),
                           ),
-                          Container(
-                            width: MediaQuery.of(context).size.width * 0.85,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 8.0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          familyList[index]["name"],
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 14),
+                          Expanded(
+                            child: Container(
+                              padding: EdgeInsets.only(
+                                  top: index == 0 ? 15 : 15, bottom: 15),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.only(left: 4),
+                                    child: Text(
+                                      familyList[index]["name"],
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16),
+                                    ),
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        margin:
+                                            EdgeInsets.only(right: 5, left: 4),
+                                        child: Image.asset(
+                                          "assets/images/ico_class_v2.png",
+                                          width: 18,
+                                          height: 18,
                                         ),
-                                        SizedBox(
-                                          height: 3,
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            RichText(
-                                              textAlign: TextAlign.left,
-                                              text: TextSpan(
-                                                children: [
-                                                  WidgetSpan(
-                                                    child: Icon(
-                                                      Icons.filter,
-                                                      size: 16,
-                                                    ),
-                                                  ),
-                                                  WidgetSpan(
-                                                      child: Container(
-                                                    padding: EdgeInsets.only(
-                                                        bottom: 0, left: 5),
-                                                    child: Text(
-                                                      familyList[index]
-                                                          ["class"],
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.normal,
-                                                          fontSize: 12),
-                                                    ),
-                                                  )),
-                                                  WidgetSpan(
-                                                      child: Row(
-                                                    children: [
-                                                      SizedBox(
-                                                        width: 5,
-                                                      ),
-                                                      Container(
-                                                        width: 1,
-                                                        height: 10,
-                                                        color: Colors.grey,
-                                                      ),
-                                                      SizedBox(
-                                                        width: 5,
-                                                      ),
-                                                    ],
-                                                  )),
-                                                  WidgetSpan(
-                                                    child: Icon(
-                                                      Icons.calendar_month,
-                                                      size: 16,
-                                                    ),
-                                                  ),
-                                                  WidgetSpan(
-                                                    child: Container(
-                                                      padding: EdgeInsets.only(
-                                                          bottom: 0, left: 5),
-                                                      child: Text(
-                                                        familyList[index]
-                                                            ["year"],
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .normal,
-                                                            fontSize: 12),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
+                                      ),
+                                      RichText(
+                                        textAlign: TextAlign.center,
+                                        text: TextSpan(children: [
+                                          WidgetSpan(
+                                              child: Container(
+                                            child: Text(
+                                              familyList[index]["class"],
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.normal,
+                                                  fontSize: 10),
                                             ),
-                                          ],
+                                          )),
+                                        ]),
+                                      ),
+                                      Container(
+                                          margin: EdgeInsets.symmetric(
+                                              horizontal: 8),
+                                          width: 1,
+                                          height: 10,
+                                          color: Colors.black),
+                                      RichText(
+                                        textAlign: TextAlign.center,
+                                        text: TextSpan(children: [
+                                          WidgetSpan(
+                                              child: Container(
+                                            padding: EdgeInsets.only(
+                                                bottom: 0, left: 0),
+                                            child: Text(
+                                              familyList[index]["year"],
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.normal,
+                                                  fontSize: 10),
+                                            ),
+                                          )),
+                                        ]),
+                                      ),
+                                    ],
+                                  ),
+                                  if (index % 2 == 0)
+                                    Row(
+                                      children: [
+                                        Container(
+                                          margin: EdgeInsets.only(
+                                              right: 5, left: 4),
+                                          child: Icon(
+                                            Icons.timelapse,
+                                            color: Colors.black,
+                                            size: 18,
+                                          ),
                                         ),
-                                        SizedBox(
-                                          height: 3,
-                                        ),
-                                        if (index % 2 == 0)
-                                          RichText(
-                                            textAlign: TextAlign.left,
-                                            text: TextSpan(
-                                              children: [
-                                                WidgetSpan(
-                                                  child: Icon(
-                                                    Icons.timelapse,
-                                                    color: Colors.redAccent,
-                                                    size: 16,
-                                                  ),
-                                                ),
-                                                WidgetSpan(
-                                                  child: Container(
-                                                    padding: EdgeInsets.only(
-                                                        bottom: 0, left: 5),
-                                                    child: Text(
-                                                      "Last requested : ",
-                                                      style: TextStyle(
-                                                          color:
-                                                              Colors.redAccent,
-                                                          fontWeight:
-                                                              FontWeight.normal,
-                                                          fontSize: 12),
-                                                    ),
-                                                  ),
-                                                ),
-                                                WidgetSpan(
-                                                    child: Container(
+                                        RichText(
+                                          textAlign: TextAlign.left,
+                                          text: TextSpan(
+                                            children: [
+                                              WidgetSpan(
+                                                child: Container(
                                                   padding: EdgeInsets.only(
-                                                      bottom: 0, left: 5),
+                                                      bottom: 0, left: 0),
                                                   child: Text(
-                                                    "05:00 PM",
+                                                    "Last requested : ",
                                                     style: TextStyle(
                                                         color: Colors.redAccent,
                                                         fontWeight:
                                                             FontWeight.normal,
-                                                        fontSize: 12),
+                                                        fontSize: 10),
                                                   ),
-                                                )),
-                                              ],
-                                            ),
-                                          ),
-                                        Row(
-                                          children: [
-                                            Flexible(
-                                              child: RichText(
-                                                textAlign: TextAlign.left,
-                                                text: TextSpan(
-                                                  children: [
-                                                    WidgetSpan(
-                                                      child: Container(
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                                bottom: 5,
-                                                                top: 0),
-                                                        child: Image.asset(
-                                                          "assets/images/pickup.png",
-                                                          width: 18,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    WidgetSpan(
-                                                      child: Container(
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                                bottom: 5,
-                                                                top: 0,
-                                                                left: 2),
-                                                        child: Text(
-                                                          "Navigate me to pick-up point",
-                                                          style: TextStyle(
-                                                              decoration:
-                                                                  TextDecoration
-                                                                      .underline,
-                                                              color: Colors
-                                                                  .blueAccent,
-                                                              decorationThickness:
-                                                                  3,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .normal,
-                                                              fontSize: 12),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
                                                 ),
                                               ),
-                                            ),
-                                            Flexible(
-                                              child: InkWell(
-                                                onTap: () {
-                                                  if (index % 2 == 0) {
-                                                    MyCustomAlertDialog()
-                                                        .showCustomAlert(
-                                                            context,
-                                                            "Notification",
-                                                            "Do you like to request for pickup now?",
-                                                            false, () {
-                                                      requestPickup(context);
-                                                    }, () {
-                                                      Navigator.of(context,
-                                                              rootNavigator:
-                                                                  true)
-                                                          .pop();
-                                                    });
-                                                  } else {
-                                                    MyCustomAlertDialog()
-                                                        .showCustomAlert(
-                                                      context,
-                                                      "Notification",
-                                                      "You are not authorized to pickup",
-                                                      false,
-                                                      null,
-                                                      () => Navigator.of(
-                                                              context,
-                                                              rootNavigator:
-                                                                  true)
-                                                          .pop(),
-                                                    );
-                                                  }
-                                                },
-                                                child: RichText(
-                                                  textAlign: TextAlign.left,
-                                                  text: TextSpan(
-                                                    children: [
-                                                      WidgetSpan(
-                                                        child: Container(
-                                                          padding:
-                                                              EdgeInsets.only(
-                                                                  bottom: 5,
-                                                                  top: 0,
-                                                                  left: 5),
-                                                          child: Image.asset(
-                                                            "assets/images/navigate.png",
-                                                            width: 18,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      WidgetSpan(
-                                                        child: Container(
-                                                          padding:
-                                                              EdgeInsets.only(
-                                                                  bottom: 5,
-                                                                  top: 0,
-                                                                  left: 2),
-                                                          child: Text(
-                                                            "Send a request for pick-up",
-                                                            style: TextStyle(
-                                                                decoration:
-                                                                    TextDecoration
-                                                                        .underline,
-                                                                color: Colors
-                                                                    .blueAccent,
-                                                                decorationThickness:
-                                                                    3,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .normal,
-                                                                fontSize: 12),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
+                                              WidgetSpan(
+                                                  child: Container(
+                                                padding: EdgeInsets.only(
+                                                    bottom: 0, left: 5),
+                                                child: Text(
+                                                  "05:00 PM",
+                                                  style: TextStyle(
+                                                      color: Colors.redAccent,
+                                                      fontWeight:
+                                                          FontWeight.normal,
+                                                      fontSize: 10),
+                                                ),
+                                              )),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  Row(
+                                    children: [
+                                      Container(
+                                        margin: EdgeInsets.only(
+                                            right: 5, left: 4, top: 4),
+                                        child: Image.asset(
+                                          "assets/images/ico_navigate_v2.png",
+                                          width: 18,
+                                          height: 18,
+                                        ),
+                                      ),
+                                      RichText(
+                                        textAlign: TextAlign.left,
+                                        text: TextSpan(
+                                          children: [
+                                            WidgetSpan(
+                                              child: Container(
+                                                padding: EdgeInsets.only(
+                                                    bottom: 0, left: 0),
+                                                child: Text(
+                                                  "Navigate me to pick-up point",
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.normal,
+                                                      fontSize: 10),
                                                 ),
                                               ),
                                             ),
                                           ],
                                         ),
+                                      ),
+                                    ],
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      if (index % 2 == 0) {
+                                        MyCustomAlertDialog().showCustomAlert(
+                                            context,
+                                            "Notification",
+                                            "Do you like to request for pickup now?",
+                                            false, () {
+                                          requestPickup(context);
+                                        }, () {
+                                          Navigator.of(context,
+                                                  rootNavigator: true)
+                                              .pop();
+                                        });
+                                      } else {
+                                        MyCustomAlertDialog().showCustomAlert(
+                                          context,
+                                          "Notification",
+                                          "You are not authorized to pickup",
+                                          false,
+                                          null,
+                                          () => Navigator.of(context,
+                                                  rootNavigator: true)
+                                              .pop(),
+                                        );
+                                      }
+                                    },
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          margin: EdgeInsets.only(
+                                              right: 5, left: 4, top: 4),
+                                          child: Image.asset(
+                                            "assets/images/ico_request_v2.png",
+                                            width: 18,
+                                            height: 18,
+                                          ),
+                                        ),
+                                        RichText(
+                                          textAlign: TextAlign.left,
+                                          text: TextSpan(
+                                            children: [
+                                              WidgetSpan(
+                                                child: Container(
+                                                  padding: EdgeInsets.only(
+                                                      bottom: 0, left: 0),
+                                                  child: Text(
+                                                    "Send a request for pick-up",
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.normal,
+                                                        fontSize: 10),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
                                       ],
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           )
                         ],
-                      )
-                    ]);
+                      ),
+                    );
                   }),
             ),
           ],

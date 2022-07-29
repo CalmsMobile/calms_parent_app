@@ -222,7 +222,7 @@ class _AccountMappingState extends State<AccountMapping> {
                       "Register",
                       style: TextStyle(
                           fontSize: 18.0,
-                          fontFamily: "Raleway",
+                          fontFamily: "Montserrat",
                           fontWeight: FontWeight.bold),
                     ),
                     Icon(Icons.arrow_forward_ios)

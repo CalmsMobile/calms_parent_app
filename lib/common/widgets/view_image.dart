@@ -14,8 +14,9 @@ class _ViewImageState extends State<ViewImage> {
   @override
   Widget build(BuildContext context) {
     final data = ModalRoute.of(context)!.settings.arguments as Map;
-    print(data['images'][0]);
-    print(data['images'][currentPos]);
+    if (data['images'] != null && data['images'].length > 0) {
+      print(data['images'][currentPos]);
+    }
 
     // currentPos = 0;
     print(currentPos);
@@ -31,7 +32,7 @@ class _ViewImageState extends State<ViewImage> {
                     borderRadius: BorderRadius.circular(8.0),
                     image: DecorationImage(
                       image: NetworkImage(data['images'][currentPos]),
-                      fit: BoxFit.fill,
+                      fit: BoxFit.contain,
                     ),
                   ),
                 )
@@ -42,7 +43,7 @@ class _ViewImageState extends State<ViewImage> {
                     borderRadius: BorderRadius.circular(8.0),
                     image: DecorationImage(
                       image: AssetImage("assets/images/no_image.png"),
-                      fit: BoxFit.fill,
+                      fit: BoxFit.contain,
                     ),
                   ),
                 ),

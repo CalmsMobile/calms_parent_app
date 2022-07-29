@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:calms_parent/common/app_settings.dart';
+import 'package:calms_parent/common/constants.dart';
 import 'package:calms_parent/common/listener/settings_listener.dart';
 import 'package:calms_parent/common/my_shared_pref.dart';
 import 'package:calms_parent/common/widgets/view_image.dart';
@@ -19,6 +20,7 @@ import 'package:calms_parent/ui/screens/home/tab_view.dart';
 import 'package:calms_parent/ui/screens/invoice/InvoicePayment.dart';
 import 'package:calms_parent/ui/screens/invoice/invoice_details/InvoiceDetails.dart';
 import 'package:calms_parent/ui/screens/meals/MealOrder.dart';
+import 'package:calms_parent/ui/screens/meals/details/meal_details.dart';
 import 'package:calms_parent/ui/screens/merchant_transaction/MerchantTransaction.dart';
 import 'package:calms_parent/ui/screens/mfp_topup/MFPTopup.dart';
 import 'package:calms_parent/ui/screens/notifications/notification-view/notification-view.dart';
@@ -86,7 +88,7 @@ void main() async {
       ],
       child: MaterialApp(
           theme: ThemeData(
-            fontFamily: 'Roboto',
+            fontFamily: appFontFmaily,
           ),
           debugShowCheckedModeBanner: false,
           localizationsDelegates: [
@@ -227,6 +229,7 @@ var myroutes = {
   "/FilterPage": (context) => FilterPage(),
   "/FilterActivities": (context) => FilterActivities(),
   "/ViewImage": (context) => ViewImage(),
+  "/MealDetails": (Context) => MealDetails()
 };
 
 class MyApp extends StatefulWidget {
@@ -371,7 +374,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
       // home: TabView(tabController, tabsList, familyList, familyPos, pageSwiped),
       home: HomePage(familyPos, familyList, pageSwiped),
       theme: ThemeData(
-        fontFamily: 'Roboto',
+        fontFamily: appFontFmaily,
         outlinedButtonTheme: OutlinedButtonThemeData(
           style: OutlinedButton.styleFrom(
             primary: Colors.blue,

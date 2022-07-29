@@ -118,7 +118,8 @@ class _DonationPageState extends State<DonationPage> {
             Container(
               margin: EdgeInsets.only(top: 15, bottom: 5),
               height: 30,
-              child: getBottomSheetActionBar(context, "Member", false),
+              child: getBottomSheetActionBar(
+                  context, "Member", false, Colors.white),
             ),
             Container(
               margin: EdgeInsets.only(top: 0, left: 20, right: 20),
@@ -168,7 +169,8 @@ class _DonationPageState extends State<DonationPage> {
             Container(
               margin: EdgeInsets.only(top: 15, bottom: 5),
               height: 30,
-              child: getBottomSheetActionBar(context, "Donation Type", false),
+              child: getBottomSheetActionBar(
+                  context, "Donation Type", false, Colors.white),
             ),
             Container(
               width: double.infinity,
@@ -212,7 +214,8 @@ class _DonationPageState extends State<DonationPage> {
                 top: 20,
               ),
               height: 30,
-              child: getBottomSheetActionBar(context, "Amount", false),
+              child: getBottomSheetActionBar(
+                  context, "Amount", false, Colors.white),
             ),
             Container(
               margin: EdgeInsets.only(top: 0, left: 10, right: 10),

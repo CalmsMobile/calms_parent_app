@@ -656,7 +656,7 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               );
                             },
-                            color: Colors.greenAccent.shade700,
+                            color: Colors.pinkAccent,
                             textColor: Colors.white,
                             child: Icon(
                               Icons.shopping_cart,

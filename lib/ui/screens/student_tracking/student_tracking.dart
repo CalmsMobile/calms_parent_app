@@ -1,3 +1,4 @@
+import 'package:calms_parent/common/HexColor.dart';
 import 'package:calms_parent/common/widgets/select_member.dart';
 import 'package:flutter/material.dart';
 
@@ -71,192 +72,133 @@ class _StudentTrackingState extends State<StudentTracking> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: getMyAppbar("Student Tracking", []),
-      body: Container(
-        color: Colors.white,
-        child: Column(children: [
-          Container(
-            width: double.infinity,
-            margin: EdgeInsets.zero,
-            padding: EdgeInsets.zero,
-            child: ListView.builder(
-                padding: EdgeInsets.zero,
-                shrinkWrap: true,
-                itemCount: familyList.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Column(children: <Widget>[
-                    new Divider(
-                      height: 0.1,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Container(
-                          width: 45,
-                          height: 45,
-                          margin: EdgeInsets.only(left: 5, right: 5),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            color: Colors.black,
-                            borderRadius: BorderRadius.circular(60.0),
-                            image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(familyList[index]['image']),
+      body: SingleChildScrollView(
+        child: Container(
+          color: HexColor("#f5f8fd"),
+          child: Column(children: [
+            Container(
+              width: double.infinity,
+              margin: EdgeInsets.zero,
+              padding: EdgeInsets.zero,
+              child: ListView.builder(
+                  padding: EdgeInsets.zero,
+                  physics: BouncingScrollPhysics(
+                      parent: AlwaysScrollableScrollPhysics()),
+                  shrinkWrap: true,
+                  itemCount: familyList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20)),
+                      margin: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(
+                            width: 60,
+                            height: 60,
+                            margin: EdgeInsets.only(left: 10, right: 5),
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(60.0),
+                              image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: NetworkImage(familyList[index]['image']),
+                              ),
                             ),
                           ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.only(
-                              top: index == 0 ? 0 : 10, bottom: 10),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                familyList[index]["name"],
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 14),
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  RichText(
-                                    textAlign: TextAlign.center,
-                                    text: TextSpan(children: [
-                                      WidgetSpan(
-                                        child: Icon(
-                                          Icons.filter,
-                                          size: 14,
-                                        ),
-                                      ),
-                                      WidgetSpan(
-                                          child: Container(
-                                        padding:
-                                            EdgeInsets.only(bottom: 0, left: 8),
-                                        child: Text(
-                                          familyList[index]["class"],
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.normal,
-                                              fontSize: 12),
-                                        ),
-                                      )),
-                                    ]),
+                          Container(
+                            padding: EdgeInsets.only(
+                                top: index == 0 ? 15 : 15, bottom: 15),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.only(left: 4),
+                                  child: Text(
+                                    familyList[index]["name"],
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16),
                                   ),
-                                  RichText(
-                                    textAlign: TextAlign.center,
-                                    text: TextSpan(children: [
-                                      WidgetSpan(
-                                        child: Container(width: 10),
-                                      ),
-                                      WidgetSpan(
-                                        child: Icon(
-                                          Icons.calendar_month,
-                                          size: 14,
-                                        ),
-                                      ),
-                                      WidgetSpan(
-                                          child: Container(
-                                        padding:
-                                            EdgeInsets.only(bottom: 0, left: 8),
-                                        child: Text(
-                                          familyList[index]["year"],
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.normal,
-                                              fontSize: 12),
-                                        ),
-                                      )),
-                                    ]),
-                                  ),
-                                ],
-                              ),
-
-                              Container(
-                                padding: EdgeInsets.only(top: 7),
-                                child: Row(
+                                ),
+                                Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    RichText(
-                                      textAlign: TextAlign.center,
-                                      text: TextSpan(children: [
-                                        WidgetSpan(
-                                          child: Icon(
-                                            Icons.route,
-                                            size: 14,
-                                          ),
-                                        ),
-                                        WidgetSpan(
-                                            child: Container(
-                                          padding: EdgeInsets.only(
-                                              bottom: 0, left: 8),
-                                          child: Text(
-                                            "KLIA Airport",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.normal,
-                                                fontSize: 12),
-                                          ),
-                                        )),
-                                      ]),
+                                    Container(
+                                      margin:
+                                          EdgeInsets.only(right: 5, left: 4),
+                                      child: Image.asset(
+                                        "assets/images/ico_class_v2.png",
+                                        width: 18,
+                                        height: 18,
+                                      ),
                                     ),
                                     RichText(
                                       textAlign: TextAlign.center,
                                       text: TextSpan(children: [
                                         WidgetSpan(
-                                          child: Container(width: 10),
-                                        ),
-                                        WidgetSpan(
-                                          child: Icon(
-                                            Icons.flag,
-                                            size: 14,
+                                            child: Container(
+                                          child: Text(
+                                            familyList[index]["class"],
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.normal,
+                                                fontSize: 10),
                                           ),
-                                        ),
+                                        )),
+                                      ]),
+                                    ),
+                                    Container(
+                                        margin:
+                                            EdgeInsets.symmetric(horizontal: 8),
+                                        width: 1,
+                                        height: 10,
+                                        color: Colors.black),
+                                    RichText(
+                                      textAlign: TextAlign.center,
+                                      text: TextSpan(children: [
                                         WidgetSpan(
                                             child: Container(
                                           padding: EdgeInsets.only(
-                                              bottom: 0, left: 8),
+                                              bottom: 0, left: 0),
                                           child: Text(
-                                            "ACTIVE",
+                                            familyList[index]["year"],
                                             style: TextStyle(
                                                 fontWeight: FontWeight.normal,
-                                                fontSize: 12),
+                                                fontSize: 10),
                                           ),
                                         )),
                                       ]),
                                     ),
                                   ],
                                 ),
-                              ),
-                              Container(
-                                padding: EdgeInsets.only(top: 7),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    RichText(
-                                      textAlign: TextAlign.center,
-                                      text: TextSpan(children: [
-                                        WidgetSpan(
-                                          child: Icon(
-                                            Icons.directions_bus,
-                                            size: 14,
-                                          ),
+                                Container(
+                                  padding: EdgeInsets.only(top: 0),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+                                        margin: EdgeInsets.only(
+                                            right: 5, left: 4, top: 4),
+                                        child: Image.asset(
+                                          "assets/images/ico_trackingbus.png",
+                                          width: 18,
+                                          height: 18,
                                         ),
-                                        WidgetSpan(
-                                            child: Container(
-                                          padding: EdgeInsets.only(
-                                              bottom: 0, left: 8),
-                                          child: InkWell(
+                                      ),
+                                      RichText(
+                                        textAlign: TextAlign.center,
+                                        text: TextSpan(children: [
+                                          WidgetSpan(
+                                              child: InkWell(
                                             onTap: () {
-                                              // Navigator.of(context).pushNamed(
-                                              //     '/BusTracking',
-                                              //     arguments: {
-                                              //       'student':
-                                              //           familyList[index],
-                                              //     });
-
                                               Navigator.of(context).pushNamed(
                                                   '/CampusTracking',
                                                   arguments: {
@@ -265,37 +207,43 @@ class _StudentTrackingState extends State<StudentTracking> {
                                                     'type': 'BusTracking'
                                                   });
                                             },
-                                            child: Text(
-                                              "Bus Tracking",
-                                              style: TextStyle(
-                                                  decoration:
-                                                      TextDecoration.underline,
-                                                  color: Colors.blueAccent,
-                                                  decorationThickness: 3,
-                                                  fontWeight: FontWeight.normal,
-                                                  fontSize: 12),
-                                            ),
-                                          ),
-                                        )),
-                                      ]),
-                                    ),
-                                    RichText(
-                                      textAlign: TextAlign.center,
-                                      text: TextSpan(children: [
-                                        WidgetSpan(
-                                          child: Container(width: 10),
-                                        ),
-                                        WidgetSpan(
-                                          child: Icon(
-                                            Icons.school,
-                                            size: 14,
-                                          ),
-                                        ),
-                                        WidgetSpan(
                                             child: Container(
-                                          padding: EdgeInsets.only(
-                                              bottom: 0, left: 8),
-                                          child: InkWell(
+                                              padding: EdgeInsets.only(
+                                                  bottom: 0, left: 0),
+                                              child: Text(
+                                                "Bus Tracking",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                    fontSize: 10),
+                                              ),
+                                            ),
+                                          )),
+                                        ]),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  padding: EdgeInsets.only(top: 0),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+                                        margin: EdgeInsets.only(
+                                            right: 5, left: 4, top: 4),
+                                        child: Image.asset(
+                                          "assets/images/ico_trackingcollege.png",
+                                          width: 18,
+                                          height: 18,
+                                        ),
+                                      ),
+                                      RichText(
+                                        textAlign: TextAlign.center,
+                                        text: TextSpan(children: [
+                                          WidgetSpan(
+                                              child: InkWell(
                                             onTap: () {
                                               Navigator.of(context).pushNamed(
                                                   '/CampusTracking',
@@ -305,123 +253,201 @@ class _StudentTrackingState extends State<StudentTracking> {
                                                     'type': 'CampusTracking'
                                                   });
                                             },
-                                            child: Text(
-                                              "Campus Tracking",
-                                              style: TextStyle(
-                                                  decoration:
-                                                      TextDecoration.underline,
-                                                  color: Colors.blueAccent,
-                                                  decorationThickness: 3,
-                                                  fontWeight: FontWeight.normal,
-                                                  fontSize: 12),
+                                            child: Container(
+                                              padding: EdgeInsets.only(
+                                                  bottom: 0, left: 0),
+                                              child: Text(
+                                                "Campus Tracking",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                    fontSize: 10),
+                                              ),
                                             ),
-                                          ),
-                                        )),
-                                      ]),
-                                    ),
-                                  ],
+                                          )),
+                                        ]),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              // Container(
-                              //   color: Colors.white24,
-                              //   margin: EdgeInsets.only(top: 8),
-                              //   child: Row(
-                              //     mainAxisAlignment: MainAxisAlignment.center,
-                              //     crossAxisAlignment: CrossAxisAlignment.start,
-                              //     children: [
-                              //       Expanded(
-                              //         child: DecoratedBox(
-                              //           decoration: BoxDecoration(
-                              //             border: Border(
-                              //               top: BorderSide(
-                              //                   width: 1,
-                              //                   color: Colors.grey.shade300),
-                              //             ),
-                              //           ),
-                              //           child: TextButton(
-                              //             onPressed: () {
-                              //               Navigator.of(context).pushNamed(
-                              //                   '/BusTracking',
-                              //                   arguments: {
-                              //                     'student': familyList[index],
-                              //                   });
-                              //             },
-                              //             child: Row(
-                              //               mainAxisAlignment:
-                              //                   MainAxisAlignment.start,
-                              //               crossAxisAlignment:
-                              //                   CrossAxisAlignment.start,
-                              //               children: [
-                              //                 Icon(
-                              //                   Icons.bus_alert,
-                              //                   size: 16,
-                              //                 ),
-                              //                 SizedBox(
-                              //                   width: 4,
-                              //                 ),
-                              //                 Text(
-                              //                   'Bus tracking',
-                              //                   textAlign: TextAlign.center,
-                              //                 ),
-                              //               ],
-                              //             ),
-                              //           ),
-                              //         ),
-                              //       ),
-                              //       Expanded(
-                              //         child: DecoratedBox(
-                              //           decoration: BoxDecoration(
-                              //             border: Border(
-                              //               left: BorderSide(
-                              //                   width: 1,
-                              //                   color: Colors.grey.shade300),
-                              //               top: BorderSide(
-                              //                   width: 1,
-                              //                   color: Colors.grey.shade300),
-                              //             ),
-                              //           ),
-                              //           child: TextButton(
-                              //             onPressed: () {
-                              //               Navigator.of(context).pushNamed(
-                              //                   '/CampusTracking',
-                              //                   arguments: {
-                              //                     'student': familyList[index],
-                              //                   });
-                              //             },
-                              //             child: Row(
-                              //               mainAxisAlignment:
-                              //                   MainAxisAlignment.start,
-                              //               crossAxisAlignment:
-                              //                   CrossAxisAlignment.start,
-                              //               children: [
-                              //                 Icon(
-                              //                   Icons.school,
-                              //                   size: 16,
-                              //                 ),
-                              //                 SizedBox(
-                              //                   width: 4,
-                              //                 ),
-                              //                 Text(
-                              //                   'Campus tracking',
-                              //                   textAlign: TextAlign.center,
-                              //                 ),
-                              //               ],
-                              //             ),
-                              //           ),
-                              //         ),
-                              //       ),
-                              //     ],
-                              //   ),
-                              // )
-                            ],
+
+                                Container(
+                                  padding: EdgeInsets.only(top: 0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        margin: EdgeInsets.only(
+                                            right: 5, left: 8, top: 0),
+                                        child: Image.asset(
+                                          "assets/images/ico_status.png",
+                                          width: 12,
+                                          height: 12,
+                                        ),
+                                      ),
+                                      RichText(
+                                        textAlign: TextAlign.center,
+                                        text: TextSpan(children: [
+                                          WidgetSpan(
+                                              child: Row(
+                                            children: [
+                                              Container(
+                                                margin: EdgeInsets.only(top: 3),
+                                                padding: EdgeInsets.only(
+                                                    bottom: 0,
+                                                    left: 2,
+                                                    right: 8),
+                                                child: Text(
+                                                  "Status",
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.normal,
+                                                      fontSize: 10),
+                                                ),
+                                              ),
+                                              Container(
+                                                margin: EdgeInsets.only(top: 3),
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 8, vertical: 2),
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          5.0),
+                                                ),
+                                                child: Text("Active",
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.normal,
+                                                        fontSize: 10)),
+                                              ),
+                                              Container(
+                                                margin: EdgeInsets.only(top: 3),
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 8, vertical: 2),
+                                                decoration: BoxDecoration(
+                                                  color: Colors.grey.shade200,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          5.0),
+                                                ),
+                                                child: Text("Inactive",
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.normal,
+                                                        fontSize: 10)),
+                                              )
+                                            ],
+                                          ))
+                                        ]),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+
+                                // Container(
+                                //   color: Colors.white24,
+                                //   margin: EdgeInsets.only(top: 8),
+                                //   child: Row(
+                                //     mainAxisAlignment: MainAxisAlignment.center,
+                                //     crossAxisAlignment: CrossAxisAlignment.start,
+                                //     children: [
+                                //       Expanded(
+                                //         child: DecoratedBox(
+                                //           decoration: BoxDecoration(
+                                //             border: Border(
+                                //               top: BorderSide(
+                                //                   width: 1,
+                                //                   color: Colors.grey.shade300),
+                                //             ),
+                                //           ),
+                                //           child: TextButton(
+                                //             onPressed: () {
+                                //               Navigator.of(context).pushNamed(
+                                //                   '/BusTracking',
+                                //                   arguments: {
+                                //                     'student': familyList[index],
+                                //                   });
+                                //             },
+                                //             child: Row(
+                                //               mainAxisAlignment:
+                                //                   MainAxisAlignment.start,
+                                //               crossAxisAlignment:
+                                //                   CrossAxisAlignment.start,
+                                //               children: [
+                                //                 Icon(
+                                //                   Icons.bus_alert,
+                                //                   size: 16,
+                                //                 ),
+                                //                 SizedBox(
+                                //                   width: 4,
+                                //                 ),
+                                //                 Text(
+                                //                   'Bus tracking',
+                                //                   textAlign: TextAlign.center,
+                                //                 ),
+                                //               ],
+                                //             ),
+                                //           ),
+                                //         ),
+                                //       ),
+                                //       Expanded(
+                                //         child: DecoratedBox(
+                                //           decoration: BoxDecoration(
+                                //             border: Border(
+                                //               left: BorderSide(
+                                //                   width: 1,
+                                //                   color: Colors.grey.shade300),
+                                //               top: BorderSide(
+                                //                   width: 1,
+                                //                   color: Colors.grey.shade300),
+                                //             ),
+                                //           ),
+                                //           child: TextButton(
+                                //             onPressed: () {
+                                //               Navigator.of(context).pushNamed(
+                                //                   '/CampusTracking',
+                                //                   arguments: {
+                                //                     'student': familyList[index],
+                                //                   });
+                                //             },
+                                //             child: Row(
+                                //               mainAxisAlignment:
+                                //                   MainAxisAlignment.start,
+                                //               crossAxisAlignment:
+                                //                   CrossAxisAlignment.start,
+                                //               children: [
+                                //                 Icon(
+                                //                   Icons.school,
+                                //                   size: 16,
+                                //                 ),
+                                //                 SizedBox(
+                                //                   width: 4,
+                                //                 ),
+                                //                 Text(
+                                //                   'Campus tracking',
+                                //                   textAlign: TextAlign.center,
+                                //                 ),
+                                //               ],
+                                //             ),
+                                //           ),
+                                //         ),
+                                //       ),
+                                //     ],
+                                //   ),
+                                // )
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
-                    )
-                  ]);
-                }),
-          ),
-        ]),
+                        ],
+                      ),
+                    );
+                  }),
+            ),
+          ]),
+        ),
       ),
     );
   }

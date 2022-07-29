@@ -1,3 +1,4 @@
+import 'package:calms_parent/common/HexColor.dart';
 import 'package:calms_parent/common/alert_dialog.dart';
 import 'package:dropdown_button2/custom_dropdown_button2.dart';
 import 'package:flutter/material.dart';
@@ -13,13 +14,13 @@ PreferredSizeWidget getMyAppbar(var titleText, List<Widget> actions1) {
         color: Colors.black, //change your color here
       ),
       elevation: 0,
-      backgroundColor: Colors.white,
+      backgroundColor: HexColor("#f5f8fd"),
       titleSpacing: -5,
       actions: actions1);
 }
 
 PreferredSizeWidget getBottomSheetActionBar(
-    BuildContext context, var titleText, bool showClose) {
+    BuildContext context, var titleText, bool showClose, Color bgcolor) {
   return AppBar(
     title: titleText == 'Confirmation'
         ? RichText(
@@ -54,9 +55,7 @@ PreferredSizeWidget getBottomSheetActionBar(
                     : FontWeight.normal),
           ),
     elevation: 0,
-    backgroundColor: titleText == 'Summary' || titleText == 'Attendance'
-        ? Colors.grey.shade200
-        : Colors.white,
+    backgroundColor: bgcolor,
     automaticallyImplyLeading: false,
     actions: [
       if (showClose)
@@ -183,7 +182,8 @@ void showCustomPaymentAlert(BuildContext buildContext) {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        getBottomSheetActionBar(context, "Confirmation", true),
+                        getBottomSheetActionBar(
+                            context, "Confirmation", true, Colors.white),
 
                         Container(
                           margin: EdgeInsets.only(top: 0),
@@ -445,8 +445,8 @@ void showPaymentSelectOption(
                                     Container(
                                       margin: EdgeInsets.only(top: 10),
                                       height: 30,
-                                      child: getBottomSheetActionBar(
-                                          context, "Select Model", false),
+                                      child: getBottomSheetActionBar(context,
+                                          "Select Model", false, Colors.white),
                                     ),
                                     Container(
                                       width: double.infinity,
@@ -493,8 +493,8 @@ void showPaymentSelectOption(
                                     Container(
                                       margin: EdgeInsets.only(top: 10),
                                       height: 30,
-                                      child: getBottomSheetActionBar(
-                                          context, "Select Bank", false),
+                                      child: getBottomSheetActionBar(context,
+                                          "Select Bank", false, Colors.white),
                                     ),
                                     Container(
                                       width: double.infinity,

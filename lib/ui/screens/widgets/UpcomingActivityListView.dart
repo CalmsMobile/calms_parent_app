@@ -31,16 +31,20 @@ class UpcomingActivityListView extends StatelessWidget {
                       title: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            upcomingActivityList[index]['title'],
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 14),
+                          Flexible(
+                            child: Text(
+                              upcomingActivityList[index]['title'],
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 14),
+                            ),
                           ),
                           Text(
                             "Due date: " +
                                 upcomingActivityList[index]['enddate'],
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 12),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 10,
+                                color: Colors.grey.shade500),
                           )
                         ],
                       ),
@@ -53,7 +57,9 @@ class UpcomingActivityListView extends StatelessWidget {
                                 "Type: " +
                                     upcomingActivityList[index]['doctype'],
                                 style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 12),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 10,
+                                    color: Colors.grey.shade500),
                               ),
                               new RichText(
                                 text: new TextSpan(
@@ -79,7 +85,7 @@ class UpcomingActivityListView extends StatelessWidget {
                             ],
                           ),
                           SizedBox(
-                            height: 2,
+                            height: 1,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -88,7 +94,9 @@ class UpcomingActivityListView extends StatelessWidget {
                                 "Category: " +
                                     upcomingActivityList[index]['category'],
                                 style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 12),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 10,
+                                    color: Colors.grey.shade500),
                               ),
                             ],
                           ),

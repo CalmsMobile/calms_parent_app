@@ -174,7 +174,7 @@ class _PinLockState extends State<PinLock> {
                         "Create passcode",
                         style: TextStyle(
                             fontSize: 18.0,
-                            fontFamily: "Raleway",
+                            fontFamily: "Montserrat",
                             fontWeight: FontWeight.bold),
                       ),
                       Icon(Icons.arrow_forward)

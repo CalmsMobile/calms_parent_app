@@ -46,7 +46,7 @@ class StoreItemListView extends StatelessWidget {
                               // Note: Styles for TextSpans must be explicitly defined.
                               // Child text spans will inherit styles from parent
                               style: new TextStyle(
-                                fontSize: 16.0,
+                                fontSize: 14.0,
                                 color: Colors.black,
                               ),
                               children: <TextSpan>[
@@ -55,9 +55,10 @@ class StoreItemListView extends StatelessWidget {
                                     style: new TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Colors.red.shade500,
-                                        fontSize: 16)),
+                                        fontSize: 14)),
                                 new TextSpan(
-                                    text: storeItemList[index]['price']),
+                                    text: storeItemList[index]['price'],
+                                    style: new TextStyle(fontSize: 14)),
                               ],
                             ),
                           ),
@@ -69,7 +70,9 @@ class StoreItemListView extends StatelessWidget {
                           Text(
                             "Category: " + storeItemList[index]['category'],
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 12),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 10,
+                                color: Colors.grey.shade500),
                           )
                         ],
                       ),

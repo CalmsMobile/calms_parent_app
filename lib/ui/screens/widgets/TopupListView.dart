@@ -52,11 +52,13 @@ class TopupListView extends StatelessWidget {
                                     text: '',
                                     style: new TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        color: Colors.grey,
-                                        fontSize: 12)),
+                                        color: Colors.grey.shade500,
+                                        fontSize: 10)),
                                 new TextSpan(
                                     text: recentActivities[index]['date'],
-                                    style: new TextStyle(fontSize: 12)),
+                                    style: new TextStyle(
+                                        color: Colors.grey.shade500,
+                                        fontSize: 10)),
                               ],
                             ),
                           ),
@@ -69,7 +71,9 @@ class TopupListView extends StatelessWidget {
                             "Topup via: " +
                                 recentActivities[index]['mode_of_topup'],
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 12),
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey.shade500,
+                                fontSize: 10),
                           ),
                           new RichText(
                             text: new TextSpan(
@@ -85,9 +89,10 @@ class TopupListView extends StatelessWidget {
                                     style: new TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Colors.red.shade500,
-                                        fontSize: 16)),
+                                        fontSize: 14)),
                                 new TextSpan(
-                                    text: recentActivities[index]['amount']),
+                                    text: recentActivities[index]['amount'],
+                                    style: TextStyle(fontSize: 14)),
                               ],
                             ),
                           ),

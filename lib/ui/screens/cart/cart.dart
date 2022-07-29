@@ -1,3 +1,4 @@
+import 'package:calms_parent/common/HexColor.dart';
 import 'package:calms_parent/common/util/radio_button.dart';
 import 'package:flutter/material.dart';
 import 'package:footer/footer.dart';
@@ -24,22 +25,24 @@ class _CartPageState extends State<CartPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          iconTheme: IconThemeData(
-            color: Colors.black, //change your color here
-          ),
-          elevation: 0,
-          title: Text(
-            "CART",
-            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-          ),
-          backgroundColor: Colors.white),
+        iconTheme: IconThemeData(
+          color: Colors.black, //change your color here
+        ),
+        elevation: 0,
+        backgroundColor: HexColor("#f5f8fd"),
+        titleSpacing: -5,
+        title: Text(
+          "MY CART",
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+        ),
+      ),
       resizeToAvoidBottomInset: false,
       body: Column(children: [
         Container(
           child: Container(
             width: double.infinity,
             margin: EdgeInsets.zero,
-            color: Colors.white,
+            color: HexColor("#f5f8fd"),
             padding: EdgeInsets.zero,
             child: ListView.builder(
                 padding: EdgeInsets.zero,
