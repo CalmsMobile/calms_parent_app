@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
+import 'package:calms_parent/common/HexColor.dart';
 import 'package:calms_parent/model/HolidayModel.dart';
 import 'package:calms_parent/model/_AppointmentDataSource.dart';
 import 'package:calms_parent/model/moduleModel.dart';
@@ -18,8 +19,6 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class HomePage extends StatefulWidget {
-  String color = "#35438e".replaceAll('#', '0xff');
-
   HomePage(this.familyPos, this.familyList, this.pageSwiped);
 
   final int familyPos;
@@ -466,7 +465,7 @@ class _HomePageState extends State<HomePage> {
                           borderRadius: BorderRadius.only(
                               bottomLeft: Radius.circular(200.0),
                               bottomRight: Radius.circular(200.0)),
-                          color: Color(int.parse(widget.color))),
+                          color: HexColor("#6495ED")),
                       child: Container(
                         width: double.infinity,
                         height: 220,
@@ -627,8 +626,8 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               );
                             },
-                            color: Colors.blue.shade700,
-                            textColor: Colors.white,
+                            color: Colors.white,
+                            textColor: HexColor("#6495ED"),
                             child: Icon(
                               Icons.settings,
                               size: 24,
@@ -656,8 +655,8 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               );
                             },
-                            color: Colors.pinkAccent,
-                            textColor: Colors.white,
+                            color: Colors.white,
+                            textColor: Colors.pinkAccent,
                             child: Icon(
                               Icons.shopping_cart,
                               size: 24,
@@ -683,8 +682,8 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               );
                             },
-                            color: Colors.blue.shade700,
-                            textColor: Colors.white,
+                            color: Colors.white,
+                            textColor: HexColor("#6495ED"),
                             child: Icon(
                               Icons.notifications,
                               size: 24,

@@ -1,3 +1,4 @@
+import 'package:calms_parent/common/HexColor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
@@ -104,6 +105,7 @@ class ProfileSLPage extends StatelessWidget {
       appBar: AppBar(
         titleSpacing: -10.0,
         centerTitle: false,
+        backgroundColor: HexColor("#f5f8fd"),
         title: Column(
           children: [
             Container(
@@ -152,6 +154,7 @@ class ProfileSLPage extends StatelessWidget {
         ),
       ),
       body: Container(
+        color: Colors.white,
         child: Column(
           children: [
             AppBar(

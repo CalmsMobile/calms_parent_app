@@ -1,3 +1,4 @@
+import 'package:calms_parent/common/widgets/select_member.dart';
 import 'package:flutter/material.dart';
 
 class TopupDetails extends StatefulWidget {
@@ -13,7 +14,7 @@ class _TopupDetailsState extends State<TopupDetails> {
     final passData = ModalRoute.of(context)?.settings.arguments as Map;
     print(passData);
     return Scaffold(
-      appBar: AppBar(title: Text("Topup Details")),
+      appBar: getMyAppbar("Topup Details", []),
       resizeToAvoidBottomInset: false,
       body: SizedBox(
         height: MediaQuery.of(context).size.height,

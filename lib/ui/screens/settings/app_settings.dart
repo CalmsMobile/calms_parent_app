@@ -1,5 +1,6 @@
 import 'package:calms_parent/common/alert_dialog.dart';
 import 'package:calms_parent/common/my_shared_pref.dart';
+import 'package:calms_parent/common/widgets/select_member.dart';
 import 'package:calms_parent/ui/screens/scan_qr_registration/QRRegistration.dart';
 import 'package:flutter/material.dart';
 
@@ -14,30 +15,11 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: ListTile(
-            contentPadding: EdgeInsets.zero,
-            title: Align(
-              alignment: Alignment(-1.2, 0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Settings",
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        color: Colors.white),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
+        appBar: getMyAppbar("Settings", []),
         body: SafeArea(
           child: SingleChildScrollView(
             child: Container(
+              color: Colors.white,
               padding: EdgeInsets.symmetric(horizontal: 10),
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,

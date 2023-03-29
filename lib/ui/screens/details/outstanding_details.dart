@@ -1,3 +1,4 @@
+import 'package:calms_parent/common/widgets/select_member.dart';
 import 'package:flutter/material.dart';
 
 class OutStandingDetails extends StatefulWidget {
@@ -13,7 +14,7 @@ class _OutStandingDetailsState extends State<OutStandingDetails> {
     final passData = ModalRoute.of(context)?.settings.arguments as Map;
     print(passData);
     return Scaffold(
-      appBar: AppBar(title: Text("Outstanding")),
+      appBar: getMyAppbar("Outstanding", []),
       resizeToAvoidBottomInset: false,
       body: SizedBox(
         height: MediaQuery.of(context).size.height,

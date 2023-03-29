@@ -1,4 +1,5 @@
 import 'package:awesome_select/awesome_select.dart';
+import 'package:calms_parent/common/HexColor.dart';
 import 'package:calms_parent/common/alert_dialog.dart';
 import 'package:calms_parent/common/widgets/select_member.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -109,7 +110,7 @@ class _StoreDetailsState extends State<StoreDetails> {
           color: Colors.black, //change your color here
         ),
         elevation: 0,
-        backgroundColor: Colors.white,
+        backgroundColor: HexColor("#f5f8fd"),
         titleSpacing: -4,
         title: Text(
           "Store Details",

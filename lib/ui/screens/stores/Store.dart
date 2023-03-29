@@ -1,4 +1,5 @@
 import 'package:awesome_select/awesome_select.dart';
+import 'package:calms_parent/common/HexColor.dart';
 import 'package:calms_parent/common/alert_dialog.dart';
 import 'package:calms_parent/common/constants.dart';
 import 'package:calms_parent/common/widgets/select_member.dart';
@@ -295,7 +296,7 @@ class _StoresState extends State<Stores> {
           color: Colors.black, //change your color here
         ),
         elevation: 0,
-        backgroundColor: Colors.white,
+        backgroundColor: HexColor("#f5f8fd"),
         titleSpacing: -5,
         title: searchEnable
             ? Container(

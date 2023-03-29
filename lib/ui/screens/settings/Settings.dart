@@ -1,3 +1,4 @@
+import 'package:calms_parent/common/HexColor.dart';
 import 'package:flutter/material.dart';
 
 class Settings extends StatefulWidget {
@@ -22,6 +23,7 @@ class _SettingsState extends State<Settings> {
     return Scaffold(
       appBar: AppBar(
         titleSpacing: -10.0,
+        backgroundColor: HexColor("#f5f8fd"),
         centerTitle: false,
         title: Column(
           children: [
@@ -75,6 +77,4 @@ class _SettingsState extends State<Settings> {
       // ),
     );
   }
-
-  
 }

@@ -1,3 +1,4 @@
+import 'package:calms_parent/common/HexColor.dart';
 import 'package:calms_parent/common/alert_dialog.dart';
 import 'package:calms_parent/common/widgets/select_member.dart';
 import 'package:calms_parent/ui/screens/activities/Activities.dart';
@@ -321,7 +322,7 @@ class _InvoicePaymentState extends State<InvoicePayment> {
             color: Colors.black, //change your color here
           ),
           elevation: 0,
-          backgroundColor: Colors.white,
+          backgroundColor: HexColor("#f5f8fd"),
           titleSpacing: -5,
           title: searchEnable
               ? Container(

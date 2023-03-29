@@ -1,3 +1,4 @@
+import 'package:calms_parent/common/widgets/select_member.dart';
 import 'package:flutter/material.dart';
 
 class ProfileMain extends StatefulWidget {
@@ -19,20 +20,7 @@ class _ProfileMainState extends State<ProfileMain> {
     final profileData = ModalRoute.of(context)?.settings.arguments as Map;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Profile"),
-        // actions: [
-        //   IconButton(
-        //     icon: Icon(
-        //       Icons.settings,
-        //     ),
-        //     onPressed: () {
-        //       Navigator.of(context)
-        //           .pushNamed('/Settings', arguments: profileData);
-        //     },
-        //   )
-        // ],
-      ),
+      appBar: getMyAppbar("Profile", []),
       body: Container(
           child: SingleChildScrollView(
         child: Column(

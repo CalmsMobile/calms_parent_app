@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart' as badges;
 import 'package:badges/badges.dart';
 import 'package:calms_parent/common/alert_dialog.dart';
 import 'package:calms_parent/common/app_settings.dart';
@@ -63,7 +64,7 @@ class _PINEnterState extends State<PINEnter> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Badge(
+                badges.Badge(
                   toAnimate: true,
                   shape: BadgeShape.circle,
                   badgeColor: Colors.grey.shade800,
@@ -85,7 +86,7 @@ class _PINEnterState extends State<PINEnter> {
                     ),
                   ),
                 ),
-                Badge(
+                badges.Badge(
                   toAnimate: true,
                   shape: BadgeShape.circle,
                   badgeColor: Colors.grey.shade800,
@@ -107,7 +108,7 @@ class _PINEnterState extends State<PINEnter> {
                     ),
                   ),
                 ),
-                Badge(
+                badges.Badge(
                   toAnimate: true,
                   shape: BadgeShape.circle,
                   badgeColor: Colors.grey.shade800,
@@ -129,7 +130,7 @@ class _PINEnterState extends State<PINEnter> {
                     ),
                   ),
                 ),
-                Badge(
+                badges.Badge(
                   toAnimate: true,
                   shape: BadgeShape.circle,
                   badgeColor: Colors.grey.shade800,
@@ -151,7 +152,7 @@ class _PINEnterState extends State<PINEnter> {
                     ),
                   ),
                 ),
-                Badge(
+                badges.Badge(
                   toAnimate: true,
                   shape: BadgeShape.circle,
                   badgeColor: Colors.grey.shade800,
@@ -173,7 +174,7 @@ class _PINEnterState extends State<PINEnter> {
                     ),
                   ),
                 ),
-                Badge(
+                badges.Badge(
                   toAnimate: true,
                   shape: BadgeShape.circle,
                   badgeColor: Colors.grey.shade800,

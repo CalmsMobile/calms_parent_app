@@ -1,3 +1,4 @@
+import 'package:calms_parent/common/HexColor.dart';
 import 'package:calms_parent/common/date_util.dart';
 import 'package:calms_parent/common/widgets/select_member.dart';
 import 'package:flutter/material.dart';
@@ -24,12 +25,27 @@ class _CampusTrackingState extends State<CampusTracking> {
               : "Campus Tracking",
           []),
       body: Container(
-        color: Colors.white,
+        color: HexColor("#f5f8fd"),
         child: Column(children: [
           Container(
-            color: Colors.white24,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20.0),
+                topRight: Radius.circular(20.0),
+                bottomLeft: Radius.circular(20.0),
+                bottomRight: Radius.circular(20.0),
+              ),
+              boxShadow: [
+                new BoxShadow(
+                  color: Colors.grey.shade300,
+                  blurRadius: 5.0,
+                ),
+              ],
+            ),
             width: double.infinity,
-            margin: EdgeInsets.symmetric(horizontal: 10),
+            margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
             child: Align(
               alignment: Alignment.center,
               child: Column(
@@ -40,15 +56,18 @@ class _CampusTrackingState extends State<CampusTracking> {
                     height: 10,
                   ),
                   ClipRRect(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(65.0),
-                      topRight: Radius.circular(65.0),
-                      bottomLeft: Radius.circular(65.0),
-                      bottomRight: Radius.circular(65.0),
-                    ),
-                    child: Image.network(stuData['image'] != null
-                        ? stuData['image']
-                        : Image.asset("assets/images/user.png")),
+                    borderRadius: BorderRadius.all(Radius.circular(65.0)),
+                    child: stuData['image'] != null
+                        ? Image.network(
+                            stuData['image'],
+                            width: 60,
+                            height: 60,
+                          )
+                        : Image.asset(
+                            "assets/images/user.png",
+                            width: 60,
+                            height: 60,
+                          ),
                   ),
                   SizedBox(
                     height: 10,
@@ -60,9 +79,6 @@ class _CampusTrackingState extends State<CampusTracking> {
                         fontWeight: FontWeight.bold,
                         color: Colors.black),
                   ),
-                  SizedBox(
-                    height: 10,
-                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -71,8 +87,9 @@ class _CampusTrackingState extends State<CampusTracking> {
                         text: TextSpan(children: [
                           WidgetSpan(
                             child: Icon(
-                              Icons.filter,
-                              size: 16,
+                              Icons.school_outlined,
+                              size: 18,
+                              color: Colors.blueAccent,
                             ),
                           ),
                           WidgetSpan(
@@ -81,21 +98,25 @@ class _CampusTrackingState extends State<CampusTracking> {
                             child: Text(
                               stuData["class"],
                               style: TextStyle(
-                                  fontWeight: FontWeight.normal, fontSize: 16),
+                                  fontWeight: FontWeight.normal, fontSize: 10),
                             ),
                           )),
                         ]),
+                      ),
+                      Container(
+                        width: 1,
+                        height: 15,
+                        color: Colors.blueAccent,
+                        margin: EdgeInsets.symmetric(horizontal: 8),
                       ),
                       RichText(
                         textAlign: TextAlign.center,
                         text: TextSpan(children: [
                           WidgetSpan(
-                            child: Container(width: 10),
-                          ),
-                          WidgetSpan(
                             child: Icon(
                               Icons.calendar_month,
                               size: 16,
+                              color: Colors.blueAccent,
                             ),
                           ),
                           WidgetSpan(
@@ -104,7 +125,7 @@ class _CampusTrackingState extends State<CampusTracking> {
                             child: Text(
                               stuData["year"],
                               style: TextStyle(
-                                  fontWeight: FontWeight.normal, fontSize: 16),
+                                  fontWeight: FontWeight.normal, fontSize: 10),
                             ),
                           )),
                         ]),
@@ -123,6 +144,7 @@ class _CampusTrackingState extends State<CampusTracking> {
                               child: Icon(
                                 Icons.route,
                                 size: 16,
+                                color: Colors.blueAccent,
                               ),
                             ),
                             WidgetSpan(
@@ -132,7 +154,7 @@ class _CampusTrackingState extends State<CampusTracking> {
                                 "KLIA Airport",
                                 style: TextStyle(
                                     fontWeight: FontWeight.normal,
-                                    fontSize: 16),
+                                    fontSize: 10),
                               ),
                             )),
                           ]),
@@ -146,7 +168,8 @@ class _CampusTrackingState extends State<CampusTracking> {
                             WidgetSpan(
                               child: Icon(
                                 Icons.flag,
-                                size: 16,
+                                size: 18,
+                                color: Colors.blueAccent,
                               ),
                             ),
                             WidgetSpan(
@@ -156,7 +179,7 @@ class _CampusTrackingState extends State<CampusTracking> {
                                 "ACTIVE",
                                 style: TextStyle(
                                     fontWeight: FontWeight.normal,
-                                    fontSize: 16),
+                                    fontSize: 10),
                               ),
                             )),
                           ]),
@@ -252,7 +275,6 @@ class _CampusTrackingState extends State<CampusTracking> {
                       padding:
                           EdgeInsets.only(left: 10.0, top: 10.0, bottom: 10.0),
                       width: double.infinity,
-                      color: Colors.grey.shade200,
                       child: Text(
                         "Vehicle Info",
                         textAlign: TextAlign.center,
@@ -282,7 +304,7 @@ class _CampusTrackingState extends State<CampusTracking> {
                                   "Vehicle No#",
                                   style: TextStyle(
                                       fontWeight: FontWeight.normal,
-                                      fontSize: 16),
+                                      fontSize: 12),
                                 ),
                               )),
                             ]),
@@ -292,7 +314,7 @@ class _CampusTrackingState extends State<CampusTracking> {
                             child: Text(
                               "BN1234",
                               style: TextStyle(
-                                  fontWeight: FontWeight.normal, fontSize: 16),
+                                  fontWeight: FontWeight.normal, fontSize: 14),
                             ),
                           ),
                         ],
@@ -320,7 +342,7 @@ class _CampusTrackingState extends State<CampusTracking> {
                                   "Vehicle Type",
                                   style: TextStyle(
                                       fontWeight: FontWeight.normal,
-                                      fontSize: 16),
+                                      fontSize: 12),
                                 ),
                               )),
                             ]),
@@ -330,7 +352,7 @@ class _CampusTrackingState extends State<CampusTracking> {
                             child: Text(
                               "Bus",
                               style: TextStyle(
-                                  fontWeight: FontWeight.normal, fontSize: 16),
+                                  fontWeight: FontWeight.normal, fontSize: 14),
                             ),
                           ),
                         ],
@@ -358,7 +380,7 @@ class _CampusTrackingState extends State<CampusTracking> {
                                   "Driver Name",
                                   style: TextStyle(
                                       fontWeight: FontWeight.normal,
-                                      fontSize: 16),
+                                      fontSize: 12),
                                 ),
                               )),
                             ]),
@@ -368,7 +390,7 @@ class _CampusTrackingState extends State<CampusTracking> {
                             child: Text(
                               "ADAM HENDRY JOHN",
                               style: TextStyle(
-                                  fontWeight: FontWeight.normal, fontSize: 16),
+                                  fontWeight: FontWeight.normal, fontSize: 14),
                             ),
                           ),
                         ],

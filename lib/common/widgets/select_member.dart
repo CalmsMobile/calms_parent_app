@@ -78,15 +78,13 @@ PreferredSizeWidget customBottomSheetActionBar(
     bool showBold,
     double textSize) {
   return AppBar(
-    title: Container(
-      margin: EdgeInsets.only(top: 0),
-      child: Text(
-        titleText,
-        style: TextStyle(
-            color: Colors.black,
-            fontSize: textSize,
-            fontWeight: showBold ? FontWeight.bold : FontWeight.normal),
-      ),
+    toolbarHeight: 50,
+    title: Text(
+      titleText,
+      style: TextStyle(
+          color: Colors.black,
+          fontSize: textSize,
+          fontWeight: showBold ? FontWeight.bold : FontWeight.normal),
     ),
     elevation: 0,
     backgroundColor: bgColor,

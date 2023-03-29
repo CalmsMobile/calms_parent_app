@@ -1,3 +1,4 @@
+import 'package:calms_parent/common/HexColor.dart';
 import 'package:calms_parent/common/alert_dialog.dart';
 import 'package:calms_parent/common/constants.dart';
 import 'package:calms_parent/common/util/my_alert_popup.dart';
@@ -62,7 +63,7 @@ class _ActivitiesState extends State<Activities> {
       "isactive": true,
       "category": "School Trip",
       "image":
-          "https://www.esn.org/blog/sites/default/files/imce/576364502a3f379b77617193680e21ff.jpg",
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX3u01CRj2dvoBQuCUuGyG_7BcxTIJ_qIKzQ&usqp=CAU",
       "startdate": "2019/07/02",
       "enddate": "2019/11/01",
       "modifieddate": "2019/07/23 02:06:48 AM"
@@ -81,7 +82,7 @@ class _ActivitiesState extends State<Activities> {
       "title": "Sing Loud",
       "price": "50",
       "image":
-          "https://www.esn.org/blog/sites/default/files/imce/576364502a3f379b77617193680e21ff.jpg",
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkBZJEywoUSqlJz0gsjE7Tn_72KStEInEN-w&usqp=CAU",
       "description":
           "I think music in itself is healing. It’s an explosive expression of humanity. It’s something we are all touched by. No matter what culture we’re from, everyone loves music.",
       "yeargroup": ["YEAR 4", "YEAR 3", "YEAR 1"],
@@ -110,7 +111,7 @@ class _ActivitiesState extends State<Activities> {
       "accessgroup": ["R001"],
       "isactive": true,
       "image":
-          "https://www.esn.org/blog/sites/default/files/imce/576364502a3f379b77617193680e21ff.jpg",
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2LFgkB8qoQQbpFehoowcqxibapU6PQTKz8Q&usqp=CAU",
       "startdate": "2019/07/02",
       "enddate": "2019/07/31",
       "category": "School Trip",
@@ -349,7 +350,7 @@ class _ActivitiesState extends State<Activities> {
           color: Colors.black, //change your color here
         ),
         elevation: 0,
-        backgroundColor: Colors.white,
+        backgroundColor: HexColor("#f5f8fd"),
         titleSpacing: -5,
         title: searchEnable
             ? Container(

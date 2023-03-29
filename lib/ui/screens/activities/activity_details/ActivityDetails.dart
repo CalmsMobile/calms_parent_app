@@ -1,3 +1,4 @@
+import 'package:calms_parent/common/HexColor.dart';
 import 'package:calms_parent/common/alert_dialog.dart';
 import 'package:calms_parent/common/widgets/select_member.dart';
 import 'package:flutter/material.dart';
@@ -79,69 +80,70 @@ class _ActivityDetailsState extends State<ActivityDetails> {
     print(activityInfo);
     return Scaffold(
       appBar: AppBar(
-          iconTheme: IconThemeData(
-            color: Colors.black, //change your color here
-          ),
-          elevation: 0,
-          titleSpacing: -5,
-          title: Text(
-            "ACTIVITY DETAILS",
-            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-          ),
-          actions: [
-            if (familyList.length > 0 && senderIndex > -1)
-              Container(
-                height: 30,
-                width: 140,
-                margin: EdgeInsets.only(right: 10),
-                child: Row(
-                  children: [
-                    Flexible(
-                      child: ListTile(
-                        horizontalTitleGap: 2,
-                        contentPadding: EdgeInsets.zero,
-                        onTap: () => {
-                          openMemberBottomSheet(context, familyList, (index) {
-                            print(index);
-                            Navigator.pop(context);
-                            setState(() {
-                              senderIndex = index;
-                            });
-                          })
-                        },
-                        title: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Text(
-                              familyList[senderIndex]['name'],
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                  fontSize: 12, fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              familyList[senderIndex]['memberId'],
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                        trailing: CircleAvatar(
-                          backgroundColor: Colors.white,
-                          backgroundImage:
-                              NetworkImage(familyList[senderIndex]['image']),
-                          radius: 20,
-                        ),
+        iconTheme: IconThemeData(
+          color: Colors.black, //change your color here
+        ),
+        elevation: 0,
+        titleSpacing: -5,
+        title: Text(
+          "ACTIVITY DETAILS",
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+        ),
+        actions: [
+          if (familyList.length > 0 && senderIndex > -1)
+            Container(
+              height: 30,
+              width: 140,
+              margin: EdgeInsets.only(right: 10),
+              child: Row(
+                children: [
+                  Flexible(
+                    child: ListTile(
+                      horizontalTitleGap: 2,
+                      contentPadding: EdgeInsets.zero,
+                      onTap: () => {
+                        openMemberBottomSheet(context, familyList, (index) {
+                          print(index);
+                          Navigator.pop(context);
+                          setState(() {
+                            senderIndex = index;
+                          });
+                        })
+                      },
+                      title: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            familyList[senderIndex]['name'],
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                fontSize: 12, fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            familyList[senderIndex]['memberId'],
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 10,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      trailing: CircleAvatar(
+                        backgroundColor: Colors.white,
+                        backgroundImage:
+                            NetworkImage(familyList[senderIndex]['image']),
+                        radius: 20,
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-          ],
-          backgroundColor: Colors.white),
+            ),
+        ],
+        backgroundColor: HexColor("#f5f8fd"),
+      ),
       resizeToAvoidBottomInset: false,
       body: SizedBox(
         height: MediaQuery.of(context).size.height,

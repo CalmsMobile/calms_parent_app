@@ -1,3 +1,4 @@
+import 'package:calms_parent/common/widgets/select_member.dart';
 import 'package:flutter/material.dart';
 
 class PurchaseDetails extends StatefulWidget {
@@ -13,7 +14,7 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
     final passData = ModalRoute.of(context)?.settings.arguments as Map;
     print(passData);
     return Scaffold(
-      appBar: AppBar(title: Text("Purchase Details")),
+      appBar: getMyAppbar("Purchase Details", []),
       resizeToAvoidBottomInset: false,
       body: SizedBox(
         height: MediaQuery.of(context).size.height,
