@@ -40,7 +40,7 @@ class _ProfileMainState extends State<ProfileMain> {
                   children: [
                     CircleAvatar(
                       backgroundColor: Colors.white,
-                      backgroundImage: NetworkImage(profileData["image"]),
+                      backgroundImage: NetworkImage(profileData["ImgPathUrl"]),
                       radius: 72,
                     ),
                     Container(
@@ -58,7 +58,7 @@ class _ProfileMainState extends State<ProfileMain> {
                           ),
                           children: [
                             TextSpan(
-                                text: "RM ${profileData["balance"]}",
+                                text: "RM ${profileData["Balance"].toString()}",
                                 style: new TextStyle(
                                     fontSize: 18, fontWeight: FontWeight.bold)),
                             TextSpan(
@@ -93,7 +93,7 @@ class _ProfileMainState extends State<ProfileMain> {
               height: 10,
             ),
             Text(
-              profileData["name"],
+              profileData["Name"],
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             SizedBox(
@@ -218,7 +218,7 @@ class _ProfileMainState extends State<ProfileMain> {
                           fontWeight: FontWeight.bold),
                     ),
                     TextSpan(
-                        text: profileData["familtid"],
+                        text: profileData["RefUserSeqId"].toString(),
                         style: new TextStyle(
                             fontSize: 12, fontWeight: FontWeight.bold)),
                   ],
@@ -244,7 +244,8 @@ class _ProfileMainState extends State<ProfileMain> {
                           fontWeight: FontWeight.bold),
                     ),
                     TextSpan(
-                        text: profileData["relationship"],
+                        //text: profileData["relationship"],
+                        text: "relationship",
                         style: new TextStyle(
                             fontSize: 12, fontWeight: FontWeight.bold)),
                   ],
@@ -267,7 +268,8 @@ class _ProfileMainState extends State<ProfileMain> {
                           fontWeight: FontWeight.bold),
                     ),
                     TextSpan(
-                        text: profileData["grade"],
+                        //text: profileData["grade"],
+                        text: "grade",
                         style: new TextStyle(
                             fontSize: 12, fontWeight: FontWeight.bold)),
                   ],
@@ -294,7 +296,8 @@ class _ProfileMainState extends State<ProfileMain> {
                           fontWeight: FontWeight.bold),
                     ),
                     TextSpan(
-                        text: profileData["year"],
+                        // text: profileData["year"],
+                        text: "year",
                         style: new TextStyle(
                             fontSize: 12, fontWeight: FontWeight.bold)),
                   ],
@@ -321,7 +324,8 @@ class _ProfileMainState extends State<ProfileMain> {
                           fontWeight: FontWeight.bold),
                     ),
                     TextSpan(
-                        text: profileData["class"],
+                        //text: profileData["class"],
+                        text: "class",
                         style: new TextStyle(
                             fontSize: 12, fontWeight: FontWeight.bold)),
                   ],
@@ -344,7 +348,8 @@ class _ProfileMainState extends State<ProfileMain> {
                           fontWeight: FontWeight.bold),
                     ),
                     TextSpan(
-                        text: profileData["department"],
+                        //text: profileData["department"],
+                        text: "department",
                         style: new TextStyle(
                             fontSize: 12, fontWeight: FontWeight.bold)),
                   ],
@@ -371,7 +376,8 @@ class _ProfileMainState extends State<ProfileMain> {
                           fontWeight: FontWeight.bold),
                     ),
                     TextSpan(
-                        text: profileData["job_title"],
+                        //text: profileData["job_title"],
+                        text: "job_title",
                         style: new TextStyle(
                             fontSize: 12, fontWeight: FontWeight.bold)),
                   ],

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 import 'package:calms_parent/common/HexColor.dart';
+import 'package:calms_parent/common/json_responses.dart';
 import 'package:calms_parent/model/HolidayModel.dart';
 import 'package:calms_parent/model/_AppointmentDataSource.dart';
 import 'package:calms_parent/model/moduleModel.dart';
@@ -26,73 +27,7 @@ class HomePage extends StatefulWidget {
   final Function pageSwiped;
 
   final List<ModuleModel> items = RandomColorModel().getModuleList();
-  final List<Map> outstandingList = [
-    {
-      "name": "James",
-      "id": "CALMS001",
-      "invoiceNo": "INV001",
-      "category": "Bill Pay",
-      "last_date": "30/11/2021",
-      "invoice_date": "30/11/2021",
-      "amount": "34950.00",
-      "desc":
-          "Attempts to create a new object that represents the amalgamation of this border and the other border",
-      "image":
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTI2iHiAT-ICPyezz_uJzuUWArjKnNDaruP-DbfLD0CWrT-oqjcpe2RfBLDl9DTRbFw9qQ&usqp=CAU"
-    },
-    {
-      "name": "James",
-      "id": "CALMS002",
-      "invoiceNo": "INV002",
-      "category": "Bill Pay",
-      "last_date": "30/11/2021",
-      "invoice_date": "30/11/2021",
-      "amount": "450.00",
-      "desc":
-          "Attempts to create a new object that represents the amalgamation of this border and the other border",
-      "image":
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpway9lZBTwtk500jCpu4BGAxHOnY0Pc6ElELDrc95Z7U3j9R6hf1h-rxZIKkJ9p_1rhA&usqp=CAU"
-    },
-    {
-      "name": "Olivia",
-      "id": "CALMS003",
-      "invoiceNo": "INV003",
-      "category": "Bill Pay",
-      "last_date": "30/11/2021",
-      "invoice_date": "30/11/2021",
-      "amount": "100.00",
-      "desc":
-          "Attempts to create a new object that represents the amalgamation of this border and the other border",
-      "image":
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTI2iHiAT-ICPyezz_uJzuUWArjKnNDaruP-DbfLD0CWrT-oqjcpe2RfBLDl9DTRbFw9qQ&usqp=CAU"
-    },
-    {
-      "name": "James",
-      "id": "CALMS004",
-      "invoiceNo": "INV004",
-      "category": "Bill Pay",
-      "last_date": "30/11/2021",
-      "invoice_date": "30/11/2021",
-      "amount": "23.00",
-      "desc":
-          "Attempts to create a new object that represents the amalgamation of this border and the other border",
-      "image":
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpway9lZBTwtk500jCpu4BGAxHOnY0Pc6ElELDrc95Z7U3j9R6hf1h-rxZIKkJ9p_1rhA&usqp=CAU"
-    },
-    {
-      "name": "James",
-      "id": "CALMS005",
-      "invoiceNo": "INV005",
-      "category": "Bill Pay",
-      "last_date": "30/11/2021",
-      "invoice_date": "30/11/2021",
-      "amount": "2043.50",
-      "desc":
-          "Attempts to create a new object that represents the amalgamation of this border and the other border",
-      "image":
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTI2iHiAT-ICPyezz_uJzuUWArjKnNDaruP-DbfLD0CWrT-oqjcpe2RfBLDl9DTRbFw9qQ&usqp=CAU"
-    }
-  ];
+  final List<Map> outstandingList = JsonResponses.outstandingList;
   final List<Map> topupList = [
     {
       "name": "James",
@@ -198,96 +133,7 @@ class HomePage extends StatefulWidget {
     }
   ];
   final List<Map> familyList;
-  final List<Map> storeItem = [
-    {
-      "category": "Stationery",
-      "item_name": "Color Box",
-      "inventory_code": "S1011",
-      "description":
-          "46 PCS Color Set has a lot of fun features to keep your baby engaged. It has 42 pieces It contain 12 water color, 6 sketch color, a sharpner, an eraser, 10 crayons color, 8 oil pastel colors, a glue, a paper clip and a box. Very nice product for your kid It improves creative power of your dear ones. Improves visual skills, creative skills and coordination skills of your child Designed keeping safety of your child on priority basis Always choose Happiesta for your kids Happiness",
-      "is_dress": 1,
-      "price": "10.00",
-      "discount": "5%",
-      "available_quantity": 50,
-      "applicable_group": "YEAR1, YEAR2",
-      "image": [
-        "http://124.217.235.107:2008/Handler/ImagePathHandler.ashx?ImagePath=StoreItems/b6fa-e4c2-2021-11-25-11-32-18-810/71-zpNFAyTL._SL1080_.jpg&Default=60&PROUrl=http://124.217.235.107:2008/&StoreageUrl=http://124.217.235.107:2008/FS/",
-        "http://124.217.235.107:2008/FS/StoreItems/4adc-e4c2-2021-11-25-11-32-55-924/student-plastic-id-card-holder-500x500.jpg"
-      ],
-      "colors": ["White", "Black", "Red", "Blue"],
-      "size": ["S", "M", "L", "XL", "XXL"],
-      "merchantimage":
-          "http://124.217.235.107:2008/FS/Merchant/1569-e4c2-2021-11-25-10-18-28-567/CALMS_Technologies_Sdn_Bhd_Logo.png"
-    },
-    {
-      "category": "Stationery",
-      "item_name": "student-plastic-id-card-holder-500x500",
-      "inventory_code": "S1011",
-      "description": "student-plastic-id-card-holder-500x500",
-      "is_dress": "0",
-      "price": "10.00",
-      "discount": "5%",
-      "available_quantity": 50,
-      "applicable_group": "All",
-      "image": [
-        "http://124.217.235.107:2008/FS/StoreItems/4adc-e4c2-2021-11-25-11-32-55-924/student-plastic-id-card-holder-500x500.jpg",
-        "http://124.217.235.107:2008/FS/StoreItems/4adc-e4c2-2021-11-25-11-32-55-924/student-plastic-id-card-holder-500x500.jpg"
-      ],
-      "merchantimage":
-          "http://124.217.235.107:2008/FS/Merchant/1569-e4c2-2021-11-25-10-18-28-567/CALMS_Technologies_Sdn_Bhd_Logo.png"
-    },
-    {
-      "category": "Stationery",
-      "item_name": "student-plastic-id-card-holder-500x500",
-      "inventory_code": "S1011",
-      "description": "student-plastic-id-card-holder-500x500",
-      "is_dress": "0",
-      "price": "10.00",
-      "discount": "5%",
-      "available_quantity": 50,
-      "applicable_group": "All",
-      "image": [
-        "http://124.217.235.107:2008/FS/StoreItems/4adc-e4c2-2021-11-25-11-32-55-924/student-plastic-id-card-holder-500x500.jpg",
-        "http://124.217.235.107:2008/FS/StoreItems/4adc-e4c2-2021-11-25-11-32-55-924/student-plastic-id-card-holder-500x500.jpg"
-      ],
-      "merchantimage":
-          "http://124.217.235.107:2008/FS/Merchant/1569-e4c2-2021-11-25-10-18-28-567/CALMS_Technologies_Sdn_Bhd_Logo.png"
-    },
-    {
-      "category": "Stationery",
-      "item_name": "student-plastic-id-card-holder-500x500",
-      "inventory_code": "S1011",
-      "description": "student-plastic-id-card-holder-500x500",
-      "is_dress": "0",
-      "price": "10.00",
-      "discount": "5%",
-      "available_quantity": 50,
-      "applicable_group": "All",
-      "image": [
-        "http://124.217.235.107:2008/FS/StoreItems/4adc-e4c2-2021-11-25-11-32-55-924/student-plastic-id-card-holder-500x500.jpg",
-        "http://124.217.235.107:2008/FS/StoreItems/4adc-e4c2-2021-11-25-11-32-55-924/student-plastic-id-card-holder-500x500.jpg"
-      ],
-      "merchantimage":
-          "http://124.217.235.107:2008/FS/Merchant/1569-e4c2-2021-11-25-10-18-28-567/CALMS_Technologies_Sdn_Bhd_Logo.png"
-    },
-    {
-      "category": "Stationery",
-      "item_name": "student-plastic-id-card-holder-500x500",
-      "inventory_code": "S1011",
-      "description": "student-plastic-id-card-holder-500x500",
-      "is_dress": "0",
-      "price": "10.00",
-      "discount": "5%",
-      "available_quantity": 50,
-      "applicable_group": "All",
-      "image": [
-        "http://124.217.235.107:2008/FS/StoreItems/4adc-e4c2-2021-11-25-11-32-55-924/student-plastic-id-card-holder-500x500.jpg",
-        "http://124.217.235.107:2008/FS/StoreItems/4adc-e4c2-2021-11-25-11-32-55-924/student-plastic-id-card-holder-500x500.jpg"
-      ],
-      "merchantimage":
-          "http://124.217.235.107:2008/FS/Merchant/1569-e4c2-2021-11-25-10-18-28-567/CALMS_Technologies_Sdn_Bhd_Logo.png"
-    }
-  ];
+  final List<Map> storeItem = JsonResponses.storeItem;
   final List<Map> upcomingActivities = [
     {
       "acitivity_type": "EDU00001_EVENT_EVNT-1001",
@@ -468,7 +314,7 @@ class _HomePageState extends State<HomePage> {
                           color: HexColor("#6495ED")),
                       child: Container(
                         width: double.infinity,
-                        height: 220,
+                        height: 200,
                         padding: EdgeInsets.only(left: 0, right: 0),
                         child: Column(children: [
                           SizedBox(
@@ -483,26 +329,26 @@ class _HomePageState extends State<HomePage> {
                                               MainAxisAlignment.spaceAround,
                                           children: [
                                             if (widget.familyList[
-                                                    widget.familyPos]['name'] ==
-                                                item["name"])
+                                                    widget.familyPos]['Name'] ==
+                                                item["Name"])
                                               Image.asset(
                                                 "assets/images/swipe_left.png",
                                                 width: 25,
                                               ),
                                             Container(
                                               width: (widget.familyList[widget
-                                                          .familyPos]['name'] ==
-                                                      item["name"])
+                                                          .familyPos]['Name'] ==
+                                                      item["Name"])
                                                   ? 92
                                                   : 62,
                                               height: (widget.familyList[widget
-                                                          .familyPos]['name'] ==
-                                                      item["name"])
+                                                          .familyPos]['Name'] ==
+                                                      item["Name"])
                                                   ? 92
                                                   : 62,
                                               child: CircleAvatar(
                                                 backgroundImage:
-                                                    NetworkImage(item["image"]),
+                                                    NetworkImage(item["ImgPathUrl"]),
                                               ),
                                               decoration: BoxDecoration(
                                                 //DecprationImage
@@ -549,8 +395,8 @@ class _HomePageState extends State<HomePage> {
                                               ),
                                             ),
                                             if (widget.familyList[
-                                                    widget.familyPos]['name'] ==
-                                                item["name"])
+                                                    widget.familyPos]['Name'] ==
+                                                item["Name"])
                                               Image.asset(
                                                 "assets/images/swipe_right.png",
                                                 width: 25,
@@ -585,7 +431,7 @@ class _HomePageState extends State<HomePage> {
                                 initialPage: widget.familyPos),
                           ),
                           Text(
-                            widget.familyList[widget.familyPos]['name'],
+                            widget.familyList[widget.familyPos]['Name'],
                             style: TextStyle(
                                 fontSize: 22.0,
                                 color: Colors.white,
@@ -601,7 +447,7 @@ class _HomePageState extends State<HomePage> {
                                 fontWeight: FontWeight.w300),
                           ),
                           Text(
-                            'MYR ${double.parse(widget.familyList[widget.familyPos]['balance']).toStringAsFixed(2)}',
+                            'MYR ${double.parse(widget.familyList[widget.familyPos]['Balance'].toString()).toStringAsFixed(2)}',
                             style: TextStyle(
                                 fontSize: 18.0,
                                 color: Colors.white,
@@ -706,8 +552,8 @@ class _HomePageState extends State<HomePage> {
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: MediaQuery.of(context).orientation ==
                                 Orientation.landscape
-                            ? 3
-                            : 3,
+                            ? 2
+                            : 2,
                         crossAxisSpacing: 0,
                         mainAxisSpacing: 0,
                         childAspectRatio: (2 / 1),
@@ -832,7 +678,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ],
                     ),
-                    Align(
+                     Align(
                       alignment: Alignment.centerLeft,
                       child: Container(
                           padding: EdgeInsets.only(
@@ -874,7 +720,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     if (storeCollapse) StoreItemListView(widget.storeItem),
-                    Align(
+                   /* Align(
                       alignment: Alignment.centerLeft,
                       child: InkWell(
                         child: Container(
@@ -977,13 +823,13 @@ class _HomePageState extends State<HomePage> {
                         },
                       ),
                     ),
-                    if (purchaseCollapse) PurchaseListView(widget.purchaseList),
+                    if (purchaseCollapse) PurchaseListView(widget.purchaseList), */
                   ],
                 ),
                 SizedBox(
                   height: 10,
                 ),
-                Column(
+                /* Column(
                   children: <Widget>[
                     Align(
                       alignment: Alignment.centerLeft,
@@ -1063,7 +909,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ],
                 ),
-              ],
+               */],
             ))));
   }
 }
@@ -1088,12 +934,12 @@ class RandomColorModel {
 
     monitorList.add(new ModuleModel('OrderMeal', _getColorFromHex("#40E0D0"),
         true, 'Order Meal', Icons.fastfood_outlined));
-    monitorList.add(new ModuleModel('Store', _getColorFromHex("#DE3163"), true,
-        'Store', Icons.shopping_bag_outlined));
-    monitorList.add(new ModuleModel('MyInvoice', _getColorFromHex("#35438e"),
-        true, 'My invoice', Icons.cloud_upload_outlined));
-    monitorList.add(new ModuleModel('Activities', _getColorFromHex("#34495E"),
-        true, 'Activities', Icons.pedal_bike_outlined));
+    // monitorList.add(new ModuleModel('Store', _getColorFromHex("#DE3163"), true,
+    //  'Store', Icons.shopping_bag_outlined));
+    //monitorList.add(new ModuleModel('MyInvoice', _getColorFromHex("#35438e"),
+    //  true, 'My invoice', Icons.cloud_upload_outlined));
+    //monitorList.add(new ModuleModel('Activities', _getColorFromHex("#34495E"),
+    //  true, 'Activities', Icons.pedal_bike_outlined));
     monitorList.add(new ModuleModel(
         'StudentAttendance',
         _getColorFromHex("#008080"),
@@ -1102,7 +948,7 @@ class RandomColorModel {
         Icons.fact_check_outlined));
     monitorList.add(new ModuleModel('Topup', _getColorFromHex("#FF7F50"), true,
         'Topup', Icons.phone_android_outlined));
-    monitorList.add(new ModuleModel(
+    /*  monitorList.add(new ModuleModel(
         'TransferMoney',
         _getColorFromHex("#CB4335"),
         true,
@@ -1113,15 +959,15 @@ class RandomColorModel {
     monitorList.add(new ModuleModel('Donation', _getColorFromHex("#008080"),
         true, 'Donation', Icons.money));
     monitorList.add(new ModuleModel('ParentPickup', _getColorFromHex("#8E44AD"),
-        true, 'Student Pickup', Icons.directions_walk));
+        true, 'Student Pickup', Icons.directions_walk)); */
     // monitorList.add(new ModuleModel(
     //     'IDCardRequest',
     //     _getColorFromHex("#2874A6"),
     //     true,
     //     'ID card request',
     //     Icons.card_travel));
-    monitorList.add(new ModuleModel('StudentTracking',
-        _getColorFromHex("#34495E"), true, 'Student tracking', Icons.map));
+    // monitorList.add(new ModuleModel('StudentTracking',
+    //   _getColorFromHex("#34495E"), true, 'Student tracking', Icons.map));
     monitorList.add(new ModuleModel(
         'HolidayCalendar',
         _getColorFromHex("#8E44AD"),

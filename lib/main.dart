@@ -41,15 +41,17 @@ import 'package:calms_parent/ui/screens/student_tracking/bus_tracking/bus_tracki
 import 'package:calms_parent/ui/screens/student_tracking/campus_tracking/campus_tracking.dart';
 import 'package:calms_parent/ui/screens/student_tracking/student_tracking.dart';
 import 'package:calms_parent/ui/screens/topup/TopupPage.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+//import 'package:firebase_core/firebase_core.dart';
+//import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+//import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-const AndroidNotificationChannel channel = AndroidNotificationChannel(
+import 'common/json_responses.dart';
+
+/* const AndroidNotificationChannel channel = AndroidNotificationChannel(
   'high_importance_channel', // id
   'High Importance Notifications', // title
   description:
@@ -57,30 +59,44 @@ const AndroidNotificationChannel channel = AndroidNotificationChannel(
   importance: Importance.high,
 );
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-    FlutterLocalNotificationsPlugin();
+    FlutterLocalNotificationsPlugin(); */
 
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+/* Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,
   // make sure you call `initializeApp` before using other Firebase services.
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: const FirebaseOptions(
+      apiKey: "AIzaSyA-B7jICiNpUde4wwWbqbZeoVyt1pjXDQ8",
+      appId: "1:746458534934:android:23456e5d0df19300159137",
+      messagingSenderId: "",
+      projectId: "parent-portal-app-36b77",
+    ),
+  );
   print('Handling a background message ${message.messageId}');
-}
+} */
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  /* await Firebase.initializeApp(
+    options: const FirebaseOptions(
+      apiKey: "AIzaSyA-B7jICiNpUde4wwWbqbZeoVyt1pjXDQ8",
+      appId: "1:746458534934:android:23456e5d0df19300159137",
+      messagingSenderId: "",
+      projectId: "parent-portal-app-36b77",
+    ),
+  );
 
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  await flutterLocalNotificationsPlugin
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler); */
+  /* await flutterLocalNotificationsPlugin
       .resolvePlatformSpecificImplementation<
           AndroidFlutterLocalNotificationsPlugin>()
-      ?.createNotificationChannel(channel);
+      ?.createNotificationChannel(channel); */
 
-  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+ /*  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
     alert: true,
     badge: true,
     sound: true,
-  );
+  ); */
   runApp(
     MultiProvider(
       providers: [
@@ -122,77 +138,6 @@ List<Map> tabsList = [
   // {"title": "Activities"}
 ];
 
-List<Map> familyList = [
-  {
-    "name": "Desmond",
-    "category": "PARENT",
-    "desc": "",
-    "balance": "250",
-    "familtid": "FMY0001",
-    "memberId": "M1001",
-    "relationship": "Father",
-    "email": "makame147@gmail.com",
-    "image": "https://randomuser.me/api/portraits/men/11.jpg"
-  },
-  {
-    "name": "SITI KHALIDA",
-    "category": "PARENT",
-    "desc": "",
-    "balance": "50",
-    "familtid": "FMY0001",
-    "memberId": "M1001",
-    "relationship": "Mother",
-    "email": "calms.rnd@gmail.com",
-    "image": "https://randomuser.me/api/portraits/women/11.jpg"
-  },
-  {
-    "name": "HAZIM",
-    "category": "STUDENT",
-    "email": "",
-    "balance": "108",
-    "familtid": "FMY0001",
-    "memberId": "M1001",
-    "relationship": "",
-    "grade": "Grade1",
-    "year": "Year1",
-    "class": "Class1",
-    "contact": "0123467589",
-    "desc": "Member account does not exist in MFP software",
-    "image": "https://randomuser.me/api/portraits/men/10.jpg"
-  },
-  {
-    "name": "MARIE LIM",
-    "category": "STUDENT",
-    "email": "",
-    "balance": "0",
-    "familtid": "FMY0001",
-    "memberId": "M1001",
-    "relationship": "",
-    "grade": "Grade2",
-    "year": "Year2",
-    "class": "Class2",
-    "contact": "",
-    "desc": "",
-    "image": "https://randomuser.me/api/portraits/men/13.jpg"
-  },
-  {
-    "name": "Danny",
-    "category": "STAFF",
-    "email": "",
-    "balance": "30.00",
-    "familtid": "FMY0001",
-    "memberId": "M1001",
-    "relationship": "",
-    "grade": "",
-    "year": "",
-    "class": "",
-    "department": "Sales Dept",
-    "job_title": "Assistant Sales Manager",
-    "contact": "",
-    "desc": "",
-    "image": "https://randomuser.me/api/portraits/men/14.jpg"
-  },
-];
 
 var myroutes = {
   "/TopupPage": (context) => new TopupPage(),
@@ -243,7 +188,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
   late TabController tabController;
   @override
   void initState() {
-    initFCM();
+    //initFCM();
     tabController =
         new TabController(length: tabsList.length, vsync: this, initialIndex: 0)
           ..addListener(() {
@@ -278,7 +223,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
     );
   }
 
-  Future<void> initFCM() async {
+  /* Future<void> initFCM() async {
     // var initializationSettingsAndroid =
     //     new AndroidInitializationSettings('ic_launcher');
     var initializationSettingsAndroid =
@@ -302,7 +247,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
       },
     );
 
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+   /*  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       RemoteNotification? notification = message.notification;
       AndroidNotification? android = message.notification?.android;
       if (notification != null && android != null) {
@@ -337,17 +282,17 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
       }
     });
 
-    getToken();
+    getToken(); */
   }
-
-  String token = '';
+ */
+  /* String token = '';
   getToken() async {
     token = (await FirebaseMessaging.instance.getToken())!;
 
     print('FCM Token: $token');
     MySharedPref().saveData(token, AppSettings.fcmId);
   }
-
+ */
   void pageSwiped(int pos) {
     setState(() {
       familyPos = pos;
@@ -372,7 +317,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
       ],
       debugShowCheckedModeBanner: false,
       // home: TabView(tabController, tabsList, familyList, familyPos, pageSwiped),
-      home: HomePage(familyPos, familyList, pageSwiped),
+      home: HomePage(familyPos, JsonResponses.familyList, pageSwiped),
       theme: ThemeData(
         fontFamily: appFontFmaily,
         outlinedButtonTheme: OutlinedButtonThemeData(

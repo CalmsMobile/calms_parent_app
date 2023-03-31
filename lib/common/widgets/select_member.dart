@@ -139,12 +139,12 @@ void openMemberBottomSheet(BuildContext buildContext, getfamilyList, callback) {
                         leading: CircleAvatar(
                           backgroundColor: Colors.white,
                           backgroundImage:
-                              NetworkImage(getfamilyList[index]['image']),
+                              NetworkImage(getfamilyList[index]['ImgPathUrl']),
                           radius: 20,
                         ),
-                        title: new Text(getfamilyList[index]["name"]),
+                        title: new Text(getfamilyList[index]["Name"]),
                         subtitle: new Text(
-                          getfamilyList[index]["memberId"],
+                          getfamilyList[index]["RefUserSeqId"].toString(),
                           style: TextStyle(fontSize: 12),
                         ),
                         onTap: () {
@@ -160,6 +160,11 @@ void openMemberBottomSheet(BuildContext buildContext, getfamilyList, callback) {
 }
 
 void showCustomPaymentAlert(BuildContext buildContext) {
+  final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
+    backgroundColor: Colors.pinkAccent,
+    textStyle: TextStyle(color: Colors.white),
+);
+
   showModalBottomSheet(
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(top: Radius.circular(60.0))),
@@ -314,18 +319,24 @@ void showCustomPaymentAlert(BuildContext buildContext) {
                         //     children: [],
                         //   ),
                         // ),
+                        
                         Container(
                           margin: EdgeInsets.only(top: 10),
                           padding: EdgeInsets.symmetric(horizontal: 20),
                           child: SizedBox(
                             width: double.infinity,
-                            child: RaisedButton(
+                            child: /* RaisedButton(
                               onPressed: () {},
                               child: Text(
                                 "Topup",
                                 style: TextStyle(color: Colors.white),
                               ),
                               color: Colors.pinkAccent,
+                            ), */
+                            ElevatedButton(
+                              style: raisedButtonStyle,
+                              onPressed: () {},
+                              child: Text('Topup'),
                             ),
                           ),
                         )

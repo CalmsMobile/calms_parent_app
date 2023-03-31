@@ -55,14 +55,13 @@ class _QRRegistrationState extends State<QRRegistration> {
       //   print("ENC: " + encryptdata);
       // }
       //Thila 2008
-      var qrdata =
-          '42Fcpk4wSQVW7uqmY3NPk5DhtVO+so0aZHgC+vkcvvzmHQwiU3DwLspssruFDNXeqq0bXjI9oA6VRH/wkdfs0Urnm79vDh8QtFFnxlIXlmJUAnqy7wrh6jxtbga1ChdBcaH3r6RIOelf2nqOCaHwoF3/t3eAiXzoHJHxRzz7NAGDTydXLCgNowFgcS3hrwv6';
+      //var qrdata = '42Fcpk4wSQVW7uqmY3NPk5DhtVO+so0aZHgC+vkcvvzmHQwiU3DwLspssruFDNXeqq0bXjI9oA6VRH/wkdfs0Urnm79vDh8QtFFnxlIXlmJUAnqy7wrh6jxtbga1ChdBcaH3r6RIOelf2nqOCaHwoF3/t3eAiXzoHJHxRzz7NAGDTydXLCgNowFgcS3hrwv6';
       //Izza 2008
       // var qrdata =
       //     '42Fcpk4wSQVW7uqmY3NPk5DhtVO+so0aZHgC+vkcvvwDSk2Xauc+GM9g2WoeS1MxYja1e6OHKdykTx1IK+zxI8pZJvcEgiTMWb0zUr5FSkKVnnyb4663l6C8EQHXXjesb+wz1SQGErkJGvDHukrb+AVoQDdPWsZ/Job4nK8s4dsWDC/RWjjPwrmG5e9K4XB5';
       //Siva
-      // var qrdata =
-      //     "42Fcpk4wSQVW7uqmY3NPk5DhtVO+so0aZHgC+vkcvvwDSk2Xauc+GM9g2WoeS1MxYja1e6OHKdykTx1IK+zxI40aWqW+LuPORm9aLf6anldDIk6OvARK0znymQxl8IsvrKknkaE3MLLPVA+WB5oaJt+YaSgi/w+U+pspUihdiUyRcRcJ50qUTSF+SofC36CQ";
+      var qrdata =
+          "42Fcpk4wSQVW7uqmY3NPk5DhtVO+so0aZHgC+vkcvvwDSk2Xauc+GM9g2WoeS1MxYja1e6OHKdykTx1IK+zxI40aWqW+LuPORm9aLf6anldDIk6OvARK0znymQxl8IsvrKknkaE3MLLPVA+WB5oaJt+YaSgi/w+U+pspUihdiUyRcRcJ50qUTSF+SofC36CQ";
       // var qrdata =
       //     "42Fcpk4wSQVW7uqmY3NPk5DhtVO+so0aZHgC+vkcvvzoiOlTwStG5SP1L7poLtlzGXOP1D3+nUTzUcrojygQd4SLPDdyAHscm39Bx/zau3iW6M100/9jhJCskTeb86CS8YeKkzmNX0mGndmnAMFqae+iraFeRJ1VK0Kxtht1Hb0R4nqLo5t4wOwd5qcOp+O0";
       processQRCode(qrdata);
@@ -86,11 +85,15 @@ class _QRRegistrationState extends State<QRRegistration> {
         Map<String, dynamic> qrJson = jsonDecode(decryptdata);
         var data = {'DeviceSeqId': qrJson["MAppSeqId"]};
         print(data);
-        Future<Map<String, dynamic>> res = RestApiProvider().postMethod(data,
+       /*  Future<Map<String, dynamic>> res = RestApiProvider().postMethod(data,
             qrJson["ApiUrl"], AppSettings.validateQRCode, context, true, false);
         res
             .then((value) => {handleApiResponse(value, decryptdata)})
-            .onError((error, stackTrace) => {qrProcessError(error)});
+            .onError((error, stackTrace) => {qrProcessError(error)}); */
+            MySharedPref().saveData(decryptdata, AppSettings.qrCodeData);
+      MySharedPref().saveData(jsonEncode("response"), AppSettings.deviceDetails);
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => new AccountMapping()));
       } else {
         MyCustomAlertDialog().showCustomAlert(
             context, "Notification", "Invalid QR code", true, () {

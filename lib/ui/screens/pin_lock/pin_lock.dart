@@ -15,6 +15,7 @@ class PinLock extends StatefulWidget {
 class _PinLockState extends State<PinLock> {
   TextEditingController pinController = TextEditingController();
   TextEditingController confirmpinController = TextEditingController();
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -164,9 +165,30 @@ class _PinLockState extends State<PinLock> {
                 height: 40,
               ),
               SizedBox(
-                width: 220,
-                height: 45,
-                child: FlatButton(
+                  width: 220,
+                  height: 45,
+                  child: TextButton(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text(
+                          "Create passcode",
+                          style: TextStyle(
+                              fontSize: 18.0,
+                              fontFamily: "Montserrat",
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Icon(Icons.arrow_forward)
+                      ],
+                    ),
+                    onPressed: pinController.text.length == 6 &&
+                            confirmpinController.text == pinController.text
+                        ? _onButtonPressed
+                        : null,
+                    style: TextButton.styleFrom(
+                        backgroundColor: Colors.blueAccent,
+                        textStyle: TextStyle(color: Colors.white)),
+                  ) /* FlatButton(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -192,8 +214,8 @@ class _PinLockState extends State<PinLock> {
                           width: 1.0,
                           color: Colors.grey),
                       borderRadius: new BorderRadius.circular(20.0)),
-                ),
-              ),
+                ), */
+                  ),
               SizedBox(
                 height: 25,
               ),

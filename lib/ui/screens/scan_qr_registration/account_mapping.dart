@@ -214,7 +214,25 @@ class _AccountMappingState extends State<AccountMapping> {
             SizedBox(
               width: 150,
               height: 45,
-              child: FlatButton(
+              child:ElevatedButton(child:Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(
+                      "Register",
+                      style: TextStyle(
+                          fontSize: 18.0,
+                          fontFamily: "Montserrat",
+                          fontWeight: FontWeight.bold),
+                    ),
+                    Icon(Icons.arrow_forward_ios)
+                  ],
+                ), onPressed: isCheckBox1Selected && isCheckBox2Selected
+                    ? _onButtonPressed
+                    : null,style:ElevatedButton.styleFrom(
+          backgroundColor: Colors.blueAccent,
+          textStyle: TextStyle(color: Colors.white),
+          
+        ) ,) /* FlatButton(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -239,7 +257,7 @@ class _AccountMappingState extends State<AccountMapping> {
                         width: 1.0,
                         color: Colors.grey),
                     borderRadius: new BorderRadius.circular(20.0)),
-              ),
+              ), */
             ),
           ]),
         ),

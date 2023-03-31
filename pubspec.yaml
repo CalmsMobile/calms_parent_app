@@ -37,7 +37,7 @@ dependencies:
       ref: master
   syncfusion_flutter_charts: ^19.4.38
   table_calendar: ^2.2.1
-  qr_code_scanner: ^0.6.1
+  qr_code_scanner: ^1.0.1
   encrypt: ^5.0.1
   crypto: ^3.0.1
   hex: ^0.2.0
@@ -54,22 +54,23 @@ dependencies:
   provider: ^6.0.2
   modal_bottom_sheet: ^2.0.0
   badges: ^2.0.2
-  firebase_messaging: ^11.2.12
-  firebase_core_dart: ^0.1.1
-  firebase_core: ^1.14.0
-  flutter_local_notifications: ^9.4.0
+  #firebase_messaging: ^14.3.0
+  #firebase_core_dart: ^0.1.1
+  #firebase_core: ^2.8.0
+  #flutter_local_notifications: ^9.4.0
   sn_progress_dialog: ^1.0.3
   connectivity_plus: ^2.2.1
   footer: ^0.0.4
-  geolocator: ^8.2.1
+  geolocator: ^9.0.2
   google_maps_flutter: ^2.1.4
   flutter_polyline_points: ^1.0.0
-  awesome_select: ^5.1.0
+  awesome_select: ^6.0.0
   sticky_headers: "^0.1.8"
   flutter_svg: ^1.0.3
   dropdown_button2: ^1.4.0
   super_tooltip: ^1.0.1
   just_the_tooltip: ^0.0.11+2
+  permission_handler: ^10.0.0
 
 dependency_overrides:
 dev_dependencies:
