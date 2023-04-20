@@ -111,7 +111,7 @@ void openMemberBottomSheet(BuildContext buildContext, getfamilyList, callback) {
             children: <Widget>[
               AppBar(
                 title: Text(
-                  "Select",
+                  "Select Member",
                   style: TextStyle(color: Colors.black, fontSize: 16),
                 ),
                 elevation: 1,
@@ -163,7 +163,7 @@ void showCustomPaymentAlert(BuildContext buildContext) {
   final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
     backgroundColor: Colors.pinkAccent,
     textStyle: TextStyle(color: Colors.white),
-);
+  );
 
   showModalBottomSheet(
       shape: RoundedRectangleBorder(
@@ -319,7 +319,7 @@ void showCustomPaymentAlert(BuildContext buildContext) {
                         //     children: [],
                         //   ),
                         // ),
-                        
+
                         Container(
                           margin: EdgeInsets.only(top: 10),
                           padding: EdgeInsets.symmetric(horizontal: 20),
@@ -333,7 +333,7 @@ void showCustomPaymentAlert(BuildContext buildContext) {
                               ),
                               color: Colors.pinkAccent,
                             ), */
-                            ElevatedButton(
+                                ElevatedButton(
                               style: raisedButtonStyle,
                               onPressed: () {},
                               child: Text('Topup'),

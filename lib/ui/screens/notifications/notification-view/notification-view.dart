@@ -180,7 +180,7 @@ class NotificationView extends StatelessWidget {
       };
 
       Future<Map<String, dynamic>> res = RestApiProvider().postMethod(data, '',
-          AppSettings.updateReadNotificationStatus, context, false, true);
+          'AppSettings.updateReadNotificationStatus', context, false, true);
       res
           .then((value) => {handleApiResponse(value, context, pos)})
           .onError((error, stackTrace) => {handleApiError(error, context)});

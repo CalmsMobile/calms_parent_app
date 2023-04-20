@@ -1,4 +1,13 @@
 class JsonResponses {
+
+  //Notification Category
+  static List<Map> notificationCategoryList = [
+    {"Name":"General"},
+    {"Name":"Topup"},
+    {"Name":"Purchase"},
+    {"Name":"Attendance"},
+    {"Name":"Payment"}
+    ];
   //getFamilybalance
   static List<Map> familyList = [
     {

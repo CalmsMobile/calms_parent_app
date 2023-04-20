@@ -38,7 +38,7 @@ class CommonUtil {
         Future<Map<String, dynamic>> res = RestApiProvider().postMethod(
             data,
             '',
-            AppSettings.getAllNotification,
+            'AppSettings.getAllNotification',
             context,
             startPosition == 0 ? true : false,
             true);
