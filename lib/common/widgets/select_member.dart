@@ -1,5 +1,6 @@
 import 'package:calms_parent/common/HexColor.dart';
 import 'package:calms_parent/common/alert_dialog.dart';
+import 'package:calms_parent/common/app_settings.dart';
 import 'package:dropdown_button2/custom_dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
@@ -101,7 +102,9 @@ PreferredSizeWidget customBottomSheetActionBar(
   );
 }
 
-void openMemberBottomSheet(BuildContext buildContext, getfamilyList, callback) {
+void openMemberBottomSheet(
+    BuildContext buildContext, getfamilyList, imageBaseUrl, callback) {
+  print(getfamilyList.toString());
   showModalBottomSheet(
       context: buildContext,
       builder: (context) {
@@ -138,13 +141,16 @@ void openMemberBottomSheet(BuildContext buildContext, getfamilyList, callback) {
                       ListTile(
                         leading: CircleAvatar(
                           backgroundColor: Colors.white,
-                          backgroundImage:
-                              NetworkImage(getfamilyList[index]['ImgPathUrl']),
+                          backgroundImage: NetworkImage(
+                              getfamilyList[index]['UserImgPath'] != null
+                                  ? imageBaseUrl +
+                                      getfamilyList[index]['UserImgPath']
+                                  : AppSettings.avatarPlaceholder),
                           radius: 20,
                         ),
                         title: new Text(getfamilyList[index]["Name"]),
                         subtitle: new Text(
-                          getfamilyList[index]["RefUserSeqId"].toString(),
+                          getfamilyList[index]["MemberId"].toString(),
                           style: TextStyle(fontSize: 12),
                         ),
                         onTap: () {

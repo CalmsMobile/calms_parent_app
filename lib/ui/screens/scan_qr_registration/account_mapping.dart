@@ -4,15 +4,25 @@ import 'package:calms_parent/common/app_settings.dart';
 import 'package:calms_parent/common/my_shared_pref.dart';
 import 'package:calms_parent/common/util/linked_checkbox.dart';
 import 'package:calms_parent/ui/screens/pin_lock/pin_lock.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
+import '../../../common/alert_dialog.dart';
+import '../../../provider/rest_api.dart';
 
 class AccountMapping extends StatefulWidget {
   const AccountMapping(
-      {Key? key, required this.dataResponseModel, required this.baseUrl})
+      {Key? key,
+      required this.dataResponseModel,
+      required this.baseUrl,
+      required this.decryptdata,
+      required this.DeviceId})
       : super(key: key);
   // Declare a field that holds the Todo.
   final Map<String, dynamic> dataResponseModel;
   final String baseUrl;
+  final String decryptdata;
+  final String? DeviceId;
   @override
   State<AccountMapping> createState() => _AccountMappingState();
 }
@@ -272,7 +282,10 @@ class _AccountMappingState extends State<AccountMapping> {
                     ],
                   ),
                   onPressed: isCheckBox1Selected && isCheckBox2Selected
-                      ? _onButtonPressed
+                      ? () {
+                          _onButtonPressed(context, widget.dataResponseModel,
+                              widget.decryptdata, widget.DeviceId);
+                        }
                       : null,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blueAccent,
@@ -313,9 +326,18 @@ class _AccountMappingState extends State<AccountMapping> {
     );
   }
 
-  _onButtonPressed() {
-    print("object");
-    var parentDetails = {
+  _onButtonPressed(context, dataResponseModel, decryptdata, DeviceId) async {
+    print(dataResponseModel);
+    print(decryptdata);
+    print("DeviceId " + DeviceId);
+    if (kDebugMode) {
+      DeviceId = "Test12345";
+    }
+    //String gg = await MySharedPref().getData(AppSettings.fcmId);
+    String FCMToken = await MySharedPref().getData(AppSettings.fcmId);
+    print("fcmId :  " + FCMToken);
+
+    /*  var parentDetails = {
       "name": "SITI KHALIDA",
       "category": "PARENT",
       "desc": "",
@@ -325,10 +347,70 @@ class _AccountMappingState extends State<AccountMapping> {
       "image": "https://randomuser.me/api/portraits/women/11.jpg"
     };
     MySharedPref()
-        .saveData(jsonEncode(parentDetails), AppSettings.parentDetails);
-    MySharedPref()
-        .saveData(AppSettings.appType_Notification, AppSettings.Sp_Key_AppType);
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => PinLock()));
+        .saveData(jsonEncode(parentDetails), AppSettings.parentDetails); */
+
+    Map<String, dynamic> qrJson = jsonDecode(decryptdata);
+    var data = {
+      'MAppDevSeqId': qrJson['MAppSeqId'],
+      'RefUserSeqId': dataResponseModel['RefUserSeqId'],
+      'DeviceUID': DeviceId,
+      'DevicePlatform': "Android",
+      'DeviceDetails': "",
+      'FCMToken': FCMToken,
+      'ForceToUpdate': 0
+    };
+    print(data);
+    Future<Map<String, dynamic>> res = RestApiProvider().postData(data,
+        qrJson["ApiUrl"], AppSettings.RegisterParentApp, context, true, false);
+    res
+        .then((value) => {
+              successResponse(
+                  value, decryptdata, data, qrJson["ApiUrl"], dataResponseModel)
+            })
+        .onError((error, stackTrace) => {responseError(error)});
+  }
+
+  responseError(error) {
+    print(error.toString());
+    MyCustomAlertDialog()
+        .showCustomAlert(context, "Notification", error.toString(), true, () {
+      Navigator.pop(context);
+      //resetQRData();
+    }, null);
+  }
+
+  successResponse(
+      Map<String, dynamic> res, decryptdata, inputData, ApiUrl, profileData) {
+    print(res);
+    if (res['Table'][0]['code'] == 10) {
+      MyCustomAlertDialog().showToast(context, res['Table'][0]['description']);
+      MySharedPref().saveData(jsonEncode(profileData), AppSettings.profileData);
+      MySharedPref().saveData(decryptdata, AppSettings.qrCodeData);
+      MySharedPref().saveData(
+          AppSettings.appType_Notification, AppSettings.Sp_Key_AppType);
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => PinLock()));
+    } else if (res['Table'][0]['code'] == 40) {
+      showAlert(context, res['Table'][0]['description'], inputData, decryptdata,
+          ApiUrl,profileData);
+    }
+  }
+
+  showAlert(BuildContext buildContext, msg, inputData, decryptdata, ApiUrl,profileData) {
+    MyCustomAlertDialog().showCustomAlert(context, "Confirmation", msg, false,
+        () {
+      Navigator.pop(context);
+      //MyCustomAlertDialog().showToast(context, "");
+      //Navigator.of(context).pop();
+      inputData['ForceToUpdate'] = 1;
+      Future<Map<String, dynamic>> res = RestApiProvider().postData(inputData,
+          ApiUrl, AppSettings.RegisterParentApp, context, true, false);
+      res
+          .then((value) =>
+              {successResponse(value, decryptdata, inputData, ApiUrl,profileData)})
+          .onError((error, stackTrace) => {responseError(error)});
+    }, () {
+      Navigator.pop(context);
+    });
   }
 }

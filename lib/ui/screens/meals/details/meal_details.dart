@@ -117,7 +117,7 @@ class _MealDetailsState extends State<MealDetails> {
                       horizontalTitleGap: 2,
                       contentPadding: EdgeInsets.zero,
                       onTap: () => {
-                        openMemberBottomSheet(context, familyList, (index) {
+                        openMemberBottomSheet(context, familyList,null, (index) {
                           print(index);
                           Navigator.pop(context);
                           setState(() {

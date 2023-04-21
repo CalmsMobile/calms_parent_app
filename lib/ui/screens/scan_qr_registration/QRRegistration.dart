@@ -10,6 +10,7 @@ import 'package:calms_parent/provider/rest_api.dart';
 import 'package:calms_parent/ui/screens/scan_qr_registration/account_mapping.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:platform_device_id/platform_device_id.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:http/http.dart' as http;
@@ -88,22 +89,20 @@ class _QRRegistrationState extends State<QRRegistration> {
         Map<String, dynamic> qrJson = jsonDecode(decryptdata);
         var data = {'MAppDevSeqId': qrJson["MAppSeqId"]};
         print(data);
-        Future<Map<String, dynamic>> res = RestApiProvider().postData(data,
-            qrJson["ApiUrl"], AppSettings.GetQRInfo, context, true, false);
-        res
-            .then((value) => {handleApiResponse(value, decryptdata,qrJson["ApiUrl"])})
-            .onError((error, stackTrace) => {qrProcessError(error)});
-
-        /* Future<Map<String, dynamic>> res = RestApiProvider().postMethod(data,
-            qrJson["ApiUrl"], AppSettings.GetQRInfo, context, true, false);
-        res
-            .then((value) => {handleApiResponse(value, decryptdata)})
-            .onError((error, stackTrace) => {qrProcessError(error)}); */
-        /* MySharedPref().saveData(decryptdata, AppSettings.qrCodeData);
-        MySharedPref()
-            .saveData(jsonEncode("response"), AppSettings.deviceDetails);
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => new AccountMapping())); */
+        if (qrJson['MAppId'] == "PARENTAPP") {
+          Future<Map<String, dynamic>> res = RestApiProvider().postData(data,
+              qrJson["ApiUrl"], AppSettings.GetQRInfo, context, true, false);
+          res
+              .then((value) =>
+                  {handleApiResponse(value, decryptdata, qrJson["ApiUrl"])})
+              .onError((error, stackTrace) => {qrProcessError(error)});
+        } else {
+          MyCustomAlertDialog().showCustomAlert(
+              context, "Notification", "Invalid QR code", true, () {
+            Navigator.pop(context);
+            resetQRData();
+          }, null);
+        }
       } else {
         MyCustomAlertDialog().showCustomAlert(
             context, "Notification", "Invalid QR code", true, () {
@@ -112,10 +111,6 @@ class _QRRegistrationState extends State<QRRegistration> {
         }, null);
       }
     }
-  }
-
-  void handleApiResponse1(Map<String, dynamic> response) {
-    print(response);
   }
 
   void qrProcessError(error) {
@@ -127,7 +122,8 @@ class _QRRegistrationState extends State<QRRegistration> {
     }, null);
   }
 
-  void handleApiResponse(Map<String, dynamic> response, decryptdata, baseUrl) {
+  void handleApiResponse(
+      Map<String, dynamic> response, decryptdata, String baseUrl) async {
     //print('response >>' + jsonEncode(response));
     if (response.containsKey("code") && response['code'] > 10) {
       print("Error in response");
@@ -137,18 +133,21 @@ class _QRRegistrationState extends State<QRRegistration> {
         resetQRData();
       }, null);
     } else {
-      MySharedPref().saveData(decryptdata, AppSettings.qrCodeData);
-      MySharedPref().saveData(jsonEncode(response), AppSettings.deviceDetails);
+      //MySharedPref().saveData(jsonEncode(response), AppSettings.deviceDetails);
       //print(response['Table1'][0]);
       MySharedPref()
           .saveData(jsonEncode(response['Table1'][0]), AppSettings.profileData);
-
+      baseUrl = baseUrl.replaceAll("/api/", "/FS/");
+      String? DeviceId = await PlatformDeviceId.getDeviceId;
       Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => AccountMapping(
-                baseUrl: baseUrl,
-                dataResponseModel: response['Table1'][0])),
+                  baseUrl: baseUrl,
+                  dataResponseModel: response['Table1'][0],
+                  decryptdata: decryptdata,
+                  DeviceId: DeviceId,
+                )),
       );
       //Navigator.pushReplacement(context,
       //   MaterialPageRoute(builder: (context) => new AccountMapping()));

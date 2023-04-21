@@ -237,6 +237,7 @@ class RestApiProvider {
           _progressDialog.close();
         }
         var jsonData = json.decode(response.body);
+        print(jsonData);
         //Map<String, dynamic> map = jsonDecode(jsonData[0]['Data']);
         List<dynamic> qrJson = jsonDecode(response.body) as List;
         if (qrJson.length > 0 && qrJson[0]['Data'] != null) {
@@ -244,10 +245,13 @@ class RestApiProvider {
           if (dataObj.containsKey("Table")) {
             List<dynamic> tableList = dataObj['Table'];
             Map<String, dynamic> tableObj = tableList[0];
-            if (tableObj['code'] == 10) {
+            if (tableObj['code'] == 10 || tableObj['Code'] == 10) {
+              return Future<Map<String, dynamic>>.value(dataObj);
+            } else if (endPoint == AppSettings.RegisterParentApp &&
+                tableObj['code'] == 40 || tableObj['Code'] == 40) {
               return Future<Map<String, dynamic>>.value(dataObj);
             } else {
-              print("failed ${tableObj['code']}");
+              print("failed ${tableObj['code'] || tableObj['Code']} ");
 
               return throw Exception(tableObj['description']);
             }

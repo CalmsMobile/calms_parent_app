@@ -393,7 +393,7 @@ class _ActivitiesState extends State<Activities> {
                     Flexible(
                       child: ListTile(
                         onTap: () => {
-                          openMemberBottomSheet(context, familyList, (index) {
+                          openMemberBottomSheet(context, familyList,null, (index) {
                             Navigator.pop(context);
                             senderIndex = index;
                             setState(() {});
@@ -676,7 +676,7 @@ class _ActivitiesState extends State<Activities> {
                         InkWell(
                           onTap: () {
                             if (senderIndex <= -1) {
-                              openMemberBottomSheet(context, familyList,
+                              openMemberBottomSheet(context, familyList,null,
                                   (studentindex) {
                                 Navigator.of(context).pop();
                                 senderIndex = studentindex;

@@ -41,11 +41,9 @@ class MySharedPref {
 
   clearAllData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString(AppSettings.parentDetails, "");
-    prefs.setString(AppSettings.parentAppSettings, "");
-    //remove below 2 line
-    // prefs.setString(AppSettings.deviceDetails, "");
-    // prefs.setString(AppSettings.qrCodeData, "");
-    prefs.setDouble(AppSettings.refTripTransHeaderSeqId, 0.0);
+    prefs.setString(AppSettings.profileData, "");
+    prefs.setString(AppSettings.qrCodeData, "");
+    prefs.setString(AppSettings.Sp_Key_AppType, "");
+    prefs.setString(AppSettings.parentAppPIN, "");
   }
 }

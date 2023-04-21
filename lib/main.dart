@@ -121,6 +121,9 @@ void main() async {
   if (kDebugMode) {
     print('Registration Token=$token');
   }
+  String tokenFcm = token!;
+  print("token" + tokenFcm);
+  MySharedPref().saveData(tokenFcm, AppSettings.fcmId);
 
   // TODO: Set up foreground message handler
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
@@ -356,27 +359,39 @@ class _SplashScreenState extends State<SplashScreen> {
     // _defaultHome = new Dashboard();
     // _defaultHome = LoginScreen();
     // }
-    String driverDetails =
-        await MySharedPref().getData(AppSettings.parentDetails);
+    String profileData = await MySharedPref().getData(AppSettings.profileData);
 
     String appPIN = await MySharedPref().getData(AppSettings.parentAppPIN);
     String qrCodeData = await MySharedPref().getData(AppSettings.qrCodeData);
     String appType = await MySharedPref().getData(AppSettings.Sp_Key_AppType);
-    print("driverDetails >> $driverDetails");
+    print("profileData >> $profileData");
     print("appPIN >> $appPIN");
     print("qrCodeData >> $qrCodeData");
     Timer(
         Duration(seconds: 3),
         () => {
-              if (driverDetails == "")
+              if (profileData == "")
                 {
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) => QRRegistration()))
                 }
-              else if (appPIN != "")
+              else if (profileData != "" && appPIN != "")
+                {
+                  if (kDebugMode)
+                    {
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Notifications()))
+                    }
+                  else
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => PINEnter()))
+                }
+              else if (profileData != "" && appPIN == "")
                 {
                   Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => PINEnter()))
+                      MaterialPageRoute(builder: (context) => PinLock()))
                 }
               else
                 {
