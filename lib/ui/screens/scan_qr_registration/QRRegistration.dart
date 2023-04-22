@@ -49,6 +49,9 @@ class _QRRegistrationState extends State<QRRegistration> {
       });
       if (kDebugMode) {
         print("ENC: start");
+        var qrdata =
+            "D5qpk1C3xkIxgAIPyzivIXAY1+BrXWHUlQKXDwvQA+ZdYEMAODR6p8LO+xtwCb40mDM1KuLMvZxu7dYHbnj4vz2xIA0UFUraTm0CeyJet7mcA0J13k2dSiQDJPtLlTDk5kYp0xT+l6pIB8TI0DpuRDQzczYlTdoFpt0NJ+Rx0fB4RdyfSpYEDuvUaZ3W4egr";
+        processQRCode(qrdata);
       }
       // String inputdata =
       //     "{\"ApiUrl\":\"http://124.217.235.107:1001/api/\",\"CompanyId\":\"0\",\"HostId\":\"VijayCalms\", \"AppId\":\"1\", \"MAppId\":\"TAMSAPP\"}";
@@ -62,11 +65,9 @@ class _QRRegistrationState extends State<QRRegistration> {
       // var qrdata =
       //     '42Fcpk4wSQVW7uqmY3NPk5DhtVO+so0aZHgC+vkcvvwDSk2Xauc+GM9g2WoeS1MxYja1e6OHKdykTx1IK+zxI8pZJvcEgiTMWb0zUr5FSkKVnnyb4663l6C8EQHXXjesb+wz1SQGErkJGvDHukrb+AVoQDdPWsZ/Job4nK8s4dsWDC/RWjjPwrmG5e9K4XB5';
       //Siva
-      var qrdata =
-          "42Fcpk4wSQVW7uqmY3NPk5DhtVO+so0aZHgC+vkcvvwDSk2Xauc+GM9g2WoeS1MxYja1e6OHKdykTx1IK+zxI40aWqW+LuPORm9aLf6anldDIk6OvARK0znymQxl8IsvrKknkaE3MLLPVA+WB5oaJt+YaSgi/w+U+pspUihdiUyRcRcJ50qUTSF+SofC36CQ";
       // var qrdata =
       //     "42Fcpk4wSQVW7uqmY3NPk5DhtVO+so0aZHgC+vkcvvzoiOlTwStG5SP1L7poLtlzGXOP1D3+nUTzUcrojygQd4SLPDdyAHscm39Bx/zau3iW6M100/9jhJCskTeb86CS8YeKkzmNX0mGndmnAMFqae+iraFeRJ1VK0Kxtht1Hb0R4nqLo5t4wOwd5qcOp+O0";
-      processQRCode(qrdata);
+
       return Future.value(false);
     } else {
       return Future.value(true);
@@ -82,8 +83,7 @@ class _QRRegistrationState extends State<QRRegistration> {
       String decryptdata = CryptoEncryption().decryption(qrData);
       if (kDebugMode) {
         print("DECRYPT: " + decryptdata);
-        decryptdata =
-            '{"MAppId":"PARENTAPP","MAppSeqId":"447","ApiUrl":"http://103.6.163.49:1001/api/","LocalApiUrl":"http://103.6.163.49:1001/api/"}';
+        //decryptdata ='{"MAppId":"PARENTAPP","MAppSeqId":"447","ApiUrl":"http://103.6.163.49:1001/api/","LocalApiUrl":"http://103.6.163.49:1001/api/"}';
       }
       if (decryptdata != "") {
         Map<String, dynamic> qrJson = jsonDecode(decryptdata);

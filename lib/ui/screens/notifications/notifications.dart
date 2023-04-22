@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'package:expendable_fab/expendable_fab.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:provider/provider.dart';
 
@@ -44,12 +46,25 @@ class _NotificationsState extends State<Notifications> {
 
   var filterMemberImagePath =
       'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
+
   @override
   void initState() {
     super.initState();
     initValues();
     //familyList = JsonResponses.familyList;
     //NotificationCategoryList = JsonResponses.notificationCategoryList;
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      //LocalNotificationService.display(message);
+      print(message.toString());
+      if (kDebugMode) {
+        print('Handling a foreground message: ${message.messageId}');
+        print('Message data: ${message.data}');
+        print('Message notification: ${message.notification?.title}');
+        print('Message notification: ${message.notification?.body}');
+      }
+      initValues();
+      //_messageStreamController.sink.add(message);
+    });
   }
 
   @override
@@ -637,7 +652,7 @@ class _NotificationsState extends State<Notifications> {
                                     backgroundImage: NetworkImage(
                                         notificationList[index1]
                                                     ["ImgPathUrl"] !=
-                                                null
+                                                ""
                                             ? imgBaseUrl +
                                                 notificationList[index1]
                                                     ["ImgPathUrl"]
