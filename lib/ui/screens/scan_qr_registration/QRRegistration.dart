@@ -48,7 +48,7 @@ class _QRRegistrationState extends State<QRRegistration> {
         isQrView = false;
       });
       if (kDebugMode) {
-        print("ENC: start");
+        print("QR: start");
         var qrdata =
             "D5qpk1C3xkIxgAIPyzivIXAY1+BrXWHUlQKXDwvQA+ZdYEMAODR6p8LO+xtwCb40mDM1KuLMvZxu7dYHbnj4vz2xIA0UFUraTm0CeyJet7mcA0J13k2dSiQDJPtLlTDk5kYp0xT+l6pIB8TI0DpuRDQzczYlTdoFpt0NJ+Rx0fB4RdyfSpYEDuvUaZ3W4egr";
         processQRCode(qrdata);
