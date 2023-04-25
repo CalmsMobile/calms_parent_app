@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.calms.calms_parent">
    <application
-        android:label="Calms Parent"
+        android:label="CALMS Parent"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity

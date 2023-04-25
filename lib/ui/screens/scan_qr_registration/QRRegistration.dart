@@ -50,7 +50,8 @@ class _QRRegistrationState extends State<QRRegistration> {
       if (kDebugMode) {
         print("QR: start");
         var qrdata =
-            "D5qpk1C3xkIxgAIPyzivIXAY1+BrXWHUlQKXDwvQA+ZdYEMAODR6p8LO+xtwCb40mDM1KuLMvZxu7dYHbnj4vz2xIA0UFUraTm0CeyJet7mcA0J13k2dSiQDJPtLlTDk5kYp0xT+l6pIB8TI0DpuRDQzczYlTdoFpt0NJ+Rx0fB4RdyfSpYEDuvUaZ3W4egr";
+            "D5qpk1C3xkIxgAIPyzivIXAY1+BrXWHUlQKXDwvQA+a0ENSxKwKvGgdAg7wsIh62QJIMYRk74tBLpCytINKDGfH2IgcCp08LVhD6OEkWBFBWCoLHBsv0C2RptNGLGIp0R8+Jzsh612VXMk+kLirn+JgMg/p9/ZDM2TAjzGQaETHhUuOUptJYcbOQAYPXZRgb";
+        //var qrdata = "D5qpk1C3xkIxgAIPyzivIXAY1+BrXWHUlQKXDwvQA+bDSlcRYT++9jkBc++WhCMLlHliyDX7ppYiygJ+gN94NDBG1W7+q8OOX6TZKZTvIjECyu9ZcCovTwEWh3q39Z2wAmzK51kYhq6YM8R8ovVz658SNGlkpfc1EeauaMQveTgX2oZR+2ukF0Fy+uO0XqTJ";
         processQRCode(qrdata);
       }
       // String inputdata =
