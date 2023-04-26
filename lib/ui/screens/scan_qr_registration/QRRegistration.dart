@@ -311,6 +311,9 @@ class _QRRegistrationState extends State<QRRegistration> {
   void _onPermissionSet(BuildContext context, QRViewController ctrl, bool p) {
     log('${DateTime.now().toIso8601String()}_onPermissionSet $p');
     if (!p) {
+      if(kDebugMode){
+        _onBackPressed();
+      }
       ScaffoldMessenger.of(context).showSnackBar(
         new SnackBar(content: Text(AppLocalizations.of(context)!.noPermission)),
       );

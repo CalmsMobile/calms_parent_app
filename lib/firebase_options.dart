@@ -23,15 +23,9 @@ class DefaultFirebaseOptions {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for ios - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -67,5 +61,29 @@ class DefaultFirebaseOptions {
     projectId: 'parent-portal-app-36b77',
     databaseURL: 'https://parent-portal-app-36b77.firebaseio.com',
     storageBucket: 'parent-portal-app-36b77.appspot.com',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyCilwwc3gaCMD72UcGX4Ap9KUkSn8_1abc',
+    appId: '1:746458534934:ios:84c1a2fd87c209bd159137',
+    messagingSenderId: '746458534934',
+    projectId: 'parent-portal-app-36b77',
+    databaseURL: 'https://parent-portal-app-36b77.firebaseio.com',
+    storageBucket: 'parent-portal-app-36b77.appspot.com',
+    androidClientId: '746458534934-95fb0u6f19qagurf0ni2l9ijquc1k991.apps.googleusercontent.com',
+    iosClientId: '746458534934-e5ba5c15taeqa315bo8np1r9h7pmk6rl.apps.googleusercontent.com',
+    iosBundleId: 'com.calms.calms-parent',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyCilwwc3gaCMD72UcGX4Ap9KUkSn8_1abc',
+    appId: '1:746458534934:ios:d38ab97176d56b56159137',
+    messagingSenderId: '746458534934',
+    projectId: 'parent-portal-app-36b77',
+    databaseURL: 'https://parent-portal-app-36b77.firebaseio.com',
+    storageBucket: 'parent-portal-app-36b77.appspot.com',
+    androidClientId: '746458534934-95fb0u6f19qagurf0ni2l9ijquc1k991.apps.googleusercontent.com',
+    iosClientId: '746458534934-j78rne81b4d9k1digp0md6r0hbs398db.apps.googleusercontent.com',
+    iosBundleId: 'com.example.calmsParentLatest',
   );
 }
