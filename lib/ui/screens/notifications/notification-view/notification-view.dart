@@ -22,75 +22,59 @@ class NotificationView extends StatelessWidget {
     String imgBaseUrl = arguments['imgBaseUrl'];
     // updateReadStatus(passData, context, pos);
     return Scaffold(
-      appBar: AppBar(
-        title: ListTile(
-          contentPadding: EdgeInsets.zero,
-          title: Align(
-            alignment: Alignment(-1.2, 0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Details",
-                  textAlign: TextAlign.start,
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                      color: Colors.white),
+      backgroundColor: Colors.transparent,
+          appBar: AppBar(
+            toolbarHeight: 70,
+            elevation: 0,
+            backgroundColor: Colors.transparent,
+            //titleSpacing: -5,
+            automaticallyImplyLeading: false,
+            centerTitle: true,
+            title: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              InkWell(
+                onTap: () {},
+                child: Image(
+                  width: 50,
+                  height: 50,
+                  image: AssetImage("assets/images/ico_back.png"),
                 ),
-              ],
-            ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 10),
+                child: Text(
+                  "Details",
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
+                ),
+              )
+              // Your widgets here
+            ],
           ),
-        ),
-      ),
-      body: SafeArea(
-        child: Column(
-          children: [
+          ),
+          extendBodyBehindAppBar: false,
+          
+      body: Container(
+          constraints: BoxConstraints.expand(),
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            colors: [
+              Color.fromARGB(255, 246, 249, 254),
+              Color.fromARGB(255, 230, 231, 239),
+            ],
+          )),
+          child:
             SingleChildScrollView(
                 child: Container(
               padding: EdgeInsets.symmetric(horizontal: 10),
               child: Column(children: [
-                /* Align(
-                  alignment: Alignment.topLeft,
-                  child: Container(
-                    margin: EdgeInsets.only(top: 20),
-                    child: Text.rich(
-                      TextSpan(
-                        children: [
-                          TextSpan(
-                            text: passData["CreatedOn"] != null
-                                ? DateUtil().convertStringFromDateformat(
-                                    passData['CreatedOn'], "dd-MM-yy")
-                                : "",
-                            style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.red),
-                          ),
-                          TextSpan(
-                            text: " ",
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          TextSpan(
-                            text: passData["CreatedOn"] != null
-                                ? DateUtil().convertStringFromDateformat(
-                                    passData['CreatedOn'], "hh:mm a")
-                                : "",
-                            style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.red),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                 */
-                Container(
+               Container(
                   // color: HexColor("#eaedf6"),
                   width: double.infinity,
                   margin: EdgeInsets.only(top: 20),
@@ -111,7 +95,7 @@ class NotificationView extends StatelessWidget {
                                   clipper: ShapeBorderClipper(
                                       shape: RoundedRectangleBorder(
                                           borderRadius:
-                                              BorderRadius.circular(10))),
+                                              BorderRadius.circular(60))),
                                   child: Image.network(
                                       passData["ImgPathUrl"] != null
                                           ? imgBaseUrl + passData["ImgPathUrl"]
@@ -127,10 +111,7 @@ class NotificationView extends StatelessWidget {
                             Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: HtmlWidget(
-                                    "${passData["HtmlContent"]}") /*Text(
-                                "${passData["HtmlContent"]}",
-                                textAlign: TextAlign.left,
-                              ), */
+                                    "${passData["HtmlContent"]}") 
                                 ),
                             Align(
                               alignment: Alignment.topRight,
@@ -178,30 +159,6 @@ class NotificationView extends StatelessWidget {
                             ),
                           ],
                         ),
-                        // Html(
-                        //   data: "${passData["HtmlContent"]}",
-                        //   style: {
-                        //     "table": Style(
-                        //       backgroundColor:
-                        //           Color.fromARGB(0x50, 0xee, 0xee, 0xee),
-                        //     ),
-                        //     "tr": Style(
-                        //       border: Border(
-                        //           bottom: BorderSide(color: Colors.grey)),
-                        //     ),
-                        //     "th": Style(
-                        //       padding: EdgeInsets.all(6),
-                        //       backgroundColor: Colors.grey,
-                        //     ),
-                        //     "td": Style(
-                        //       padding: EdgeInsets.all(6),
-                        //       alignment: Alignment.topLeft,
-                        //     ),
-                        //     'h5': Style(
-                        //         maxLines: 2,
-                        //         textOverflow: TextOverflow.ellipsis),
-                        //   },
-                        // ),
                         decoration: BoxDecoration(
                             border: Border(
                                 left: BorderSide(
@@ -218,10 +175,7 @@ class NotificationView extends StatelessWidget {
                 ),
               ]),
             )),
-          ],
-        ),
-      ),
-    );
+        ));
   }
 
   void updateReadStatus(

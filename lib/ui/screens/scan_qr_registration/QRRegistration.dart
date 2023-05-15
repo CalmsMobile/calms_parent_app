@@ -28,6 +28,12 @@ class _QRRegistrationState extends State<QRRegistration> {
   Barcode? result;
   QRViewController? controller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if(kDebugMode) _onBackPressed();
+  }
 
   @override
   void reassemble() {
@@ -49,9 +55,14 @@ class _QRRegistrationState extends State<QRRegistration> {
       });
       if (kDebugMode) {
         print("QR: start");
+        //store tester account - 1001
+        //var qrdata = "D5qpk1C3xkIxgAIPyzivIXAY1+BrXWHUlQKXDwvQA+a0ENSxKwKvGgdAg7wsIh62QJIMYRk74tBLpCytINKDGfH2IgcCp08LVhD6OEkWBFBWCoLHBsv0C2RptNGLGIp0R8+Jzsh612VXMk+kLirn+JgMg/p9/ZDM2TAjzGQaETHhUuOUptJYcbOQAYPXZRgb";
+        //nizam-parent - 1001
+        // var qrdata ="D5qpk1C3xkIxgAIPyzivIXAY1+BrXWHUlQKXDwvQA+bDSlcRYT++9jkBc++WhCMLlHliyDX7ppYiygJ+gN94NDBG1W7+q8OOX6TZKZTvIjECyu9ZcCovTwEWh3q39Z2wAmzK51kYhq6YM8R8ovVz658SNGlkpfc1EeauaMQveTgX2oZR+2ukF0Fy+uO0XqTJ";
+        //nizam-parent - 2008
         var qrdata =
-            "D5qpk1C3xkIxgAIPyzivIXAY1+BrXWHUlQKXDwvQA+a0ENSxKwKvGgdAg7wsIh62QJIMYRk74tBLpCytINKDGfH2IgcCp08LVhD6OEkWBFBWCoLHBsv0C2RptNGLGIp0R8+Jzsh612VXMk+kLirn+JgMg/p9/ZDM2TAjzGQaETHhUuOUptJYcbOQAYPXZRgb";
-        //var qrdata = "D5qpk1C3xkIxgAIPyzivIXAY1+BrXWHUlQKXDwvQA+bDSlcRYT++9jkBc++WhCMLlHliyDX7ppYiygJ+gN94NDBG1W7+q8OOX6TZKZTvIjECyu9ZcCovTwEWh3q39Z2wAmzK51kYhq6YM8R8ovVz658SNGlkpfc1EeauaMQveTgX2oZR+2ukF0Fy+uO0XqTJ";
+            "D5qpk1C3xkIxgAIPyzivIXAY1+BrXWHUlQKXDwvQA+a0ENSxKwKvGgdAg7wsIh62jJq4qnNThnkWZKxg9B5/FNP5rnQ4IJyufGXetfDDBkw2BYW0KYMZlY0lP46kXK5MyHtKIa8mpbgN3E0/rYj1i6BJxX+efyEEfHOyfmoKjr/+TSGhyyKbH2NejrPJ5J5i";
+
         processQRCode(qrdata);
       }
       // String inputdata =
@@ -136,8 +147,7 @@ class _QRRegistrationState extends State<QRRegistration> {
     } else {
       //MySharedPref().saveData(jsonEncode(response), AppSettings.deviceDetails);
       //print(response['Table1'][0]);
-      MySharedPref()
-          .saveData(jsonEncode(response['Table1'][0]), AppSettings.profileData);
+      //MySharedPref().saveData(jsonEncode(response['Table1'][0]), AppSettings.profileData);
       baseUrl = baseUrl.replaceAll("/api/", "/FS/");
       String? DeviceId = await PlatformDeviceId.getDeviceId;
       Navigator.push(
@@ -163,47 +173,24 @@ class _QRRegistrationState extends State<QRRegistration> {
         onWillPop: _onBackPressed,
         child: new Scaffold(
           backgroundColor: Colors.white,
-          body: new Container(
+          body: Container(
             constraints: BoxConstraints.expand(),
             decoration: BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage("assets/images/app_bg.png"),
                     fit: BoxFit.cover)),
-            child: new Column(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
               children: [
                 if (isQrView)
                   Expanded(
                     flex: 4,
                     child: _buildQrView(context),
-                    // child: Stack(
-                    //   alignment: Alignment.bottomCenter,
-                    //   children: [
-                    //     Expanded(flex: 4, child: _buildQrView(context)),
-                    // if (result != null)
-                    //   Text(
-                    //       'Barcode Type: ${describeEnum(result!.format)}   Data: ${result!.code}')
-                    // else
-                    //   const Text('Scan a code'),
-                    // Container(
-                    //   color: Colors.orange,
-                    //   padding:
-                    //       EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                    //   margin: const EdgeInsets.only(bottom: 100),
-                    //   child: Text(
-                    //     AppLocalizations.of(context)!.scanYourQrcode,
-                    //     textAlign: TextAlign.center,
-                    //     style: TextStyle(
-                    //         fontWeight: FontWeight.bold,
-                    //         fontSize: 18,
-                    //         color: Colors.white),
-                    //   ),
-                    // ),
-                    // ],
-                    // ),
                   )
                 else
                   Container(
-                    margin: EdgeInsets.only(top: 50),
+                    alignment: Alignment.center,
                     padding: EdgeInsets.symmetric(horizontal: 20),
                     color: Colors.transparent,
                     child: Align(
@@ -211,50 +198,56 @@ class _QRRegistrationState extends State<QRRegistration> {
                       child: Column(
                         children: [
                           Image(
-                              width: 120,
-                              height: 120,
+                              width: 130,
+                              height: 130,
                               image: AssetImage('assets/images/logo.png')),
                           SizedBox(
-                            height: 20,
+                            height: 30,
                           ),
                           Text(
                             "Welcome",
                             style: TextStyle(
-                                fontSize: 22, fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            "Scan QR Code from the button below",
-                            style: TextStyle(
-                                fontSize: 12, fontWeight: FontWeight.normal),
+                                fontSize: 28, fontWeight: FontWeight.bold),
                           ),
                           SizedBox(
-                            height: 10,
+                            height: 20,
                           ),
-                          Card(
-                            elevation: 15,
-                            shadowColor: Colors.grey,
-                            shape: BeveledRectangleBorder(
-                                borderRadius: BorderRadius.circular(16)),
-                            child: InkWell(
-                              onTap: () {
-                                print("tapped");
-                                //barcode scanner
-                                setState(() {
-                                  isQrView = !isQrView;
-                                  //   Navigator.pushReplacement(
-                                  //       context,
-                                  //       MaterialPageRoute(
-                                  //           builder: (context) =>
-                                  //               new LoginScreen()));
-                                });
-                              },
-                              child: Image(
-                                  width: 95,
-                                  height: 95,
-                                  image:
-                                      AssetImage('assets/images/qrcode.png')),
-                            ),
+                          Text(
+                            "Scan QR Code from \n the button below",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.normal),
                           ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          InkWell(
+                            onTap: () {
+                              print("tapped");
+                              //barcode scanner
+                              setState(() {
+                                isQrView = !isQrView;
+                                //   Navigator.pushReplacement(
+                                //       context,
+                                //       MaterialPageRoute(
+                                //           builder: (context) =>
+                                //               new LoginScreen()));
+                              });
+                            },
+                            child: Image(
+                                width: 130,
+                                height: 130,
+                                image: AssetImage('assets/images/qrcode.png')),
+                          ),
+                          SizedBox(
+                            height: 40,
+                          ),
+                          Image(
+                              width: 200,
+                              height: 200,
+                              alignment: Alignment.bottomCenter,
+                              image: AssetImage(
+                                  'assets/images/welcome_bottom_img.png')),
                         ],
                       ),
                     ),
@@ -311,7 +304,7 @@ class _QRRegistrationState extends State<QRRegistration> {
   void _onPermissionSet(BuildContext context, QRViewController ctrl, bool p) {
     log('${DateTime.now().toIso8601String()}_onPermissionSet $p');
     if (!p) {
-      if(kDebugMode){
+      if (kDebugMode) {
         _onBackPressed();
       }
       ScaffoldMessenger.of(context).showSnackBar(

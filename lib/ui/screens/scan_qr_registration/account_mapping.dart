@@ -3,7 +3,7 @@ import 'dart:convert';
 import '/common/app_settings.dart';
 import '/common/my_shared_pref.dart';
 import '/common/util/linked_checkbox.dart';
-import '/ui/screens/pin_lock/pin_lock.dart';
+import '../pin_lock/create_pin.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -42,288 +42,384 @@ class _AccountMappingState extends State<AccountMapping> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(title: Text("Register")),
-      backgroundColor: Colors.white,
-      body: Container(
-        constraints: BoxConstraints.expand(),
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage("assets/images/app_bg_main.png"),
-                fit: BoxFit.cover)),
-        child: SingleChildScrollView(
-          child: Column(children: [
-            SizedBox(
-              height: 45,
-            ),
-            CircleAvatar(
-              backgroundColor: Colors.white,
-              backgroundImage:
-                  NetworkImage(widget.dataResponseModel["BranchImg"]!),
-              radius: 52,
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Text(
-              widget.dataResponseModel["BranchName"]!,
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Card(
-              borderOnForeground: true,
-              margin: EdgeInsets.all(20),
-              child: Container(
-                // width: double.infinity,
-                margin: EdgeInsets.all(8),
-                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 25),
-                // decoration: BoxDecoration(
-                //     borderRadius: BorderRadius.circular(60),
-                //     border: Border.all(color: Colors.black12, width: 0)),
-                child: Column(
-                  children: [
-                    CircleAvatar(
-                      backgroundColor: Colors.white,
-                      backgroundImage: NetworkImage(widget.baseUrl +
-                          widget.dataResponseModel["UserImgPath"]!),
-                      radius: 32,
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      widget.dataResponseModel["Name"]!,
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Text(
-                      "MEMBER ID",
-                      style: TextStyle(
-                          fontSize: 10, fontWeight: FontWeight.normal),
-                    ),
-                    RichText(
-                      text: TextSpan(
-                        children: [
-                          WidgetSpan(
-                            child: Icon(
-                              Icons.card_membership,
-                              size: 16,
-                              color: Colors.blueAccent,
-                            ),
-                          ),
-                          TextSpan(
-                            style: new TextStyle(
-                              fontSize: 16.0,
-                              color: Colors.black,
-                            ),
-                            text: widget.dataResponseModel["MemberId"] !=
-                                        null &&
-                                    widget.dataResponseModel["MemberId"] != ""
-                                ? " " + widget.dataResponseModel["MemberId"]!
-                                : " --",
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Text(
-                      "EMAIL",
-                      style: TextStyle(
-                          fontSize: 10, fontWeight: FontWeight.normal),
-                    ),
-                    RichText(
-                      text: TextSpan(
-                        children: [
-                          WidgetSpan(
-                            child: Icon(
-                              Icons.email,
-                              size: 16,
-                              color: Colors.blueAccent,
-                            ),
-                          ),
-                          TextSpan(
-                            style: new TextStyle(
-                              fontSize: 16.0,
-                              color: Colors.black,
-                            ),
-                            text: widget.dataResponseModel["Email"] != null &&
-                                    widget.dataResponseModel["Email"] != ""
-                                ? " " + widget.dataResponseModel["Email"]!
-                                : " --",
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Text(
-                      "CONTACT",
-                      style: TextStyle(
-                          fontSize: 10, fontWeight: FontWeight.normal),
-                    ),
-                    RichText(
-                      text: TextSpan(
-                        children: [
-                          WidgetSpan(
-                            child: Icon(
-                              Icons.contact_page,
-                              size: 16,
-                              color: Colors.blueAccent,
-                            ),
-                          ),
-                          TextSpan(
-                            style: new TextStyle(
-                              fontSize: 16.0,
-                              color: Colors.black,
-                            ),
-                            text: widget.dataResponseModel["ContactNo"] !=
-                                        null &&
-                                    widget.dataResponseModel["ContactNo"] != ""
-                                ? " " + widget.dataResponseModel["ContactNo"]!
-                                : " --",
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Text(
-                      "RELATIONSHIP",
-                      style: TextStyle(
-                          fontSize: 10, fontWeight: FontWeight.normal),
-                    ),
-                    RichText(
-                      text: TextSpan(
-                        children: [
-                          WidgetSpan(
-                            child: Icon(
-                              Icons.person_outline,
-                              size: 16,
-                              color: Colors.blueAccent,
-                            ),
-                          ),
-                          TextSpan(
-                            style: new TextStyle(
-                              fontSize: 16.0,
-                              color: Colors.black,
-                            ),
-                            text: widget.dataResponseModel["RelationShip"] !=
-                                        null &&
-                                    widget.dataResponseModel["RelationShip"] !=
-                                        ""
-                                ? " " +
-                                    widget.dataResponseModel["RelationShip"]!
-                                : " --",
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            LinkedLabelCheckbox(
-                label: 'Yes, above details are correct.',
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 50.0, vertical: 0.0),
-                value: isCheckBox1Selected,
-                isDisableTextClick: true,
-                onChanged: (bool newValue) {
-                  print(newValue);
-                  setState(() {
-                    isCheckBox1Selected = newValue;
-                  });
-                },
-                onTextClick: () {
-                  debugPrint('Label has been tapped.');
-                }),
-            LinkedLabelCheckbox(
-              label: 'I, accept Terms and conditions',
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 50.0, vertical: 0),
-              value: isCheckBox2Selected,
-              isDisableTextClick: false,
-              onChanged: (bool newValue) {
-                print(newValue);
-                setState(() {
-                  isCheckBox2Selected = newValue;
-                });
-              },
-              onTextClick: () {
-                print("open terms");
-              },
-            ),
-            SizedBox(
-              height: 40,
-            ),
-            SizedBox(
-                width: 150,
-                height: 45,
-                child: ElevatedButton(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text(
-                        "Register",
-                        style: TextStyle(
-                            fontSize: 18.0,
-                            fontFamily: "Montserrat",
-                            fontWeight: FontWeight.bold),
-                      ),
-                      Icon(Icons.arrow_forward_ios)
-                    ],
+        body: Stack(children: [
+      Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: AppBar(
+            toolbarHeight: 70,
+            elevation: 0,
+            backgroundColor: Colors.transparent,
+            //titleSpacing: -5,
+            automaticallyImplyLeading: false,
+            centerTitle: true,
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                InkWell(
+                  onTap: () {},
+                  child: Image(
+                    width: 50,
+                    height: 50,
+                    image: AssetImage("assets/images/ico_back.png"),
                   ),
-                  onPressed: isCheckBox1Selected && isCheckBox2Selected
-                      ? () {
-                          _onButtonPressed(context, widget.dataResponseModel,
-                              widget.decryptdata, widget.DeviceId);
-                        }
-                      : null,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blueAccent,
-                    textStyle: TextStyle(color: Colors.white),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(60.0)),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 10),
+                  child: Text(
+                    "",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
                   ),
-                ) /* FlatButton(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Text(
-                      "Register",
-                      style: TextStyle(
-                          fontSize: 18.0,
-                          fontFamily: "Montserrat",
-                          fontWeight: FontWeight.bold),
-                    ),
-                    Icon(Icons.arrow_forward_ios)
-                  ],
-                ),
-                onPressed: isCheckBox1Selected && isCheckBox2Selected
-                    ? _onButtonPressed
-                    : null,
-                textColor: Colors.white,
-                color: Colors.blueAccent,
-                shape: OutlineInputBorder(
-                    borderSide: BorderSide(
-                        style: BorderStyle.solid,
-                        width: 1.0,
-                        color: Colors.grey),
-                    borderRadius: new BorderRadius.circular(20.0)),
-              ), */
-                ),
-          ]),
-        ),
-      ),
-    );
+                )
+                // Your widgets here
+              ],
+            ),
+          ),
+          extendBodyBehindAppBar: false,
+          body: Container(
+              constraints: BoxConstraints.expand(),
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                begin: Alignment.topRight,
+                end: Alignment.bottomLeft,
+                colors: [
+                  //Color.fromARGB(255, 246, 249, 254),
+                  Color.fromARGB(255, 246, 249, 254),
+                  Color.fromARGB(255, 230, 231, 239),
+                ],
+              )),
+              child: SingleChildScrollView(
+                  child: Column(children: [
+                Column(children: [
+                  Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      borderOnForeground: true,
+                      margin: EdgeInsets.all(20),
+                      child: Container(
+                        // width: double.infinity,
+                        margin: EdgeInsets.all(10),
+                        //padding: EdgeInsets.symmetric(horizontal: 40, vertical: 25),
+                        // decoration: BoxDecoration(
+                        //     borderRadius: BorderRadius.circular(60),
+                        //     border: Border.all(color: Colors.black12, width: 0)),
+                        child: Column(children: [
+                          SizedBox(
+                            height: 10,
+                          ),
+                          CircleAvatar(
+                            backgroundColor: Colors.white,
+                            backgroundImage: NetworkImage(
+                                widget.dataResponseModel["BranchImg"]!),
+                            radius: 40,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            widget.dataResponseModel["BranchName"]!,
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Column(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.all(20),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    CircleAvatar(
+                                      backgroundColor: Colors.white,
+                                      backgroundImage: NetworkImage(
+                                          widget.baseUrl +
+                                              widget.dataResponseModel[
+                                                  "UserImgPath"]!),
+                                      radius: 40,
+                                    ),
+                                    SizedBox(
+                                      width: 20,
+                                    ),
+                                    Text(
+                                      widget.dataResponseModel["Name"]!,
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: 20, bottom: 0, right: 20, top: 10),
+                                child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Image(
+                                          width: 50,
+                                          height: 50,
+                                          image: AssetImage(
+                                              'assets/images/ico_id.png')),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Text(
+                                            "ID",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Text(
+                                            widget.dataResponseModel[
+                                                            "MemberId"] !=
+                                                        null &&
+                                                    widget.dataResponseModel[
+                                                            "MemberId"] !=
+                                                        ""
+                                                ? "" +
+                                                    widget.dataResponseModel[
+                                                        "MemberId"]!
+                                                : "--",
+                                            style: TextStyle(
+                                                color: Colors.grey,
+                                                fontSize: 13,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      )
+                                    ]),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: 20, bottom: 0, right: 20, top: 10),
+                                child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Image(
+                                          width: 50,
+                                          height: 50,
+                                          image: AssetImage(
+                                              'assets/images/ico_email.png')),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Text(
+                                            "Email",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Text(
+                                            widget.dataResponseModel["Email"] !=
+                                                        null &&
+                                                    widget.dataResponseModel[
+                                                            "Email"] !=
+                                                        ""
+                                                ? "" +
+                                                    widget.dataResponseModel[
+                                                        "Email"]!
+                                                : "--",
+                                            style: TextStyle(
+                                                color: Colors.grey,
+                                                fontSize: 13,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      )
+                                    ]),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: 20, bottom: 0, right: 20, top: 10),
+                                child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Image(
+                                          width: 50,
+                                          height: 50,
+                                          image: AssetImage(
+                                              'assets/images/ico_contact.png')),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Text(
+                                            "Contact",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Text(
+                                            widget.dataResponseModel[
+                                                            "ContactNo"] !=
+                                                        null &&
+                                                    widget.dataResponseModel[
+                                                            "ContactNo"] !=
+                                                        ""
+                                                ? "" +
+                                                    widget.dataResponseModel[
+                                                        "ContactNo"]!
+                                                : "--",
+                                            style: TextStyle(
+                                                color: Colors.grey,
+                                                fontSize: 13,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      )
+                                    ]),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: 20, bottom: 0, right: 20, top: 10),
+                                child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Image(
+                                          width: 50,
+                                          height: 50,
+                                          image: AssetImage(
+                                              'assets/images/ico_relatioship.png')),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Text(
+                                            "Relationship",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Text(
+                                            widget.dataResponseModel[
+                                                            "RelationShip"] !=
+                                                        null &&
+                                                    widget.dataResponseModel[
+                                                            "RelationShip"] !=
+                                                        ""
+                                                ? "" +
+                                                    widget.dataResponseModel[
+                                                        "RelationShip"]!
+                                                : "--",
+                                            style: TextStyle(
+                                                color: Colors.grey,
+                                                fontSize: 13,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      )
+                                    ]),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 20),
+                          LinkedLabelCheckbox(
+                              label: 'Yes, above details are correct.',
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 30.0, vertical: 0.0),
+                              value: isCheckBox1Selected,
+                              isDisableTextClick: true,
+                              onChanged: (bool newValue) {
+                                print(newValue);
+                                setState(() {
+                                  isCheckBox1Selected = newValue;
+                                });
+                              },
+                              onTextClick: () {
+                                debugPrint('Label has been tapped.');
+                              }),
+                          LinkedLabelCheckbox(
+                            label: 'I, accept Terms and conditions',
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 30.0, vertical: 0),
+                            value: isCheckBox2Selected,
+                            isDisableTextClick: false,
+                            onChanged: (bool newValue) {
+                              print(newValue);
+                              setState(() {
+                                isCheckBox2Selected = newValue;
+                              });
+                            },
+                            onTextClick: () {
+                              print("open terms");
+                            },
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                        ]),
+                      )),
+                  Padding(
+                      padding: EdgeInsets.only(left: 20, right: 20),
+                      child: SizedBox(
+                        width: 150,
+                        height: 45,
+                        child: ElevatedButton(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Text(
+                                "Register",
+                                style: TextStyle(
+                                    fontSize: 18.0,
+                                    fontFamily: "Montserrat",
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Icon(Icons.arrow_forward_ios)
+                            ],
+                          ),
+                          onPressed: isCheckBox1Selected && isCheckBox2Selected
+                              ? () {
+                                  _onButtonPressed(
+                                      context,
+                                      widget.dataResponseModel,
+                                      widget.decryptdata,
+                                      widget.DeviceId);
+                                }
+                              : null,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color.fromARGB(255, 6, 105, 199),
+                            textStyle: TextStyle(color: Colors.white),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(60.0)),
+                          ),
+                        ),
+                      )),
+                ]),
+              ]))))
+    ]));
   }
 
   _onButtonPressed(context, dataResponseModel, decryptdata, DeviceId) async {

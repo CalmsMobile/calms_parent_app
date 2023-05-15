@@ -27,7 +27,7 @@ import '/ui/screens/notifications/notification-view/notification-view.dart';
 import '/ui/screens/notifications/notifications.dart';
 import '/ui/screens/parent_pickup/parent_pickup.dart';
 import '/ui/screens/pin_lock/pin_enter.dart';
-import '/ui/screens/pin_lock/pin_lock.dart';
+import 'ui/screens/pin_lock/create_pin.dart';
 import '/ui/screens/profile/ProfilePage.dart';
 import '/ui/screens/profile/profile_main.dart';
 import '/ui/screens/scan_qr_registration/QRRegistration.dart';
@@ -429,8 +429,71 @@ class _SplashScreenState extends State<SplashScreen> {
       constraints: BoxConstraints.expand(),
       decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage("assets/images/splash.png"),
+              image: AssetImage("assets/images/app_bg.png"),
               fit: BoxFit.cover)),
+      child: new Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Container(
+            alignment: Alignment.center,
+            // margin: EdgeInsets.only(top: 50),
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            color: Colors.transparent,
+            child: Align(
+              alignment: Alignment.center,
+              child: Column(
+                children: [
+                  Image(
+                      width: 150,
+                      height: 150,
+                      image: AssetImage('assets/images/logo.png')),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Text(
+                    "",
+                    style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    "",
+                    textAlign: TextAlign.center,
+                    style:
+                        TextStyle(fontSize: 20, fontWeight: FontWeight.normal),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  /* InkWell(
+                            onTap: () {
+                              print("tapped");
+                              //barcode scanner
+                              setState(() {
+                                
+                              });
+                            },
+                            child: Image(
+                                width: 150,
+                                height: 150,
+                                image: AssetImage('assets/images/qrcode.png')),
+                          ),SizedBox(
+                            height: 40,
+                          ), */
+                  Image(
+                      width: 200,
+                      height: 200,
+                      alignment: Alignment.bottomCenter,
+                      image:
+                          AssetImage('assets/images/welcome_bottom_img.png')),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -27,15 +27,18 @@ class AppSettings {
       '/Handler/PortalImageHandler.ashx?ScreenType=45&RefSlno=';
 
   // API End Points
- static String GetQRInfo = 'ParentApp/GetQRInfo';
- static String RegisterParentApp = 'ParentApp/RegisterParentApp';
- static String GetNotificationList = 'ParentApp/GetNotificationList';
- static String GetNotificationListWithFilter = 'ParentApp/GetNotificationListWithFilter';
- static String RemovePushNotification = 'ParentApp/RemovePushNotification';
+  static String GetQRInfo = 'ParentApp/GetQRInfo';
+  static String RegisterParentApp = 'ParentApp/RegisterParentApp';
+  static String GetNotificationList = 'ParentApp/GetNotificationList';
+  static String GetNotificationListWithFilter =
+      'ParentApp/GetNotificationListWithFilter';
+  static String RemovePushNotification = 'ParentApp/RemovePushNotification';
 
-static String avatarPlaceholder = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png";
+  static String avatarPlaceholder =
+      "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png";
   static String vapidKey =
       'BIEVELZisr_SbfStZljlwA4SKRuQU5N7o_8ylvJ_GJs5RvYKGLEX-iAQlyu7EWyIIEY3KDPGEzADra__rbMQLak';
 
-      static String appType_Notification = "NOTIFICATION";
+  static String appType_Notification = "NOTIFICATION";
+  // static String appType_Notification = "NOTIFICATION";
 }
