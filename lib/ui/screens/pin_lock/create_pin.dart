@@ -7,14 +7,14 @@ import 'package:flutter/services.dart';
 
 import '../notifications/notifications.dart';
 
-class PinLock extends StatefulWidget {
-  const PinLock({Key? key}) : super(key: key);
+class CreatePin extends StatefulWidget {
+  const CreatePin({Key? key}) : super(key: key);
 
   @override
-  State<PinLock> createState() => _PinLockState();
+  State<CreatePin> createState() => _CreatePinState();
 }
 
-class _PinLockState extends State<PinLock> {
+class _CreatePinState extends State<CreatePin> {
   String appType = '';
   TextEditingController pinController = TextEditingController();
   TextEditingController confirmpinController = TextEditingController();
@@ -277,7 +277,7 @@ class _PinLockState extends State<PinLock> {
     MySharedPref().saveData(pinController.text, AppSettings.parentAppPIN);
     if (appType == AppSettings.appType_Notification) {
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => Notifications()));
+          context, MaterialPageRoute(builder: (context) => MyApp()));
     } else {
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => MyApp()));

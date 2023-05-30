@@ -15,167 +15,226 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: getMyAppbar("Settings", []),
+        appBar: AppBar(
+          toolbarHeight: 70,
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          //titleSpacing: -5,
+          automaticallyImplyLeading: false,
+          centerTitle: true,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              InkWell(
+                onTap: () {},
+                child: Image(
+                  width: 50,
+                  height: 50,
+                  image: AssetImage("assets/images/ico_back.png"),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 10),
+                child: Text(
+                  "App Settings",
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
+                ),
+              )
+              // Your widgets here
+            ],
+          ),
+        ),
         body: SafeArea(
-          child: SingleChildScrollView(
-            child: Container(
-              color: Colors.white,
-              padding: EdgeInsets.symmetric(horizontal: 10),
+          child: Container(
+            constraints: BoxConstraints.expand(),
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: [
+                //Color.fromARGB(255, 246, 249, 254),
+                Color.fromARGB(255, 246, 249, 254),
+                Color.fromARGB(255, 230, 231, 239),
+              ],
+            )),
+            child: SingleChildScrollView(
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      "General Settings",
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
-                    Container(
-                      height: 40.0,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            flex: 1,
-                            child: ListTile(
-                              contentPadding: EdgeInsets.symmetric(
-                                  vertical: 0.0, horizontal: 0.0),
-                              minLeadingWidth: 10,
-                              dense: true,
-                              minVerticalPadding: 5,
-                              leading: Icon(
-                                Icons.info_outline,
-                                size: 24,
-                              ),
-                              title: Text(
-                                "App version ",
-                                style: TextStyle(fontSize: 14),
-                              ),
-                            ),
+                    Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      borderOnForeground: true,
+                      margin: EdgeInsets.all(20),
+                      child: Container(
+                        margin: EdgeInsets.all(10),
+                        child: Column(children: [
+                          SizedBox(
+                            height: 20,
                           ),
-                          Text(
-                            "1.0.0",
+                          Align(
+                          alignment: Alignment.centerLeft,
+                          child:Text(
+                            "General Settings",
                             style: TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.bold),
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),),
+                          Container(
+                            height: 40.0,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: ListTile(
+                                    contentPadding: EdgeInsets.symmetric(
+                                        vertical: 0.0, horizontal: 0.0),
+                                    minLeadingWidth: 10,
+                                    dense: true,
+                                    minVerticalPadding: 5,
+                                    leading: Icon(
+                                      Icons.info_outline,
+                                      size: 24,
+                                    ),
+                                    title: Text(
+                                      "App version ",
+                                      style: TextStyle(fontSize: 14),
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  "1.0.1",
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
                           ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Divider(
-                      height: 15,
-                      color: Colors.grey,
-                    ),
-                    Container(
-                      height: 40.0,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: ListTile(
-                              contentPadding: EdgeInsets.symmetric(
-                                  vertical: 0.0, horizontal: 0.0),
-                              minLeadingWidth: 10,
-                              minVerticalPadding: -4,
-                              dense: true,
-                              leading: Icon(
-                                Icons.phone_android_outlined,
-                                size: 24,
-                              ),
-                              title: Text(
-                                "Device Name",
-                                style: TextStyle(fontSize: 14),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Divider(
+                            height: 15,
+                            color: Colors.grey,
+                          ),
+                          Container(
+                            height: 40.0,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: ListTile(
+                                    contentPadding: EdgeInsets.symmetric(
+                                        vertical: 0.0, horizontal: 0.0),
+                                    minLeadingWidth: 10,
+                                    minVerticalPadding: -4,
+                                    dense: true,
+                                    leading: Icon(
+                                      Icons.phone_android_outlined,
+                                      size: 24,
+                                    ),
+                                    title: Text(
+                                      "Device Name",
+                                      style: TextStyle(fontSize: 14),
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  "",
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Divider(
+                            height: 15,
+                            color: Colors.grey.shade300,
+                          ),
+                          Container(
+                            height: 40.0,
+                            child: InkWell(
+                              onTap: () {
+                                getAppSettings();
+                              },
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    child: ListTile(
+                                      contentPadding: EdgeInsets.symmetric(
+                                          vertical: 0.0, horizontal: 0.0),
+                                      minLeadingWidth: 10,
+                                      minVerticalPadding: -4,
+                                      dense: true,
+                                      leading: Icon(
+                                        Icons.browser_updated,
+                                        size: 24,
+                                      ),
+                                      title: Text(
+                                        "Sync now",
+                                        style: TextStyle(fontSize: 14),
+                                      ),
+                                    ),
+                                  ),
+                                  Icon(Icons.sync)
+                                ],
                               ),
                             ),
                           ),
-                          Text(
-                            "",
-                            style: TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.bold),
+                          SizedBox(
+                            height: 5,
                           ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Divider(
-                      height: 15,
-                      color: Colors.grey.shade300,
-                    ),
-                    Container(
-                      height: 40.0,
-                      child: InkWell(
-                        onTap: () {
-                          getAppSettings();
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              child: ListTile(
-                                contentPadding: EdgeInsets.symmetric(
-                                    vertical: 0.0, horizontal: 0.0),
-                                minLeadingWidth: 10,
-                                minVerticalPadding: -4,
-                                dense: true,
-                                leading: Icon(
-                                  Icons.browser_updated,
-                                  size: 24,
-                                ),
-                                title: Text(
-                                  "Sync now",
-                                  style: TextStyle(fontSize: 14),
-                                ),
+                          Divider(
+                            height: 15,
+                            color: Colors.grey.shade300,
+                          ),
+                          Container(
+                            height: 40.0,
+                            child: InkWell(
+                              onTap: () {
+                                logoutDevice();
+                              },
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    child: ListTile(
+                                      contentPadding: EdgeInsets.symmetric(
+                                          vertical: 0.0, horizontal: 0.0),
+                                      minLeadingWidth: 10,
+                                      minVerticalPadding: -4,
+                                      dense: true,
+                                      leading: Icon(
+                                        Icons.logout_outlined,
+                                        size: 24,
+                                      ),
+                                      title: Text(
+                                        "Unregister device",
+                                        style: TextStyle(fontSize: 14),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                            Icon(Icons.sync)
-                          ],
-                        ),
+                          ),
+                        ]),
                       ),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Divider(
-                      height: 15,
-                      color: Colors.grey.shade300,
-                    ),
-                    Container(
-                      height: 40.0,
-                      child: InkWell(
-                        onTap: () {
-                          logoutDevice();
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              child: ListTile(
-                                contentPadding: EdgeInsets.symmetric(
-                                    vertical: 0.0, horizontal: 0.0),
-                                minLeadingWidth: 10,
-                                minVerticalPadding: -4,
-                                dense: true,
-                                leading: Icon(
-                                  Icons.logout_outlined,
-                                  size: 24,
-                                ),
-                                title: Text(
-                                  "Unregister device",
-                                  style: TextStyle(fontSize: 14),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                    )
                   ]),
             ),
           ),

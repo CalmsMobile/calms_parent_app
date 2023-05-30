@@ -213,7 +213,7 @@ var myroutes = {
   "/TopupDetails": (context) => TopupDetails(),
   "/PurchaseDetails": (context) => PurchaseDetails(),
   "/QRRegistration": (context) => QRRegistration(),
-  "/PinLock": (context) => PinLock(),
+  "/CreatePin": (context) => CreatePin(),
   "/PINEnter": (context) => PINEnter(),
   "/FilterPage": (context) => FilterPage(),
   "/FilterActivities": (context) => FilterActivities(),
@@ -352,13 +352,6 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   Future<void> routingScreen() async {
-    // WidgetsFlutterBinding.ensureInitialized();
-
-    // bool _result = appAuth.login();
-    // if (_result) {
-    // _defaultHome = new Dashboard();
-    // _defaultHome = LoginScreen();
-    // }
     String profileData = await MySharedPref().getData(AppSettings.profileData);
 
     String appPIN = await MySharedPref().getData(AppSettings.parentAppPIN);
@@ -379,10 +372,8 @@ class _SplashScreenState extends State<SplashScreen> {
                 {
                   if (kDebugMode)
                     {
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Notifications()))
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (context) => MyApp()))
                     }
                   else
                     Navigator.pushReplacement(context,
@@ -391,16 +382,14 @@ class _SplashScreenState extends State<SplashScreen> {
               else if (profileData != "" && appPIN == "")
                 {
                   Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => PinLock()))
+                      MaterialPageRoute(builder: (context) => CreatePin()))
                 }
               else
                 {
                   if (appType == AppSettings.appType_Notification)
                     {
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Notifications()))
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (context) => MyApp()))
                     }
                   else
                     {

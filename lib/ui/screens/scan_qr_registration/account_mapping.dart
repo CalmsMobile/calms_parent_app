@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:calms_parent_latest/main.dart';
+
 import '/common/app_settings.dart';
 import '/common/my_shared_pref.dart';
 import '/common/util/linked_checkbox.dart';
@@ -41,6 +43,15 @@ class _AccountMappingState extends State<AccountMapping> {
 
   @override
   Widget build(BuildContext context) {
+    String BranchImg = widget.dataResponseModel["BranchImg"];
+    if (BranchImg != null || BranchImg != "") {
+      BranchImg =
+          BranchImg.replaceAll(RegExp(r'^data:image\/[a-z]+;base64,'), '');
+    } else
+      BranchImg =
+          "iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAQAAAAAYLlVAAAAAmJLR0QA/4ePzL8AAAEfSURBVGje7ZhRDoIwDED9IB7K4AH03xtIdw0kRvRaLp5DIvHHSyAQFZwIK2kHmrZfC5u8tA8bmEwkJMYUqynEcIUMkbdgH3pkALBF3fyZMR1AAlkwQ53wc4AzHUBRfh9zYj3PTyRkAGrXpwVqQwYQenBAA0SEEpZtyH+UY+9vATSkLq+djLU7AHUsr2lj/bctGA3Ao+f66xr/r9E9O94AdNXvxnXGMDt4W2AxO3gBLGYHswPds4PdgQghIXULrPaPCsDGAV4ACwcGb0FrhfpUDA/QUqE+FRMHxAFxQBwQB8QBcUAcEAfEAXOTWkL6eq1Kg4XzN6Pa7Yu8OAEw0+YLGqkDOABmB0wA9w4IgCuA2ndgF6k/AbRLgOrJkJAYPO7iUgnEnQYsGAAAAABJRU5ErkJggg==";
+
+    Uint8List bytesImage = const Base64Decoder().convert(BranchImg);
     return Scaffold(
         body: Stack(children: [
       Scaffold(
@@ -101,21 +112,14 @@ class _AccountMappingState extends State<AccountMapping> {
                       borderOnForeground: true,
                       margin: EdgeInsets.all(20),
                       child: Container(
-                        // width: double.infinity,
                         margin: EdgeInsets.all(10),
-                        //padding: EdgeInsets.symmetric(horizontal: 40, vertical: 25),
-                        // decoration: BoxDecoration(
-                        //     borderRadius: BorderRadius.circular(60),
-                        //     border: Border.all(color: Colors.black12, width: 0)),
                         child: Column(children: [
                           SizedBox(
                             height: 10,
                           ),
                           CircleAvatar(
-                            backgroundColor: Colors.white,
-                            backgroundImage: NetworkImage(
-                                widget.dataResponseModel["BranchImg"]!),
-                            radius: 40,
+                            radius: 40.0,
+                            backgroundImage: MemoryImage(bytesImage), //here
                           ),
                           SizedBox(
                             height: 10,
@@ -485,7 +489,7 @@ class _AccountMappingState extends State<AccountMapping> {
       MySharedPref().saveData(
           AppSettings.appType_Notification, AppSettings.Sp_Key_AppType);
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => PinLock()));
+          context, MaterialPageRoute(builder: (context) => CreatePin()));
     } else if (res['Table'][0]['code'] == 40) {
       showAlert(context, res['Table'][0]['description'], inputData, decryptdata,
           ApiUrl, profileData);
