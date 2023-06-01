@@ -307,14 +307,14 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              InkWell(
+              /* InkWell(
                 onTap: () {},
                 child: Image(
                   width: 50,
                   height: 50,
                   image: AssetImage("assets/images/ico_back.png"),
                 ),
-              ),
+              ), */
               Padding(
                 padding: EdgeInsets.only(left: 10),
                 child: Text(
@@ -367,8 +367,8 @@ class _HomePageState extends State<HomePage> {
               padding: EdgeInsets.only(right: 20),
               child: InkWell(
                 onTap: () {
-                   Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (context) => Notifications()));
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => Notifications()));
                 },
                 child: Image(
                     width: 50,
@@ -504,11 +504,14 @@ class _HomePageState extends State<HomePage> {
                                   },
                                   initialPage: widget.familyPos),
                             ),
+                            SizedBox(
+                              height: 10,
+                            ),
                             Text(
                               widget.familyList[widget.familyPos]['Name'],
                               style: TextStyle(
                                   fontSize: 22.0,
-                                  color: Colors.grey[600],
+                                  color: Colors.black87,
                                   letterSpacing: 2.0,
                                   fontWeight: FontWeight.w400),
                             ),
@@ -524,7 +527,7 @@ class _HomePageState extends State<HomePage> {
                               'MYR ${double.parse(widget.familyList[widget.familyPos]['Balance'].toString()).toStringAsFixed(2)}',
                               style: TextStyle(
                                   fontSize: 18.0,
-                                  color: Colors.grey[600],
+                                  color: Colors.blue[700],
                                   letterSpacing: 2.0,
                                   fontWeight: FontWeight.bold),
                             ),
@@ -534,7 +537,120 @@ class _HomePageState extends State<HomePage> {
                     ),
                     Column(
                       children: [
-                        GridView.builder(
+                        Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                          borderOnForeground: true,
+                          margin: EdgeInsets.only(top: 5,bottom: 20,left: 20,right: 20),
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(vertical: 20.0),
+                            height: 100.0,
+                            child: ListView(
+                              // This next line does the trick.
+                              scrollDirection: Axis.horizontal,
+                              children: [
+                                Container(
+                                  width: 100.0,
+                                  child: InkWell(
+                                      child: Column(
+                                    children: [
+                                      Image(
+                                          width: 50,
+                                          height: 50,
+                                          image: AssetImage(
+                                              "assets/images/ico_order.png")),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text(
+                                        "Order Meal",
+                                        style: TextStyle(
+                                            fontSize: 11.0,
+                                            color: Colors.black,
+                                            letterSpacing: 2.0,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  )),
+                                ),
+                                Container(
+                                  width: 100.0,
+                                  child: InkWell(
+                                      child: Column(
+                                    children: [
+                                      Image(
+                                          width: 50,
+                                          height: 50,
+                                          image: AssetImage(
+                                              "assets/images/ico_attendance.png")),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text(
+                                        "Attendance",
+                                        style: TextStyle(
+                                            fontSize: 11.0,
+                                            color: Colors.black,
+                                            letterSpacing: 2.0,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  )),
+                                ),
+                                Container(
+                                  width: 100.0,
+                                  child: InkWell(
+                                      child: Column(
+                                    children: [
+                                      Image(
+                                          width: 50,
+                                          height: 50,
+                                          image: AssetImage(
+                                              "assets/images/ico_top_up.png")),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text(
+                                        "Topup",
+                                        style: TextStyle(
+                                            fontSize: 11.0,
+                                            color: Colors.black,
+                                            letterSpacing: 2.0,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  )),
+                                ),
+                                Container(
+                                  width: 100.0,
+                                  child: InkWell(
+                                      child: Column(
+                                    children: [
+                                      Image(
+                                          width: 50,
+                                          height: 50,
+                                          image: AssetImage(
+                                              "assets/images/ico_attendance.png")),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text(
+                                        "Student\nCalender",
+                                        style: TextStyle(
+                                            fontSize: 11.0,
+                                            color: Colors.black,
+                                            letterSpacing: 2.0,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  )),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        /* GridView.builder(
                           itemCount: widget.items.length,
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(
@@ -644,6 +760,7 @@ class _HomePageState extends State<HomePage> {
                             );
                           },
                         ),
+                         */
                         Card(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15.0),

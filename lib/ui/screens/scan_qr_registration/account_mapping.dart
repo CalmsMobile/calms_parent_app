@@ -18,13 +18,14 @@ class AccountMapping extends StatefulWidget {
       required this.dataResponseModel,
       required this.baseUrl,
       required this.decryptdata,
-      required this.DeviceId})
+      required this.DeviceId, required this.DevicePlatform})
       : super(key: key);
   // Declare a field that holds the Todo.
   final Map<String, dynamic> dataResponseModel;
   final String baseUrl;
   final String decryptdata;
   final String? DeviceId;
+  final String DevicePlatform;
   @override
   State<AccountMapping> createState() => _AccountMappingState();
 }
@@ -410,7 +411,8 @@ class _AccountMappingState extends State<AccountMapping> {
                                       context,
                                       widget.dataResponseModel,
                                       widget.decryptdata,
-                                      widget.DeviceId);
+                                      widget.DeviceId,
+                                      widget.DevicePlatform);
                                 }
                               : null,
                           style: ElevatedButton.styleFrom(
@@ -426,7 +428,7 @@ class _AccountMappingState extends State<AccountMapping> {
     ]));
   }
 
-  _onButtonPressed(context, dataResponseModel, decryptdata, DeviceId) async {
+  _onButtonPressed(context, dataResponseModel, decryptdata, DeviceId, DevicePlatform) async {
     print(dataResponseModel);
     print(decryptdata);
     print("DeviceId " + DeviceId);
@@ -454,7 +456,7 @@ class _AccountMappingState extends State<AccountMapping> {
       'MAppDevSeqId': qrJson['MAppSeqId'],
       'RefUserSeqId': dataResponseModel['RefUserSeqId'],
       'DeviceUID': DeviceId,
-      'DevicePlatform': "Android",
+      'DevicePlatform': DevicePlatform,
       'DeviceDetails': "",
       'FCMToken': FCMToken,
       'ForceToUpdate': 0

@@ -58,11 +58,12 @@ class _QRRegistrationState extends State<QRRegistration> {
         //store tester account - 1001
         //var qrdata = "D5qpk1C3xkIxgAIPyzivIXAY1+BrXWHUlQKXDwvQA+a0ENSxKwKvGgdAg7wsIh62QJIMYRk74tBLpCytINKDGfH2IgcCp08LVhD6OEkWBFBWCoLHBsv0C2RptNGLGIp0R8+Jzsh612VXMk+kLirn+JgMg/p9/ZDM2TAjzGQaETHhUuOUptJYcbOQAYPXZRgb";
         //nizam-parent - 1001
-         var qrdata ="D5qpk1C3xkIxgAIPyzivIXAY1+BrXWHUlQKXDwvQA+bDSlcRYT++9jkBc++WhCMLlHliyDX7ppYiygJ+gN94NDBG1W7+q8OOX6TZKZTvIjECyu9ZcCovTwEWh3q39Z2wAmzK51kYhq6YM8R8ovVz658SNGlkpfc1EeauaMQveTgX2oZR+2ukF0Fy+uO0XqTJ";
+        var qrdata =
+            "D5qpk1C3xkIxgAIPyzivIXAY1+BrXWHUlQKXDwvQA+bDSlcRYT++9jkBc++WhCMLlHliyDX7ppYiygJ+gN94NDBG1W7+q8OOX6TZKZTvIjECyu9ZcCovTwEWh3q39Z2wAmzK51kYhq6YM8R8ovVz658SNGlkpfc1EeauaMQveTgX2oZR+2ukF0Fy+uO0XqTJ";
         //nizam-parent - 2008
-       // var qrdata = "D5qpk1C3xkIxgAIPyzivIXAY1+BrXWHUlQKXDwvQA+bKsLCI7GP2EMDb8/1tHG/vkPFFxV/ebxiJkiU/wVqVOC7dkd76icciFv3SgUJiIBCpdQ2oQIgBdXE0rSyFVEfiCAA9rSZ9QBMCONEr18fv7Q==";
+        // var qrdata = "D5qpk1C3xkIxgAIPyzivIXAY1+BrXWHUlQKXDwvQA+bKsLCI7GP2EMDb8/1tHG/vkPFFxV/ebxiJkiU/wVqVOC7dkd76icciFv3SgUJiIBCpdQ2oQIgBdXE0rSyFVEfiCAA9rSZ9QBMCONEr18fv7Q==";
         //var qrdata = "D5qpk1C3xkIxgAIPyzivIXAY1+BrXWHUlQKXDwvQA+bKsLCI7GP2EMDb8/1tHG/vkPFFxV/ebxiJkiU/wVqVOC7dkd76icciFv3SgUJiIBCpdQ2oQIgBdXE0rSyFVEfiCAA9rSZ9QBMCONEr18fv7Q==";
-           /*  DECRYPT: {"MAppId":"PARENTAPP","MAppSeqId":"106","RefUserSeqId":"100004","RefBranchSeqId":"11001","ApiUrl":""}
+        /*  DECRYPT: {"MAppId":"PARENTAPP","MAppSeqId":"106","RefUserSeqId":"100004","RefBranchSeqId":"11001","ApiUrl":""}
 js_primitives.dart:30 {MAppDevSeqId: 106} */
 
         processQRCode(qrdata);
@@ -152,6 +153,14 @@ js_primitives.dart:30 {MAppDevSeqId: 106} */
       //MySharedPref().saveData(jsonEncode(response['Table1'][0]), AppSettings.profileData);
       baseUrl = baseUrl.replaceAll("/api/", "/FS/");
       String? DeviceId = await PlatformDeviceId.getDeviceId;
+      String DevicePlatform = "";
+      if (defaultTargetPlatform == TargetPlatform.android) {
+        DevicePlatform = "Android";
+      } else if (defaultTargetPlatform == TargetPlatform.iOS) {
+        DevicePlatform = "iOS";
+      } else {
+        DevicePlatform = "Web";
+      }
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -160,6 +169,7 @@ js_primitives.dart:30 {MAppDevSeqId: 106} */
                   dataResponseModel: response['Table1'][0],
                   decryptdata: decryptdata,
                   DeviceId: DeviceId,
+                  DevicePlatform: DevicePlatform,
                 )),
       );
       //Navigator.pushReplacement(context,
