@@ -1740,7 +1740,7 @@ class _CartPageState extends State<CartPage> {
             "ratings": 4,
             "merchant_name": "Cafe",
             "merchant_image":
-                "http://124.217.235.107:2008/Handler/ImagePathHandler.ashx?ImagePath=Merchant/04ff-e4c2-2021-11-24-15-58-30-844/coffee-and-cafe-logo-design-inspiration-vector-31020950.jpg&Default=2&PROUrl=http://124.217.235.107:2008/&StoreageUrl=http://124.217.235.107:2008/FS/",
+                "http://103.6.163.49:2008/Handler/ImagePathHandler.ashx?ImagePath=Merchant/04ff-e4c2-2021-11-24-15-58-30-844/coffee-and-cafe-logo-design-inspiration-vector-31020950.jpg&Default=2&PROUrl=http://103.6.163.49:2008/&StoreageUrl=http://103.6.163.49:2008/FS/",
             "calories": "",
             "price": "18",
             "addon": true,
@@ -1748,12 +1748,12 @@ class _CartPageState extends State<CartPage> {
               {
                 "name": "Chicken",
                 "image":
-                    "http://124.217.235.107:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
+                    "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
               },
               {
                 "name": "Mix Vege",
                 "image":
-                    "http://124.217.235.107:2008/Handler/PortalImageHandler.ashx?RefSlno=118&ScreenType=12"
+                    "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=118&ScreenType=12"
               }
             ],
             "date": "2022/05/01",
@@ -1789,7 +1789,7 @@ class _CartPageState extends State<CartPage> {
             "ratings": 4,
             "merchant_name": "Cafe",
             "merchant_image":
-                "http://124.217.235.107:2008/Handler/ImagePathHandler.ashx?ImagePath=Merchant/04ff-e4c2-2021-11-24-15-58-30-844/coffee-and-cafe-logo-design-inspiration-vector-31020950.jpg&Default=2&PROUrl=http://124.217.235.107:2008/&StoreageUrl=http://124.217.235.107:2008/FS/",
+                "http://103.6.163.49:2008/Handler/ImagePathHandler.ashx?ImagePath=Merchant/04ff-e4c2-2021-11-24-15-58-30-844/coffee-and-cafe-logo-design-inspiration-vector-31020950.jpg&Default=2&PROUrl=http://103.6.163.49:2008/&StoreageUrl=http://103.6.163.49:2008/FS/",
             "calories": "",
             "price": "18",
             "addon": true,
@@ -1797,12 +1797,12 @@ class _CartPageState extends State<CartPage> {
               {
                 "name": "Chicken",
                 "image":
-                    "http://124.217.235.107:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
+                    "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
               },
               {
                 "name": "Mix Vege",
                 "image":
-                    "http://124.217.235.107:2008/Handler/PortalImageHandler.ashx?RefSlno=118&ScreenType=12"
+                    "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=118&ScreenType=12"
               }
             ],
             "date": "2022/05/01",
@@ -1990,13 +1990,13 @@ class _CartPageState extends State<CartPage> {
             "applicable_group":
                 "Year1,Year2,Year3,Year4,Year5,Year6,Year2,Year3,Year4,Year10",
             "image": [
-              "http://124.217.235.107:2008/Handler/ImagePathHandler.ashx?ImagePath=StoreItems/b6fa-e4c2-2021-11-25-11-32-18-810/71-zpNFAyTL._SL1080_.jpg&Default=60&PROUrl=http://124.217.235.107:2008/&StoreageUrl=http://124.217.235.107:2008/FS/",
-              "http://124.217.235.107:2008/FS/StoreItems/4adc-e4c2-2021-11-25-11-32-55-924/student-plastic-id-card-holder-500x500.jpg"
+              "http://103.6.163.49:2008/Handler/ImagePathHandler.ashx?ImagePath=StoreItems/b6fa-e4c2-2021-11-25-11-32-18-810/71-zpNFAyTL._SL1080_.jpg&Default=60&PROUrl=http://103.6.163.49:2008/&StoreageUrl=http://103.6.163.49:2008/FS/",
+              "http://103.6.163.49:2008/FS/StoreItems/4adc-e4c2-2021-11-25-11-32-55-924/student-plastic-id-card-holder-500x500.jpg"
             ],
             "colors": ["White", "Black", "Red", "Blue"],
             "size": ["S", "M", "L", "XL", "XXL"],
             "merchantimage":
-                "http://124.217.235.107:2008/FS/Merchant/1569-e4c2-2021-11-25-10-18-28-567/CALMS_Technologies_Sdn_Bhd_Logo.png"
+                "http://103.6.163.49:2008/FS/Merchant/1569-e4c2-2021-11-25-10-18-28-567/CALMS_Technologies_Sdn_Bhd_Logo.png"
           },
           {
             "quantity": "1",
@@ -2032,7 +2032,7 @@ class _CartPageState extends State<CartPage> {
             "colors": ["White", "Black", "Red", "Blue"],
             "size": ["S", "M", "L", "XL", "XXL"],
             "merchantimage":
-                "http://124.217.235.107:2008/FS/Merchant/1569-e4c2-2021-11-25-10-18-28-567/CALMS_Technologies_Sdn_Bhd_Logo.png"
+                "http://103.6.163.49:2008/FS/Merchant/1569-e4c2-2021-11-25-10-18-28-567/CALMS_Technologies_Sdn_Bhd_Logo.png"
           }
         ]
       },

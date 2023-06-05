@@ -585,7 +585,7 @@ class _ProfileMainState extends State<ProfileMain> {
                                 child: CircleAvatar(
                                   backgroundColor: Colors.white,
                                   backgroundImage: NetworkImage(
-                                      "http://124.217.235.107:2008/FS/Merchant/04ff-e4c2-2021-11-24-15-58-30-844/coffee-and-cafe-logo-design-inspiration-vector-31020950.jpg"),
+                                      "http://103.6.163.49:2008/FS/Merchant/04ff-e4c2-2021-11-24-15-58-30-844/coffee-and-cafe-logo-design-inspiration-vector-31020950.jpg"),
                                   radius: 30,
                                 ),
                               ),

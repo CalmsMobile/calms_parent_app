@@ -382,7 +382,7 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
                     decoration: BoxDecoration(
                         image: DecorationImage(
                             image: NetworkImage(
-                                "http://124.217.235.107:2008/calmsweb/Parent/Images/Invoice/default.png"),
+                                "http://103.6.163.49:2008/calmsweb/Parent/Images/Invoice/default.png"),
                             fit: BoxFit.fill)),
                   ),
                 ),

@@ -228,7 +228,7 @@ class _MealDetailsState extends State<MealDetails> {
                                   margin: EdgeInsets.only(left: 5, top: 10),
                                   padding: EdgeInsets.all(5),
                                   child: Image.network(
-                                    "${'http://124.217.235.107:2008/Library/Images/HealthyRating/' + mealInfo['ratings'].toString() + '.png'}",
+                                    "${'http://103.6.163.49:2008/Library/Images/HealthyRating/' + mealInfo['ratings'].toString() + '.png'}",
                                     fit: BoxFit.cover,
                                     height: 20,
                                   ),

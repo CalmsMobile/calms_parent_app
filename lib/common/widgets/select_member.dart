@@ -50,8 +50,8 @@ PreferredSizeWidget getBottomSheetActionBar(
             titleText,
             style: TextStyle(
                 color: Colors.black,
-                fontSize: 16,
-                fontWeight: titleText == 'Summary' || titleText == 'Attendance'
+                fontSize: 22,
+                fontWeight: titleText == 'Summary' || titleText == 'Attendance' || titleText == 'Select Model' || titleText == 'Package'
                     ? FontWeight.bold
                     : FontWeight.normal),
           ),

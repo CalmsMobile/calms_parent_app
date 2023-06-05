@@ -35,7 +35,7 @@ class _MealOrderState extends State<MealOrder> {
       "ratings": 4,
       "merchant_name": "Cafe",
       "merchant_image":
-          "http://124.217.235.107:2008/Handler/ImagePathHandler.ashx?ImagePath=Merchant/04ff-e4c2-2021-11-24-15-58-30-844/coffee-and-cafe-logo-design-inspiration-vector-31020950.jpg&Default=2&PROUrl=http://124.217.235.107:2008/&StoreageUrl=http://124.217.235.107:2008/FS/",
+          "http://103.6.163.49:2008/Handler/ImagePathHandler.ashx?ImagePath=Merchant/04ff-e4c2-2021-11-24-15-58-30-844/coffee-and-cafe-logo-design-inspiration-vector-31020950.jpg&Default=2&PROUrl=http://103.6.163.49:2008/&StoreageUrl=http://103.6.163.49:2008/FS/",
       "calories": "",
       "price": "18",
       "addon": true,
@@ -43,42 +43,42 @@ class _MealOrderState extends State<MealOrder> {
         {
           "name": "Chicken",
           "image":
-              "http://124.217.235.107:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
+              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
         },
         {
           "name": "Mix Vege",
           "image":
-              "http://124.217.235.107:2008/Handler/PortalImageHandler.ashx?RefSlno=118&ScreenType=12"
+              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=118&ScreenType=12"
         },
         {
           "name": "Potato",
           "image":
-              "http://124.217.235.107:2008/Handler/PortalImageHandler.ashx?RefSlno=123&ScreenType=12"
+              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=123&ScreenType=12"
         },
         {
           "name": "Chicken1",
           "image":
-              "http://124.217.235.107:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
+              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
         },
         {
           "name": "Mix Vege1",
           "image":
-              "http://124.217.235.107:2008/Handler/PortalImageHandler.ashx?RefSlno=118&ScreenType=12"
+              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=118&ScreenType=12"
         },
         {
           "name": "Potato1",
           "image":
-              "http://124.217.235.107:2008/Handler/PortalImageHandler.ashx?RefSlno=123&ScreenType=12"
+              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=123&ScreenType=12"
         },
         {
           "name": "Chicken2",
           "image":
-              "http://124.217.235.107:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
+              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
         },
       ],
       "date": "2022/05/01",
       "image":
-          "http://124.217.235.107:2008/FS/Meals/ResizeImg/1c28-e4c2-2021-11-25-11-31-21-929/82861384-baguette-sandwich-with-roast-beef-tomato-and-mixed-salad.jpg"
+          "http://103.6.163.49:2008/FS/Meals/ResizeImg/1c28-e4c2-2021-11-25-11-31-21-929/82861384-baguette-sandwich-with-roast-beef-tomato-and-mixed-salad.jpg"
     },
     {
       "id": "ID002",
@@ -86,7 +86,7 @@ class _MealOrderState extends State<MealOrder> {
       "mealOrderType": "Daily",
       "selectionMode": "Multiple",
       "requirePurchaseCutoff": true,
-      "name": "Briyani",
+      "name": "Sample Menu Name 2",
       "desc":
           "Rolled flour tortilla filled with marinated grilled beef, lettuce, tomato, onion and fries",
       "category": "Lunch",
@@ -94,14 +94,14 @@ class _MealOrderState extends State<MealOrder> {
       "ratings": 2,
       "merchant_name": "Cafe",
       "merchant_image":
-          "http://124.217.235.107:2008/Handler/ImagePathHandler.ashx?ImagePath=Merchant/04ff-e4c2-2021-11-24-15-58-30-844/coffee-and-cafe-logo-design-inspiration-vector-31020950.jpg&Default=2&PROUrl=http://124.217.235.107:2008/&StoreageUrl=http://124.217.235.107:2008/FS/",
+          "http://103.6.163.49:2008/Handler/ImagePathHandler.ashx?ImagePath=Merchant/04ff-e4c2-2021-11-24-15-58-30-844/coffee-and-cafe-logo-design-inspiration-vector-31020950.jpg&Default=2&PROUrl=http://103.6.163.49:2008/&StoreageUrl=http://103.6.163.49:2008/FS/",
       "calories": "",
       "price": "120",
       "addon": true,
       "ingredients": [],
       "date": "2022/05/01",
       "image":
-          "http://124.217.235.107:2008/FS/Meals/ResizeImg/9882-e4c2-2021-11-25-11-24-10-477/Rolled%20flour%20tortilla%20filled%20with%20marinated%20grilled%20chicken%20capsicum%20onion%20lettuce%20and%20fries.jpg"
+          "http://103.6.163.49:2008/FS/Meals/ResizeImg/9882-e4c2-2021-11-25-11-24-10-477/Rolled%20flour%20tortilla%20filled%20with%20marinated%20grilled%20chicken%20capsicum%20onion%20lettuce%20and%20fries.jpg"
     },
     {
       "id": "ID003",
@@ -117,7 +117,7 @@ class _MealOrderState extends State<MealOrder> {
       "ratings": 3,
       "merchant_name": "Cafe",
       "merchant_image":
-          "http://124.217.235.107:2008/Handler/ImagePathHandler.ashx?ImagePath=Merchant/04ff-e4c2-2021-11-24-15-58-30-844/coffee-and-cafe-logo-design-inspiration-vector-31020950.jpg&Default=2&PROUrl=http://124.217.235.107:2008/&StoreageUrl=http://124.217.235.107:2008/FS/",
+          "http://103.6.163.49:2008/Handler/ImagePathHandler.ashx?ImagePath=Merchant/04ff-e4c2-2021-11-24-15-58-30-844/coffee-and-cafe-logo-design-inspiration-vector-31020950.jpg&Default=2&PROUrl=http://103.6.163.49:2008/&StoreageUrl=http://103.6.163.49:2008/FS/",
       "calories": "",
       "price": "10",
       "addon": false,
@@ -125,27 +125,27 @@ class _MealOrderState extends State<MealOrder> {
         {
           "name": "Chicken",
           "image":
-              "http://124.217.235.107:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
+              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
         },
         {
           "name": "Mix Vege",
           "image":
-              "http://124.217.235.107:2008/Handler/PortalImageHandler.ashx?RefSlno=118&ScreenType=12"
+              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=118&ScreenType=12"
         },
         {
           "name": "Potato",
           "image":
-              "http://124.217.235.107:2008/Handler/PortalImageHandler.ashx?RefSlno=123&ScreenType=12"
+              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=123&ScreenType=12"
         },
         {
           "name": "Chicken",
           "image":
-              "http://124.217.235.107:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
+              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
         },
       ],
       "date": "2022/05/01",
       "image":
-          "http://124.217.235.107:2008/FS/Meals/ResizeImg/1c28-e4c2-2021-11-25-11-31-21-929/82861384-baguette-sandwich-with-roast-beef-tomato-and-mixed-salad.jpg"
+          "http://103.6.163.49:2008/FS/Meals/ResizeImg/1c28-e4c2-2021-11-25-11-31-21-929/82861384-baguette-sandwich-with-roast-beef-tomato-and-mixed-salad.jpg"
     },
     {
       "id": "ID004",
@@ -161,14 +161,14 @@ class _MealOrderState extends State<MealOrder> {
       "ratings": 1,
       "merchant_name": "Cafe",
       "merchant_image":
-          "http://124.217.235.107:2008/Handler/ImagePathHandler.ashx?ImagePath=Merchant/04ff-e4c2-2021-11-24-15-58-30-844/coffee-and-cafe-logo-design-inspiration-vector-31020950.jpg&Default=2&PROUrl=http://124.217.235.107:2008/&StoreageUrl=http://124.217.235.107:2008/FS/",
+          "http://103.6.163.49:2008/Handler/ImagePathHandler.ashx?ImagePath=Merchant/04ff-e4c2-2021-11-24-15-58-30-844/coffee-and-cafe-logo-design-inspiration-vector-31020950.jpg&Default=2&PROUrl=http://103.6.163.49:2008/&StoreageUrl=http://103.6.163.49:2008/FS/",
       "calories": "",
       "price": "18",
       "addon": true,
       "ingredients": [],
       "date": "2022/05/02",
       "image":
-          "http://124.217.235.107:2008/FS/Meals/ResizeImg/1c28-e4c2-2021-11-25-11-31-21-929/82861384-baguette-sandwich-with-roast-beef-tomato-and-mixed-salad.jpg"
+          "http://103.6.163.49:2008/FS/Meals/ResizeImg/1c28-e4c2-2021-11-25-11-31-21-929/82861384-baguette-sandwich-with-roast-beef-tomato-and-mixed-salad.jpg"
     },
     {
       "id": "ID005",
@@ -184,7 +184,7 @@ class _MealOrderState extends State<MealOrder> {
       "ratings": 5,
       "merchant_name": "Cafe",
       "merchant_image":
-          "http://124.217.235.107:2008/Handler/ImagePathHandler.ashx?ImagePath=Merchant/04ff-e4c2-2021-11-24-15-58-30-844/coffee-and-cafe-logo-design-inspiration-vector-31020950.jpg&Default=2&PROUrl=http://124.217.235.107:2008/&StoreageUrl=http://124.217.235.107:2008/FS/",
+          "http://103.6.163.49:2008/Handler/ImagePathHandler.ashx?ImagePath=Merchant/04ff-e4c2-2021-11-24-15-58-30-844/coffee-and-cafe-logo-design-inspiration-vector-31020950.jpg&Default=2&PROUrl=http://103.6.163.49:2008/&StoreageUrl=http://103.6.163.49:2008/FS/",
       "calories": "",
       "price": "18",
       "addon": false,
@@ -192,27 +192,27 @@ class _MealOrderState extends State<MealOrder> {
         {
           "name": "Chicken",
           "image":
-              "http://124.217.235.107:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
+              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
         },
         {
           "name": "Mix Vege",
           "image":
-              "http://124.217.235.107:2008/Handler/PortalImageHandler.ashx?RefSlno=118&ScreenType=12"
+              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=118&ScreenType=12"
         },
         {
           "name": "Potato",
           "image":
-              "http://124.217.235.107:2008/Handler/PortalImageHandler.ashx?RefSlno=123&ScreenType=12"
+              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=123&ScreenType=12"
         },
         {
           "name": "Chicken",
           "image":
-              "http://124.217.235.107:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
+              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
         },
       ],
       "date": "2022/05/03",
       "image":
-          "http://124.217.235.107:2008/FS/Meals/ResizeImg/1c28-e4c2-2021-11-25-11-31-21-929/82861384-baguette-sandwich-with-roast-beef-tomato-and-mixed-salad.jpg"
+          "http://103.6.163.49:2008/FS/Meals/ResizeImg/1c28-e4c2-2021-11-25-11-31-21-929/82861384-baguette-sandwich-with-roast-beef-tomato-and-mixed-salad.jpg"
     },
     {
       "id": "ID0055",
@@ -228,7 +228,7 @@ class _MealOrderState extends State<MealOrder> {
       "ratings": 2,
       "merchant_name": "Cafe",
       "merchant_image":
-          "http://124.217.235.107:2008/Handler/ImagePathHandler.ashx?ImagePath=Merchant/04ff-e4c2-2021-11-24-15-58-30-844/coffee-and-cafe-logo-design-inspiration-vector-31020950.jpg&Default=2&PROUrl=http://124.217.235.107:2008/&StoreageUrl=http://124.217.235.107:2008/FS/",
+          "http://103.6.163.49:2008/Handler/ImagePathHandler.ashx?ImagePath=Merchant/04ff-e4c2-2021-11-24-15-58-30-844/coffee-and-cafe-logo-design-inspiration-vector-31020950.jpg&Default=2&PROUrl=http://103.6.163.49:2008/&StoreageUrl=http://103.6.163.49:2008/FS/",
       "calories": "Lunch",
       "price": "18",
       "addon": true,
@@ -250,7 +250,7 @@ class _MealOrderState extends State<MealOrder> {
       "ratings": 3,
       "merchant_name": "Cafe",
       "merchant_image":
-          "http://124.217.235.107:2008/Handler/ImagePathHandler.ashx?ImagePath=Merchant/04ff-e4c2-2021-11-24-15-58-30-844/coffee-and-cafe-logo-design-inspiration-vector-31020950.jpg&Default=2&PROUrl=http://124.217.235.107:2008/&StoreageUrl=http://124.217.235.107:2008/FS/",
+          "http://103.6.163.49:2008/Handler/ImagePathHandler.ashx?ImagePath=Merchant/04ff-e4c2-2021-11-24-15-58-30-844/coffee-and-cafe-logo-design-inspiration-vector-31020950.jpg&Default=2&PROUrl=http://103.6.163.49:2008/&StoreageUrl=http://103.6.163.49:2008/FS/",
       "calories": "",
       "price": "18",
       "addon": false,
@@ -258,27 +258,27 @@ class _MealOrderState extends State<MealOrder> {
         {
           "name": "Chicken",
           "image":
-              "http://124.217.235.107:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
+              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
         },
         {
           "name": "Mix Vege",
           "image":
-              "http://124.217.235.107:2008/Handler/PortalImageHandler.ashx?RefSlno=118&ScreenType=12"
+              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=118&ScreenType=12"
         },
         {
           "name": "Potato",
           "image":
-              "http://124.217.235.107:2008/Handler/PortalImageHandler.ashx?RefSlno=123&ScreenType=12"
+              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=123&ScreenType=12"
         },
         {
           "name": "Chicken",
           "image":
-              "http://124.217.235.107:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
+              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
         },
       ],
       "date": "2022/05/05",
       "image":
-          "http://124.217.235.107:2008/FS/Meals/ResizeImg/1c28-e4c2-2021-11-25-11-31-21-929/82861384-baguette-sandwich-with-roast-beef-tomato-and-mixed-salad.jpg"
+          "http://103.6.163.49:2008/FS/Meals/ResizeImg/1c28-e4c2-2021-11-25-11-31-21-929/82861384-baguette-sandwich-with-roast-beef-tomato-and-mixed-salad.jpg"
     },
     {
       "id": "ID007",
@@ -294,7 +294,7 @@ class _MealOrderState extends State<MealOrder> {
       "ratings": 4,
       "merchant_name": "Cafe",
       "merchant_image":
-          "http://124.217.235.107:2008/Handler/ImagePathHandler.ashx?ImagePath=Merchant/04ff-e4c2-2021-11-24-15-58-30-844/coffee-and-cafe-logo-design-inspiration-vector-31020950.jpg&Default=2&PROUrl=http://124.217.235.107:2008/&StoreageUrl=http://124.217.235.107:2008/FS/",
+          "http://103.6.163.49:2008/Handler/ImagePathHandler.ashx?ImagePath=Merchant/04ff-e4c2-2021-11-24-15-58-30-844/coffee-and-cafe-logo-design-inspiration-vector-31020950.jpg&Default=2&PROUrl=http://103.6.163.49:2008/&StoreageUrl=http://103.6.163.49:2008/FS/",
       "calories": "",
       "price": "18",
       "addon": true,
@@ -302,22 +302,22 @@ class _MealOrderState extends State<MealOrder> {
         {
           "name": "Chicken",
           "image":
-              "http://124.217.235.107:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
+              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
         },
         {
           "name": "Mix Vege",
           "image":
-              "http://124.217.235.107:2008/Handler/PortalImageHandler.ashx?RefSlno=118&ScreenType=12"
+              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=118&ScreenType=12"
         },
         {
           "name": "Potato",
           "image":
-              "http://124.217.235.107:2008/Handler/PortalImageHandler.ashx?RefSlno=123&ScreenType=12"
+              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=123&ScreenType=12"
         },
         {
           "name": "Chicken",
           "image":
-              "http://124.217.235.107:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
+              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
         },
       ],
       "date": "2022/05/06",
@@ -337,7 +337,7 @@ class _MealOrderState extends State<MealOrder> {
       "ratings": 5,
       "merchant_name": "Cafe1",
       "merchant_image":
-          "http://124.217.235.107:2008/Handler/ImagePathHandler.ashx?ImagePath=Merchant/04ff-e4c2-2021-11-24-15-58-30-844/coffee-and-cafe-logo-design-inspiration-vector-31020950.jpg&Default=2&PROUrl=http://124.217.235.107:2008/&StoreageUrl=http://124.217.235.107:2008/FS/",
+          "http://103.6.163.49:2008/Handler/ImagePathHandler.ashx?ImagePath=Merchant/04ff-e4c2-2021-11-24-15-58-30-844/coffee-and-cafe-logo-design-inspiration-vector-31020950.jpg&Default=2&PROUrl=http://103.6.163.49:2008/&StoreageUrl=http://103.6.163.49:2008/FS/",
       "calories": "",
       "price": "18",
       "addon": false,
@@ -345,22 +345,22 @@ class _MealOrderState extends State<MealOrder> {
         {
           "name": "Chicken",
           "image":
-              "http://124.217.235.107:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
+              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
         },
         {
           "name": "Mix Vege",
           "image":
-              "http://124.217.235.107:2008/Handler/PortalImageHandler.ashx?RefSlno=118&ScreenType=12"
+              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=118&ScreenType=12"
         },
         {
           "name": "Potato",
           "image":
-              "http://124.217.235.107:2008/Handler/PortalImageHandler.ashx?RefSlno=123&ScreenType=12"
+              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=123&ScreenType=12"
         },
         {
           "name": "Chicken",
           "image":
-              "http://124.217.235.107:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
+              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
         },
       ],
       "date": "2022/05/07",
@@ -380,7 +380,7 @@ class _MealOrderState extends State<MealOrder> {
       "ratings": 1,
       "merchant_name": "Cafe",
       "merchant_image":
-          "http://124.217.235.107:2008/Handler/ImagePathHandler.ashx?ImagePath=Merchant/04ff-e4c2-2021-11-24-15-58-30-844/coffee-and-cafe-logo-design-inspiration-vector-31020950.jpg&Default=2&PROUrl=http://124.217.235.107:2008/&StoreageUrl=http://124.217.235.107:2008/FS/",
+          "http://103.6.163.49:2008/Handler/ImagePathHandler.ashx?ImagePath=Merchant/04ff-e4c2-2021-11-24-15-58-30-844/coffee-and-cafe-logo-design-inspiration-vector-31020950.jpg&Default=2&PROUrl=http://103.6.163.49:2008/&StoreageUrl=http://103.6.163.49:2008/FS/",
       "calories": "",
       "price": "18",
       "addon": true,
@@ -402,7 +402,7 @@ class _MealOrderState extends State<MealOrder> {
       "ratings": 2,
       "merchant_name": "Cafe",
       "merchant_image":
-          "http://124.217.235.107:2008/Handler/ImagePathHandler.ashx?ImagePath=Merchant/04ff-e4c2-2021-11-24-15-58-30-844/coffee-and-cafe-logo-design-inspiration-vector-31020950.jpg&Default=2&PROUrl=http://124.217.235.107:2008/&StoreageUrl=http://124.217.235.107:2008/FS/",
+          "http://103.6.163.49:2008/Handler/ImagePathHandler.ashx?ImagePath=Merchant/04ff-e4c2-2021-11-24-15-58-30-844/coffee-and-cafe-logo-design-inspiration-vector-31020950.jpg&Default=2&PROUrl=http://103.6.163.49:2008/&StoreageUrl=http://103.6.163.49:2008/FS/",
       "calories": "",
       "price": "18",
       "addon": false,
@@ -410,22 +410,22 @@ class _MealOrderState extends State<MealOrder> {
         {
           "name": "Chicken",
           "image":
-              "http://124.217.235.107:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
+              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
         },
         {
           "name": "Mix Vege",
           "image":
-              "http://124.217.235.107:2008/Handler/PortalImageHandler.ashx?RefSlno=118&ScreenType=12"
+              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=118&ScreenType=12"
         },
         {
           "name": "Potato",
           "image":
-              "http://124.217.235.107:2008/Handler/PortalImageHandler.ashx?RefSlno=123&ScreenType=12"
+              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=123&ScreenType=12"
         },
         {
           "name": "Chicken",
           "image":
-              "http://124.217.235.107:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
+              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
         },
       ],
       "date": "2022/05/09",
@@ -445,7 +445,7 @@ class _MealOrderState extends State<MealOrder> {
       "ratings": 4,
       "merchant_name": "Cafe",
       "merchant_image":
-          "http://124.217.235.107:2008/Handler/ImagePathHandler.ashx?ImagePath=Merchant/04ff-e4c2-2021-11-24-15-58-30-844/coffee-and-cafe-logo-design-inspiration-vector-31020950.jpg&Default=2&PROUrl=http://124.217.235.107:2008/&StoreageUrl=http://124.217.235.107:2008/FS/",
+          "http://103.6.163.49:2008/Handler/ImagePathHandler.ashx?ImagePath=Merchant/04ff-e4c2-2021-11-24-15-58-30-844/coffee-and-cafe-logo-design-inspiration-vector-31020950.jpg&Default=2&PROUrl=http://103.6.163.49:2008/&StoreageUrl=http://103.6.163.49:2008/FS/",
       "calories": "",
       "price": "18",
       "addon": true,
@@ -453,22 +453,22 @@ class _MealOrderState extends State<MealOrder> {
         {
           "name": "Chicken",
           "image":
-              "http://124.217.235.107:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
+              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
         },
         {
           "name": "Mix Vege",
           "image":
-              "http://124.217.235.107:2008/Handler/PortalImageHandler.ashx?RefSlno=118&ScreenType=12"
+              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=118&ScreenType=12"
         },
         {
           "name": "Potato",
           "image":
-              "http://124.217.235.107:2008/Handler/PortalImageHandler.ashx?RefSlno=123&ScreenType=12"
+              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=123&ScreenType=12"
         },
         {
           "name": "Chicken",
           "image":
-              "http://124.217.235.107:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
+              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
         },
       ],
       "date": "2022/05/10",
@@ -488,7 +488,7 @@ class _MealOrderState extends State<MealOrder> {
       "ratings": 3,
       "merchant_name": "Cafe",
       "merchant_image":
-          "http://124.217.235.107:2008/Handler/ImagePathHandler.ashx?ImagePath=Merchant/04ff-e4c2-2021-11-24-15-58-30-844/coffee-and-cafe-logo-design-inspiration-vector-31020950.jpg&Default=2&PROUrl=http://124.217.235.107:2008/&StoreageUrl=http://124.217.235.107:2008/FS/",
+          "http://103.6.163.49:2008/Handler/ImagePathHandler.ashx?ImagePath=Merchant/04ff-e4c2-2021-11-24-15-58-30-844/coffee-and-cafe-logo-design-inspiration-vector-31020950.jpg&Default=2&PROUrl=http://103.6.163.49:2008/&StoreageUrl=http://103.6.163.49:2008/FS/",
       "calories": "",
       "price": "18",
       "addon": false,
@@ -496,22 +496,22 @@ class _MealOrderState extends State<MealOrder> {
         {
           "name": "Chicken",
           "image":
-              "http://124.217.235.107:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
+              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
         },
         {
           "name": "Mix Vege",
           "image":
-              "http://124.217.235.107:2008/Handler/PortalImageHandler.ashx?RefSlno=118&ScreenType=12"
+              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=118&ScreenType=12"
         },
         {
           "name": "Potato",
           "image":
-              "http://124.217.235.107:2008/Handler/PortalImageHandler.ashx?RefSlno=123&ScreenType=12"
+              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=123&ScreenType=12"
         },
         {
           "name": "Chicken",
           "image":
-              "http://124.217.235.107:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
+              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
         },
       ],
       "date": "2022/05/11",
@@ -531,7 +531,7 @@ class _MealOrderState extends State<MealOrder> {
       "ratings": 4,
       "merchant_name": "Cafe",
       "merchant_image":
-          "http://124.217.235.107:2008/Handler/ImagePathHandler.ashx?ImagePath=Merchant/04ff-e4c2-2021-11-24-15-58-30-844/coffee-and-cafe-logo-design-inspiration-vector-31020950.jpg&Default=2&PROUrl=http://124.217.235.107:2008/&StoreageUrl=http://124.217.235.107:2008/FS/",
+          "http://103.6.163.49:2008/Handler/ImagePathHandler.ashx?ImagePath=Merchant/04ff-e4c2-2021-11-24-15-58-30-844/coffee-and-cafe-logo-design-inspiration-vector-31020950.jpg&Default=2&PROUrl=http://103.6.163.49:2008/&StoreageUrl=http://103.6.163.49:2008/FS/",
       "calories": "",
       "price": "18",
       "addon": true,
@@ -539,22 +539,22 @@ class _MealOrderState extends State<MealOrder> {
         {
           "name": "Chicken",
           "image":
-              "http://124.217.235.107:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
+              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
         },
         {
           "name": "Mix Vege",
           "image":
-              "http://124.217.235.107:2008/Handler/PortalImageHandler.ashx?RefSlno=118&ScreenType=12"
+              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=118&ScreenType=12"
         },
         {
           "name": "Potato",
           "image":
-              "http://124.217.235.107:2008/Handler/PortalImageHandler.ashx?RefSlno=123&ScreenType=12"
+              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=123&ScreenType=12"
         },
         {
           "name": "Chicken",
           "image":
-              "http://124.217.235.107:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
+              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
         },
       ],
       "date": "2022/05/12",
@@ -652,576 +652,696 @@ class _MealOrderState extends State<MealOrder> {
       MealPager(mealList_, onCartClick),
     ];
     return Scaffold(
-      appBar: AppBar(
-        iconTheme: IconThemeData(
-          color: Colors.black, //change your color here
-        ),
-        elevation: 0,
-        backgroundColor: HexColor("#f5f8fd"),
-        titleSpacing: -5,
-        title: searchEnable
-            ? Container(
-                width: double.infinity,
-                height: 40,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(5)),
-                child: Center(
-                  child: TextField(
-                    autofocus: true,
-                    onChanged: (value) => _runFilter(value),
-                    decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.search),
-                        suffixIcon: IconButton(
-                          icon: Icon(Icons.clear),
-                          onPressed: () {
-                            searchEnable = !searchEnable;
-                            setState(() {});
-                          },
-                        ),
-                        hintText: 'Search by meal name',
-                        border: InputBorder.none),
-                  ),
-                ),
-              )
-            : Text(
-                "MEAL ORDER",
-                style:
-                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-              ),
-        actions: [
-          // Navigate to the Search Screen
-          if (!searchEnable)
-            if (familyList.length > 0 && senderIndex > -1)
-              Container(
-                height: 30,
-                width: 150,
-                margin: EdgeInsets.only(right: 10),
-                child: Row(
-                  children: [
-                    Flexible(
-                      child: ListTile(
-                          horizontalTitleGap: 2,
-                          contentPadding: EdgeInsets.zero,
-                          onTap: () => {
-                                openMemberBottomSheet(context, familyList, null,
-                                    (index) {
-                                  Navigator.pop(context);
-                                  senderIndex = index;
-                                  setState(() {});
-                                })
-                              },
-                          title: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                familyList[senderIndex]['Name'],
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                    fontSize: 12, fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                familyList[senderIndex]['RefUserSeqId']
-                                    .toString(),
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          ),
-                          trailing: SizedBox(
-                            width: 50,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(60.0),
-                              child: FadeInImage(
-                                image: NetworkImage(
-                                    familyList[senderIndex]['ImgPathUrl']),
-                                placeholder:
-                                    AssetImage("assets/images/user.png"),
-                                imageErrorBuilder:
-                                    (context, error, stackTrace) {
-                                  return Image.asset('assets/images/user.png',
-                                      fit: BoxFit.fitWidth);
-                                },
-                                fit: BoxFit.fitWidth,
-                              ),
-                            ),
-                          )),
-                    ),
-                  ],
-                ),
-              ),
-          if (!searchEnable)
-            InkWell(
-              onTap: () {
-                _pickDateDialog();
-              },
-              child: Container(
-                padding: const EdgeInsets.only(right: 15),
-                child: Icon(
-                  Icons.calendar_month,
-                  size: 30,
-                ),
-              ),
-            )
-        ],
-      ),
-      bottomNavigationBar: showMeal
-          ? Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(0),
-                boxShadow: [
-                  new BoxShadow(
-                    color: Colors.grey,
-                    blurRadius: 1.0,
-                  ),
-                ],
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  InkWell(
-                    onTap: () {
-                      Navigator.of(context)
-                          .pushNamed('/FilterPage', arguments: "");
-                    },
-                    child: Container(
-                      height: 45,
-                      child: Center(
-                        child: RichText(
-                          textAlign: TextAlign.center,
-                          text: TextSpan(children: [
-                            WidgetSpan(
-                                child: Icon(
-                              Icons.filter_alt_outlined,
-                              size: 18,
-                              color: Colors.black54,
-                            )),
-                            TextSpan(
-                              text: " FILTER",
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Colors.black54,
-                              ),
-                            )
-                          ]),
-                        ),
-                      ),
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      openSortByBottomSheet(context, sortList, (index1) {
-                        selectedSortby = sortList[index1];
-                        setState(() {});
-                        Navigator.of(context).pop();
-                      }, selectedSortby);
-                    },
-                    child: Container(
-                      height: 45,
-                      child: Center(
-                        child: RichText(
-                          textAlign: TextAlign.center,
-                          text: TextSpan(children: [
-                            WidgetSpan(
-                                child: Icon(
-                              Icons.sort,
-                              size: 18,
-                              color: Colors.black54,
-                            )),
-                            TextSpan(
-                              text: " SORT BY",
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Colors.black54,
-                              ),
-                            )
-                          ]),
-                        ),
-                      ),
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      searchEnable = !searchEnable;
-                      setState(() {});
-                    },
-                    child: Container(
-                      height: 45,
-                      child: Center(
-                        child: RichText(
-                          textAlign: TextAlign.center,
-                          text: TextSpan(children: [
-                            WidgetSpan(
-                                child: Icon(
-                              Icons.search_rounded,
-                              size: 18,
-                              color: Colors.black54,
-                            )),
-                            TextSpan(
-                              text: " SEARCH",
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Colors.black54,
-                              ),
-                            )
-                          ]),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            )
-          : SizedBox(
-              height: 0,
-            ),
-      resizeToAvoidBottomInset: false,
-      body: SizedBox(
-        height: MediaQuery.of(context).size.height,
-        child: Container(
-          color: HexColor("#f5f8fd"),
-          margin: EdgeInsets.only(top: 0),
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-            if (!showMeal)
-              Container(
-                margin: EdgeInsets.only(top: 10),
-                height: 30,
-                child: getBottomSheetActionBar(
-                    context, "Select Model", false, HexColor("#f5f8fd")),
-              ),
-            if (!showMeal)
-              Container(
-                width: double.infinity,
-                color: Colors.grey.shade400,
-                margin: EdgeInsets.only(top: 0, left: 20, right: 20),
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton2(
-                    hint: Text(
-                      'Select Term',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Theme.of(context).hintColor,
-                      ),
-                    ),
-                    items: termList
-                        .map((item) => DropdownMenuItem<String>(
-                              value: item,
-                              child: Text(
-                                item,
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                ),
-                              ),
-                            ))
-                        .toList(),
-                    value: selectedTermValue,
-                    onChanged: (value) {
-                      setState(() {
-                        selectedTermValue = value as String;
-                        packageList = [
-                          {"name": "Lunch Only", "amount": "300"},
-                          {"name": "Breakfast Only", "amount": "330"},
-                          {"name": "Lunch & Breakfast", "amount": "350.00"}
-                        ];
-                      });
-                    },
-                    buttonHeight: 40,
-                    buttonWidth: 140,
-                    itemHeight: 40,
-                  ),
-                ),
-              ),
-            if (!showMeal)
-              Container(
-                margin: EdgeInsets.only(top: 10),
-                height: 30,
-                child: getBottomSheetActionBar(
-                    context, "Package", false, HexColor("#f5f8fd")),
-              ),
-            if (!showMeal)
-              Container(
-                child: ListView.builder(
-                    padding: EdgeInsets.zero,
-                    shrinkWrap: true,
-                    scrollDirection: Axis.vertical,
-                    itemCount: packageList.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Container(
-                          margin:
-                              EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-                          decoration: BoxDecoration(
-                              boxShadow: [
-                                new BoxShadow(
-                                  color: Colors.white,
-                                  blurRadius: 3.0,
-                                ),
-                              ],
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(20),
-                              border: Border.all(color: Colors.white70)),
-                          // color: Colors.grey,
-                          child: ListTile(
-                            horizontalTitleGap: 0,
-                            minVerticalPadding: 0,
-                            onTap: () {
-                              showMeal = true;
+        appBar: AppBar(
+          toolbarHeight: 70,
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          //titleSpacing: -5,
+          automaticallyImplyLeading: false,
+          centerTitle: true,
+          title: searchEnable
+              ? Container(
+                  width: double.infinity,
+                  height: 40,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(5)),
+                  child: Center(
+                    child: TextField(
+                      autofocus: true,
+                      onChanged: (value) => _runFilter(value),
+                      decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.search),
+                          suffixIcon: IconButton(
+                            icon: Icon(Icons.clear),
+                            onPressed: () {
+                              searchEnable = !searchEnable;
                               setState(() {});
                             },
-                            title: Text(
-                              "${packageList[index]["name"]}",
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            subtitle: Text(
-                              "${packageList[index]["amount"]}",
-                              style: TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.normal),
-                            ),
-                            trailing: InkWell(
-                              onTap: () {
-                                MyCustomAlertDialog()
-                                    .showToast(context, "Item added to cart ");
-                              },
-                              child: Container(
-                                width: 30,
-                                height: 30,
-                                margin: EdgeInsets.only(right: 3),
-                                padding: EdgeInsets.all(3),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    border: Border.all(
-                                        color: Colors.black, width: 2)),
-                                child:
-                                    Image.asset("assets/images/cart_round.png"),
-                              ),
-                            ),
-                          ));
-                    }),
-              ),
-            if (showMeal)
-              Container(
-                height: 66,
-                margin: EdgeInsets.symmetric(horizontal: 20),
-                child: ListView.builder(
-                    padding: EdgeInsets.zero,
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: dateList.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return InkWell(
-                        onTap: () {
-                          selectedDate = dateList[index]["date"];
-                          setState(() {});
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: selectedDate == dateList[index]["date"]
-                                  ? Colors.pinkAccent
-                                  : Colors.white,
-                              borderRadius: BorderRadius.circular(20),
-                              border: selectedDate == dateList[index]["date"]
-                                  ? Border.all(
-                                      color: Colors.pinkAccent,
-                                      width: 2,
-                                    )
-                                  : Border.all(color: Colors.white)),
-                          margin: EdgeInsets.symmetric(horizontal: 5),
-                          // color: Colors.grey,
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Container(
-                                padding:
-                                    EdgeInsets.only(top: 0, left: 0, right: 0),
-                                child: Text(
-                                  "${DateUtil().getDaysOfDate(dateList[index]["date"])["dayString"]}",
+                          ),
+                          hintText: 'Search by meal name',
+                          border: InputBorder.none),
+                    ),
+                  ),
+                )
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    InkWell(
+                      onTap: () {},
+                      child: Image(
+                        width: 50,
+                        height: 50,
+                        image: AssetImage("assets/images/ico_back.png"),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 10),
+                      child: Text(
+                        "Meal Order",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    )
+                    // Your widgets here
+                  ],
+                ),
+          actions: [
+            // Navigate to the Search Screen
+            if (!searchEnable)
+              if (familyList.length > 0 && senderIndex > -1)
+                Container(
+                  height: 30,
+                  width: 150,
+                  margin: EdgeInsets.only(right: 10),
+                  child: Row(
+                    children: [
+                      Flexible(
+                        child: ListTile(
+                            horizontalTitleGap: 2,
+                            contentPadding: EdgeInsets.zero,
+                            onTap: () => {
+                                  openMemberBottomSheet(
+                                      context, familyList, null, (index) {
+                                    Navigator.pop(context);
+                                    senderIndex = index;
+                                    setState(() {});
+                                  })
+                                },
+                            title: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  familyList[senderIndex]['Name'],
+                                  overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
-                                      fontSize: selectedDate ==
-                                              dateList[index]["date"]
-                                          ? 12
-                                          : 10,
-                                      color: selectedDate ==
-                                              dateList[index]["date"]
-                                          ? Colors.white
-                                          : Colors.black,
-                                      fontWeight: selectedDate ==
-                                              dateList[index]["date"]
-                                          ? FontWeight.bold
-                                          : FontWeight.normal),
-                                ),
-                              ),
-                              Container(
-                                padding: EdgeInsets.all(10),
-                                margin: EdgeInsets.only(top: 3),
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(60),
-                                    border: Border.all(
-                                      color: Colors.white,
-                                      width: 2,
-                                    )),
-                                child: Text(
-                                  "${DateUtil().getDaysOfDate(dateList[index]["date"])["day"]}",
-                                  style: TextStyle(
-                                      fontSize: selectedDate ==
-                                              dateList[index]["date"]
-                                          ? 12
-                                          : 10,
-                                      color: Colors.black,
+                                      fontSize: 12,
                                       fontWeight: FontWeight.bold),
                                 ),
+                                Text(
+                                  familyList[senderIndex]['RefUserSeqId']
+                                      .toString(),
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                            trailing: SizedBox(
+                              width: 50,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(60.0),
+                                child: FadeInImage(
+                                  image: NetworkImage(
+                                      familyList[senderIndex]['ImgPathUrl']),
+                                  placeholder:
+                                      AssetImage("assets/images/user.png"),
+                                  imageErrorBuilder:
+                                      (context, error, stackTrace) {
+                                    return Image.asset('assets/images/user.png',
+                                        fit: BoxFit.fitWidth);
+                                  },
+                                  fit: BoxFit.fitWidth,
+                                ),
                               ),
-                            ],
-                          ),
-                        ),
-                      );
-                    }),
-              ),
-            if (showMeal)
-              Padding(
-                padding: const EdgeInsets.all(8.0),
+                            )),
+                      ),
+                    ],
+                  ),
+                ),
+            if (!searchEnable)
+              InkWell(
+                onTap: () {
+                  _pickDateDialog();
+                },
+                child: Container(
+                  padding: const EdgeInsets.only(right: 15),
+                  child: Icon(Icons.calendar_month,
+                      size: 30, color: Colors.grey.shade500),
+                ),
+              )
+          ],
+        ),
+        bottomNavigationBar: showMeal
+            ? Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(0),
+                  boxShadow: [
+                    new BoxShadow(
+                      color: Colors.grey,
+                      blurRadius: 1.0,
+                    ),
+                  ],
+                ),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     InkWell(
                       onTap: () {
-                        selectedTab = 'Breakfast';
-                        setState(() {});
+                        Navigator.of(context)
+                            .pushNamed('/FilterPage', arguments: "");
                       },
                       child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 5),
-                        margin: EdgeInsets.symmetric(horizontal: 10),
-                        decoration: BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(
-                                color: selectedTab == 'Breakfast'
-                                    ? Colors.pinkAccent
-                                    : Colors.transparent,
-                                width: 5.0),
-                          ),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Text(
-                            "Breakfast",
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
+                        height: 45,
+                        child: Center(
+                          child: RichText(
+                            textAlign: TextAlign.center,
+                            text: TextSpan(children: [
+                              WidgetSpan(
+                                  child: Icon(
+                                Icons.filter_alt_outlined,
+                                size: 18,
+                                color: Colors.black54,
+                              )),
+                              TextSpan(
+                                text: " FILTER",
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.black54,
+                                ),
+                              )
+                            ]),
                           ),
                         ),
                       ),
                     ),
                     InkWell(
                       onTap: () {
-                        selectedTab = 'Lunch';
-                        setState(() {});
+                        openSortByBottomSheet(context, sortList, (index1) {
+                          selectedSortby = sortList[index1];
+                          setState(() {});
+                          Navigator.of(context).pop();
+                        }, selectedSortby);
                       },
                       child: Container(
-                          padding: EdgeInsets.symmetric(horizontal: 5),
-                          decoration: BoxDecoration(
-                            border: Border(
-                              bottom: BorderSide(
-                                  color: selectedTab == 'Lunch'
-                                      ? Colors.pinkAccent
-                                      : Colors.transparent,
-                                  width: 5.0),
-                            ),
+                        height: 45,
+                        child: Center(
+                          child: RichText(
+                            textAlign: TextAlign.center,
+                            text: TextSpan(children: [
+                              WidgetSpan(
+                                  child: Icon(
+                                Icons.sort,
+                                size: 18,
+                                color: Colors.black54,
+                              )),
+                              TextSpan(
+                                text: " SORT BY",
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.black54,
+                                ),
+                              )
+                            ]),
                           ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Text(
-                              "Lunch",
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.bold),
-                            ),
-                          )),
+                        ),
+                      ),
                     ),
                     InkWell(
                       onTap: () {
-                        selectedTab = 'Dinner';
+                        searchEnable = !searchEnable;
                         setState(() {});
                       },
                       child: Container(
-                          padding: EdgeInsets.symmetric(horizontal: 5),
-                          margin: EdgeInsets.symmetric(horizontal: 10),
-                          decoration: BoxDecoration(
-                            border: Border(
-                              bottom: BorderSide(
-                                  color: selectedTab == 'Dinner'
-                                      ? Colors.pinkAccent
-                                      : Colors.transparent,
-                                  width: 5.0),
-                            ),
+                        height: 45,
+                        child: Center(
+                          child: RichText(
+                            textAlign: TextAlign.center,
+                            text: TextSpan(children: [
+                              WidgetSpan(
+                                  child: Icon(
+                                Icons.search_rounded,
+                                size: 18,
+                                color: Colors.black54,
+                              )),
+                              TextSpan(
+                                text: " SEARCH",
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.black54,
+                                ),
+                              )
+                            ]),
                           ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Text(
-                              "Dinner",
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.bold),
-                            ),
-                          )),
+                        ),
+                      ),
                     ),
                   ],
                 ),
-              ),
-            if (showMeal)
-              Expanded(
-                child: PageView(
-                  children: _list,
-                  scrollDirection: Axis.horizontal,
-
-                  // reverse: true,
-                  // physics: BouncingScrollPhysics(),
-                  controller: controller,
-                  onPageChanged: (num) {
-                    setState(() {
-                      print("Pos" + _curr.toString());
-                      _curr = num;
-                      switch (_curr % 3) {
-                        case 0:
-                          selectedTab = 'Breakfast';
-                          _curr = 0;
-                          print("OnChange date" + selectedDate);
-                          int index = dateList.indexWhere(
-                              (element) => selectedDate == element['date']);
-                          if (index > -1) {
-                            selectedDate = dateList[index + 1]['date'];
-                          }
-
-                          print("OnChange pos" + index.toString());
-                          print("OnChange date" + selectedDate);
-                          break;
-                        case 1:
-                          selectedTab = 'Lunch';
-                          break;
-                        case 2:
-                          selectedTab = 'Dinner';
-                          break;
-                      }
-                    });
-                  },
-                ),
               )
-          ]),
-        ),
-      ),
-    );
+            : SizedBox(
+                height: 0,
+              ),
+        resizeToAvoidBottomInset: false,
+        body: Container(
+          constraints: BoxConstraints.expand(),
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            colors: [
+              Color.fromARGB(255, 246, 249, 254),
+              Color.fromARGB(255, 230, 231, 239),
+            ],
+          )),
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height,
+            child: Container(
+              color: HexColor("#f5f8fd"),
+              margin: EdgeInsets.only(top: 0),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    if (!showMeal)
+                      Container(
+                        margin: EdgeInsets.only(top: 40, left: 15, bottom: 10),
+                        height: 30,
+                        child: getBottomSheetActionBar(context, "Select Model",
+                            false, HexColor("#f5f8fd")),
+                      ),
+                    if (!showMeal)
+                      Container(
+                        width: double.infinity,
+                        color: Colors.grey.shade100,
+                        margin: EdgeInsets.only(top: 0, left: 20, right: 20),
+                        // padding: EdgeInsets.symmetric(horizontal: 10),
+                        child: InputDecorator(
+                          decoration: const InputDecoration(
+                              border: OutlineInputBorder()),
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton2(
+                              iconSize: 28,
+                              hint: Text(
+                                'Select Term',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: Theme.of(context).hintColor,
+                                ),
+                              ),
+                              items: termList
+                                  .map((item) => DropdownMenuItem<String>(
+                                        value: item,
+                                        child: Text(
+                                          item,
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            color: Colors.blue.shade900,
+                                          ),
+                                        ),
+                                      ))
+                                  .toList(),
+                              value: selectedTermValue,
+                              onChanged: (value) {
+                                setState(() {
+                                  selectedTermValue = value as String;
+                                  packageList = [
+                                    {"name": "Lunch Only", "amount": "1.00"},
+                                    {
+                                      "name": "Breakfast Only",
+                                      "amount": "33.44"
+                                    },
+                                    {
+                                      "name": "Lunch & Breakfast",
+                                      "amount": "350.00"
+                                    }
+                                  ];
+                                });
+                              },
+                              buttonHeight: 40,
+                              buttonWidth: 140,
+                              itemHeight: 40,
+                            ),
+                          ),
+                        ),
+                      ),
+                    if (!showMeal)
+                      Container(
+                        margin: EdgeInsets.only(top: 40, left: 15, bottom: 10),
+                        height: 30,
+                        child: getBottomSheetActionBar(
+                            context, "Package", false, HexColor("#f5f8fd")),
+                      ),
+                    if (!showMeal)
+                      Container(
+                        child: ListView.builder(
+                            padding: EdgeInsets.zero,
+                            shrinkWrap: true,
+                            scrollDirection: Axis.vertical,
+                            itemCount: packageList.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return InkWell(
+                                  onTap: () {
+                                    showMeal = true;
+                                    setState(() {});
+                                  },
+                                  child: Container(
+                                      margin: EdgeInsets.symmetric(
+                                          horizontal: 15, vertical: 5),
+                                      decoration: BoxDecoration(
+                                          boxShadow: [
+                                            new BoxShadow(
+                                              color: Colors.white,
+                                              blurRadius: 3.0,
+                                            ),
+                                          ],
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                          border:
+                                              Border.all(color: Colors.white)),
+                                      // color: Colors.grey,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Container(
+                                            child: Row(
+                                              children: [
+                                                Container(
+                                                  margin: EdgeInsets.all(5),
+                                                  child: Icon(
+                                                      Icons
+                                                          .breakfast_dining_outlined,
+                                                      size: 30,
+                                                      color:
+                                                          Colors.amberAccent),
+                                                ),
+                                                Text(
+                                                  "${packageList[index]["name"]}",
+                                                  style: TextStyle(
+                                                      fontSize: 16,
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Container(
+                                                child: Text(
+                                                  "MYR " +
+                                                      "${packageList[index]["amount"]}",
+                                                  style: TextStyle(
+                                                      fontSize: 16,
+                                                      color:
+                                                          Colors.blue.shade900,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              ),
+                                              InkWell(
+                                                onTap: () {
+                                                  MyCustomAlertDialog()
+                                                      .showToast(context,
+                                                          "Item added to cart ");
+                                                },
+                                                child: Container(
+                                                  width: 50,
+                                                  height: 50,
+                                                  margin:
+                                                      EdgeInsets.only(right: 3),
+                                                  child: Image.asset(
+                                                      "assets/images/ico_cart_white.png"),
+                                                ),
+                                              ),
+                                            ],
+                                          )
+                                        ],
+                                      )
+                                      /* ListTile(
+                                    horizontalTitleGap: 0,
+                                    minVerticalPadding: 0,
+                                    onTap: () {
+                                      showMeal = true;
+                                      setState(() {});
+                                    },
+                                    title: Text(
+                                      "${packageList[index]["name"]}",
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    subtitle: Text(
+                                      "${packageList[index]["amount"]}",
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.normal),
+                                    ),
+                                    trailing: InkWell(
+                                      onTap: () {
+                                        MyCustomAlertDialog().showToast(
+                                            context, "Item added to cart ");
+                                      },
+                                      child: Container(
+                                        width: 50,
+                                        height: 50,
+                                        margin: EdgeInsets.only(right: 3),
+                                        /*padding: EdgeInsets.all(3),
+                                         decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            border: Border.all(
+                                                color: Colors.black, width: 2)), */
+                                        child: Image.asset(
+                                            "assets/images/ico_cart_white.png"),
+                                      ),
+                                    ),
+                                  ) */
+                                      ));
+                            }),
+                      ),
+                    if (showMeal)
+                      Container(
+                        height: 66,
+                        margin: EdgeInsets.symmetric(horizontal: 20),
+                        child: ListView.builder(
+                            padding: EdgeInsets.zero,
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            itemCount: dateList.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return InkWell(
+                                onTap: () {
+                                  selectedDate = dateList[index]["date"];
+                                  setState(() {});
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      color: selectedDate ==
+                                              dateList[index]["date"]
+                                          ? Colors.amber.shade700
+                                          : Colors.white,
+                                      borderRadius: BorderRadius.circular(20),
+                                      border: selectedDate ==
+                                              dateList[index]["date"]
+                                          ? Border.all(
+                                              color: Colors.amber.shade700,
+                                              width: 2,
+                                            )
+                                          : Border.all(color: Colors.white)),
+                                  margin: EdgeInsets.symmetric(horizontal: 5),
+                                  // color: Colors.grey,
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 0, vertical: 0),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Container(
+                                        padding: EdgeInsets.only(
+                                            top: 0, left: 0, right: 0),
+                                        child: Text(
+                                          "${DateUtil().getDaysOfDate(dateList[index]["date"])["dayString"]}",
+                                          style: TextStyle(
+                                              fontSize: selectedDate ==
+                                                      dateList[index]["date"]
+                                                  ? 12
+                                                  : 10,
+                                              color: selectedDate ==
+                                                      dateList[index]["date"]
+                                                  ? Colors.white
+                                                  : Colors.black,
+                                              fontWeight: selectedDate ==
+                                                      dateList[index]["date"]
+                                                  ? FontWeight.bold
+                                                  : FontWeight.normal),
+                                        ),
+                                      ),
+                                      Container(
+                                        padding: EdgeInsets.all(10),
+                                        margin: EdgeInsets.only(top: 3),
+                                        decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(60),
+                                            border: Border.all(
+                                              color: Colors.white,
+                                              width: 2,
+                                            )),
+                                        child: Text(
+                                          "${DateUtil().getDaysOfDate(dateList[index]["date"])["day"]}",
+                                          style: TextStyle(
+                                              fontSize: selectedDate ==
+                                                      dateList[index]["date"]
+                                                  ? 12
+                                                  : 10,
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            }),
+                      ),
+                    if (showMeal)
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                selectedTab = 'Breakfast';
+                                setState(() {});
+                              },
+                              child: Container(
+                                padding: EdgeInsets.symmetric(horizontal: 5),
+                                margin: EdgeInsets.symmetric(horizontal: 10),
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(
+                                        color: selectedTab == 'Breakfast'
+                                            ? Colors.amber.shade700
+                                            : Colors.transparent,
+                                        width: 5.0),
+                                  ),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: Text(
+                                    "Breakfast",
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            InkWell(
+                              onTap: () {
+                                selectedTab = 'Lunch';
+                                setState(() {});
+                              },
+                              child: Container(
+                                  padding: EdgeInsets.symmetric(horizontal: 5),
+                                  decoration: BoxDecoration(
+                                    border: Border(
+                                      bottom: BorderSide(
+                                          color: selectedTab == 'Lunch'
+                                              ? Colors.amber.shade700
+                                              : Colors.transparent,
+                                          width: 5.0),
+                                    ),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(12.0),
+                                    child: Text(
+                                      "Lunch",
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  )),
+                            ),
+                            InkWell(
+                              onTap: () {
+                                selectedTab = 'Dinner';
+                                setState(() {});
+                              },
+                              child: Container(
+                                  padding: EdgeInsets.symmetric(horizontal: 5),
+                                  margin: EdgeInsets.symmetric(horizontal: 10),
+                                  decoration: BoxDecoration(
+                                    border: Border(
+                                      bottom: BorderSide(
+                                          color: selectedTab == 'Dinner'
+                                              ? Colors.amber.shade700
+                                              : Colors.transparent,
+                                          width: 5.0),
+                                    ),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(12.0),
+                                    child: Text(
+                                      "Dinner",
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  )),
+                            ),
+                          ],
+                        ),
+                      ),
+                    if (showMeal)
+                      Expanded(
+                        child: PageView(
+                          children: _list,
+                          scrollDirection: Axis.horizontal,
+
+                          // reverse: true,
+                          // physics: BouncingScrollPhysics(),
+                          controller: controller,
+                          onPageChanged: (num) {
+                            setState(() {
+                              print("Pos" + _curr.toString());
+                              _curr = num;
+                              switch (_curr % 3) {
+                                case 0:
+                                  selectedTab = 'Breakfast';
+                                  _curr = 0;
+                                  print("OnChange date" + selectedDate);
+                                  int index = dateList.indexWhere((element) =>
+                                      selectedDate == element['date']);
+                                  if (index > -1) {
+                                    selectedDate = dateList[index + 1]['date'];
+                                  }
+
+                                  print("OnChange pos" + index.toString());
+                                  print("OnChange date" + selectedDate);
+                                  break;
+                                case 1:
+                                  selectedTab = 'Lunch';
+                                  break;
+                                case 2:
+                                  selectedTab = 'Dinner';
+                                  break;
+                              }
+                            });
+                          },
+                        ),
+                      )
+                  ]),
+            ),
+          ),
+        ));
   }
 
   void onCartClick(int index) {

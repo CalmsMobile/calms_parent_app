@@ -95,19 +95,19 @@ class _TopupPageState extends State<TopupPage> {
                     "name": "FPX Online Payment",
                     "id": "fpx",
                     "image":
-                        "http://124.217.235.107:2008/calmsweb/Images/noimage.png"
+                        "http://103.6.163.49:2008/calmsweb/Images/noimage.png"
                   },
                   {
                     "name": "Boost",
                     "id": "boost",
                     "image":
-                        "http://124.217.235.107:2008/calmsweb/Images/noimage.png"
+                        "http://103.6.163.49:2008/calmsweb/Images/noimage.png"
                   },
                   {
                     "name": "Global Payment",
                     "id": "global",
                     "image":
-                        "http://124.217.235.107:2008/calmsweb/Images/noimage.png"
+                        "http://103.6.163.49:2008/calmsweb/Images/noimage.png"
                   },
                 ];
                 showPaymentSelectOption(

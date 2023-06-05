@@ -307,14 +307,6 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              /* InkWell(
-                onTap: () {},
-                child: Image(
-                  width: 50,
-                  height: 50,
-                  image: AssetImage("assets/images/ico_back.png"),
-                ),
-              ), */
               Padding(
                 padding: EdgeInsets.only(left: 10),
                 child: Text(
@@ -542,7 +534,8 @@ class _HomePageState extends State<HomePage> {
                             borderRadius: BorderRadius.circular(15.0),
                           ),
                           borderOnForeground: true,
-                          margin: EdgeInsets.only(top: 5,bottom: 20,left: 20,right: 20),
+                          margin: EdgeInsets.only(
+                              top: 5, bottom: 20, left: 20, right: 20),
                           child: Container(
                             margin: const EdgeInsets.symmetric(vertical: 20.0),
                             height: 100.0,
@@ -553,6 +546,8 @@ class _HomePageState extends State<HomePage> {
                                 Container(
                                   width: 100.0,
                                   child: InkWell(
+                                    onTap: () => Navigator.of(context)
+                                        .pushNamed('/MealOrder'),
                                       child: Column(
                                     children: [
                                       Image(
@@ -577,6 +572,8 @@ class _HomePageState extends State<HomePage> {
                                 Container(
                                   width: 100.0,
                                   child: InkWell(
+                                    onTap: () => Navigator.of(context)
+                                        .pushNamed('/StudentAttendance'),
                                       child: Column(
                                     children: [
                                       Image(
@@ -601,6 +598,8 @@ class _HomePageState extends State<HomePage> {
                                 Container(
                                   width: 100.0,
                                   child: InkWell(
+                                    onTap: () => Navigator.of(context)
+                                        .pushNamed('/MFPTopup'),
                                       child: Column(
                                     children: [
                                       Image(
@@ -625,13 +624,21 @@ class _HomePageState extends State<HomePage> {
                                 Container(
                                   width: 100.0,
                                   child: InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => HolidayCalendar(
+                                                new RandomColorModel()
+                                                    ._getCalendarDataSource())));
+                                    },
                                       child: Column(
                                     children: [
                                       Image(
                                           width: 50,
                                           height: 50,
                                           image: AssetImage(
-                                              "assets/images/ico_attendance.png")),
+                                              "assets/images/ico_schoolattendance.png")),
                                       SizedBox(
                                         height: 10,
                                       ),

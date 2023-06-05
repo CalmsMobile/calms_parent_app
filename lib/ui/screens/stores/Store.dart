@@ -30,13 +30,13 @@ class _StoresState extends State<Stores> {
       "applicable_group":
           "Year1,Year2,Year3,Year4,Year5,Year6,Year2,Year3,Year4,Year10",
       "image": [
-        "http://124.217.235.107:2008/Handler/ImagePathHandler.ashx?ImagePath=StoreItems/b6fa-e4c2-2021-11-25-11-32-18-810/71-zpNFAyTL._SL1080_.jpg&Default=60&PROUrl=http://124.217.235.107:2008/&StoreageUrl=http://124.217.235.107:2008/FS/",
-        "http://124.217.235.107:2008/FS/StoreItems/4adc-e4c2-2021-11-25-11-32-55-924/student-plastic-id-card-holder-500x500.jpg"
+        "http://103.6.163.49:2008/Handler/ImagePathHandler.ashx?ImagePath=StoreItems/b6fa-e4c2-2021-11-25-11-32-18-810/71-zpNFAyTL._SL1080_.jpg&Default=60&PROUrl=http://103.6.163.49:2008/&StoreageUrl=http://103.6.163.49:2008/FS/",
+        "http://103.6.163.49:2008/FS/StoreItems/4adc-e4c2-2021-11-25-11-32-55-924/student-plastic-id-card-holder-500x500.jpg"
       ],
       "colors": ["White", "Black", "Red", "Blue"],
       "size": ["S", "M", "L", "XL", "XXL"],
       "merchantimage":
-          "http://124.217.235.107:2008/FS/Merchant/1569-e4c2-2021-11-25-10-18-28-567/CALMS_Technologies_Sdn_Bhd_Logo.png"
+          "http://103.6.163.49:2008/FS/Merchant/1569-e4c2-2021-11-25-10-18-28-567/CALMS_Technologies_Sdn_Bhd_Logo.png"
     },
     {
       "id": "2",
@@ -52,7 +52,7 @@ class _StoresState extends State<Stores> {
       "applicable_group": "All",
       "image": [],
       "merchantimage":
-          "http://124.217.235.107:2008/FS/Merchant/1569-e4c2-2021-11-25-10-18-28-567/CALMS_Technologies_Sdn_Bhd_Logo.png"
+          "http://103.6.163.49:2008/FS/Merchant/1569-e4c2-2021-11-25-10-18-28-567/CALMS_Technologies_Sdn_Bhd_Logo.png"
     },
     {
       "id": "3",
@@ -68,7 +68,7 @@ class _StoresState extends State<Stores> {
       "applicable_group": "All",
       "image": [],
       "merchantimage":
-          "http://124.217.235.107:2008/FS/Merchant/1569-e4c2-2021-11-25-10-18-28-567/CALMS_Technologies_Sdn_Bhd_Logo.png"
+          "http://103.6.163.49:2008/FS/Merchant/1569-e4c2-2021-11-25-10-18-28-567/CALMS_Technologies_Sdn_Bhd_Logo.png"
     },
     {
       "id": "4",
@@ -84,7 +84,7 @@ class _StoresState extends State<Stores> {
       "applicable_group": "All",
       "image": [],
       "merchantimage":
-          "http://124.217.235.107:2008/FS/Merchant/1569-e4c2-2021-11-25-10-18-28-567/CALMS_Technologies_Sdn_Bhd_Logo.png"
+          "http://103.6.163.49:2008/FS/Merchant/1569-e4c2-2021-11-25-10-18-28-567/CALMS_Technologies_Sdn_Bhd_Logo.png"
     },
     {
       "id": "5",
@@ -99,11 +99,11 @@ class _StoresState extends State<Stores> {
       "available_quantity": 50,
       "applicable_group": "Year1,Year2,Year3,Year4,Year5",
       "image": [
-        "http://124.217.235.107:2008/FS/StoreItems/4adc-e4c2-2021-11-25-11-32-55-924/student-plastic-id-card-holder-500x500.jpg",
-        "http://124.217.235.107:2008/FS/StoreItems/4adc-e4c2-2021-11-25-11-32-55-924/student-plastic-id-card-holder-500x500.jpg"
+        "http://103.6.163.49:2008/FS/StoreItems/4adc-e4c2-2021-11-25-11-32-55-924/student-plastic-id-card-holder-500x500.jpg",
+        "http://103.6.163.49:2008/FS/StoreItems/4adc-e4c2-2021-11-25-11-32-55-924/student-plastic-id-card-holder-500x500.jpg"
       ],
       "merchantimage":
-          "http://124.217.235.107:2008/FS/Merchant/1569-e4c2-2021-11-25-10-18-28-567/CALMS_Technologies_Sdn_Bhd_Logo.png"
+          "http://103.6.163.49:2008/FS/Merchant/1569-e4c2-2021-11-25-10-18-28-567/CALMS_Technologies_Sdn_Bhd_Logo.png"
     },
     {
       "id": "6",
@@ -118,11 +118,11 @@ class _StoresState extends State<Stores> {
       "available_quantity": 50,
       "applicable_group": "Year1,Year2,Year3,Year4,Year5",
       "image": [
-        "http://124.217.235.107:2008/FS/StoreItems/4adc-e4c2-2021-11-25-11-32-55-924/student-plastic-id-card-holder-500x500.jpg",
-        "http://124.217.235.107:2008/FS/StoreItems/4adc-e4c2-2021-11-25-11-32-55-924/student-plastic-id-card-holder-500x500.jpg"
+        "http://103.6.163.49:2008/FS/StoreItems/4adc-e4c2-2021-11-25-11-32-55-924/student-plastic-id-card-holder-500x500.jpg",
+        "http://103.6.163.49:2008/FS/StoreItems/4adc-e4c2-2021-11-25-11-32-55-924/student-plastic-id-card-holder-500x500.jpg"
       ],
       "merchantimage":
-          "http://124.217.235.107:2008/FS/Merchant/1569-e4c2-2021-11-25-10-18-28-567/CALMS_Technologies_Sdn_Bhd_Logo.png"
+          "http://103.6.163.49:2008/FS/Merchant/1569-e4c2-2021-11-25-10-18-28-567/CALMS_Technologies_Sdn_Bhd_Logo.png"
     },
     {
       "id": "7",
@@ -137,11 +137,11 @@ class _StoresState extends State<Stores> {
       "available_quantity": 50,
       "applicable_group": "All",
       "image": [
-        "http://124.217.235.107:2008/FS/StoreItems/4adc-e4c2-2021-11-25-11-32-55-924/student-plastic-id-card-holder-500x500.jpg",
-        "http://124.217.235.107:2008/FS/StoreItems/4adc-e4c2-2021-11-25-11-32-55-924/student-plastic-id-card-holder-500x500.jpg"
+        "http://103.6.163.49:2008/FS/StoreItems/4adc-e4c2-2021-11-25-11-32-55-924/student-plastic-id-card-holder-500x500.jpg",
+        "http://103.6.163.49:2008/FS/StoreItems/4adc-e4c2-2021-11-25-11-32-55-924/student-plastic-id-card-holder-500x500.jpg"
       ],
       "merchantimage":
-          "http://124.217.235.107:2008/FS/Merchant/1569-e4c2-2021-11-25-10-18-28-567/CALMS_Technologies_Sdn_Bhd_Logo.png"
+          "http://103.6.163.49:2008/FS/Merchant/1569-e4c2-2021-11-25-10-18-28-567/CALMS_Technologies_Sdn_Bhd_Logo.png"
     },
     {
       "id": "8",
@@ -156,11 +156,11 @@ class _StoresState extends State<Stores> {
       "available_quantity": 50,
       "applicable_group": "All",
       "image": [
-        "http://124.217.235.107:2008/FS/StoreItems/4adc-e4c2-2021-11-25-11-32-55-924/student-plastic-id-card-holder-500x500.jpg",
-        "http://124.217.235.107:2008/FS/StoreItems/4adc-e4c2-2021-11-25-11-32-55-924/student-plastic-id-card-holder-500x500.jpg"
+        "http://103.6.163.49:2008/FS/StoreItems/4adc-e4c2-2021-11-25-11-32-55-924/student-plastic-id-card-holder-500x500.jpg",
+        "http://103.6.163.49:2008/FS/StoreItems/4adc-e4c2-2021-11-25-11-32-55-924/student-plastic-id-card-holder-500x500.jpg"
       ],
       "merchantimage":
-          "http://124.217.235.107:2008/FS/Merchant/1569-e4c2-2021-11-25-10-18-28-567/CALMS_Technologies_Sdn_Bhd_Logo.png"
+          "http://103.6.163.49:2008/FS/Merchant/1569-e4c2-2021-11-25-10-18-28-567/CALMS_Technologies_Sdn_Bhd_Logo.png"
     },
     {
       "id": "8",
@@ -175,13 +175,13 @@ class _StoresState extends State<Stores> {
       "available_quantity": 50,
       "applicable_group": "All",
       "image": [
-        "http://124.217.235.107:2008/FS/StoreItems/4adc-e4c2-2021-11-25-11-32-55-924/student-plastic-id-card-holder-500x500.jpg",
-        "http://124.217.235.107:2008/FS/StoreItems/4adc-e4c2-2021-11-25-11-32-55-924/student-plastic-id-card-holder-500x500.jpg"
+        "http://103.6.163.49:2008/FS/StoreItems/4adc-e4c2-2021-11-25-11-32-55-924/student-plastic-id-card-holder-500x500.jpg",
+        "http://103.6.163.49:2008/FS/StoreItems/4adc-e4c2-2021-11-25-11-32-55-924/student-plastic-id-card-holder-500x500.jpg"
       ],
       "colors": ["White", "Black", "Red", "Blue"],
       "size": ["S", "M", "L", "XL", "XXL"],
       "merchantimage":
-          "http://124.217.235.107:2008/FS/Merchant/1569-e4c2-2021-11-25-10-18-28-567/CALMS_Technologies_Sdn_Bhd_Logo.png"
+          "http://103.6.163.49:2008/FS/Merchant/1569-e4c2-2021-11-25-10-18-28-567/CALMS_Technologies_Sdn_Bhd_Logo.png"
     },
     {
       "id": "9",
@@ -197,7 +197,7 @@ class _StoresState extends State<Stores> {
       "applicable_group": "All",
       "image": [],
       "merchantimage":
-          "http://124.217.235.107:2008/FS/Merchant/1569-e4c2-2021-11-25-10-18-28-567/CALMS_Technologies_Sdn_Bhd_Logo.png"
+          "http://103.6.163.49:2008/FS/Merchant/1569-e4c2-2021-11-25-10-18-28-567/CALMS_Technologies_Sdn_Bhd_Logo.png"
     },
   ];
   @override
