@@ -229,15 +229,13 @@ class RestApiProvider {
         headers: {"Content-Type": "application/json"},
         body: body,
       );
-
       if (response.statusCode == 200) {
         // If the server did return a 201 CREATED response,
         // then parse the JSON.
         if (showProgress) {
           _progressDialog.close();
         }
-        var jsonData = json.decode(response.body);
-        print(jsonData);
+        //var jsonData = json.decode(response.body);
         //Map<String, dynamic> map = jsonDecode(jsonData[0]['Data']);
         List<dynamic> qrJson = jsonDecode(response.body) as List;
         if (qrJson.length > 0 && qrJson[0]['Data'] != null) {

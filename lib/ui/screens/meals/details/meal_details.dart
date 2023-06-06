@@ -1,3 +1,5 @@
+import 'package:calms_parent_latest/common/json_responses.dart';
+
 import '/common/HexColor.dart';
 import '/common/alert_dialog.dart';
 import '/common/widgets/select_member.dart';
@@ -15,55 +17,7 @@ class MealDetails extends StatefulWidget {
 }
 
 class _MealDetailsState extends State<MealDetails> {
-  List<Map> familyList = [
-    {
-      "name": "HAZIM",
-      "category": "STUDENT",
-      "memberId": "M1003",
-      "email": "",
-      "balance": "108",
-      "familtid": "FMY0001",
-      "relationship": "",
-      "grade": "Grade1",
-      "year": "Year1",
-      "class": "Class1",
-      "contact": "0123467589",
-      "desc": "Member account does not exist in MFP software",
-      "image": "https://randomuser.me/api/portraits/men/10.jpg"
-    },
-    {
-      "name": "MARIE LIM",
-      "category": "STUDENT",
-      "memberId": "M1004",
-      "email": "",
-      "balance": "0",
-      "familtid": "FMY0001",
-      "relationship": "",
-      "grade": "Grade2",
-      "year": "Year2",
-      "class": "Class2",
-      "contact": "",
-      "desc": "",
-      "image": "https://randomuser.me/api/portraits/men/13.jpg"
-    },
-    {
-      "name": "Danny",
-      "category": "STAFF",
-      "memberId": "M1005",
-      "email": "",
-      "balance": "30.00",
-      "familtid": "FMY0001",
-      "relationship": "",
-      "grade": "",
-      "year": "",
-      "class": "",
-      "department": "Sales Dept",
-      "job_title": "Assistant Sales Manager",
-      "contact": "",
-      "desc": "",
-      "image": "https://randomuser.me/api/portraits/men/14.jpg"
-    },
-  ];
+  List<Map> familyList = [];
   int senderIndex = 2;
   var selectedIngi = "";
   SuperTooltip? tooltip;
@@ -75,6 +29,13 @@ class _MealDetailsState extends State<MealDetails> {
       return false;
     }
     return true;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    familyList = JsonResponses.familyList;
   }
 
   void onTapIngi(textToShow, BuildContext childContext) {
@@ -108,7 +69,7 @@ class _MealDetailsState extends State<MealDetails> {
           if (familyList.length > 0 && senderIndex > -1)
             Container(
               height: 30,
-              width: 140,
+              width: 150,
               margin: EdgeInsets.only(right: 10),
               child: Row(
                 children: [
@@ -131,13 +92,13 @@ class _MealDetailsState extends State<MealDetails> {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
-                            familyList[senderIndex]['name'],
+                            familyList[senderIndex]['Name'],
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                                 fontSize: 12, fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            familyList[senderIndex]['memberId'],
+                            familyList[senderIndex]['RefUserSeqId'].toString(),
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                                 color: Colors.grey,
@@ -147,12 +108,12 @@ class _MealDetailsState extends State<MealDetails> {
                         ],
                       ),
                       trailing: SizedBox(
-                        width: 40,
+                        width: 50,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(60.0),
                           child: FadeInImage(
-                            image:
-                                NetworkImage(familyList[senderIndex]['image']),
+                            image: NetworkImage(
+                                familyList[senderIndex]['ImgPathUrl']),
                             placeholder: AssetImage("assets/images/user.png"),
                             imageErrorBuilder: (context, error, stackTrace) {
                               return Image.asset('assets/images/user.png',
@@ -173,6 +134,7 @@ class _MealDetailsState extends State<MealDetails> {
           height: MediaQuery.of(context).size.height,
           child: SingleChildScrollView(
             child: Container(
+                margin: EdgeInsets.all(20.0),
                 color: Colors.white,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -190,22 +152,24 @@ class _MealDetailsState extends State<MealDetails> {
                         },
                         child: Container(
                           child: ClipRRect(
-                            borderRadius: BorderRadius.all(Radius.circular(0)),
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(20),
+                                topRight: Radius.circular(20)),
                             child: mealInfo['image'] != null &&
                                     mealInfo['image'] != ""
                                 ? Image.network(mealInfo['image'],
                                     width: double.infinity,
-                                    height: 425,
+                                    height: 300,
                                     fit: BoxFit.cover)
                                 : Image.asset(
                                     "assets/images/no_image.png",
-                                    height: 425,
+                                    height: 300,
                                   ),
                           ),
                         ),
                       ),
                       Container(
-                        height: 425,
+                        height: 300,
                         width: double.infinity,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -446,43 +410,15 @@ class _MealDetailsState extends State<MealDetails> {
                                 setState(() {});
                               },
                               child: Container(
-                                width: 40,
-                                height: 40,
-                                margin: EdgeInsets.only(left: 3),
-                                padding: EdgeInsets.all(3),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    border: Border.all(
-                                        color: Colors.black, width: 2)),
-                                child:
-                                    Image.asset("assets/images/cart_round.png"),
+                                width: 50,
+                                height: 50,
+                                margin: EdgeInsets.only(right: 15, bottom: 5),
+                                child: Image.asset(
+                                    "assets/images/ico_cart_white.png"),
                               ),
                             )
                           ]),
                     ),
-
-                    // Container(
-                    //   margin: EdgeInsets.only(left: 15, top: 5),
-                    //   child: RichText(
-                    //     maxLines: 2,
-                    //     text: TextSpan(
-                    //         text: 'Item style ',
-                    //         style: TextStyle(
-                    //             fontSize: 12,
-                    //             color: Colors.black,
-                    //             fontWeight: FontWeight.bold),
-                    //         children: [
-                    //           WidgetSpan(
-                    //               child: Text(
-                    //             mealInfo['mealStyle'],
-                    //             style: TextStyle(
-                    //                 fontSize: 12,
-                    //                 color: Colors.black,
-                    //                 fontWeight: FontWeight.normal),
-                    //           ))
-                    //         ]),
-                    //   ),
-                    // ),
                     SizedBox(
                       height: 10,
                     ),

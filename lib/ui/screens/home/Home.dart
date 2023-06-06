@@ -359,7 +359,7 @@ class _HomePageState extends State<HomePage> {
               padding: EdgeInsets.only(right: 20),
               child: InkWell(
                 onTap: () {
-                  Navigator.pushReplacement(context,
+                  Navigator.push(context,
                       MaterialPageRoute(builder: (context) => Notifications()));
                 },
                 child: Image(

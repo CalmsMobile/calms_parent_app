@@ -25,18 +25,7 @@ class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        iconTheme: IconThemeData(
-          color: Colors.black, //change your color here
-        ),
-        elevation: 0,
-        backgroundColor: HexColor("#f5f8fd"),
-        titleSpacing: -5,
-        title: Text(
-          "MY CART",
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-        ),
-      ),
+      appBar: getMyAppbar("My Cart", []),
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
         child: Container(
@@ -44,7 +33,7 @@ class _CartPageState extends State<CartPage> {
           margin: EdgeInsets.symmetric(horizontal: 0),
           child: Column(children: [
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 0),
+              margin: EdgeInsets.all(20),
               child: Column(
                 children: [
                   Container(
@@ -107,62 +96,45 @@ class _CartPageState extends State<CartPage> {
                       ],
                     ),
                   ),
-                  Container(
-                    width: double.infinity,
-                    margin: EdgeInsets.symmetric(horizontal: 0),
-                    padding: EdgeInsets.symmetric(horizontal: 0, vertical: 5),
-                    child: ListView.builder(
-                        padding: EdgeInsets.zero,
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(
-                            parent: AlwaysScrollableScrollPhysics()),
-                        itemCount: cartList.length > 0
-                            ? cartList[0]['items'].length
-                            : 0,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Container(
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(0)),
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 8, horizontal: 8),
-                            margin: EdgeInsets.only(bottom: 8),
-                            child: Column(children: <Widget>[
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.8,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Stack(children: [
-                                          Container(
-                                            child: ClipRRect(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(5)),
-                                              child: cartList[0]['items'][index]
-                                                          ['image'] !=
-                                                      ""
-                                                  ? Image.network(
-                                                      cartList[0]['items']
-                                                          [index]['image'],
-                                                      width: 80,
-                                                      height: 100,
-                                                      fit: BoxFit.cover)
-                                                  : Image.asset(
-                                                      "assets/images/meal_default.png",
-                                                      width: 80,
-                                                      height: 100,
-                                                    ),
-                                            ),
-                                          ),
+                  ClipRRect(
+                    borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(20),
+                        bottomRight: Radius.circular(20)),
+                    child: Container(
+                      width: double.infinity,
+                      margin: EdgeInsets.symmetric(horizontal: 0),
+                      padding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                      child: ListView.builder(
+                          padding: EdgeInsets.zero,
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(
+                              parent: AlwaysScrollableScrollPhysics()),
+                          itemCount: cartList.length > 0
+                              ? cartList[0]['items'].length
+                              : 0,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(0)),
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 0, horizontal: 0),
+                              margin: EdgeInsets.only(bottom: 8),
+                              child: Column(children: <Widget>[
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.8,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
                                           Container(
                                             width: 20,
                                             height: 20,
@@ -192,135 +164,158 @@ class _CartPageState extends State<CartPage> {
                                               ),
                                             ),
                                           ),
-                                        ]),
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Container(
-                                                margin:
-                                                    EdgeInsets.only(bottom: 3),
-                                                child: RichText(
-                                                  maxLines: 2,
-                                                  text: TextSpan(
-                                                    children: [
-                                                      TextSpan(
-                                                        text:
-                                                            "${cartList[0]['items'][index]['member']['name']}",
-                                                        style: TextStyle(
-                                                            fontSize: 10,
-                                                            fontFamily:
-                                                                appFontFmaily,
-                                                            color: Colors.black,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                              Container(
-                                                margin: EdgeInsets.only(
-                                                    bottom: 3, left: 0),
-                                                child: RichText(
-                                                  maxLines: 2,
-                                                  text: TextSpan(
-                                                    children: [
-                                                      TextSpan(
-                                                        text: cartList[0]
-                                                                ['items'][index]
-                                                            ['name'],
-                                                        style: TextStyle(
-                                                            fontFamily:
-                                                                appFontFmaily,
-                                                            color: Colors.black,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .normal,
-                                                            fontSize: 10),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                              Container(
-                                                margin:
-                                                    EdgeInsets.only(bottom: 3),
-                                                child: RichText(
-                                                  maxLines: 2,
-                                                  text: TextSpan(
-                                                    children: [
-                                                      TextSpan(
-                                                        text:
-                                                            "${cartList[0]['items'][index]['category']}",
-                                                        style: TextStyle(
-                                                            fontSize: 10,
-                                                            fontFamily:
-                                                                appFontFmaily,
-                                                            color:
-                                                                Colors.black26,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                              Container(
-                                                margin:
-                                                    EdgeInsets.only(bottom: 3),
-                                                child: RichText(
-                                                  maxLines: 2,
-                                                  text: TextSpan(
-                                                    children: [
-                                                      TextSpan(
-                                                        text:
-                                                            "MYR ${double.parse(cartList[0]['items'][index]["price"]).toStringAsFixed(2)}",
-                                                        style: TextStyle(
-                                                            fontSize: 10,
-                                                            fontFamily:
-                                                                appFontFmaily,
-                                                            color:
-                                                                Colors.black54,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
+                                          Container(
+                                            margin: EdgeInsets.all(10),
+                                            child: ClipRRect(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(5)),
+                                              child: cartList[0]['items'][index]
+                                                          ['image'] !=
+                                                      ""
+                                                  ? Image.network(
+                                                      cartList[0]['items']
+                                                          [index]['image'],
+                                                      width: 80,
+                                                      height: 80,
+                                                      fit: BoxFit.cover)
+                                                  : Image.asset(
+                                                      "assets/images/meal_default.png",
+                                                      width: 80,
+                                                      height: 80,
+                                                    ),
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Icon(
-                                        Icons.close,
-                                        size: 18,
+                                          Padding(
+                                            padding: const EdgeInsets.all(5.0),
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Container(
+                                                  margin: EdgeInsets.only(
+                                                      top: 10),
+                                                  child: RichText(
+                                                    maxLines: 2,
+                                                    text: TextSpan(
+                                                      children: [
+                                                        TextSpan(
+                                                          text:
+                                                              "${cartList[0]['items'][index]['member']['name']}",
+                                                          style: TextStyle(
+                                                              fontSize: 10,
+                                                              fontFamily:
+                                                                  appFontFmaily,
+                                                              color:
+                                                                  Colors.black,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                                Container(
+                                                  margin: EdgeInsets.only(
+                                                      bottom: 3, left: 0),
+                                                  child: RichText(
+                                                    maxLines: 2,
+                                                    text: TextSpan(
+                                                      children: [
+                                                        TextSpan(
+                                                          text: cartList[0]
+                                                                  ['items']
+                                                              [index]['name'],
+                                                          style: TextStyle(
+                                                              fontFamily:
+                                                                  appFontFmaily,
+                                                              color:
+                                                                  Colors.black,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .normal,
+                                                              fontSize: 10),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                                Container(
+                                                  margin: EdgeInsets.only(top: 15,
+                                                      bottom: 3),
+                                                  child: RichText(
+                                                    maxLines: 2,
+                                                    text: TextSpan(
+                                                      children: [
+                                                        TextSpan(
+                                                          text:
+                                                              "${cartList[0]['items'][index]['category']}",
+                                                          style: TextStyle(
+                                                              fontSize: 10,
+                                                              fontFamily:
+                                                                  appFontFmaily,
+                                                              color: Colors
+                                                                  .black26,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                                Container(
+                                                  margin: EdgeInsets.only(
+                                                      bottom: 3),
+                                                  child: RichText(
+                                                    maxLines: 2,
+                                                    text: TextSpan(
+                                                      children: [
+                                                        TextSpan(
+                                                          text:
+                                                              "MYR ${double.parse(cartList[0]['items'][index]["price"]).toStringAsFixed(2)}",
+                                                          style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontFamily:
+                                                                  appFontFmaily,
+                                                              color: Colors
+                                                                  .blue,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                  )
-                                ],
-                              ),
-                            ]),
-                          );
-                        }),
-                  ),
+                                    Container(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Icon(
+                                          Icons.close,
+                                          size: 18,
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ]),
+                            );
+                          }),
+                    ),
+                  )
                 ],
               ),
             ),
-            Container(
+            /* Container(
               color: Colors.grey.shade300,
               width: double.infinity,
               child: Row(
@@ -1601,6 +1596,7 @@ class _CartPageState extends State<CartPage> {
                     );
                   }),
             ),
+           */
           ]),
         ),
       ),
@@ -1725,7 +1721,8 @@ class _CartPageState extends State<CartPage> {
               "class": "Class2",
               "contact": "",
               "desc": "",
-              "image": "https://randomuser.me/api/portraits/men/13.jpg"
+              "image":
+                  "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
             },
             "id": "ID001",
             "allowCancel": true,
@@ -1774,7 +1771,8 @@ class _CartPageState extends State<CartPage> {
               "class": "Class2",
               "contact": "",
               "desc": "",
-              "image": "https://randomuser.me/api/portraits/men/13.jpg"
+              "image":
+                  "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
             },
             "id": "ID001",
             "allowCancel": true,
@@ -1807,7 +1805,7 @@ class _CartPageState extends State<CartPage> {
             ],
             "date": "2022/05/01",
             "image":
-                "https://media.self.com/photos/61e9dae8808d098c8ccc3b58/1:1/w_768,c_limit/15-Bean-Soup-Vegetarian.jpg"
+                "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
           },
         ]
       },
@@ -1828,12 +1826,14 @@ class _CartPageState extends State<CartPage> {
               "class": "Class2",
               "contact": "",
               "desc": "",
-              "image": "https://randomuser.me/api/portraits/men/13.jpg"
+              "image":
+                  "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
             },
             "invoice_no": "TF-X01-11032022-03",
             "memberId": "M0001",
             "name": "James",
-            "user_image": "https://randomuser.me/api/portraits/men/2.jpg",
+            "user_image":
+                "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12",
             "class": "Y5C1",
             "title": "Transportation Fee",
             "description":
@@ -1859,12 +1859,14 @@ class _CartPageState extends State<CartPage> {
               "class": "Class2",
               "contact": "",
               "desc": "",
-              "image": "https://randomuser.me/api/portraits/men/3.jpg"
+              "image":
+                  "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
             },
             "invoice_no": "TF-X01-11032022-02",
             "memberId": "M0001",
             "name": "James",
-            "user_image": "https://randomuser.me/api/portraits/men/2.jpg",
+            "user_image":
+                "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12",
             "class": "Y5C1",
             "title": "Bus Fee",
             "description":
@@ -1890,12 +1892,14 @@ class _CartPageState extends State<CartPage> {
               "class": "Class2",
               "contact": "",
               "desc": "",
-              "image": "https://randomuser.me/api/portraits/men/5.jpg"
+              "image":
+                  "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
             },
             "invoice_no": "TF-X01-11032022-04",
             "memberId": "M0001",
             "name": "James",
-            "user_image": "https://randomuser.me/api/portraits/men/2.jpg",
+            "user_image":
+                "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12",
             "class": "Y5C1",
             "title": "Term Fee",
             "description":
@@ -1926,7 +1930,8 @@ class _CartPageState extends State<CartPage> {
               "class": "Class2",
               "contact": "",
               "desc": "",
-              "image": "https://randomuser.me/api/portraits/men/13.jpg"
+              "image":
+                  "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
             },
             "date": "01-12-2021",
             "description": "Donate",
@@ -1947,7 +1952,8 @@ class _CartPageState extends State<CartPage> {
               "class": "Class2",
               "contact": "",
               "desc": "",
-              "image": "https://randomuser.me/api/portraits/men/3.jpg"
+              "image":
+                  "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
             },
             "date": "01-12-2021",
             "description": "Donate",
@@ -1974,7 +1980,8 @@ class _CartPageState extends State<CartPage> {
               "class": "Class2",
               "contact": "",
               "desc": "",
-              "image": "https://randomuser.me/api/portraits/men/13.jpg",
+              "image":
+                  "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12",
             },
             "id": "1",
             "category": "Stationery",
@@ -2013,7 +2020,8 @@ class _CartPageState extends State<CartPage> {
               "class": "Class2",
               "contact": "",
               "desc": "",
-              "image": "https://randomuser.me/api/portraits/men/13.jpg",
+              "image":
+                  "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12",
             },
             "id": "1",
             "category": "Cloths",
@@ -2054,7 +2062,8 @@ class _CartPageState extends State<CartPage> {
               "class": "Class2",
               "contact": "",
               "desc": "",
-              "image": "https://randomuser.me/api/portraits/men/13.jpg",
+              "image":
+                  "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12",
             },
             "_id": "EDU00001_EVENT_EVNT-1008",
             "receipt_no": "RCPT001-12111",
@@ -2105,7 +2114,8 @@ class _CartPageState extends State<CartPage> {
               "class": "Class2",
               "contact": "",
               "desc": "",
-              "image": "https://randomuser.me/api/portraits/men/13.jpg",
+              "image":
+                  "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12",
             },
             "date": "01-12-2021",
             "description": "MFP TopUp",

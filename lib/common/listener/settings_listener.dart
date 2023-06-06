@@ -50,6 +50,7 @@ class MySettingsListener with ChangeNotifier {
       _notificationList.addAll(notiListClone);
     } */
     if (Type != "filter") {
+      
       if (familyList != null) _notificationMembersList = familyList;
       if (categoryList != null) _notificationCategoryList = categoryList;
     }

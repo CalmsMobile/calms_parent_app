@@ -738,6 +738,7 @@ class _MealOrderState extends State<MealOrder> {
                                 Text(
                                   familyList[senderIndex]['Name'],
                                   overflow: TextOverflow.ellipsis,
+                                  textAlign: TextAlign.left,
                                   style: TextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold),
@@ -746,6 +747,7 @@ class _MealOrderState extends State<MealOrder> {
                                   familyList[senderIndex]['RefUserSeqId']
                                       .toString(),
                                   overflow: TextOverflow.ellipsis,
+                                  textAlign: TextAlign.left,
                                   style: TextStyle(
                                       color: Colors.grey,
                                       fontSize: 10,
@@ -1047,9 +1049,9 @@ class _MealOrderState extends State<MealOrder> {
                                           Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
+                                                textDirection: TextDirection.ltr,
                                             children: [
-                                              Container(
-                                                child: Text(
+                                              Text(
                                                   "MYR " +
                                                       "${packageList[index]["amount"]}",
                                                   style: TextStyle(
@@ -1059,7 +1061,7 @@ class _MealOrderState extends State<MealOrder> {
                                                       fontWeight:
                                                           FontWeight.bold),
                                                 ),
-                                              ),
+                                              
                                               InkWell(
                                                 onTap: () {
                                                   MyCustomAlertDialog()

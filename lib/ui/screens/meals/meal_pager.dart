@@ -37,12 +37,16 @@ class MealPager extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Container(
-                      height: 100,
-                      child: mealList_[index]['image'] != null &&
+                    ClipRRect(
+                            borderRadius: BorderRadius.only(topLeft: Radius.circular(15.0),topRight: Radius.circular(15.0)),
+                            child: mealList_[index]['image'] != null &&
                               mealList_[index]['image'] != ""
-                          ? Image.network(mealList_[index]['image'])
-                          : Image.asset("assets/images/meal_default.png"),
+                          ? Image.network(mealList_[index]['image'],width: double.infinity,
+                                    height: 100,
+                                    fit: BoxFit.cover)
+                          : Image.asset("assets/images/meal_default.png",width: double.infinity,
+                                    height: 100,
+                                    fit: BoxFit.cover),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,

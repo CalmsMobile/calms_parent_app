@@ -7,16 +7,45 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 
 PreferredSizeWidget getMyAppbar(var titleText, List<Widget> actions1) {
   return AppBar(
-      title: Text(
+      toolbarHeight: 70,
+      elevation: 0,
+      backgroundColor: Colors.transparent,
+      //titleSpacing: -5,
+      automaticallyImplyLeading: false,
+      centerTitle: true,
+      title: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                InkWell(
+                  onTap: () {},
+                  child: Image(
+                    width: 50,
+                    height: 50,
+                    image: AssetImage("assets/images/ico_back.png"),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 10),
+                  child: Text(
+                    titleText,
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
+                  ),
+                )
+                // Your widgets here
+              ],
+            ),
+      /* title: Text(
         titleText,
         style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-      ),
-      iconTheme: IconThemeData(
+      ), */
+      /* iconTheme: IconThemeData(
         color: Colors.black, //change your color here
-      ),
-      elevation: 0,
-      backgroundColor: HexColor("#f5f8fd"),
-      titleSpacing: -5,
+      ), */
+      // titleSpacing: -5,
       actions: actions1);
 }
 
@@ -51,7 +80,10 @@ PreferredSizeWidget getBottomSheetActionBar(
             style: TextStyle(
                 color: Colors.black,
                 fontSize: 22,
-                fontWeight: titleText == 'Summary' || titleText == 'Attendance' || titleText == 'Select Model' || titleText == 'Package'
+                fontWeight: titleText == 'Summary' ||
+                        titleText == 'Attendance' ||
+                        titleText == 'Select Model' ||
+                        titleText == 'Package'
                     ? FontWeight.bold
                     : FontWeight.normal),
           ),

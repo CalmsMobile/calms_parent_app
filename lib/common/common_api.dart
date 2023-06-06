@@ -39,7 +39,7 @@ class CommonUtil {
           qrJson["ApiUrl"],
           AppSettings.GetNotificationList,
           context,
-          true,
+          false,
           false);
       res
           .then(
@@ -84,7 +84,7 @@ class CommonUtil {
           qrJson["ApiUrl"],
           AppSettings.GetNotificationListWithFilter,
           context,
-          true,
+          false,
           false);
       res
           .then((value) =>
@@ -116,7 +116,7 @@ class CommonUtil {
           qrJson["ApiUrl"],
           AppSettings.GetNotificationListWithFilter,
           context,
-          true,
+          false,
           false);
       res
           .then((value) =>
@@ -146,9 +146,8 @@ class CommonUtil {
           response['Table4']);
     }
   }
-
   handleNotiApiError(error, BuildContext context) {
-    print(error);
+    print("handleNotiApiError "+error.toString());
     MyCustomAlertDialog()
         .showCustomAlert(context, "Notification", error.toString(), true, () {
       Navigator.pop(context);
