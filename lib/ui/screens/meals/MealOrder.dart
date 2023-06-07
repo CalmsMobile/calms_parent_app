@@ -1,3 +1,5 @@
+import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
+
 import '/common/HexColor.dart';
 import '/common/alert_dialog.dart';
 import '/common/constants.dart';
@@ -790,7 +792,7 @@ class _MealOrderState extends State<MealOrder> {
               )
           ],
         ),
-        bottomNavigationBar: showMeal
+       /*  bottomNavigationBar: showMeal
             ? Container(
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -901,7 +903,7 @@ class _MealOrderState extends State<MealOrder> {
             : SizedBox(
                 height: 0,
               ),
-        resizeToAvoidBottomInset: false,
+         */resizeToAvoidBottomInset: false,
         body: Container(
           constraints: BoxConstraints.expand(),
           decoration: BoxDecoration(
@@ -1049,19 +1051,17 @@ class _MealOrderState extends State<MealOrder> {
                                           Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
-                                                textDirection: TextDirection.ltr,
+                                            textDirection: TextDirection.ltr,
                                             children: [
                                               Text(
-                                                  "MYR " +
-                                                      "${packageList[index]["amount"]}",
-                                                  style: TextStyle(
-                                                      fontSize: 16,
-                                                      color:
-                                                          Colors.blue.shade900,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                              
+                                                "MYR " +
+                                                    "${packageList[index]["amount"]}",
+                                                style: TextStyle(
+                                                    fontSize: 16,
+                                                    color: Colors.blue.shade900,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
                                               InkWell(
                                                 onTap: () {
                                                   MyCustomAlertDialog()
@@ -1307,7 +1307,6 @@ class _MealOrderState extends State<MealOrder> {
                         child: PageView(
                           children: _list,
                           scrollDirection: Axis.horizontal,
-
                           // reverse: true,
                           // physics: BouncingScrollPhysics(),
                           controller: controller,
@@ -1343,7 +1342,9 @@ class _MealOrderState extends State<MealOrder> {
                   ]),
             ),
           ),
-        ));
+        ),
+        floatingActionButtonLocation: ExpandableFab.location,
+        floatingActionButton: _getFilterFAB());
   }
 
   void onCartClick(int index) {
@@ -1369,6 +1370,43 @@ class _MealOrderState extends State<MealOrder> {
       }
     }
     selectedDate = dateList[0]["date"];
+  }
+
+  Widget _getFilterFAB() {
+    if (showMeal)
+      return ExpandableFab(
+        children: [
+          FloatingActionButton.small(
+            heroTag: null,
+            backgroundColor: Colors.amber,
+            child: const Icon(Icons.filter_alt_outlined),
+            onPressed: () {
+              Navigator.of(context).pushNamed('/FilterPage', arguments: "");
+            },
+          ),
+          FloatingActionButton.small(
+            heroTag: null,
+            child: const Icon(Icons.short_text_rounded),
+            onPressed: () {
+              openSortByBottomSheet(context, sortList, (index1) {
+                selectedSortby = sortList[index1];
+                setState(() {});
+                Navigator.of(context).pop();
+              }, selectedSortby);
+            },
+          ),
+          FloatingActionButton.small(
+            heroTag: null,
+            child: const Icon(Icons.search),
+            onPressed: () {
+              searchEnable = !searchEnable;
+              setState(() {});
+            },
+          ),
+        ],
+      );
+    else
+      return Container();
   }
 }
 

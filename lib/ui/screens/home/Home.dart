@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 import 'package:calms_parent_latest/ui/screens/notifications/notification-view/notification-view.dart';
+import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 
 import '/common/HexColor.dart';
 import '/common/json_responses.dart';
@@ -538,242 +539,132 @@ class _HomePageState extends State<HomePage> {
                               top: 5, bottom: 20, left: 20, right: 20),
                           child: Container(
                             margin: const EdgeInsets.symmetric(vertical: 20.0),
-                            height: 100.0,
+                            height: 80.0,
                             child: ListView(
                               // This next line does the trick.
                               scrollDirection: Axis.horizontal,
                               children: [
                                 Container(
-                                  width: 100.0,
+                                  width: 90.0,
                                   child: InkWell(
-                                    onTap: () => Navigator.of(context)
-                                        .pushNamed('/MealOrder'),
+                                      onTap: () => Navigator.of(context)
+                                          .pushNamed('/MealOrder'),
                                       child: Column(
-                                    children: [
-                                      Image(
-                                          width: 50,
-                                          height: 50,
-                                          image: AssetImage(
-                                              "assets/images/ico_order.png")),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      Text(
-                                        "Order Meal",
-                                        style: TextStyle(
-                                            fontSize: 11.0,
-                                            color: Colors.black,
-                                            letterSpacing: 2.0,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ],
-                                  )),
+                                        children: [
+                                          Image(
+                                              width: 50,
+                                              height: 50,
+                                              image: AssetImage(
+                                                  "assets/images/ico_order.png")),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          Text(
+                                            "Order Meal",
+                                            style: TextStyle(
+                                                fontSize: 11.0,
+                                                color: Colors.black,
+                                                //letterSpacing: 2.0,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      )),
                                 ),
                                 Container(
-                                  width: 100.0,
+                                  width: 90.0,
                                   child: InkWell(
-                                    onTap: () => Navigator.of(context)
-                                        .pushNamed('/StudentAttendance'),
+                                      onTap: () => Navigator.of(context)
+                                          .pushNamed('/StudentAttendance'),
                                       child: Column(
-                                    children: [
-                                      Image(
-                                          width: 50,
-                                          height: 50,
-                                          image: AssetImage(
-                                              "assets/images/ico_attendance.png")),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      Text(
-                                        "Attendance",
-                                        style: TextStyle(
-                                            fontSize: 11.0,
-                                            color: Colors.black,
-                                            letterSpacing: 2.0,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ],
-                                  )),
+                                        children: [
+                                          Image(
+                                              width: 50,
+                                              height: 50,
+                                              image: AssetImage(
+                                                  "assets/images/ico_attendance.png")),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          Text(
+                                            "Attendance",
+                                            style: TextStyle(
+                                                fontSize: 11.0,
+                                                color: Colors.black,
+                                                //letterSpacing: 2.0,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      )),
                                 ),
                                 Container(
-                                  width: 100.0,
+                                  width: 90.0,
                                   child: InkWell(
-                                    onTap: () => Navigator.of(context)
-                                        .pushNamed('/MFPTopup'),
+                                      onTap: () => Navigator.of(context)
+                                          .pushNamed('/MFPTopup'),
                                       child: Column(
-                                    children: [
-                                      Image(
-                                          width: 50,
-                                          height: 50,
-                                          image: AssetImage(
-                                              "assets/images/ico_top_up.png")),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      Text(
-                                        "Topup",
-                                        style: TextStyle(
-                                            fontSize: 11.0,
-                                            color: Colors.black,
-                                            letterSpacing: 2.0,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ],
-                                  )),
+                                        children: [
+                                          Image(
+                                              width: 50,
+                                              height: 50,
+                                              image: AssetImage(
+                                                  "assets/images/ico_top_up.png")),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          Text(
+                                            "Topup",
+                                            style: TextStyle(
+                                                fontSize: 11.0,
+                                                color: Colors.black,
+                                                //letterSpacing: 2.0,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      )),
                                 ),
                                 Container(
-                                  width: 100.0,
+                                  width: 90.0,
                                   child: InkWell(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => HolidayCalendar(
-                                                new RandomColorModel()
-                                                    ._getCalendarDataSource())));
-                                    },
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    HolidayCalendar(
+                                                        new RandomColorModel()
+                                                            ._getCalendarDataSource())));
+                                      },
                                       child: Column(
-                                    children: [
-                                      Image(
-                                          width: 50,
-                                          height: 50,
-                                          image: AssetImage(
-                                              "assets/images/ico_schoolattendance.png")),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      Text(
-                                        "Student\nCalender",
-                                        style: TextStyle(
-                                            fontSize: 11.0,
-                                            color: Colors.black,
-                                            letterSpacing: 2.0,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ],
-                                  )),
+                                        children: [
+                                          Image(
+                                              width: 50,
+                                              height: 50,
+                                              image: AssetImage(
+                                                  "assets/images/ico_schoolattendance.png")),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          Text(
+                                            "Calender",
+                                            style: TextStyle(
+                                                fontSize: 11.0,
+                                                color: Colors.black,
+                                                //letterSpacing: 2.0,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      )),
                                 ),
                               ],
                             ),
                           ),
                         ),
-                        /* GridView.builder(
-                          itemCount: widget.items.length,
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(
-                              parent: AlwaysScrollableScrollPhysics()),
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount:
-                                MediaQuery.of(context).orientation ==
-                                        Orientation.landscape
-                                    ? 2
-                                    : 2,
-                            crossAxisSpacing: 0,
-                            mainAxisSpacing: 0,
-                            childAspectRatio: (2 / 1),
-                          ),
-                          itemBuilder: (
-                            context,
-                            index,
-                          ) {
-                            return GestureDetector(
-                              onTap: () {
-                                ModuleModel moduleModel = widget.items[index];
-                                print(moduleModel.label);
-                                switch (moduleModel.module) {
-                                  case "HolidayCalendar":
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => HolidayCalendar(
-                                                new RandomColorModel()
-                                                    ._getCalendarDataSource())));
-                                    break;
-                                  case "Topup":
-                                    Navigator.of(context)
-                                        .pushNamed('/TopupPage');
-                                    break;
-                                  case "MFPTopup":
-                                    Navigator.of(context)
-                                        .pushNamed('/MFPTopup');
-                                    break;
-                                  case "Donation":
-                                    Navigator.of(context)
-                                        .pushNamed('/DonationPage');
-                                    break;
-                                  case "TransferMoney":
-                                    Navigator.of(context)
-                                        .pushNamed('/TransferMoney');
-                                    break;
-                                  case "Store":
-                                    Navigator.of(context).pushNamed('/Stores');
-                                    break;
-                                  case "MyInvoice":
-                                    Navigator.of(context)
-                                        .pushNamed('/InvoicePayment');
-                                    break;
-                                  case "Activities":
-                                    Navigator.of(context)
-                                        .pushNamed('/Activities');
-                                    break;
-                                  case "StudentAttendance":
-                                    Navigator.of(context)
-                                        .pushNamed('/StudentAttendance');
-                                    break;
-                                  case "OrderMeal":
-                                    Navigator.of(context)
-                                        .pushNamed('/MealOrder');
-                                    break;
-                                  case "ParentPickup":
-                                    Navigator.of(context)
-                                        .pushNamed('/ParentPickup');
-                                    break;
-                                  case "StudentTracking":
-                                    Navigator.of(context)
-                                        .pushNamed('/StudentTracking');
-                                    break;
-                                }
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  border: Border(
-                                    right: BorderSide(
-                                        width: 1.5,
-                                        color: Colors.grey.shade300),
-                                    bottom: BorderSide(
-                                        width: 1.5,
-                                        color: Colors.grey.shade300),
-                                  ),
-                                  // borderRadius: BorderRadius.only(
-                                  //     bottomLeft: Radius.circular(5.0),
-                                  //     bottomRight: Radius.circular(5.0)),
-                                ),
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Icon(
-                                      widget.items[index].icon,
-                                      color: widget.items[index].color,
-                                    ),
-                                    Text(widget.items[index].label,
-                                        style: TextStyle(
-                                            fontSize: 12, color: Colors.black),
-                                        textAlign: TextAlign.center),
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                         */
-                        Card(
+                       Card(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15.0),
                           ),
                           borderOnForeground: true,
-                          margin: EdgeInsets.all(20),
+                          margin: EdgeInsets.only(left: 20,right: 20,bottom: 20),
                           child: Container(
                             margin: EdgeInsets.all(10),
                             child: Column(
@@ -819,7 +710,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                         ),
-                        Align(
+                        /* Align(
                           alignment: Alignment.centerLeft,
                           child: Container(
                               padding: EdgeInsets.only(
@@ -831,13 +722,13 @@ class _HomePageState extends State<HomePage> {
                                 style: TextStyle(
                                     fontSize: 16, fontWeight: FontWeight.bold),
                               )),
-                        ),
+                        ), */
                         Card(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15.0),
                           ),
                           borderOnForeground: true,
-                          margin: EdgeInsets.all(20),
+                          margin: EdgeInsets.only(left: 20, right: 20),
                           child: Container(
                             margin: EdgeInsets.all(10),
                             child: Column(children: [
@@ -1069,7 +960,11 @@ class _HomePageState extends State<HomePage> {
                 ),
                */
                   ],
-                )))));
+                )
+                )
+                )
+                ),
+                ); 
   }
 }
 
