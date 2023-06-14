@@ -30,364 +30,474 @@ class _StudentAttendanceState extends State<StudentAttendance> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: getMyAppbar("Attendance", []),
-        body: SingleChildScrollView(
-          child: Container(
-            color: Colors.white,
-            child: Column(
-              children: [
-                SfCalendar(
-                  view: CalendarView.month,
-                  showDatePickerButton: true,
-                  dataSource: _getCalendarDataSource(),
-                  onTap: calendarTapped,
-                ),
-                Container(
+        body: Container(
+            constraints: BoxConstraints.expand(),
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: [
+                Color.fromARGB(255, 246, 249, 254),
+                Color.fromARGB(255, 230, 231, 239),
+              ],
+            )),
+            child: SizedBox(
+                height: MediaQuery.of(context).size.height,
+                child: SingleChildScrollView(
+                  child: Container(
+                    child: Column(
+                      children: [
+                        Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                          borderOnForeground: true,
+                          margin: EdgeInsets.only(
+                              top: 5, bottom: 20, left: 20, right: 20),
+                          child: Padding(
+                            padding: EdgeInsets.all(15),
+                            child: SfCalendar(
+                              view: CalendarView.month,
+                              showDatePickerButton: true,
+                              dataSource: _getCalendarDataSource(),
+                              onTap: calendarTapped,
+                            ),
+                          ),
+                        ),
+                        /*  Container(
                   color: Colors.black,
                   margin: EdgeInsets.only(top: 5, bottom: 5),
                   height: 30,
                   child: customBottomSheetActionBar(context, "Legends", false,
                       Colors.grey.shade200, false, true, 14),
-                ),
-                Container(
-                  padding: EdgeInsets.only(top: 3),
-                  margin: EdgeInsets.symmetric(vertical: 0, horizontal: 20),
-                  color: Colors.white,
-                  child: Container(
-                    margin: EdgeInsets.only(top: 3, left: 0, right: 0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        RichText(
-                          textAlign: TextAlign.center,
-                          text: TextSpan(children: [
-                            WidgetSpan(
-                                child: Container(
-                              width: 15,
-                              height: 15,
-                              padding: EdgeInsets.only(top: 0),
-                              decoration: BoxDecoration(
-                                  color: Colors.greenAccent,
-                                  borderRadius: BorderRadius.circular(60.0)),
-                            )),
-                            WidgetSpan(
-                                child: Container(
-                              padding: EdgeInsets.only(bottom: 0, left: 8),
-                              child: Text(
-                                "Present",
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 12),
-                              ),
-                            )),
-                          ]),
+                ), */
+                        Container(
+                          padding: EdgeInsets.only(top: 3),
+                          margin: EdgeInsets.only(
+                              top: 5, bottom: 20, left: 20, right: 20),
+                          child: Container(
+                            margin: EdgeInsets.only(top: 3, left: 0, right: 0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                RichText(
+                                  textAlign: TextAlign.center,
+                                  text: TextSpan(children: [
+                                    WidgetSpan(
+                                        child: Container(
+                                      width: 15,
+                                      height: 15,
+                                      padding: EdgeInsets.only(top: 0),
+                                      decoration: BoxDecoration(
+                                          color: Colors.greenAccent,
+                                          borderRadius:
+                                              BorderRadius.circular(60.0)),
+                                    )),
+                                    WidgetSpan(
+                                        child: Container(
+                                      padding:
+                                          EdgeInsets.only(bottom: 0, left: 8),
+                                      child: Text(
+                                        "Present",
+                                        style: TextStyle(
+                                            color: Colors.black, fontSize: 12),
+                                      ),
+                                    )),
+                                  ]),
+                                ),
+                                RichText(
+                                  textAlign: TextAlign.center,
+                                  text: TextSpan(children: [
+                                    WidgetSpan(
+                                        child: Container(
+                                      width: 15,
+                                      height: 15,
+                                      padding: EdgeInsets.only(top: 0),
+                                      decoration: BoxDecoration(
+                                          color: Colors.redAccent,
+                                          borderRadius:
+                                              BorderRadius.circular(60.0)),
+                                    )),
+                                    WidgetSpan(
+                                        child: Container(
+                                      padding:
+                                          EdgeInsets.only(bottom: 0, left: 8),
+                                      child: Text(
+                                        "Absent",
+                                        style: TextStyle(
+                                            color: Colors.black, fontSize: 12),
+                                      ),
+                                    )),
+                                  ]),
+                                ),
+                                RichText(
+                                  textAlign: TextAlign.center,
+                                  text: TextSpan(children: [
+                                    WidgetSpan(
+                                        child: Container(
+                                      width: 15,
+                                      height: 15,
+                                      padding: EdgeInsets.only(top: 0),
+                                      decoration: BoxDecoration(
+                                          color: Colors.blueAccent,
+                                          borderRadius:
+                                              BorderRadius.circular(60.0)),
+                                    )),
+                                    WidgetSpan(
+                                        child: Container(
+                                      padding:
+                                          EdgeInsets.only(bottom: 0, left: 8),
+                                      child: Text(
+                                        "Holiday",
+                                        style: TextStyle(
+                                            color: Colors.black, fontSize: 12),
+                                      ),
+                                    )),
+                                  ]),
+                                ),
+                                RichText(
+                                  textAlign: TextAlign.center,
+                                  text: TextSpan(children: [
+                                    WidgetSpan(
+                                        child: Container(
+                                      width: 15,
+                                      height: 15,
+                                      padding: EdgeInsets.only(top: 0),
+                                      decoration: BoxDecoration(
+                                          color: Colors.orangeAccent,
+                                          borderRadius:
+                                              BorderRadius.circular(60.0)),
+                                    )),
+                                    WidgetSpan(
+                                        child: Container(
+                                      padding:
+                                          EdgeInsets.only(bottom: 0, left: 8),
+                                      child: Text(
+                                        "Late Entry",
+                                        style: TextStyle(
+                                            color: Colors.black, fontSize: 12),
+                                      ),
+                                    )),
+                                  ]),
+                                ),
+                                RichText(
+                                  textAlign: TextAlign.center,
+                                  text: TextSpan(children: [
+                                    WidgetSpan(
+                                        child: Container(
+                                      width: 15,
+                                      height: 15,
+                                      padding: EdgeInsets.only(top: 0),
+                                      decoration: BoxDecoration(
+                                          color: Colors.orangeAccent,
+                                          borderRadius:
+                                              BorderRadius.circular(60.0)),
+                                    )),
+                                    WidgetSpan(
+                                        child: Container(
+                                      padding:
+                                          EdgeInsets.only(bottom: 0, left: 8),
+                                      child: Text(
+                                        "Early Out",
+                                        style: TextStyle(
+                                            color: Colors.black, fontSize: 12),
+                                      ),
+                                    )),
+                                  ]),
+                                )
+                              ],
+                            ),
+                          ),
                         ),
-                        RichText(
-                          textAlign: TextAlign.center,
-                          text: TextSpan(children: [
-                            WidgetSpan(
-                                child: Container(
-                              width: 15,
-                              height: 15,
-                              padding: EdgeInsets.only(top: 0),
-                              decoration: BoxDecoration(
-                                  color: Colors.redAccent,
-                                  borderRadius: BorderRadius.circular(60.0)),
-                            )),
-                            WidgetSpan(
-                                child: Container(
-                              padding: EdgeInsets.only(bottom: 0, left: 8),
-                              child: Text(
-                                "Absent",
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 12),
-                              ),
-                            )),
-                          ]),
-                        ),
-                        RichText(
-                          textAlign: TextAlign.center,
-                          text: TextSpan(children: [
-                            WidgetSpan(
-                                child: Container(
-                              width: 15,
-                              height: 15,
-                              padding: EdgeInsets.only(top: 0),
-                              decoration: BoxDecoration(
-                                  color: Colors.blueAccent,
-                                  borderRadius: BorderRadius.circular(60.0)),
-                            )),
-                            WidgetSpan(
-                                child: Container(
-                              padding: EdgeInsets.only(bottom: 0, left: 8),
-                              child: Text(
-                                "Holiday",
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 12),
-                              ),
-                            )),
-                          ]),
-                        ),
-                        RichText(
-                          textAlign: TextAlign.center,
-                          text: TextSpan(children: [
-                            WidgetSpan(
-                                child: Container(
-                              width: 15,
-                              height: 15,
-                              padding: EdgeInsets.only(top: 0),
-                              decoration: BoxDecoration(
-                                  color: Colors.orangeAccent,
-                                  borderRadius: BorderRadius.circular(60.0)),
-                            )),
-                            WidgetSpan(
-                                child: Container(
-                              padding: EdgeInsets.only(bottom: 0, left: 8),
-                              child: Text(
-                                "Late Entry",
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 12),
-                              ),
-                            )),
-                          ]),
-                        ),
-                        RichText(
-                          textAlign: TextAlign.center,
-                          text: TextSpan(children: [
-                            WidgetSpan(
-                                child: Container(
-                              width: 15,
-                              height: 15,
-                              padding: EdgeInsets.only(top: 0),
-                              decoration: BoxDecoration(
-                                  color: Colors.orangeAccent,
-                                  borderRadius: BorderRadius.circular(60.0)),
-                            )),
-                            WidgetSpan(
-                                child: Container(
-                              padding: EdgeInsets.only(bottom: 0, left: 8),
-                              child: Text(
-                                "Early Out",
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 12),
-                              ),
-                            )),
-                          ]),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                Container(
+
+                        /* Container(
                   color: Colors.black,
                   margin: EdgeInsets.only(top: 10, bottom: 5),
                   height: 30,
                   child: customBottomSheetActionBar(context, "Attendance",
                       false, Colors.grey.shade200, false, true, 14),
-                ),
-                Container(
-                  height: 85,
-                  margin: EdgeInsets.symmetric(vertical: 0, horizontal: 20),
-                  child: ListView.separated(
-                    itemCount: _appointmentDetails.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Container(
-                          padding: EdgeInsets.all(2),
-                          color: Colors.white,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(6.0),
+                ), */
+                        Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                            borderOnForeground: true,
+                            margin: EdgeInsets.only(
+                                top: 5, bottom: 20, left: 20, right: 20),
+                            child: Column(children: [
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Container(
+                                    padding: EdgeInsets.only(
+                                        left: 10.0, top: 10.0, bottom: 10.0),
+                                    margin: EdgeInsets.zero,
+                                    width: double.infinity,
+                                    color: Colors.transparent,
                                     child: Text(
-                                      "Class time",
-                                      textAlign: TextAlign.left,
+                                      "Attendance",
                                       style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.normal),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(6.0),
-                                    child: Text(
-                                      "Schedule time",
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.normal),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(6.0),
-                                    child: Text(
-                                      "Clock time",
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.normal),
-                                    ),
-                                  ),
-                                ],
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
+                                    )),
                               ),
-                              Column(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(5.0),
-                                    child: Text(
-                                      "${DateFormat('hh:mm a').format(_appointmentDetails[index].startTime)} - ${DateFormat('hh:mm a').format(_appointmentDetails[index].endTime)}",
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.normal),
-                                    ),
+                              Container(
+                                height: 85,
+                                margin: EdgeInsets.symmetric(
+                                    vertical: 0, horizontal: 20),
+                                child: ListView.separated(
+                                  itemCount: _appointmentDetails.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return Container(
+                                        padding: EdgeInsets.all(2),
+                                        color: Colors.white,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(6.0),
+                                                  child: Text(
+                                                    "Class time",
+                                                    textAlign: TextAlign.left,
+                                                    style: TextStyle(
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.normal),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(6.0),
+                                                  child: Text(
+                                                    "Schedule time",
+                                                    textAlign: TextAlign.left,
+                                                    style: TextStyle(
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.normal),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(6.0),
+                                                  child: Text(
+                                                    "Clock time",
+                                                    textAlign: TextAlign.left,
+                                                    style: TextStyle(
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.normal),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            Column(
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(5.0),
+                                                  child: Text(
+                                                    "${DateFormat('hh:mm a').format(_appointmentDetails[index].startTime)} - ${DateFormat('hh:mm a').format(_appointmentDetails[index].endTime)}",
+                                                    textAlign: TextAlign.left,
+                                                    style: TextStyle(
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.normal),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(5.0),
+                                                  child: Text(
+                                                    "${getActualTime(_appointmentDetails[index])} - ${getActualEndTime(_appointmentDetails[index])}",
+                                                    textAlign: TextAlign.left,
+                                                    style: TextStyle(
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.normal),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(5.0),
+                                                  child: Text(
+                                                    "${getActualTime(_appointmentDetails[index])} - ${getActualEndTime(_appointmentDetails[index])}",
+                                                    textAlign: TextAlign.left,
+                                                    style: TextStyle(
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.normal),
+                                                  ),
+                                                ),
+                                              ],
+                                            )
+                                          ],
+                                        ));
+                                  },
+                                  separatorBuilder:
+                                      (BuildContext context, int index) =>
+                                          const Divider(
+                                    height: 5,
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(5.0),
-                                    child: Text(
-                                      "${getActualTime(_appointmentDetails[index])} - ${getActualEndTime(_appointmentDetails[index])}",
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.normal),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(5.0),
-                                    child: Text(
-                                      "${getActualTime(_appointmentDetails[index])} - ${getActualEndTime(_appointmentDetails[index])}",
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.normal),
-                                    ),
-                                  ),
-                                ],
-                              )
-                            ],
-                          ));
-                    },
-                    separatorBuilder: (BuildContext context, int index) =>
-                        const Divider(
-                      height: 5,
-                    ),
-                  ),
-                ),
-                Container(
+                                ),
+                              ),
+                            ])),
+                        /*  Container(
                   color: Colors.black,
                   margin: EdgeInsets.only(top: 5, bottom: 5),
                   height: 30,
                   child: customBottomSheetActionBar(context, "Summary", false,
                       Colors.grey.shade200, false, true, 14),
-                ),
-                Container(
-                  color: Colors.white,
-                  margin: EdgeInsets.only(top: 0),
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              "Total school days",
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                  fontSize: 14, fontWeight: FontWeight.normal),
+                ), */
+                        Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.0),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              "Total present",
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                  fontSize: 14, fontWeight: FontWeight.normal),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              "Total absent",
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                  fontSize: 14, fontWeight: FontWeight.normal),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              "Total late in days",
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                  fontSize: 14, fontWeight: FontWeight.normal),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              "Total early out days",
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                  fontSize: 14, fontWeight: FontWeight.normal),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              "25",
-                              style: TextStyle(
-                                  fontSize: 14, fontWeight: FontWeight.normal),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              "20",
-                              style: TextStyle(
-                                  fontSize: 14, fontWeight: FontWeight.normal),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              "05",
-                              style: TextStyle(
-                                  fontSize: 14, fontWeight: FontWeight.normal),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              "10",
-                              style: TextStyle(
-                                  fontSize: 14, fontWeight: FontWeight.normal),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              "07",
-                              style: TextStyle(
-                                  fontSize: 14, fontWeight: FontWeight.normal),
-                            ),
-                          ),
-                        ],
-                      )
-                    ],
+                            borderOnForeground: true,
+                            margin: EdgeInsets.only(
+                                top: 5, bottom: 20, left: 20, right: 20),
+                            child: Column(children: [
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Container(
+                                    padding: EdgeInsets.only(
+                                        left: 10.0, top: 10.0, bottom: 10.0),
+                                    margin: EdgeInsets.zero,
+                                    width: double.infinity,
+                                    color: Colors.transparent,
+                                    child: Text(
+                                      "Summary",
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
+                                    )),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(top: 0),
+                                padding: EdgeInsets.symmetric(horizontal: 20),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                            "Total school days",
+                                            textAlign: TextAlign.left,
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.normal),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                            "Total present",
+                                            textAlign: TextAlign.left,
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.normal),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                            "Total absent",
+                                            textAlign: TextAlign.left,
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.normal),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                            "Total late in days",
+                                            textAlign: TextAlign.left,
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.normal),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                            "Total early out days",
+                                            textAlign: TextAlign.left,
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.normal),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                            "25",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.normal),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                            "20",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.normal),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                            "05",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.normal),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                            "10",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.normal),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                            "07",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.normal),
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              )
+                            ]))
+                      ],
+                    ),
                   ),
-                )
-              ],
-            ),
-          ),
-        ));
+                ))));
   }
 
   AppointmentDataSource _getCalendarDataSource() {
