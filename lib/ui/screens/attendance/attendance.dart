@@ -76,138 +76,169 @@ class _StudentAttendanceState extends State<StudentAttendance> {
                           margin: EdgeInsets.only(
                               top: 5, bottom: 20, left: 20, right: 20),
                           child: Container(
-                            margin: EdgeInsets.only(top: 3, left: 0, right: 0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                RichText(
-                                  textAlign: TextAlign.center,
-                                  text: TextSpan(children: [
-                                    WidgetSpan(
-                                        child: Container(
-                                      width: 15,
-                                      height: 15,
-                                      padding: EdgeInsets.only(top: 0),
-                                      decoration: BoxDecoration(
-                                          color: Colors.greenAccent,
-                                          borderRadius:
-                                              BorderRadius.circular(60.0)),
-                                    )),
-                                    WidgetSpan(
-                                        child: Container(
-                                      padding:
-                                          EdgeInsets.only(bottom: 0, left: 8),
-                                      child: Text(
-                                        "Present",
-                                        style: TextStyle(
-                                            color: Colors.black, fontSize: 12),
+                              margin:
+                                  EdgeInsets.only(top: 3, left: 0, right: 0),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      RichText(
+                                        textAlign: TextAlign.center,
+                                        text: TextSpan(children: [
+                                          WidgetSpan(
+                                              child: Container(
+                                            width: 15,
+                                            height: 15,
+                                            padding: EdgeInsets.only(top: 0),
+                                            decoration: BoxDecoration(
+                                                color: Colors.greenAccent,
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        60.0)),
+                                          )),
+                                          WidgetSpan(
+                                              child: Container(
+                                            padding: EdgeInsets.only(
+                                                bottom: 0, left: 12),
+                                            child: Text(
+                                              "Present",
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 18),
+                                            ),
+                                          )),
+                                        ]),
                                       ),
-                                    )),
-                                  ]),
-                                ),
-                                RichText(
-                                  textAlign: TextAlign.center,
-                                  text: TextSpan(children: [
-                                    WidgetSpan(
-                                        child: Container(
-                                      width: 15,
-                                      height: 15,
-                                      padding: EdgeInsets.only(top: 0),
-                                      decoration: BoxDecoration(
-                                          color: Colors.redAccent,
-                                          borderRadius:
-                                              BorderRadius.circular(60.0)),
-                                    )),
-                                    WidgetSpan(
-                                        child: Container(
-                                      padding:
-                                          EdgeInsets.only(bottom: 0, left: 8),
-                                      child: Text(
-                                        "Absent",
-                                        style: TextStyle(
-                                            color: Colors.black, fontSize: 12),
+                                      RichText(
+                                        textAlign: TextAlign.start,
+                                        text: TextSpan(children: [
+                                          WidgetSpan(
+                                              child: Container(
+                                            width: 15,
+                                            height: 15,
+                                            margin: EdgeInsets.only(left: 10),
+                                            padding: EdgeInsets.only(
+                                                top: 0, left: 12),
+                                            decoration: BoxDecoration(
+                                                color: Colors.redAccent,
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        60.0)),
+                                          )),
+                                          WidgetSpan(
+                                              child: Container(
+                                            padding: EdgeInsets.only(
+                                                bottom: 0, left: 12),
+                                            child: Text(
+                                              "Absent",
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 18),
+                                            ),
+                                          )),
+                                        ]),
                                       ),
-                                    )),
-                                  ]),
-                                ),
-                                RichText(
-                                  textAlign: TextAlign.center,
-                                  text: TextSpan(children: [
-                                    WidgetSpan(
-                                        child: Container(
-                                      width: 15,
-                                      height: 15,
-                                      padding: EdgeInsets.only(top: 0),
-                                      decoration: BoxDecoration(
-                                          color: Colors.blueAccent,
-                                          borderRadius:
-                                              BorderRadius.circular(60.0)),
-                                    )),
-                                    WidgetSpan(
-                                        child: Container(
-                                      padding:
-                                          EdgeInsets.only(bottom: 0, left: 8),
-                                      child: Text(
-                                        "Holiday",
-                                        style: TextStyle(
-                                            color: Colors.black, fontSize: 12),
+                                      RichText(
+                                        textAlign: TextAlign.start,
+                                        text: TextSpan(children: [
+                                          WidgetSpan(
+                                              child: Container(
+                                            width: 15,
+                                            height: 15,
+                                            margin: EdgeInsets.only(left: 10),
+                                            padding: EdgeInsets.only(
+                                                top: 0, left: 12),
+                                            decoration: BoxDecoration(
+                                                color: Colors.blueAccent,
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        60.0)),
+                                          )),
+                                          WidgetSpan(
+                                              child: Container(
+                                            padding: EdgeInsets.only(
+                                                bottom: 0, left: 12),
+                                            child: Text(
+                                              "Holiday",
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 18),
+                                            ),
+                                          )),
+                                        ]),
                                       ),
-                                    )),
-                                  ]),
-                                ),
-                                RichText(
-                                  textAlign: TextAlign.center,
-                                  text: TextSpan(children: [
-                                    WidgetSpan(
-                                        child: Container(
-                                      width: 15,
-                                      height: 15,
-                                      padding: EdgeInsets.only(top: 0),
-                                      decoration: BoxDecoration(
-                                          color: Colors.orangeAccent,
-                                          borderRadius:
-                                              BorderRadius.circular(60.0)),
-                                    )),
-                                    WidgetSpan(
-                                        child: Container(
-                                      padding:
-                                          EdgeInsets.only(bottom: 0, left: 8),
-                                      child: Text(
-                                        "Late Entry",
-                                        style: TextStyle(
-                                            color: Colors.black, fontSize: 12),
-                                      ),
-                                    )),
-                                  ]),
-                                ),
-                                RichText(
-                                  textAlign: TextAlign.center,
-                                  text: TextSpan(children: [
-                                    WidgetSpan(
-                                        child: Container(
-                                      width: 15,
-                                      height: 15,
-                                      padding: EdgeInsets.only(top: 0),
-                                      decoration: BoxDecoration(
-                                          color: Colors.orangeAccent,
-                                          borderRadius:
-                                              BorderRadius.circular(60.0)),
-                                    )),
-                                    WidgetSpan(
-                                        child: Container(
-                                      padding:
-                                          EdgeInsets.only(bottom: 0, left: 8),
-                                      child: Text(
-                                        "Early Out",
-                                        style: TextStyle(
-                                            color: Colors.black, fontSize: 12),
-                                      ),
-                                    )),
-                                  ]),
-                                )
-                              ],
-                            ),
-                          ),
+                                    ],
+                                  ),
+                                  Container(
+                                      padding: EdgeInsets.only(top: 10),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          RichText(
+                                            textAlign: TextAlign.start,
+                                            text: TextSpan(children: [
+                                              WidgetSpan(
+                                                  child: Container(
+                                                width: 15,
+                                                height: 15,
+                                                padding: EdgeInsets.only(
+                                                    top: 0, left: 12),
+                                                decoration: BoxDecoration(
+                                                    color: Colors.orangeAccent,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            60.0)),
+                                              )),
+                                              WidgetSpan(
+                                                  child: Container(
+                                                padding: EdgeInsets.only(
+                                                    bottom: 0, left: 12),
+                                                child: Text(
+                                                  "Late Entry",
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 18),
+                                                ),
+                                              )),
+                                            ]),
+                                          ),
+                                          RichText(
+                                            textAlign: TextAlign.start,
+                                            text: TextSpan(children: [
+                                              WidgetSpan(
+                                                  child: Container(
+                                                margin:
+                                                    EdgeInsets.only(left: 10),
+                                                width: 15,
+                                                height: 15,
+                                                padding: EdgeInsets.only(
+                                                    top: 0, left: 12),
+                                                decoration: BoxDecoration(
+                                                    color: Colors.orangeAccent,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            60.0)),
+                                              )),
+                                              WidgetSpan(
+                                                  child: Container(
+                                                padding: EdgeInsets.only(
+                                                    bottom: 0, left: 12),
+                                                child: Text(
+                                                  "Early Out",
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 18),
+                                                ),
+                                              )),
+                                            ]),
+                                          )
+                                        ],
+                                      ))
+                                ],
+                              )),
                         ),
 
                         /* Container(
@@ -241,7 +272,7 @@ class _StudentAttendanceState extends State<StudentAttendance> {
                                     )),
                               ),
                               Container(
-                                height: 85,
+                                height: 180,
                                 margin: EdgeInsets.symmetric(
                                     vertical: 0, horizontal: 20),
                                 child: ListView.separated(
@@ -251,92 +282,143 @@ class _StudentAttendanceState extends State<StudentAttendance> {
                                     return Container(
                                         padding: EdgeInsets.all(2),
                                         color: Colors.white,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: [
                                                 Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(6.0),
-                                                  child: Text(
-                                                    "Class time",
-                                                    textAlign: TextAlign.left,
-                                                    style: TextStyle(
-                                                        fontSize: 14,
-                                                        fontWeight:
-                                                            FontWeight.normal),
-                                                  ),
+                                                  padding: EdgeInsets.all(3),
+                                                  child: Image(
+                                                      width: 30,
+                                                      height: 30,
+                                                      image: AssetImage(
+                                                          "assets/images/ico_classtime.png")),
                                                 ),
                                                 Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(6.0),
-                                                  child: Text(
-                                                    "Schedule time",
-                                                    textAlign: TextAlign.left,
-                                                    style: TextStyle(
+                                                    padding: EdgeInsets.all(3),
+                                                    child: Text(
+                                                      "Class time",
+                                                      textAlign: TextAlign.left,
+                                                      style: TextStyle(
                                                         fontSize: 14,
                                                         fontWeight:
-                                                            FontWeight.normal),
-                                                  ),
-                                                ),
+                                                            FontWeight.bold,
+                                                      ),
+                                                    )),
                                                 Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(6.0),
+                                                  padding: EdgeInsets.all(3),
                                                   child: Text(
-                                                    "Clock time",
-                                                    textAlign: TextAlign.left,
+                                                    "${DateFormat('hh:mm a').format(_appointmentDetails[index].startTime)} - ${DateFormat('hh:mm a').format(_appointmentDetails[index].endTime)}",
+                                                    textAlign: TextAlign.right,
                                                     style: TextStyle(
-                                                        fontSize: 14,
+                                                        color: Colors
+                                                            .blue.shade900,
+                                                        fontSize: 18,
                                                         fontWeight:
                                                             FontWeight.normal),
                                                   ),
                                                 ),
                                               ],
                                             ),
-                                            Column(
+                                            Divider(
+                                              height: 20,
+                                              thickness: 0.5,
+                                              indent: 2,
+                                              endIndent: 2,
+                                              color: Colors.grey,
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: [
                                                 Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(5.0),
+                                                  padding: EdgeInsets.all(3),
+                                                  child: Image(
+                                                      width: 30,
+                                                      height: 30,
+                                                      image: AssetImage(
+                                                          "assets/images/ico_schedule.png")),
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsets.all(3),
                                                   child: Text(
-                                                    "${DateFormat('hh:mm a').format(_appointmentDetails[index].startTime)} - ${DateFormat('hh:mm a').format(_appointmentDetails[index].endTime)}",
+                                                    "Schedule time",
                                                     textAlign: TextAlign.left,
                                                     style: TextStyle(
-                                                        fontSize: 12,
-                                                        fontWeight:
-                                                            FontWeight.normal),
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
                                                   ),
                                                 ),
                                                 Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(5.0),
+                                                  padding: EdgeInsets.all(3),
                                                   child: Text(
                                                     "${getActualTime(_appointmentDetails[index])} - ${getActualEndTime(_appointmentDetails[index])}",
-                                                    textAlign: TextAlign.left,
+                                                    textAlign: TextAlign.right,
                                                     style: TextStyle(
-                                                        fontSize: 12,
-                                                        fontWeight:
-                                                            FontWeight.normal),
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(5.0),
-                                                  child: Text(
-                                                    "${getActualTime(_appointmentDetails[index])} - ${getActualEndTime(_appointmentDetails[index])}",
-                                                    textAlign: TextAlign.left,
-                                                    style: TextStyle(
-                                                        fontSize: 12,
+                                                        color: Colors
+                                                            .blue.shade900,
+                                                        fontSize: 18,
                                                         fontWeight:
                                                             FontWeight.normal),
                                                   ),
                                                 ),
                                               ],
-                                            )
+                                            ),
+                                            Divider(
+                                              height: 20,
+                                              thickness: 0.5,
+                                              indent: 2,
+                                              endIndent: 2,
+                                              color: Colors.grey,
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Padding(
+                                                  padding: EdgeInsets.all(3),
+                                                  child: Image(
+                                                      width: 30,
+                                                      height: 30,
+                                                      image: AssetImage(
+                                                          "assets/images/ico_time.png")),
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsets.all(3),
+                                                  child: Text(
+                                                    "Clock time",
+                                                    textAlign: TextAlign.left,
+                                                    style: TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsets.all(3),
+                                                  child: Text(
+                                                    "${getActualTime(_appointmentDetails[index])} - ${getActualEndTime(_appointmentDetails[index])}",
+                                                    textAlign: TextAlign.right,
+                                                    style: TextStyle(
+                                                        color: Colors
+                                                            .blue.shade900,
+                                                        fontSize: 18,
+                                                        fontWeight:
+                                                            FontWeight.normal),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
                                           ],
                                         ));
                                   },
@@ -378,14 +460,142 @@ class _StudentAttendanceState extends State<StudentAttendance> {
                                           fontWeight: FontWeight.bold),
                                     )),
                               ),
-                              Container(
-                                margin: EdgeInsets.only(top: 0),
-                                padding: EdgeInsets.symmetric(horizontal: 20),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Column(
+                              SingleChildScrollView(
+                                scrollDirection: Axis.vertical,
+                                child: Container(
+                                  height: 180,
+                                  margin: EdgeInsets.only(top: 0),
+                                  padding: EdgeInsets.symmetric(horizontal: 20),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Padding(
+                                            padding: EdgeInsets.all(3),
+                                            child: Image(
+                                                width: 30,
+                                                height: 30,
+                                                image: AssetImage(
+                                                    "assets/images/ico_schoolholiday.png")),
+                                          ),
+                                          Padding(
+                                              padding: EdgeInsets.all(3),
+                                              child: Text(
+                                                "Total School Holidays",
+                                                textAlign: TextAlign.left,
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              )),
+                                          Padding(
+                                            padding: EdgeInsets.all(3),
+                                            child: Text(
+                                              "20",
+                                              textAlign: TextAlign.right,
+                                              style: TextStyle(
+                                                  color: Colors.blue.shade900,
+                                                  fontSize: 18,
+                                                  fontWeight:
+                                                      FontWeight.normal),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Divider(
+                                        height: 20,
+                                        thickness: 0.5,
+                                        indent: 2,
+                                        endIndent: 2,
+                                        color: Colors.grey,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Padding(
+                                            padding: EdgeInsets.all(3),
+                                            child: Image(
+                                                width: 30,
+                                                height: 30,
+                                                image: AssetImage(
+                                                    "assets/images/ico_totalpresent.png")),
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.all(3),
+                                            child: Text(
+                                              "Total Present",
+                                              textAlign: TextAlign.left,
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.all(3),
+                                            child: Text(
+                                              "100",
+                                              textAlign: TextAlign.right,
+                                              style: TextStyle(
+                                                  color: Colors.blue.shade900,
+                                                  fontSize: 18,
+                                                  fontWeight:
+                                                      FontWeight.normal),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Divider(
+                                        height: 20,
+                                        thickness: 0.5,
+                                        indent: 2,
+                                        endIndent: 2,
+                                        color: Colors.grey,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Padding(
+                                            padding: EdgeInsets.all(3),
+                                            child: Image(
+                                                width: 30,
+                                                height: 30,
+                                                image: AssetImage(
+                                                    "assets/images/ico_totalabsent.png")),
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.all(3),
+                                            child: Text(
+                                              "Total Absent",
+                                              textAlign: TextAlign.left,
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.all(3),
+                                            child: Text(
+                                              "45",
+                                              textAlign: TextAlign.right,
+                                              style: TextStyle(
+                                                  color: Colors.blue.shade900,
+                                                  fontSize: 18,
+                                                  fontWeight:
+                                                      FontWeight.normal),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+
+                                      /* Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
@@ -452,6 +662,8 @@ class _StudentAttendanceState extends State<StudentAttendance> {
                                                 fontWeight: FontWeight.normal),
                                           ),
                                         ),
+                                       
+                                           
                                         Padding(
                                           padding: const EdgeInsets.all(8.0),
                                           child: Text(
@@ -489,10 +701,11 @@ class _StudentAttendanceState extends State<StudentAttendance> {
                                           ),
                                         ),
                                       ],
-                                    )
-                                  ],
+                                    ) */
+                                    ],
+                                  ),
                                 ),
-                              )
+                              ),
                             ]))
                       ],
                     ),

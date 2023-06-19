@@ -1051,7 +1051,7 @@ class _MealOrderState extends State<MealOrder> {
                                           Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
-                                            textDirection: TextDirection.ltr,
+                                            //textDirection: TextDirection.ltr,
                                             children: [
                                               Text(
                                                 "MYR " +
