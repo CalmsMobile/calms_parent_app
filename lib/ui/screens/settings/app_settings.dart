@@ -1,3 +1,4 @@
+import '../../../main.dart';
 import '/common/alert_dialog.dart';
 import '/common/my_shared_pref.dart';
 import '/common/widgets/select_member.dart';
@@ -79,12 +80,13 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
                             height: 20,
                           ),
                           Align(
-                          alignment: Alignment.centerLeft,
-                          child:Text(
-                            "General Settings",
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                          ),),
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              "General Settings",
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
+                            ),
+                          ),
                           Container(
                             height: 40.0,
                             child: Row(
@@ -246,10 +248,10 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
   logoutDevice() {
     MyCustomAlertDialog().showCustomAlert(
         context, "Notification", "Do you want to logout?", false, () {
-      Navigator.of(context, rootNavigator: true).pop();
+          print("logout proceed");
       MySharedPref().clearAllData();
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => QRRegistration()));
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder:(context)=> SplashScreen()));
+      //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => QRRegistration()));
     }, () {
       print("Close alert");
       Navigator.of(context, rootNavigator: true).pop();

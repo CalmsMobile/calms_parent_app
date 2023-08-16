@@ -7,10 +7,6 @@ class MyCustomAlertDialog {
   bool isShowingAlready = false;
   void showCustomAlert(BuildContext buildContext, String title,
       String description, bool isError, _okPress, _cancelPress) {
-    // if (isShowingAlready) {
-    //   return;
-    // }
-    // isShowingAlready = true;
     showModalBottomSheet(
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(top: Radius.circular(60.0))),
@@ -62,17 +58,7 @@ class MyCustomAlertDialog {
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   child: SizedBox(
                     width: double.infinity,
-                    child: /* RaisedButton(
-                      onPressed: () {
-                        _okPress();
-                      },
-                      child: Text(
-                        "Proceed",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      color: Colors.pinkAccent,
-                    ), */
-                        ElevatedButton(
+                    child: ElevatedButton(
                       style: raisedButtonStyle,
                       onPressed: () {
                         _okPress();
@@ -81,6 +67,89 @@ class MyCustomAlertDialog {
                     ),
                   ),
                 )
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void showVerificationAlert(BuildContext buildContext, String title,
+      String description, bool isError, _verifyAgain, _reSend) {
+    showModalBottomSheet(
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(60.0))),
+      context: buildContext,
+      enableDrag: false,
+      isDismissible: false,
+      isScrollControlled: false,
+      builder: (context) {
+        final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
+          backgroundColor: Colors.pinkAccent,
+          textStyle: TextStyle(color: Colors.white),
+        );
+        return SizedBox(
+          height: 200,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              getBottomSheetActionBar(context, title, false, Colors.white),
+              Container(
+                margin: EdgeInsets.only(top: 0),
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(top: 5),
+                          child: Text(
+                            "$description",
+                            textAlign: TextAlign.justify,
+                            style: TextStyle(
+                                fontSize: 14, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        Divider(
+                          height: 1,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 10),
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    style: raisedButtonStyle,
+                    onPressed: () {
+                       Navigator.pop(context);
+                      _verifyAgain();
+                    },
+                    child: Text('Verify'),
+                  ),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 10),
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    style: raisedButtonStyle,
+                    onPressed: () {
+                       Navigator.pop(context);
+                      _reSend();
+                    },
+                    child: Text('Resend'),
+                  ),
+                ),
+              )
             ],
           ),
         );

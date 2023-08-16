@@ -1,5 +1,8 @@
 import 'dart:convert';
+import 'dart:html';
 import 'dart:math';
+import 'package:calms_parent_latest/common/app_settings.dart';
+import 'package:calms_parent_latest/common/my_shared_pref.dart';
 import 'package:calms_parent_latest/ui/screens/notifications/notification-view/notification-view.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 
@@ -26,7 +29,6 @@ class HomePage extends StatefulWidget {
   HomePage(this.familyPos, this.familyList, this.pageSwiped);
 
   final int familyPos;
-
   final Function pageSwiped;
 
   final List<ModuleModel> items = RandomColorModel().getModuleList();
@@ -292,425 +294,434 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  Future<void> CheckAppVerificationStatus() async {
+    bool isAppVerified =
+        await MySharedPref().getBooleanData(AppSettings.Sp_App_Verified);
+    if (!isAppVerified) print("App not verified");
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    //CheckAppVerificationStatus();
+  }
+
   @override
   Widget build(BuildContext context) {
-    print(widget.familyPos);
-    print(widget.familyList);
+    //print(widget.familyPos);
+    // print(widget.familyList);
     return Scaffold(
-        appBar: AppBar(
-          toolbarHeight: 70,
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          //titleSpacing: -5,
-          automaticallyImplyLeading: false,
-          centerTitle: true,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(left: 10),
-                child: Text(
-                  "",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold),
-                ),
-              )
-              // Your widgets here
-            ],
-          ),
-          actions: [
+      appBar: AppBar(
+        toolbarHeight: 70,
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        //titleSpacing: -5,
+        automaticallyImplyLeading: false,
+        centerTitle: true,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
             Padding(
-              padding: EdgeInsets.only(right: 20),
-              child: InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => AppSettingsPage(),
-                    ),
-                  );
-                },
-                child: Image(
-                    width: 50,
-                    height: 50,
-                    image: AssetImage("assets/images/ico_setting.png")),
+              padding: EdgeInsets.only(left: 10),
+              child: Text(
+                "",
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(right: 20),
-              child: InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => CartPage(),
-                    ),
-                  );
-                },
-                child: Image(
-                    width: 50,
-                    height: 50,
-                    image: AssetImage("assets/images/ico_cart_white.png")),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(right: 20),
-              child: InkWell(
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Notifications()));
-                },
-                child: Image(
-                    width: 50,
-                    height: 50,
-                    image: AssetImage("assets/images/ico_option.png")),
-              ),
-            ),
+            )
+            // Your widgets here
           ],
         ),
-        extendBodyBehindAppBar: false,
-        resizeToAvoidBottomInset: false,
-        body: Container(
-            constraints: BoxConstraints.expand(),
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
-              colors: [
-                Color.fromARGB(255, 246, 249, 254),
-                Color.fromARGB(255, 230, 231, 239),
-              ],
-            )),
-            child: SizedBox(
-                height: MediaQuery.of(context).size.height,
-                child: SingleChildScrollView(
-                    child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Stack(
-                      clipBehavior: Clip.none,
-                      children: [
-                        Container(
-                          width: double.infinity,
-                          height: 220,
-                          padding: EdgeInsets.only(left: 0, right: 0),
-                          child: Column(children: [
-                            SizedBox(
-                              height: 20,
-                            ),
-                            CarouselSlider(
-                              items: widget.familyList
-                                  .map((item) => InkWell(
-                                        child: Container(
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceAround,
-                                            children: [
-                                              if (widget.familyList[widget
-                                                      .familyPos]['Name'] ==
-                                                  item["Name"])
-                                                Image.asset(
-                                                  "assets/images/swipe_left.png",
-                                                  width: 25,
-                                                ),
-                                              Container(
-                                                width: (widget.familyList[widget
-                                                                .familyPos]
-                                                            ['Name'] ==
-                                                        item["Name"])
-                                                    ? 92
-                                                    : 62,
-                                                height: (widget.familyList[
-                                                                widget
-                                                                    .familyPos]
-                                                            ['Name'] ==
-                                                        item["Name"])
-                                                    ? 92
-                                                    : 62,
-                                                child: CircleAvatar(
-                                                  backgroundImage: NetworkImage(
-                                                      item["ImgPathUrl"]),
-                                                ),
-                                                decoration: BoxDecoration(
-                                                  //DecprationImage
-                                                  border: Border.all(
-                                                      color: Theme.of(context)
-                                                          .primaryColor,
-                                                      width: 4.0,
-                                                      style: BorderStyle
-                                                          .solid), //Border.all
-
-                                                  borderRadius:
-                                                      BorderRadius.only(
-                                                    topLeft:
-                                                        Radius.circular(60.0),
-                                                    topRight:
-                                                        Radius.circular(60.0),
-                                                    bottomLeft:
-                                                        Radius.circular(60.0),
-                                                    bottomRight:
-                                                        Radius.circular(60.0),
-                                                  ),
-                                                  //BorderRadius.only
-                                                  /************************************/
-                                                  /* The BoxShadow widget  is here */
-                                                  /************************************/
-                                                ),
+        actions: [
+          Padding(
+            padding: EdgeInsets.only(right: 20),
+            child: InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AppSettingsPage(),
+                  ),
+                );
+              },
+              child: Image(
+                  width: 50,
+                  height: 50,
+                  image: AssetImage("assets/images/ico_setting.png")),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(right: 20),
+            child: InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CartPage(),
+                  ),
+                );
+              },
+              child: Image(
+                  width: 50,
+                  height: 50,
+                  image: AssetImage("assets/images/ico_cart_white.png")),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(right: 20),
+            child: InkWell(
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Notifications()));
+              },
+              child: Image(
+                  width: 50,
+                  height: 50,
+                  image: AssetImage("assets/images/ico_option.png")),
+            ),
+          ),
+        ],
+      ),
+      extendBodyBehindAppBar: false,
+      resizeToAvoidBottomInset: false,
+      body: Container(
+          constraints: BoxConstraints.expand(),
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            colors: [
+              Color.fromARGB(255, 246, 249, 254),
+              Color.fromARGB(255, 230, 231, 239),
+            ],
+          )),
+          child: SizedBox(
+              height: MediaQuery.of(context).size.height,
+              child: SingleChildScrollView(
+                  child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      Container(
+                        width: double.infinity,
+                        height: 220,
+                        padding: EdgeInsets.only(left: 0, right: 0),
+                        child: Column(children: [
+                          SizedBox(
+                            height: 20,
+                          ),
+                          CarouselSlider(
+                            items: widget.familyList
+                                .map((item) => InkWell(
+                                      child: Container(
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
+                                          children: [
+                                            if (widget.familyList[
+                                                    widget.familyPos]['Name'] ==
+                                                item["Name"])
+                                              Image.asset(
+                                                "assets/images/swipe_left.png",
+                                                width: 25,
                                               ),
-                                              if (widget.familyList[widget
-                                                      .familyPos]['Name'] ==
-                                                  item["Name"])
-                                                Image.asset(
-                                                  "assets/images/swipe_right.png",
-                                                  width: 25,
-                                                )
-                                            ],
-                                          ),
-                                        ),
-                                        onTap: () => {
-                                          Navigator.of(context).pushNamed(
-                                              '/ProfileMain',
-                                              arguments: item)
-                                        },
-                                      ))
-                                  .toList(),
+                                            Container(
+                                              width: (widget.familyList[widget
+                                                          .familyPos]['Name'] ==
+                                                      item["Name"])
+                                                  ? 92
+                                                  : 62,
+                                              height: (widget.familyList[widget
+                                                          .familyPos]['Name'] ==
+                                                      item["Name"])
+                                                  ? 92
+                                                  : 62,
+                                              child: CircleAvatar(
+                                                backgroundImage: NetworkImage(
+                                                    item["ImgPathUrl"]),
+                                              ),
+                                              decoration: BoxDecoration(
+                                                //DecprationImage
+                                                border: Border.all(
+                                                    color: Theme.of(context)
+                                                        .primaryColor,
+                                                    width: 4.0,
+                                                    style: BorderStyle
+                                                        .solid), //Border.all
 
-                              //Slider Container properties
-                              options: CarouselOptions(
-                                  height: 100.0,
-                                  enlargeStrategy:
-                                      CenterPageEnlargeStrategy.scale,
-                                  enlargeCenterPage: true,
-                                  autoPlay: false,
-                                  aspectRatio: 16 / 9,
-                                  autoPlayCurve: Curves.fastOutSlowIn,
-                                  enableInfiniteScroll: true,
-                                  autoPlayAnimationDuration:
-                                      Duration(milliseconds: 800),
-                                  viewportFraction: 0.35,
-                                  onPageChanged: (index, reason) {
-                                    widget.pageSwiped(index);
-                                  },
-                                  initialPage: widget.familyPos),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              widget.familyList[widget.familyPos]['Name'],
-                              style: TextStyle(
-                                  fontSize: 22.0,
-                                  color: Colors.black87,
-                                  letterSpacing: 2.0,
-                                  fontWeight: FontWeight.w400),
-                            ),
-                            Text(
-                              "Wallet Ballance",
-                              style: TextStyle(
-                                  fontSize: 14.0,
-                                  color: Colors.grey[600],
-                                  letterSpacing: 2.0,
-                                  fontWeight: FontWeight.w300),
-                            ),
-                            Text(
-                              'MYR ${double.parse(widget.familyList[widget.familyPos]['Balance'].toString()).toStringAsFixed(2)}',
-                              style: TextStyle(
-                                  fontSize: 18.0,
-                                  color: Colors.blue[700],
-                                  letterSpacing: 2.0,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ]),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                          ),
-                          borderOnForeground: true,
-                          margin: EdgeInsets.only(
-                              top: 5, bottom: 20, left: 20, right: 20),
-                          child: Container(
-                            margin: const EdgeInsets.symmetric(vertical: 20.0),
-                            height: 80.0,
-                            child: ListView(
-                              // This next line does the trick.
-                              scrollDirection: Axis.horizontal,
-                              children: [
-                                Container(
-                                  width: 90.0,
-                                  child: InkWell(
-                                      onTap: () => Navigator.of(context)
-                                          .pushNamed('/MealOrder'),
-                                      child: Column(
-                                        children: [
-                                          Image(
-                                              width: 50,
-                                              height: 50,
-                                              image: AssetImage(
-                                                  "assets/images/ico_order.png")),
-                                          SizedBox(
-                                            height: 10,
-                                          ),
-                                          Text(
-                                            "Order Meal",
-                                            style: TextStyle(
-                                                fontSize: 11.0,
-                                                color: Colors.black,
-                                                //letterSpacing: 2.0,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ],
-                                      )),
-                                ),
-                                Container(
-                                  width: 90.0,
-                                  child: InkWell(
-                                      onTap: () => Navigator.of(context)
-                                          .pushNamed('/StudentAttendance'),
-                                      child: Column(
-                                        children: [
-                                          Image(
-                                              width: 50,
-                                              height: 50,
-                                              image: AssetImage(
-                                                  "assets/images/ico_attendance.png")),
-                                          SizedBox(
-                                            height: 10,
-                                          ),
-                                          Text(
-                                            "Attendance",
-                                            style: TextStyle(
-                                                fontSize: 11.0,
-                                                color: Colors.black,
-                                                //letterSpacing: 2.0,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ],
-                                      )),
-                                ),
-                                Container(
-                                  width: 90.0,
-                                  child: InkWell(
-                                      onTap: () => Navigator.of(context)
-                                          .pushNamed('/MFPTopup'),
-                                      child: Column(
-                                        children: [
-                                          Image(
-                                              width: 50,
-                                              height: 50,
-                                              image: AssetImage(
-                                                  "assets/images/ico_top_up.png")),
-                                          SizedBox(
-                                            height: 10,
-                                          ),
-                                          Text(
-                                            "Topup",
-                                            style: TextStyle(
-                                                fontSize: 11.0,
-                                                color: Colors.black,
-                                                //letterSpacing: 2.0,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ],
-                                      )),
-                                ),
-                                Container(
-                                  width: 90.0,
-                                  child: InkWell(
-                                      onTap: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    HolidayCalendar(
-                                                        new RandomColorModel()
-                                                            ._getCalendarDataSource())));
+                                                borderRadius: BorderRadius.only(
+                                                  topLeft:
+                                                      Radius.circular(60.0),
+                                                  topRight:
+                                                      Radius.circular(60.0),
+                                                  bottomLeft:
+                                                      Radius.circular(60.0),
+                                                  bottomRight:
+                                                      Radius.circular(60.0),
+                                                ),
+                                                //BorderRadius.only
+                                                /************************************/
+                                                /* The BoxShadow widget  is here */
+                                                /************************************/
+                                              ),
+                                            ),
+                                            if (widget.familyList[
+                                                    widget.familyPos]['Name'] ==
+                                                item["Name"])
+                                              Image.asset(
+                                                "assets/images/swipe_right.png",
+                                                width: 25,
+                                              )
+                                          ],
+                                        ),
+                                      ),
+                                      onTap: () => {
+                                        Navigator.of(context).pushNamed(
+                                            '/ProfileMain',
+                                            arguments: item)
                                       },
-                                      child: Column(
-                                        children: [
-                                          Image(
-                                              width: 50,
-                                              height: 50,
-                                              image: AssetImage(
-                                                  "assets/images/ico_schoolattendance.png")),
-                                          SizedBox(
-                                            height: 10,
-                                          ),
-                                          Text(
-                                            "Calender",
-                                            style: TextStyle(
-                                                fontSize: 11.0,
-                                                color: Colors.black,
-                                                //letterSpacing: 2.0,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ],
-                                      )),
-                                ),
-                              ],
-                            ),
+                                    ))
+                                .toList(),
+
+                            //Slider Container properties
+                            options: CarouselOptions(
+                                height: 100.0,
+                                enlargeStrategy:
+                                    CenterPageEnlargeStrategy.scale,
+                                enlargeCenterPage: true,
+                                autoPlay: false,
+                                aspectRatio: 16 / 9,
+                                autoPlayCurve: Curves.fastOutSlowIn,
+                                enableInfiniteScroll: true,
+                                autoPlayAnimationDuration:
+                                    Duration(milliseconds: 800),
+                                viewportFraction: 0.35,
+                                onPageChanged: (index, reason) {
+                                  widget.pageSwiped(index);
+                                },
+                                initialPage: widget.familyPos),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            widget.familyList[widget.familyPos]['Name'],
+                            style: TextStyle(
+                                fontSize: 22.0,
+                                color: Colors.black87,
+                                letterSpacing: 2.0,
+                                fontWeight: FontWeight.w400),
+                          ),
+                          Text(
+                            "Wallet Ballance",
+                            style: TextStyle(
+                                fontSize: 14.0,
+                                color: Colors.grey[600],
+                                letterSpacing: 2.0,
+                                fontWeight: FontWeight.w300),
+                          ),
+                          Text(
+                            'MYR ${double.parse(widget.familyList[widget.familyPos]['Balance'].toString()).toStringAsFixed(2)}',
+                            style: TextStyle(
+                                fontSize: 18.0,
+                                color: Colors.blue[700],
+                                letterSpacing: 2.0,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ]),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                        borderOnForeground: true,
+                        margin: EdgeInsets.only(
+                            top: 5, bottom: 20, left: 20, right: 20),
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(vertical: 20.0),
+                          height: 80.0,
+                          child: ListView(
+                            // This next line does the trick.
+                            scrollDirection: Axis.horizontal,
+                            children: [
+                              Container(
+                                width: 90.0,
+                                child: InkWell(
+                                    onTap: () => Navigator.of(context)
+                                        .pushNamed('/MealOrder'),
+                                    child: Column(
+                                      children: [
+                                        Image(
+                                            width: 50,
+                                            height: 50,
+                                            image: AssetImage(
+                                                "assets/images/ico_order.png")),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Text(
+                                          "Order Meal",
+                                          style: TextStyle(
+                                              fontSize: 11.0,
+                                              color: Colors.black,
+                                              //letterSpacing: 2.0,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
+                                    )),
+                              ),
+                              Container(
+                                width: 90.0,
+                                child: InkWell(
+                                    onTap: () => Navigator.of(context)
+                                        .pushNamed('/StudentAttendance'),
+                                    child: Column(
+                                      children: [
+                                        Image(
+                                            width: 50,
+                                            height: 50,
+                                            image: AssetImage(
+                                                "assets/images/ico_attendance.png")),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Text(
+                                          "Attendance",
+                                          style: TextStyle(
+                                              fontSize: 11.0,
+                                              color: Colors.black,
+                                              //letterSpacing: 2.0,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
+                                    )),
+                              ),
+                              Container(
+                                width: 90.0,
+                                child: InkWell(
+                                    onTap: () => Navigator.of(context)
+                                        .pushNamed('/MFPTopup'),
+                                    child: Column(
+                                      children: [
+                                        Image(
+                                            width: 50,
+                                            height: 50,
+                                            image: AssetImage(
+                                                "assets/images/ico_top_up.png")),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Text(
+                                          "Topup",
+                                          style: TextStyle(
+                                              fontSize: 11.0,
+                                              color: Colors.black,
+                                              //letterSpacing: 2.0,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
+                                    )),
+                              ),
+                              Container(
+                                width: 90.0,
+                                child: InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => HolidayCalendar(
+                                                  new RandomColorModel()
+                                                      ._getCalendarDataSource())));
+                                    },
+                                    child: Column(
+                                      children: [
+                                        Image(
+                                            width: 50,
+                                            height: 50,
+                                            image: AssetImage(
+                                                "assets/images/ico_schoolattendance.png")),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Text(
+                                          "Calender",
+                                          style: TextStyle(
+                                              fontSize: 11.0,
+                                              color: Colors.black,
+                                              //letterSpacing: 2.0,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
+                                    )),
+                              ),
+                            ],
                           ),
                         ),
-                       Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                          ),
-                          borderOnForeground: true,
-                          margin: EdgeInsets.only(left: 20,right: 20,bottom: 20),
-                          child: Container(
-                            margin: EdgeInsets.all(10),
-                            child: Column(
-                              children: [
-                                Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Container(
-                                      padding: EdgeInsets.only(
-                                          left: 10.0, top: 10.0, bottom: 10.0),
-                                      margin: EdgeInsets.zero,
-                                      width: double.infinity,
-                                      color: Colors.transparent,
-                                      child: Text(
-                                        "OUTSTANDING",
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                ),
-                                Column(
-                                  children: <Widget>[
-                                    Container(
-                                      width: double.infinity,
-                                      margin: EdgeInsets.zero,
-                                      padding: EdgeInsets.zero,
-                                      child: ListView.builder(
-                                          padding: EdgeInsets.zero,
-                                          shrinkWrap: true,
-                                          physics: NeverScrollableScrollPhysics(
-                                              parent:
-                                                  AlwaysScrollableScrollPhysics()),
-                                          itemCount:
-                                              widget.outstandingList.length,
-                                          itemBuilder: (BuildContext context,
-                                              int index) {
-                                            return userList(context, index,
-                                                widget.outstandingList);
-                                          }),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
+                      ),
+                      Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                        borderOnForeground: true,
+                        margin:
+                            EdgeInsets.only(left: 20, right: 20, bottom: 20),
+                        child: Container(
+                          margin: EdgeInsets.all(10),
+                          child: Column(
+                            children: [
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Container(
+                                    padding: EdgeInsets.only(
+                                        left: 10.0, top: 10.0, bottom: 10.0),
+                                    margin: EdgeInsets.zero,
+                                    width: double.infinity,
+                                    color: Colors.transparent,
+                                    child: Text(
+                                      "OUTSTANDING",
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
+                                    )),
+                              ),
+                              Column(
+                                children: <Widget>[
+                                  Container(
+                                    width: double.infinity,
+                                    margin: EdgeInsets.zero,
+                                    padding: EdgeInsets.zero,
+                                    child: ListView.builder(
+                                        padding: EdgeInsets.zero,
+                                        shrinkWrap: true,
+                                        physics: NeverScrollableScrollPhysics(
+                                            parent:
+                                                AlwaysScrollableScrollPhysics()),
+                                        itemCount:
+                                            widget.outstandingList.length,
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
+                                          return userList(context, index,
+                                              widget.outstandingList);
+                                        }),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                         ),
-                        /* Align(
+                      ),
+                      /* Align(
                           alignment: Alignment.centerLeft,
                           child: Container(
                               padding: EdgeInsets.only(
@@ -723,50 +734,50 @@ class _HomePageState extends State<HomePage> {
                                     fontSize: 16, fontWeight: FontWeight.bold),
                               )),
                         ), */
-                        Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                          ),
-                          borderOnForeground: true,
-                          margin: EdgeInsets.only(left: 20, right: 20),
-                          child: Container(
-                            margin: EdgeInsets.all(10),
-                            child: Column(children: [
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: InkWell(
-                                  child: Container(
-                                      padding: EdgeInsets.only(
-                                          left: 10.0,
-                                          top: 10.0,
-                                          bottom: 10.0,
-                                          right: 20),
-                                      width: double.infinity,
-                                      color: Colors.transparent,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            "STORE ITEM(S)",
-                                            style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          Icon(storeCollapse
-                                              ? Icons.arrow_drop_down
-                                              : Icons.arrow_drop_up)
-                                        ],
-                                      )),
-                                  onTap: () {
-                                    storeCollapse = !storeCollapse;
-                                    setState(() {});
-                                  },
-                                ),
+                      Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                        borderOnForeground: true,
+                        margin: EdgeInsets.only(left: 20, right: 20),
+                        child: Container(
+                          margin: EdgeInsets.all(10),
+                          child: Column(children: [
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: InkWell(
+                                child: Container(
+                                    padding: EdgeInsets.only(
+                                        left: 10.0,
+                                        top: 10.0,
+                                        bottom: 10.0,
+                                        right: 20),
+                                    width: double.infinity,
+                                    color: Colors.transparent,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          "STORE ITEM(S)",
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Icon(storeCollapse
+                                            ? Icons.arrow_drop_down
+                                            : Icons.arrow_drop_up)
+                                      ],
+                                    )),
+                                onTap: () {
+                                  storeCollapse = !storeCollapse;
+                                  setState(() {});
+                                },
                               ),
-                              if (storeCollapse)
-                                StoreItemListView(widget.storeItem),
-                              /* Align(
+                            ),
+                            if (storeCollapse)
+                              StoreItemListView(widget.storeItem),
+                            /* Align(
                       alignment: Alignment.centerLeft,
                       child: InkWell(
                         child: Container(
@@ -870,15 +881,15 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     if (purchaseCollapse) PurchaseListView(widget.purchaseList), */
-                            ]),
-                          ),
+                          ]),
                         ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    /* Column(
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  /* Column(
                   children: <Widget>[
                     Align(
                       alignment: Alignment.centerLeft,
@@ -959,12 +970,9 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
                */
-                  ],
-                )
-                )
-                )
-                ),
-                ); 
+                ],
+              )))),
+    );
   }
 }
 

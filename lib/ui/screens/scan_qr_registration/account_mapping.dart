@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:calms_parent_latest/main.dart';
 
+import '../../../common/crypto_enc.dart';
 import '/common/app_settings.dart';
 import '/common/my_shared_pref.dart';
 import '/common/util/linked_checkbox.dart';
@@ -18,7 +19,8 @@ class AccountMapping extends StatefulWidget {
       required this.dataResponseModel,
       required this.baseUrl,
       required this.decryptdata,
-      required this.DeviceId, required this.DevicePlatform})
+      required this.DeviceId,
+      required this.DevicePlatform})
       : super(key: key);
   // Declare a field that holds the Todo.
   final Map<String, dynamic> dataResponseModel;
@@ -428,7 +430,8 @@ class _AccountMappingState extends State<AccountMapping> {
     ]));
   }
 
-  _onButtonPressed(context, dataResponseModel, decryptdata, DeviceId, DevicePlatform) async {
+  _onButtonPressed(
+      context, dataResponseModel, decryptdata, DeviceId, DevicePlatform) async {
     print(dataResponseModel);
     print(decryptdata);
     print("DeviceId " + DeviceId);
@@ -452,7 +455,37 @@ class _AccountMappingState extends State<AccountMapping> {
         .saveData(jsonEncode(parentDetails), AppSettings.parentDetails); */
 
     Map<String, dynamic> qrJson = jsonDecode(decryptdata);
+    /*  {
+"Data":{
+"Authorize":{"AuMAppDevSeqId":"0L1yJ8WKCFjSLrRTvuyOCQ==","AuDeviceUID":"","Token":"","AuRefUserSeqId":""},
+"ParamData":{"MAppDevSeqId":"453","DeviceUID":"1234567890","DevicePlatform":"And","DeviceDetails":"verison 9","FCMToken":"","ForceToUpdate":"0"}
+}
+} */
+    var paramData = {
+      "MAppDevSeqId": qrJson['MAppSeqId'],
+      "DeviceUID": DeviceId,
+      "DevicePlatform": DevicePlatform,
+      "DeviceDetails": "1",
+      "FCMToken": FCMToken,
+      "ForceToUpdate": 0
+    };
+    String encParamData = CryptoEncryption(dataResponseModel['SecureKey'])
+        .encryptMyData(json.encode(paramData));
+    var payload = { 
+        "Authorize": {
+          "AuMAppDevSeqId": qrJson['MAppSeqId'],
+          "AuDeviceUID": "",
+          "Token": "",
+          "AuRefUserSeqId": ""
+        },
+        "ParamData": encParamData
+    };
+    print("Payload == > " + payload.toString());
+    String encData = CryptoEncryption(AppSettings.commonCryptoKey).encryptMyData(json.encode(payload));
     var data = {
+      "Data":encData
+    };
+    /* var data = {
       'MAppDevSeqId': qrJson['MAppSeqId'],
       'RefUserSeqId': dataResponseModel['RefUserSeqId'],
       'DeviceUID': DeviceId,
@@ -461,13 +494,13 @@ class _AccountMappingState extends State<AccountMapping> {
       'FCMToken': FCMToken,
       'ForceToUpdate': 0
     };
-    print(data);
-    Future<Map<String, dynamic>> res = RestApiProvider().postData(data,
+    print(data); */
+    Future<Map<String, dynamic>> res = RestApiProvider().postNewData(data,
         qrJson["ApiUrl"], AppSettings.RegisterParentApp, context, true, false);
     res
         .then((value) => {
               successResponse(
-                  value, decryptdata, data, qrJson["ApiUrl"], dataResponseModel)
+                  value, decryptdata, data, qrJson["ApiUrl"], dataResponseModel,DeviceId)
             })
         .onError((error, stackTrace) => {responseError(error)});
   }
@@ -482,7 +515,7 @@ class _AccountMappingState extends State<AccountMapping> {
   }
 
   successResponse(
-      Map<String, dynamic> res, decryptdata, inputData, ApiUrl, profileData) {
+      Map<String, dynamic> res, decryptdata, inputData, ApiUrl, profileData,DeviceId) {
     print(res);
     if (res['Table'][0]['code'] == 10) {
       MyCustomAlertDialog().showToast(context, res['Table'][0]['description']);
@@ -490,16 +523,19 @@ class _AccountMappingState extends State<AccountMapping> {
       MySharedPref().saveData(decryptdata, AppSettings.qrCodeData);
       MySharedPref().saveData(
           AppSettings.appType_Notification, AppSettings.Sp_Key_AppType);
+          MySharedPref().saveData(res['Table1'][0]['Token'], AppSettings.Sp_Token);
+          MySharedPref().saveBooleanData(false, AppSettings.Sp_App_Verified);
+          MySharedPref().saveData(DeviceId, AppSettings.Sp_DeviceId);
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => CreatePin()));
     } else if (res['Table'][0]['code'] == 40) {
       showAlert(context, res['Table'][0]['description'], inputData, decryptdata,
-          ApiUrl, profileData);
+          ApiUrl, profileData,DeviceId);
     }
   }
 
   showAlert(BuildContext buildContext, msg, inputData, decryptdata, ApiUrl,
-      profileData) {
+      profileData,DeviceId) {
     MyCustomAlertDialog().showCustomAlert(context, "Confirmation", msg, false,
         () {
       Navigator.pop(context);
@@ -511,7 +547,7 @@ class _AccountMappingState extends State<AccountMapping> {
       res
           .then((value) => {
                 successResponse(
-                    value, decryptdata, inputData, ApiUrl, profileData)
+                    value, decryptdata, inputData, ApiUrl, profileData,DeviceId)
               })
           .onError((error, stackTrace) => {responseError(error)});
     }, () {

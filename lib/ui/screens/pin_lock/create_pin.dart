@@ -48,9 +48,7 @@ class _CreatePinState extends State<CreatePin> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               InkWell(
-                onTap: () {
-                  
-                },
+                onTap: () {},
                 child: Image(
                   width: 50,
                   height: 50,
@@ -254,7 +252,7 @@ class _CreatePinState extends State<CreatePin> {
                                   ? _onButtonPressed
                                   : null,
                               style: ElevatedButton.styleFrom(
-                                elevation:10,
+                                elevation: 10,
                                 shadowColor: Colors.black,
                                 backgroundColor:
                                     Color.fromARGB(255, 6, 105, 199),
@@ -273,14 +271,21 @@ class _CreatePinState extends State<CreatePin> {
     ]));
   }
 
-  _onButtonPressed() {
+  _onButtonPressed() async {
     MySharedPref().saveData(pinController.text, AppSettings.parentAppPIN);
-    if (appType == AppSettings.appType_Notification) {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => MyApp()));
+    bool appVerified =
+        await MySharedPref().getBooleanData(AppSettings.Sp_App_Verified);
+    if (appVerified) {
+      if (appType == AppSettings.appType_Notification) {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => MyApp()));
+      } else {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => MyApp()));
+      }
     } else {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => MyApp()));
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => SplashScreen()));
     }
   }
 

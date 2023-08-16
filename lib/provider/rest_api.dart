@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import '../common/crypto_enc.dart';
 import '/common/alert_dialog.dart';
 import '/common/app_settings.dart';
 import '/common/my_shared_pref.dart';
@@ -208,6 +209,7 @@ class RestApiProvider {
   Future<Map<String, dynamic>> postData(
       data, apiURL, endPoint, context, showProgress, allowAuth) async {
     apiURL = apiURL + endPoint;
+   
     ProgressDialog _progressDialog = ProgressDialog(context: context);
     if (showProgress) {
       _progressDialog.show(max: 100, msg: 'Loading...please wait...');
@@ -259,6 +261,91 @@ class RestApiProvider {
           }
         } else {
           throw Exception('Something went wrong.');
+        }
+      } else {
+        // If the server did not return a 201 CREATED response,
+        // then throw an exception.
+        if (showProgress) {
+          _progressDialog.close();
+        }
+        throw Exception('Something went wrong.');
+      }
+    } else {
+      if (showProgress) {
+        _progressDialog.close();
+      }
+      throw Exception('Failed to connect network.');
+    }
+  }
+
+  Future<Map<String, dynamic>> postNewData(
+      data, apiURL, endPoint, context, showProgress, allowAuth) async {
+    apiURL = apiURL + endPoint;
+    if (endPoint == AppSettings.GetQRInfo) {
+      data = json.encode(data);
+      data = CryptoEncryption(AppSettings.commonCryptoKey).encryptMyData(data);
+      print("Encrypted data= " + data);
+      print("Decrypted data= " + CryptoEncryption(AppSettings.commonCryptoKey).decryption(data));
+
+      data = {"Data": data};
+    }
+    ProgressDialog _progressDialog = ProgressDialog(context: context);
+    if (showProgress) {
+      _progressDialog.show(max: 100, msg: 'Loading...please wait...');
+    }
+    bool isConnected = false;
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile) {
+      // I am connected to a mobile network.
+      isConnected = true;
+    } else if (connectivityResult == ConnectivityResult.wifi) {
+      // I am connected to a wifi network.
+      isConnected = true;
+    }
+    String body = json.encode(data);
+
+    if (isConnected) {
+      final response = await http.post(
+        Uri.parse(apiURL),
+        headers: {"Content-Type": "application/json"},
+        body: body,
+      );
+      if (response.statusCode == 200) {
+        // If the server did return a 201 CREATED response,
+        // then parse the JSON.
+        if (showProgress) {
+          _progressDialog.close();
+        }
+        //var jsonData = json.decode(response.body);
+        //Map<String, dynamic> map = jsonDecode(jsonData[0]['Data']);
+
+        //List<dynamic> qrJson = jsonDecode(response.body) as List;
+        //if (qrJson.length > 0 && qrJson[0]['Data'] != null) {
+        Map<String, dynamic> res = jsonDecode(response.body);
+        print(res['Data']);
+        if (res['Status']) {
+          if (res['Data'].containsKey("Table")) {
+            List<dynamic> tableList = res['Data']['Table'];
+            Map<String, dynamic> tableObj = tableList[0];
+            if (tableObj['code'] == 10 || tableObj['Code'] == 10 || tableObj['code'] == 50) {
+              return Future<Map<String, dynamic>>.value(res['Data']);
+            } else if (endPoint == AppSettings.RegisterParentApp &&
+                    tableObj['code'] == 40 ||
+                tableObj['Code'] == 40) {
+              return Future<Map<String, dynamic>>.value(res['Data']);
+            } else {
+              print("failed ${tableObj['code'] || tableObj['Code']} ");
+
+              return throw Exception(tableObj['description']);
+            }
+          } else {
+            throw Exception('Something went wrong.');
+          }
+        } else {
+          if (res['ErrorLog'][0]['Error'] != null)
+            throw Exception(res['ErrorLog'][0]['Error']);
+          else
+            throw Exception('Something went wrong.');
         }
       } else {
         // If the server did not return a 201 CREATED response,

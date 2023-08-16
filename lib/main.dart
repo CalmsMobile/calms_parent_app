@@ -1,4 +1,9 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:developer';
+import 'dart:math';
+
+import 'package:calms_parent_latest/provider/rest_api.dart';
 
 import '/common/app_settings.dart';
 import '/common/constants.dart';
@@ -27,6 +32,8 @@ import '/ui/screens/notifications/notification-view/notification-view.dart';
 import '/ui/screens/notifications/notifications.dart';
 import '/ui/screens/parent_pickup/parent_pickup.dart';
 import '/ui/screens/pin_lock/pin_enter.dart';
+import 'common/alert_dialog.dart';
+import 'common/crypto_enc.dart';
 import 'ui/screens/pin_lock/create_pin.dart';
 import '/ui/screens/profile/ProfilePage.dart';
 import '/ui/screens/profile/profile_main.dart';
@@ -351,41 +358,64 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  String profileData = "";
+  String token = "";
+  String DeviceId = "";
+  bool appVerified = false;
+  String appPIN = "";
+  String qrCodeData = "";
+  String appType = "";
+  var verificationPayload = {};
   Future<void> routingScreen() async {
-    String profileData = await MySharedPref().getData(AppSettings.profileData);
-
-    String appPIN = await MySharedPref().getData(AppSettings.parentAppPIN);
-    String qrCodeData = await MySharedPref().getData(AppSettings.qrCodeData);
-    String appType = await MySharedPref().getData(AppSettings.Sp_Key_AppType);
+    profileData = await MySharedPref().getData(AppSettings.profileData);
+    token = await MySharedPref().getData(AppSettings.Sp_Token);
+    DeviceId = await MySharedPref().getData(AppSettings.Sp_DeviceId);
+    appVerified =
+        await MySharedPref().getBooleanData(AppSettings.Sp_App_Verified);
+    appPIN = await MySharedPref().getData(AppSettings.parentAppPIN);
+    qrCodeData = await MySharedPref().getData(AppSettings.qrCodeData);
+    appType = await MySharedPref().getData(AppSettings.Sp_Key_AppType);
     print("profileData >> $profileData");
     print("appPIN >> $appPIN");
     print("qrCodeData >> $qrCodeData");
+    print("appVerified >> $appVerified");
+    print("token >> $token");
+    print("DeviceId >> $DeviceId");
     Timer(
         Duration(seconds: 3),
         () => {
-              if (profileData == "")
+              if (token == "" && profileData == "" && qrCodeData == "")
                 {
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) => QRRegistration()))
                 }
-              else if (profileData != "" && appPIN != "")
+              else if (token != "" && profileData != "" && appPIN != "")
                 {
-                  if (kDebugMode)
+                  if (appVerified)
                     {
-                      Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (context) => MyApp()))
+                      if (kDebugMode)
+                        {
+                          Navigator.pushReplacement(context,
+                              MaterialPageRoute(builder: (context) => MyApp()))
+                        }
+                      else
+                        Navigator.pushReplacement(context,
+                            MaterialPageRoute(builder: (context) => PINEnter()))
                     }
                   else
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => PINEnter()))
+                    {
+                      verifySignIn(
+                          context, qrCodeData, profileData, token, DeviceId)
+                    }
                 }
-              else if (profileData != "" && appPIN == "")
+              else if (token != "" && profileData != "" && appPIN == "")
                 {
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) => CreatePin()))
                 }
-              else
+              /* else
                 {
+                  
                   if (appType == AppSettings.appType_Notification)
                     {
                       Navigator.pushReplacement(context,
@@ -396,8 +426,85 @@ class _SplashScreenState extends State<SplashScreen> {
                       Navigator.pushReplacement(context,
                           MaterialPageRoute(builder: (context) => MyApp()))
                     }
-                }
+                } */
             });
+  }
+
+  verifySignIn(context, qrCodeData, profileData, token, DeviceId) {
+    Map<String, dynamic> qrJson = jsonDecode(qrCodeData);
+    Map<String, dynamic> profileDataJson = jsonDecode(profileData);
+    print("qrJson test " + qrJson['MAppSeqId']);
+    var Authorize = {
+      "AuMAppDevSeqId": qrJson['MAppSeqId'],
+      "AuDeviceUID": DeviceId,
+      "Token": token
+    };
+    var paramData = {"MAppDevSeqId": qrJson['MAppSeqId']};
+    String encParamData = CryptoEncryption(profileDataJson['SecureKey'])
+        .encryptMyData(json.encode(paramData));
+    var payload = {"Authorize": Authorize, "ParamData": encParamData};
+    print("Payload == > " + payload.toString());
+    String encData = CryptoEncryption(AppSettings.commonCryptoKey)
+        .encryptMyData(json.encode(payload));
+    verificationPayload = {"Data": encData};
+    print(verificationPayload);
+    Future<Map<String, dynamic>> res = RestApiProvider().postNewData(
+        verificationPayload,
+        qrJson["ApiUrl"],
+        AppSettings.AppSignIn,
+        context,
+        true,
+        false);
+    res
+        .then((value) => {
+              verificationResponse(
+                  value, context, qrCodeData, profileData, token, DeviceId)
+            })
+        .onError((error, stackTrace) => {});
+  }
+
+  verificationResponse(Map<String, dynamic> res, context, decryptdata,
+      profileData, token, DeviceId) {
+    if (res['Table'][0]['code'] == 10) {
+      MySharedPref().saveBooleanData(true, AppSettings.Sp_App_Verified);
+      if (kDebugMode) {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => MyApp()));
+      } else
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => PINEnter()));
+    } else if (res['Table'][0]['code'] == 50) {
+      MySharedPref().saveBooleanData(false, AppSettings.Sp_App_Verified);
+      MyCustomAlertDialog().showVerificationAlert(context, "Alert!",
+          res['Table'][0]['description'], false, verifyAgain, resend);
+    }
+  }
+
+  verifyAgain() {
+    print("verifyAgain");
+    verifySignIn(context, qrCodeData, profileData, token, DeviceId);
+  }
+
+  resend() {
+    Map<String, dynamic> qrJson = jsonDecode(qrCodeData);
+    Future<Map<String, dynamic>> res = RestApiProvider().postNewData(
+        verificationPayload,
+        qrJson["ApiUrl"],
+        AppSettings.ReSendVerifyEmail,
+        context,
+        true,
+        false);
+    res
+        .then((value) => {resendSuccess(value)})
+        .onError((error, stackTrace) => {});
+  }
+
+  resendSuccess(Map<String, dynamic> res) {
+      MyCustomAlertDialog()
+        .showCustomAlert(context, "Notification",  res['Table'][0]['description'], true, () {
+      Navigator.pop(context);
+      verifyAgain();
+    }, null);
   }
 
   void enterFullScreen(FullScreenMode fullScreenMode) async {

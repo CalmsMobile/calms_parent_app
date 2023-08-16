@@ -57,15 +57,15 @@ class _QRRegistrationState extends State<QRRegistration> {
         print("QR: start");
         //store tester account - 1001
         //var qrdata = "D5qpk1C3xkIxgAIPyzivIXAY1+BrXWHUlQKXDwvQA+a0ENSxKwKvGgdAg7wsIh62QJIMYRk74tBLpCytINKDGfH2IgcCp08LVhD6OEkWBFBWCoLHBsv0C2RptNGLGIp0R8+Jzsh612VXMk+kLirn+JgMg/p9/ZDM2TAjzGQaETHhUuOUptJYcbOQAYPXZRgb";
-        //nizam-parent - 1001
+        //nizam-parent - rnd
         var qrdata =
-            "D5qpk1C3xkIxgAIPyzivIXAY1+BrXWHUlQKXDwvQA+bDSlcRYT++9jkBc++WhCMLlHliyDX7ppYiygJ+gN94NDBG1W7+q8OOX6TZKZTvIjECyu9ZcCovTwEWh3q39Z2wAmzK51kYhq6YM8R8ovVz658SNGlkpfc1EeauaMQveTgX2oZR+2ukF0Fy+uO0XqTJ";
+            "D5qpk1C3xkIxgAIPyzivIXAY1+BrXWHUlQKXDwvQA+YDCq3ZKz2ctrqZBVSRFc5dbHg+7ZKbpZlMkh8NNQatNf83hsXcToACqmlZ+8Tlabb0D0cC211BmzymayoQ3yB9E2U0E7NfkX/TdTmQJdBhG5DFY0LKgT1iYiGytP6PWP4EQbAa+rn7FQx+kyNHA82z";
         //nizam-parent - 2008
         // var qrdata = "D5qpk1C3xkIxgAIPyzivIXAY1+BrXWHUlQKXDwvQA+bKsLCI7GP2EMDb8/1tHG/vkPFFxV/ebxiJkiU/wVqVOC7dkd76icciFv3SgUJiIBCpdQ2oQIgBdXE0rSyFVEfiCAA9rSZ9QBMCONEr18fv7Q==";
         //var qrdata = "D5qpk1C3xkIxgAIPyzivIXAY1+BrXWHUlQKXDwvQA+bKsLCI7GP2EMDb8/1tHG/vkPFFxV/ebxiJkiU/wVqVOC7dkd76icciFv3SgUJiIBCpdQ2oQIgBdXE0rSyFVEfiCAA9rSZ9QBMCONEr18fv7Q==";
         /*  DECRYPT: {"MAppId":"PARENTAPP","MAppSeqId":"106","RefUserSeqId":"100004","RefBranchSeqId":"11001","ApiUrl":""}
 js_primitives.dart:30 {MAppDevSeqId: 106} */
-
+        // qrdata ="D5qpk1C3xkIxgAIPyzivIXAY1+BrXWHUlQKXDwvQA+adrrhq0g3nvj3JeZ84JEqfdmMP7QHPtWgIVGBvita/v0pMqyQadCbws1wx4G6khHxrjJ2tlmJcGlUKWo0lnjpyU3XhnsQeYjLgb93luli+oPzUaEQJvhIL2JJh4xmaYZYN+4S/GjPGoj0ZL7Z8yPxj";
         processQRCode(qrdata);
       }
       // String inputdata =
@@ -95,17 +95,23 @@ js_primitives.dart:30 {MAppDevSeqId: 106} */
     if (qrCodeResult == "") {
       qrCodeResult = qrData;
       print("qrCodeResult inside >> $qrCodeResult  >> $qrData");
-      String decryptdata = CryptoEncryption().decryption(qrData);
+      String decryptdata =
+          CryptoEncryption(AppSettings.commonCryptoKey).decryption(qrData);
       if (kDebugMode) {
         print("DECRYPT: " + decryptdata);
         //decryptdata ='{"MAppId":"PARENTAPP","MAppSeqId":"447","ApiUrl":"http://103.6.163.49:1001/api/","LocalApiUrl":"http://103.6.163.49:1001/api/"}';
       }
       if (decryptdata != "") {
         Map<String, dynamic> qrJson = jsonDecode(decryptdata);
-        var data = {'MAppDevSeqId': qrJson["MAppSeqId"]};
-        print(data);
+        //var MAppDevSeqId = {'MAppDevSeqId': qrJson["MAppDevSeqId"]};
+        //qrJson['MAppSeqId'] = '0L1yJ8WKCFjSLrRTvuyOCQ==';
+        var data = {
+          "Authorize": null,
+          "Param": {"MAppDevSeqId": qrJson["MAppSeqId"]}
+        };
+
         if (qrJson['MAppId'] == "PARENTAPP") {
-          Future<Map<String, dynamic>> res = RestApiProvider().postData(data,
+          Future<Map<String, dynamic>> res = RestApiProvider().postNewData(data,
               qrJson["ApiUrl"], AppSettings.GetQRInfo, context, true, false);
           res
               .then((value) =>
@@ -139,7 +145,7 @@ js_primitives.dart:30 {MAppDevSeqId: 106} */
 
   void handleApiResponse(
       Map<String, dynamic> response, decryptdata, String baseUrl) async {
-    //print('response >>' + jsonEncode(response));
+    print('response >>' + jsonEncode(response));
     if (response.containsKey("code") && response['code'] > 10) {
       print("Error in response");
       MyCustomAlertDialog().showCustomAlert(

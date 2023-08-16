@@ -1,10 +1,16 @@
 import 'package:encrypt/encrypt.dart' as enc;
 
 class CryptoEncryption {
-  final key = enc.Key.fromUtf8('qweqweqweqweqweq'); //32 chars
-  final iv = enc.IV.fromUtf8('qweqweqweqweqweq'); //16 chars
+  String secureKey;
+  CryptoEncryption(this.secureKey);
+
+//CryptoEncryption(this.secureKey);
 
   String encryptMyData(String text) {
+    print("secureKey = " + this.secureKey);
+    print("text = " + text);
+    final key = enc.Key.fromUtf8(this.secureKey); //32 chars
+    final iv = enc.IV.fromUtf8(this.secureKey); //16 chars
     final e =
         enc.Encrypter(enc.AES(key, mode: enc.AESMode.cbc, padding: 'PKCS7'));
     final encryptedData = e.encrypt(text, iv: iv);
@@ -12,6 +18,8 @@ class CryptoEncryption {
   }
 
   String decryption(String plainText) {
+    final key = enc.Key.fromUtf8(this.secureKey); //32 chars
+    final iv = enc.IV.fromUtf8(this.secureKey); //16 chars
     try {
       final encrypter =
           enc.Encrypter(enc.AES(key, mode: enc.AESMode.cbc, padding: 'PKCS7'));

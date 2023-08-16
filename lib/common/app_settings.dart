@@ -18,6 +18,9 @@ class AppSettings {
   static String fcmId = 'CPA_FCM_ID';
   static String refTripTransHeaderSeqId = 'CPA_TRIP_TRANS_HEADER_SEQ_ID';
   static String driverLastLoggedIn = 'CPA_DRIVER_LAST_LOGGED_IN';
+  static String Sp_Token = 'CPA_TOKEN';
+  static String Sp_App_Verified = 'CPA_APP_VERIFIED';
+  static String Sp_DeviceId = 'CPA_DEVICEID';
   static String tripDropOffStudentStatusList =
       'CPA_DROPOFF_STUDENT_STATUS_LIST';
   static String apiURL = 'http://124.217.235.107:1001/api/';
@@ -33,6 +36,9 @@ class AppSettings {
   static String GetNotificationListWithFilter =
       'ParentApp/GetNotificationListWithFilter';
   static String RemovePushNotification = 'ParentApp/RemovePushNotification';
+  static String AppSignIn = 'parentapp/AppSignIn';
+  static String ReSendVerifyEmail = 'parentapp/ReSendVerifyEmail';
+  static String EntryToDashboard = 'parentapp/EntryToDashboard';
 
   static String avatarPlaceholder =
       "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png";
@@ -40,5 +46,9 @@ class AppSettings {
       'BIEVELZisr_SbfStZljlwA4SKRuQU5N7o_8ylvJ_GJs5RvYKGLEX-iAQlyu7EWyIIEY3KDPGEzADra__rbMQLak';
 
   static String appType_Notification = "NOTIFICATION";
+
+  static String commonCryptoKey = "qweqweqweqweqweq";
   // static String appType_Notification = "NOTIFICATION";
+
+  static String verificationAlertMsg = "Verification link sent to your email. Please verify to access this application. If you have not received the link, Click 'Resend' below to send a verification email again.";
 }
