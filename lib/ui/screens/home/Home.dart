@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:core';
 import 'dart:html';
 import 'dart:math';
 import 'package:calms_parent_latest/common/app_settings.dart';
@@ -277,12 +278,14 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   bool topupCollapse = true;
   bool purchaseCollapse = true;
   bool storeCollapse = true;
   bool activitiesCollapse = true;
   CalendarController _controller = CalendarController();
+  late AnimationController controller;
+  String imgBaseUrl = "";
   List<Appointment> _appointmentDetails = <Appointment>[];
 
   void calendarTapped(CalendarTapDetails calendarTapDetails) {
@@ -294,17 +297,38 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  Future<void> CheckAppVerificationStatus() async {
-    bool isAppVerified =
-        await MySharedPref().getBooleanData(AppSettings.Sp_App_Verified);
-    if (!isAppVerified) print("App not verified");
+  Future<void> getLocalData() async {
+    imgBaseUrl = await MySharedPref().getData(AppSettings.Sp_Img_Base_Url);
   }
 
   @override
   void initState() {
     // TODO: implement initState
+    controller = AnimationController(
+      /// [AnimationController]s can be created with `vsync: this` because of
+      /// [TickerProviderStateMixin].
+      vsync: this,
+      duration: const Duration(seconds: 5),
+    )..addListener(() {
+        setState(() {});
+      });
+    controller.repeat(reverse: true);
     super.initState();
-    //CheckAppVerificationStatus();
+    getLocalData();
+  }
+
+  String getInitials(name) {
+    List<String> names = name.split(" ");
+    String initials = "";
+    int numWords = 2;
+
+    if (numWords < names.length) {
+      numWords = names.length;
+    }
+    for (var i = 0; i < numWords; i++) {
+      initials += '${names[i][0]}';
+    }
+    return initials;
   }
 
   @override
@@ -443,10 +467,28 @@ class _HomePageState extends State<HomePage> {
                                                       item["Name"])
                                                   ? 92
                                                   : 62,
-                                              child: CircleAvatar(
-                                                backgroundImage: NetworkImage(
-                                                    item["ImgPathUrl"]),
-                                              ),
+                                              child: item['UserImgPath'] != null
+                                                  ? CircleAvatar(
+                                                      backgroundImage:
+                                                          NetworkImage(imgBaseUrl +
+                                                              item[
+                                                                  "UserImgPath"]),
+                                                    )
+                                                  : CircleAvatar(
+                                                      backgroundColor:
+                                                          Colors.blue[700],
+                                                      child: Text(
+                                                        getInitials(
+                                                            item['Name']),
+                                                        style: TextStyle(
+                                                            fontSize: 22.0,
+                                                            color: Colors.white,
+                                                            letterSpacing: 2.0,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w900),
+                                                      ),
+                                                    ),
                                               decoration: BoxDecoration(
                                                 //DecprationImage
                                                 border: Border.all(

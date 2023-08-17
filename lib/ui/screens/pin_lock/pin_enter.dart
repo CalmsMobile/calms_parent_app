@@ -244,17 +244,17 @@ class _PINEnterState extends State<PINEnter> {
                       setState(() {});
                       if (enteredPIN.length == 6) {
                         if (appPIN == enteredPIN) {
-                          if (appType == AppSettings.appType_Notification) {
+                          /* if (appType == AppSettings.appType_Notification) {
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => Notifications()));
-                          } else {
+                          } else { */
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => MyApp()));
-                          }
+                          //}
                         } else {
                           MyCustomAlertDialog()
                               .showToast(context, "Wrong PIN entered");

@@ -28,6 +28,10 @@ class _CreatePinState extends State<CreatePin> {
   initValues() async {
     appType = await MySharedPref().getData(AppSettings.Sp_Key_AppType);
     print(appType);
+    String auth =
+        await MySharedPref().getData(AppSettings.Sp_Payload_Authorize);
+    String apiUrl = await MySharedPref().getData(AppSettings.Sp_Api_Url);
+    print(apiUrl);
   }
 
   @override

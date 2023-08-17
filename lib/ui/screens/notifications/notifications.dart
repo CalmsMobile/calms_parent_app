@@ -76,14 +76,14 @@ class _NotificationsState extends State<Notifications> {
   }
 
   Future<void> initValues() async {
-    profileData = await MySharedPref().getData(AppSettings.profileData);
+    profileData = await MySharedPref().getData(AppSettings.Sp_ProfileData);
 
     if (profileData != "") {
       //var profileData = jsonDecode(profileData);
       //profileData_ = jsonDecode(profileData["Table1"][0]["SettingDetail"]);
       //print(profileData_);
 
-      qrData = await MySharedPref().getData(AppSettings.qrCodeData);
+      qrData = await MySharedPref().getData(AppSettings.Sp_QrCodeData);
       qrJson = jsonDecode(qrData);
       apiURL = qrJson['ApiUrl'];
       imgBaseUrl = apiURL.replaceAll("/api/", "/FS/");

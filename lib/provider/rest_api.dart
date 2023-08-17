@@ -59,7 +59,7 @@ class RestApiProvider {
     };
     print("Param: $data >> API:  $apiURL >> endPoint:  $endPoint");
     if (apiURL == null || apiURL == '') {
-      String qrData = await MySharedPref().getData(AppSettings.qrCodeData);
+      String qrData = await MySharedPref().getData(AppSettings.Sp_QrCodeData);
       Map<String, dynamic> qrJson = jsonDecode(qrData);
       apiURL = qrJson['ApiUrl'];
     }
@@ -332,6 +332,84 @@ class RestApiProvider {
             } else if (endPoint == AppSettings.RegisterParentApp &&
                     tableObj['code'] == 40 ||
                 tableObj['Code'] == 40) {
+              return Future<Map<String, dynamic>>.value(res['Data']);
+            } else {
+              print("failed ${tableObj['code'] || tableObj['Code']} ");
+
+              return throw Exception(tableObj['description']);
+            }
+          } else {
+            throw Exception('Something went wrong.');
+          }
+        } else {
+          if (res['ErrorLog'][0]['Error'] != null)
+            throw Exception(res['ErrorLog'][0]['Error']);
+          else
+            throw Exception('Something went wrong.');
+        }
+      } else {
+        // If the server did not return a 201 CREATED response,
+        // then throw an exception.
+        if (showProgress) {
+          _progressDialog.close();
+        }
+        throw Exception('Something went wrong.');
+      }
+    } else {
+      if (showProgress) {
+        _progressDialog.close();
+      }
+      throw Exception('Failed to connect network.');
+    }
+  }
+
+ Future<Map<String, dynamic>> authorizedPostRequest(
+      ParamData, endPoint, context, showProgress) async {
+      String apiURL = await MySharedPref().getData(AppSettings.Sp_Api_Url);
+      String secureKey = await MySharedPref().getData(AppSettings.Sp_SecureKey);
+      String auth = await MySharedPref().getData(AppSettings.Sp_Payload_Authorize);
+      var Authorize = jsonDecode(auth);
+      ParamData = CryptoEncryption(secureKey).encryptMyData(jsonEncode(ParamData));
+     var payload = {"Authorize": Authorize, "ParamData": ParamData};
+     String encData = CryptoEncryption(AppSettings.commonCryptoKey)
+        .encryptMyData(json.encode(payload));
+     var data = {"Data": encData};
+    
+    ProgressDialog _progressDialog = ProgressDialog(context: context);
+    if (showProgress) {
+      _progressDialog.show(max: 100, msg: 'Loading...please wait...');
+    }
+    bool isConnected = false;
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile) {
+      // I am connected to a mobile network.
+      isConnected = true;
+    } else if (connectivityResult == ConnectivityResult.wifi) {
+      // I am connected to a wifi network.
+      isConnected = true;
+    }
+    String body = json.encode(data);
+
+    if (isConnected) {
+      final response = await http.post(
+        Uri.parse(apiURL+endPoint),
+        headers: {"Content-Type": "application/json"},
+        body: body,
+      );
+      if (response.statusCode == 200) {
+        // If the server did return a 201 CREATED response,
+        // then parse the JSON.
+        if (showProgress) {
+          _progressDialog.close();
+        }
+        
+        Map<String, dynamic> res = jsonDecode(response.body);
+        print(res['Data']);
+        if (res['Status']) {
+          if (res['Data'].containsKey("Table")) {
+            List<dynamic> tableList = res['Data']['Table'];
+            Map<String, dynamic> tableObj = tableList[0];
+            if (tableObj['code'] == 10 || tableObj['Code'] == 10 || tableObj['code'] == 50) {
               return Future<Map<String, dynamic>>.value(res['Data']);
             } else {
               print("failed ${tableObj['code'] || tableObj['Code']} ");

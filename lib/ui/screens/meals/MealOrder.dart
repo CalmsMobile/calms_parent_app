@@ -583,7 +583,74 @@ class _MealOrderState extends State<MealOrder> {
   void initState() {
     super.initState();
     mealList_ = mealList;
-    familyList = JsonResponses.familyList;
+    familyList = [
+    {
+      "RefPaySeqId": 100,
+      "RefUserSeqId": 100141,
+      "Balance": 945.3,
+      "Name": "IzzaizaParent",
+      "PaymodeName": "e Wallet",
+      "FamilyBased": false,
+      "category": "PARENT",
+      "ImgPathUrl":
+          "http://103.6.163.49:2008/FS/Profile\\ResizeImg\\c3e4-e4c2-2021-11-22-12-24-38-445\\20210506_121427.jpg"
+    },
+    {
+      "RefPaySeqId": 100,
+      "RefUserSeqId": 100873,
+      "Balance": 239.8,
+      "Name": "IzzaizaStudent1",
+      "PaymodeName": "e Wallet",
+      "FamilyBased": false,
+      "category": "STUDENT",
+      "ImgPathUrl":
+          "http://103.6.163.49:2008/FS/Profile\\ResizeImg\\77a1-e4c2-2021-11-10-16-31-43-850\\usser icon 1.png"
+    },
+    {
+      "RefPaySeqId": 100,
+      "RefUserSeqId": 100878,
+      "Balance": 115,
+      "Name": "IzzaizaStudent2",
+      "PaymodeName": "e Wallet",
+      "FamilyBased": false,
+      "category": "STUDENT",
+      "ImgPathUrl":
+          "http://103.6.163.49:2008/FS/Profile\\ResizeImg\\5b43-e4c2-2021-11-10-16-31-58-086\\user icon.png"
+    },
+    {
+      "RefPaySeqId": 100,
+      "RefUserSeqId": 101024,
+      "Balance": 37,
+      "Name": "IzzaizaStudent3",
+      "PaymodeName": "e Wallet",
+      "FamilyBased": false,
+      "category": "STUDENT",
+      "ImgPathUrl":
+          "http://103.6.163.49:2008/FS/Profile\\ResizeImg\\f0d4-e4c2-2022-01-20-10-22-33-589\\user icon 3.png"
+    },
+    {
+      "RefPaySeqId": 100,
+      "RefUserSeqId": 101052,
+      "Balance": 50,
+      "Name": "IzzaizaStudent4",
+      "PaymodeName": "e Wallet",
+      "FamilyBased": false,
+      "category": "STUDENT",
+      "ImgPathUrl":
+          "http://103.6.163.49:2008/FS/Profile\\ResizeImg\\6140-e4c2-2022-08-09-10-42-50-140\\user icon 7.png"
+    },
+    {
+      "RefPaySeqId": 100,
+      "RefUserSeqId": 111128,
+      "Balance": 60,
+      "Name": "IzzaizaStudent5",
+      "PaymodeName": "e Wallet",
+      "FamilyBased": false,
+      "category": "STUDENT",
+      "ImgPathUrl":
+          "http://103.6.163.49:2008/FS/Profile\\ResizeImg\\094b-e4c2-2022-08-22-12-33-50-986\\user icon 4.png"
+    },
+  ];
 
     initDates();
   }

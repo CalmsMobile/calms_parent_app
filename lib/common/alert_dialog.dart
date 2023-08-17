@@ -131,7 +131,7 @@ class MyCustomAlertDialog {
                        Navigator.pop(context);
                       _verifyAgain();
                     },
-                    child: Text('Verify'),
+                    child: Text('Verify now'),
                   ),
                 ),
               ),
@@ -146,7 +146,7 @@ class MyCustomAlertDialog {
                        Navigator.pop(context);
                       _reSend();
                     },
-                    child: Text('Resend'),
+                    child: Text('Resend verification email'),
                   ),
                 ),
               )

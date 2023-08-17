@@ -236,8 +236,44 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
-  late TabController tabController;
   String _lastMessage = "";
+  List<Map> familyList = [
+    {
+      "UserSeqId": 106312.0,
+      "Name": "Child 1",
+      "FamilyId": "NZ001",
+      "MemberId": "NZChild1",
+      "Email": "",
+      "ContactNo": "",
+      "RelationShip": "",
+      "Grade": "Master of ",
+      "Year": "PR",
+      "Class": null,
+      "UserImgPath": null,
+      "MemberType": "Student",
+      "Balance": 0.0000,
+      "RefMemberTypeSeqId": 10002.0,
+      "RefBranchSeqId": "11001"
+    },
+    {
+      "UserSeqId": 106118.0,
+      "Name": "Nizam Parent",
+      "FamilyId": "NZ001",
+      "MemberId": "NizamParent",
+      "Email": "nizamcseb@outlook.com",
+      "ContactNo": "",
+      "RelationShip": "Father",
+      "Grade": null,
+      "Year": null,
+      "Class": null,
+      "UserImgPath":
+          "Profile\\ResizeImg\\bd69-e4c2-2023-08-15-17-22-08-605\\2.png",
+      "MemberType": "Parent",
+      "Balance": 0.0000,
+      "RefMemberTypeSeqId": 10003.0,
+      "RefBranchSeqId": "11001"
+    }
+  ];
 
   _MyAppState() {
     // subscribe to the message stream fed by foreground message handler
@@ -255,20 +291,8 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
       });
     });
   }
-  @override
-  void initState() {
-    // Initialise  localnotification
-    // LocalNotificationService.initialize();
 
-    tabController =
-        new TabController(length: tabsList.length, vsync: this, initialIndex: 0)
-          ..addListener(() {
-            setState(() {});
-          });
-    super.initState();
-  }
-
-  int familyPos = 2;
+  int familyPos = 1;
 
   onDidReceiveLocalNotification(
       int id, String title, String body, String payload) {
@@ -301,11 +325,36 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
     });
   }
 
+  Future<void> getDashBoardDetails() async {
+    var ParamData = {
+      "MAppDevSeqId": await MySharedPref().getData(AppSettings.Sp_MAppDevSeqId)
+    };
+    Future<Map<String, dynamic>> res = RestApiProvider().authorizedPostRequest(
+      ParamData,
+      AppSettings.EntryToDashboard,
+      context,
+      true,
+    );
+    res
+        .then((response) => {dashBoardSuccess(response)})
+        .onError((error, stackTrace) => {dashBoardFailed(error)});
+  }
+
+  dashBoardSuccess(Map<String, dynamic> response) {
+    if (response['Table'][0]['code'] == 10 && response['Table1'][0] != null) {
+      familyList = response['Table'];
+    }
+  }
+
+  dashBoardFailed(Object? error) {}
+  @override
+  void initState() {
+    super.initState();
+   // getDashBoardDetails();
+  }
+
   @override
   Widget build(BuildContext context) {
-    // var routes = <String, WidgetBuilder>{
-    //   TopupPage.routeName: (BuildContext context) => new TopupPage(),
-    // };
     return MaterialApp(
       localizationsDelegates: [
         AppLocalizations.delegate,
@@ -317,8 +366,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
         Locale('en', ''), // English, no country code
       ],
       debugShowCheckedModeBanner: false,
-      // home: TabView(tabController, tabsList, familyList, familyPos, pageSwiped),
-      home: HomePage(familyPos, JsonResponses.familyList, pageSwiped),
+      home: HomePage(familyPos, familyList, pageSwiped),
       theme: ThemeData(
         fontFamily: appFontFmaily,
         outlinedButtonTheme: OutlinedButtonThemeData(
@@ -333,22 +381,6 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
     );
   }
 }
-
-// class MyApp extends StatelessWidget {
-//   // This widget is the root of your application.
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'CALMS Parent',
-//       debugShowCheckedModeBanner: false,
-//       theme: ThemeData(
-//         primarySwatch: Colors.blue,
-//         visualDensity: VisualDensity.adaptivePlatformDensity,
-//       ),
-//       home: ProfileUI2(), // calling  profilepage Ui design
-//     );
-//   }
-// }
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -366,14 +398,15 @@ class _SplashScreenState extends State<SplashScreen> {
   String qrCodeData = "";
   String appType = "";
   var verificationPayload = {};
+  var AuthorizePayload = {};
   Future<void> routingScreen() async {
-    profileData = await MySharedPref().getData(AppSettings.profileData);
+    profileData = await MySharedPref().getData(AppSettings.Sp_ProfileData);
     token = await MySharedPref().getData(AppSettings.Sp_Token);
     DeviceId = await MySharedPref().getData(AppSettings.Sp_DeviceId);
     appVerified =
         await MySharedPref().getBooleanData(AppSettings.Sp_App_Verified);
     appPIN = await MySharedPref().getData(AppSettings.parentAppPIN);
-    qrCodeData = await MySharedPref().getData(AppSettings.qrCodeData);
+    qrCodeData = await MySharedPref().getData(AppSettings.Sp_QrCodeData);
     appType = await MySharedPref().getData(AppSettings.Sp_Key_AppType);
     print("profileData >> $profileData");
     print("appPIN >> $appPIN");
@@ -410,23 +443,13 @@ class _SplashScreenState extends State<SplashScreen> {
                 }
               else if (token != "" && profileData != "" && appPIN == "")
                 {
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => CreatePin()))
-                }
-              /* else
-                {
-                  
-                  if (appType == AppSettings.appType_Notification)
-                    {
-                      Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (context) => MyApp()))
-                    }
+                  if (appVerified)
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => CreatePin()))
                   else
-                    {
-                      Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (context) => MyApp()))
-                    }
-                } */
+                    verifySignIn(
+                        context, qrCodeData, profileData, token, DeviceId)
+                }
             });
   }
 
@@ -434,7 +457,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Map<String, dynamic> qrJson = jsonDecode(qrCodeData);
     Map<String, dynamic> profileDataJson = jsonDecode(profileData);
     print("qrJson test " + qrJson['MAppSeqId']);
-    var Authorize = {
+    AuthorizePayload = {
       "AuMAppDevSeqId": qrJson['MAppSeqId'],
       "AuDeviceUID": DeviceId,
       "Token": token
@@ -442,7 +465,7 @@ class _SplashScreenState extends State<SplashScreen> {
     var paramData = {"MAppDevSeqId": qrJson['MAppSeqId']};
     String encParamData = CryptoEncryption(profileDataJson['SecureKey'])
         .encryptMyData(json.encode(paramData));
-    var payload = {"Authorize": Authorize, "ParamData": encParamData};
+    var payload = {"Authorize": AuthorizePayload, "ParamData": encParamData};
     print("Payload == > " + payload.toString());
     String encData = CryptoEncryption(AppSettings.commonCryptoKey)
         .encryptMyData(json.encode(payload));
@@ -457,26 +480,34 @@ class _SplashScreenState extends State<SplashScreen> {
         false);
     res
         .then((value) => {
-              verificationResponse(
-                  value, context, qrCodeData, profileData, token, DeviceId)
+              verificationResponse(value, context, qrJson['ApiUrl'],
+                  profileDataJson['SecureKey'], qrJson['MAppSeqId'])
             })
         .onError((error, stackTrace) => {});
   }
 
-  verificationResponse(Map<String, dynamic> res, context, decryptdata,
-      profileData, token, DeviceId) {
+  verificationResponse(
+      Map<String, dynamic> res, context, apiUrl, secureKey, MAppSeqId) {
     if (res['Table'][0]['code'] == 10) {
       MySharedPref().saveBooleanData(true, AppSettings.Sp_App_Verified);
-      if (kDebugMode) {
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => MyApp()));
-      } else
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => PINEnter()));
+      MySharedPref().saveData(apiUrl, AppSettings.Sp_Api_Url);
+      MySharedPref().saveData(apiUrl.replaceAll("/api/", "/FS/"), AppSettings.Sp_Img_Base_Url);
+      MySharedPref().saveData(secureKey, AppSettings.Sp_SecureKey);
+      MySharedPref().saveData(MAppSeqId, AppSettings.Sp_MAppDevSeqId);
+      MySharedPref().saveData(
+          json.encode(AuthorizePayload), AppSettings.Sp_Payload_Authorize);
+      //if (appPIN == "")
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => CreatePin()));
     } else if (res['Table'][0]['code'] == 50) {
       MySharedPref().saveBooleanData(false, AppSettings.Sp_App_Verified);
-      MyCustomAlertDialog().showVerificationAlert(context, "Alert!",
-          res['Table'][0]['description'], false, verifyAgain, resend);
+      MyCustomAlertDialog().showVerificationAlert(
+          context,
+          "Account verification alert!",
+          res['Table'][0]['description'],
+          false,
+          verifyAgain,
+          resend);
     }
   }
 
@@ -500,8 +531,8 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   resendSuccess(Map<String, dynamic> res) {
-      MyCustomAlertDialog()
-        .showCustomAlert(context, "Notification",  res['Table'][0]['description'], true, () {
+    MyCustomAlertDialog().showCustomAlert(
+        context, "Notification", res['Table'][0]['description'], true, () {
       Navigator.pop(context);
       verifyAgain();
     }, null);

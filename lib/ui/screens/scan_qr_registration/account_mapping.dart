@@ -519,15 +519,17 @@ class _AccountMappingState extends State<AccountMapping> {
     print(res);
     if (res['Table'][0]['code'] == 10) {
       MyCustomAlertDialog().showToast(context, res['Table'][0]['description']);
-      MySharedPref().saveData(jsonEncode(profileData), AppSettings.profileData);
-      MySharedPref().saveData(decryptdata, AppSettings.qrCodeData);
+      MySharedPref().saveData(jsonEncode(profileData), AppSettings.Sp_ProfileData);
+      MySharedPref().saveData(decryptdata, AppSettings.Sp_QrCodeData);
       MySharedPref().saveData(
           AppSettings.appType_Notification, AppSettings.Sp_Key_AppType);
           MySharedPref().saveData(res['Table1'][0]['Token'], AppSettings.Sp_Token);
           MySharedPref().saveBooleanData(false, AppSettings.Sp_App_Verified);
           MySharedPref().saveData(DeviceId, AppSettings.Sp_DeviceId);
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => CreatePin()));
+      /* Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => CreatePin())); */
+          Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => SplashScreen()));
     } else if (res['Table'][0]['code'] == 40) {
       showAlert(context, res['Table'][0]['description'], inputData, decryptdata,
           ApiUrl, profileData,DeviceId);
