@@ -19,7 +19,77 @@ class CommonUtil {
   updateDriverDetailsSettings(var driverDetails, BuildContext context) {
     context.read<MySettingsListener>().updateDriverDetails(driverDetails);
   }
+//ParentApp
+Future<void> getEntryToDashboard(BuildContext context) async {
+    var ParamData = {
+      "MAppDevSeqId": await MySharedPref().getData(AppSettings.Sp_MAppDevSeqId)
+    };
+    Future<Map<String, dynamic>> res = RestApiProvider().authorizedPostRequest(
+      ParamData,
+      AppSettings.EntryToDashboard,
+      context,
+      false,
+    );
+    res
+        .then((response) => {EntryToDashboardSuccess(context, response)})
+        .onError((error, stackTrace) => {authorizedPostRequestError(error)});
+  }
 
+  EntryToDashboardSuccess(BuildContext context, Map<String, dynamic> response) {
+    if (response['Table'][0]['code'] == 10 && response['Table1'][0] != null) {
+      print("getEntryToDashboard success");
+      //familyList = response['Table1'];
+      context
+          .read<MySettingsListener>()
+          .updateEntryToDashboardLists(response['Table1'], response['Table2']);
+    }
+  }
+
+  Future<void> getDashboard(BuildContext context,RefUserSeqId,RefBranchSeqId) async {
+    var ParamData = {"RefUserSeqId": RefUserSeqId, "RefBranchSeqId": RefBranchSeqId};
+    Future<Map<String, dynamic>> res = RestApiProvider().authorizedPostRequest(
+      ParamData,
+      AppSettings.GetDashboard,
+      context,
+      false,
+    );
+    res
+        .then((response) => {EntryToDashboardSuccess(context, response)})
+        .onError((error, stackTrace) => {authorizedPostRequestError(error)});
+  }
+
+  getDashboardSuccess(BuildContext context, Map<String, dynamic> response) {
+    if (response['Table'][0]['code'] == 10) {
+      print("getDashboard success");
+      context.read<MySettingsListener>().updateDashBoard();
+    }
+  }
+
+  Future<void> getGetCalendarData(BuildContext context,RefUserSeqId,RefBranchSeqId,int Year,int Month) async {
+    var ParamData = {"RefUserSeqId": RefUserSeqId, "RefBranchSeqId": RefBranchSeqId,Year:Year,"Month":Month};
+    Future<Map<String, dynamic>> res = RestApiProvider().authorizedPostRequest(
+      ParamData,
+      AppSettings.GetCalendarData,
+      context,
+      false,
+    );
+    res
+        .then((response) => {getCalendarDataSuccess(context, response)})
+        .onError((error, stackTrace) => {authorizedPostRequestError(error)});
+  }
+
+  getCalendarDataSuccess(BuildContext context, Map<String, dynamic> response) {
+    if (response['Table'][0]['code'] == 10) {
+      print("GetCalendarData success");
+      context
+          .read<MySettingsListener>()
+          .updateGetCalendarData();
+    }
+  }
+
+  authorizedPostRequestError(Object? error) {}
+
+//Notification App
   Future<void> getAllNotification(BuildContext context, String apiURL,
       int startPosition, profileData, decryptdata) async {
     if (profileData != "") {
@@ -146,8 +216,9 @@ class CommonUtil {
           response['Table4']);
     }
   }
+
   handleNotiApiError(error, BuildContext context) {
-    print("handleNotiApiError "+error.toString());
+    print("handleNotiApiError " + error.toString());
     MyCustomAlertDialog()
         .showCustomAlert(context, "Notification", error.toString(), true, () {
       Navigator.pop(context);

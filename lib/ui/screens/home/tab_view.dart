@@ -55,7 +55,8 @@ class TabView extends StatelessWidget {
                 controller: tabController,
                 children: List<Widget>.generate(tabsList.length, (int index) {
                   return index == 0
-                      ? new HomePage(familyPos, familyList, pageSwiped)
+                      //? new HomePage(familyPos, familyList, pageSwiped)
+                      ? new HomePage()
                       : tabsList[index]['title'] == "Stores"
                           ? Stores()
                           : tabsList[index]['title'] == "Invoice"

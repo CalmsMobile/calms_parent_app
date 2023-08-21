@@ -6,9 +6,24 @@ import 'package:flutter/foundation.dart';
 class MySettingsListener with ChangeNotifier {
   var _settingDetails;
   var _driverDetails;
+  List _familyList = [];
+  List _dashboardMenuList = [];
+  int _familyPos = 0;
   List _notificationList = [];
   List _notificationCategoryList = [];
   List _notificationMembersList = [];
+
+  UnmodifiableListView<dynamic> get familyList =>
+      UnmodifiableListView(_familyList);
+  get familyPos => _familyPos;
+  void pageSwiped(int pos) {
+    _familyPos = pos;
+    print(pos);
+  }
+
+  UnmodifiableListView<dynamic> get dashboardMenuList =>
+      UnmodifiableListView(_dashboardMenuList);
+  get dashboardMenuListsize => _dashboardMenuList.length;
 
   UnmodifiableListView<dynamic> get notificationList =>
       UnmodifiableListView(_notificationList);
@@ -25,6 +40,19 @@ class MySettingsListener with ChangeNotifier {
 
   UnmodifiableMapView get mydriverDetails =>
       UnmodifiableMapView(_driverDetails == null ? {} : _driverDetails);
+
+  updateEntryToDashboardLists(List familyList, List menuList) {
+    _familyList = familyList;
+    _dashboardMenuList = menuList;
+  }
+
+  updateDashBoard(){
+
+  }
+
+  updateGetCalendarData(){
+    
+  }
 
   updateSettings(var settingDetails) {
     _settingDetails = settingDetails;
@@ -44,13 +72,12 @@ class MySettingsListener with ChangeNotifier {
   updateNotifiactionList(Type, List notiListClone, int startPosition,
       List familyList, List categoryList) {
     //if (startPosition == 0) {
-      _notificationList = notiListClone;
-      print("_notificationList "+_notificationList.toString());
+    _notificationList = notiListClone;
+    print("_notificationList " + _notificationList.toString());
     /* } else {
       _notificationList.addAll(notiListClone);
     } */
     if (Type != "filter") {
-      
       if (familyList != null) _notificationMembersList = familyList;
       if (categoryList != null) _notificationCategoryList = categoryList;
     }

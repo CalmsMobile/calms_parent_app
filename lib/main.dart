@@ -325,7 +325,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
     });
   }
 
-  Future<void> getDashBoardDetails() async {
+ /*  Future<void> getDashBoardDetails() async {
     var ParamData = {
       "MAppDevSeqId": await MySharedPref().getData(AppSettings.Sp_MAppDevSeqId)
     };
@@ -342,15 +342,15 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
 
   dashBoardSuccess(Map<String, dynamic> response) {
     if (response['Table'][0]['code'] == 10 && response['Table1'][0] != null) {
-      familyList = response['Table'];
+      familyList = response['Table1'];
     }
   }
 
-  dashBoardFailed(Object? error) {}
+  dashBoardFailed(Object? error) {} */
   @override
   void initState() {
+    //getDashBoardDetails();
     super.initState();
-   // getDashBoardDetails();
   }
 
   @override
@@ -366,7 +366,8 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
         Locale('en', ''), // English, no country code
       ],
       debugShowCheckedModeBanner: false,
-      home: HomePage(familyPos, familyList, pageSwiped),
+      //home: HomePage(familyPos, familyList, pageSwiped),
+      home: HomePage(),
       theme: ThemeData(
         fontFamily: appFontFmaily,
         outlinedButtonTheme: OutlinedButtonThemeData(

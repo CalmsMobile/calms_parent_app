@@ -3,10 +3,14 @@ import 'dart:core';
 import 'dart:html';
 import 'dart:math';
 import 'package:calms_parent_latest/common/app_settings.dart';
+import 'package:calms_parent_latest/common/common_api.dart';
 import 'package:calms_parent_latest/common/my_shared_pref.dart';
 import 'package:calms_parent_latest/ui/screens/notifications/notification-view/notification-view.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
+import 'package:provider/provider.dart';
 
+import '../../../common/listener/settings_listener.dart';
+import '../widgets/DashboardMenuList.dart';
 import '/common/HexColor.dart';
 import '/common/json_responses.dart';
 import '/model/HolidayModel.dart';
@@ -27,10 +31,11 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage(this.familyPos, this.familyList, this.pageSwiped);
+  //HomePage(this.familyPos, this.familyList, this.pageSwiped);
+  HomePage();
 
-  final int familyPos;
-  final Function pageSwiped;
+  //final int familyPos;
+  //final Function pageSwiped;
 
   final List<ModuleModel> items = RandomColorModel().getModuleList();
   final List<Map> outstandingList = JsonResponses.outstandingList;
@@ -138,7 +143,7 @@ class HomePage extends StatefulWidget {
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTI2iHiAT-ICPyezz_uJzuUWArjKnNDaruP-DbfLD0CWrT-oqjcpe2RfBLDl9DTRbFw9qQ&usqp=CAU"
     }
   ];
-  final List<Map> familyList;
+  //final List<Map> familyList;
   final List<Map> storeItem = JsonResponses.storeItem;
   final List<Map> upcomingActivities = [
     {
@@ -291,8 +296,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   void calendarTapped(CalendarTapDetails calendarTapDetails) {
     if (calendarTapDetails.targetElement == CalendarElement.calendarCell) {
       setState(() {
-        _appointmentDetails =
-            calendarTapDetails.appointments!.cast<Appointment>();
+        _appointmentDetails = calendarTapDetails.appointments!.cast<Appointment>();
       });
     }
   }
@@ -315,6 +319,18 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     controller.repeat(reverse: true);
     super.initState();
     getLocalData();
+    initValues();
+  }
+
+  @override
+  dispose() {
+    controller.dispose(); // you need this
+    super.dispose();
+  }
+
+  Future<void> initValues() async {
+    CommonUtil().getEntryToDashboard(context);
+    //CommonUtil().getDashboard(context);
   }
 
   String getInitials(name) {
@@ -437,147 +453,158 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         width: double.infinity,
                         height: 220,
                         padding: EdgeInsets.only(left: 0, right: 0),
-                        child: Column(children: [
-                          SizedBox(
-                            height: 20,
-                          ),
-                          CarouselSlider(
-                            items: widget.familyList
-                                .map((item) => InkWell(
-                                      child: Container(
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceAround,
-                                          children: [
-                                            if (widget.familyList[
-                                                    widget.familyPos]['Name'] ==
-                                                item["Name"])
-                                              Image.asset(
-                                                "assets/images/swipe_left.png",
-                                                width: 25,
-                                              ),
-                                            Container(
-                                              width: (widget.familyList[widget
-                                                          .familyPos]['Name'] ==
-                                                      item["Name"])
-                                                  ? 92
-                                                  : 62,
-                                              height: (widget.familyList[widget
-                                                          .familyPos]['Name'] ==
-                                                      item["Name"])
-                                                  ? 92
-                                                  : 62,
-                                              child: item['UserImgPath'] != null
-                                                  ? CircleAvatar(
-                                                      backgroundImage:
-                                                          NetworkImage(imgBaseUrl +
-                                                              item[
-                                                                  "UserImgPath"]),
-                                                    )
-                                                  : CircleAvatar(
-                                                      backgroundColor:
-                                                          Colors.blue[700],
-                                                      child: Text(
-                                                        getInitials(
-                                                            item['Name']),
-                                                        style: TextStyle(
-                                                            fontSize: 22.0,
-                                                            color: Colors.white,
-                                                            letterSpacing: 2.0,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w900),
-                                                      ),
-                                                    ),
-                                              decoration: BoxDecoration(
-                                                //DecprationImage
-                                                border: Border.all(
-                                                    color: Theme.of(context)
-                                                        .primaryColor,
-                                                    width: 4.0,
-                                                    style: BorderStyle
-                                                        .solid), //Border.all
-
-                                                borderRadius: BorderRadius.only(
-                                                  topLeft:
-                                                      Radius.circular(60.0),
-                                                  topRight:
-                                                      Radius.circular(60.0),
-                                                  bottomLeft:
-                                                      Radius.circular(60.0),
-                                                  bottomRight:
-                                                      Radius.circular(60.0),
+                        child: Consumer<MySettingsListener>(
+                            builder: (context, data, settingsDta) {
+                          return Column(children: [
+                            SizedBox(
+                              height: 20,
+                            ),
+                            CarouselSlider(
+                              items: data.familyList
+                                  .map((item) => InkWell(
+                                        child: Container(
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: [
+                                              if (data.familyList[
+                                                      data.familyPos]['Name'] ==
+                                                  item["Name"])
+                                                Image.asset(
+                                                  "assets/images/swipe_left.png",
+                                                  width: 25,
                                                 ),
-                                                //BorderRadius.only
-                                                /************************************/
-                                                /* The BoxShadow widget  is here */
-                                                /************************************/
-                                              ),
-                                            ),
-                                            if (widget.familyList[
-                                                    widget.familyPos]['Name'] ==
-                                                item["Name"])
-                                              Image.asset(
-                                                "assets/images/swipe_right.png",
-                                                width: 25,
-                                              )
-                                          ],
-                                        ),
-                                      ),
-                                      onTap: () => {
-                                        Navigator.of(context).pushNamed(
-                                            '/ProfileMain',
-                                            arguments: item)
-                                      },
-                                    ))
-                                .toList(),
+                                              Container(
+                                                width: (data.familyList[
+                                                                data.familyPos]
+                                                            ['Name'] ==
+                                                        item["Name"])
+                                                    ? 92
+                                                    : 62,
+                                                height: (data.familyList[
+                                                                data.familyPos]
+                                                            ['Name'] ==
+                                                        item["Name"])
+                                                    ? 92
+                                                    : 62,
+                                                child: item['UserImgPath'] !=
+                                                        null
+                                                    ? CircleAvatar(
+                                                        backgroundImage:
+                                                            NetworkImage(
+                                                                imgBaseUrl +
+                                                                    item[
+                                                                        "UserImgPath"]),
+                                                      )
+                                                    : CircleAvatar(
+                                                        backgroundColor:
+                                                            Colors.blue[700],
+                                                        child: Text(
+                                                          getInitials(
+                                                              item['Name']),
+                                                          style: TextStyle(
+                                                              fontSize: 22.0,
+                                                              color:
+                                                                  Colors.white,
+                                                              letterSpacing:
+                                                                  2.0,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w900),
+                                                        ),
+                                                      ),
+                                                decoration: BoxDecoration(
+                                                  //DecprationImage
+                                                  border: Border.all(
+                                                      color: Theme.of(context)
+                                                          .primaryColor,
+                                                      width: 4.0,
+                                                      style: BorderStyle
+                                                          .solid), //Border.all
 
-                            //Slider Container properties
-                            options: CarouselOptions(
-                                height: 100.0,
-                                enlargeStrategy:
-                                    CenterPageEnlargeStrategy.scale,
-                                enlargeCenterPage: true,
-                                autoPlay: false,
-                                aspectRatio: 16 / 9,
-                                autoPlayCurve: Curves.fastOutSlowIn,
-                                enableInfiniteScroll: true,
-                                autoPlayAnimationDuration:
-                                    Duration(milliseconds: 800),
-                                viewportFraction: 0.35,
-                                onPageChanged: (index, reason) {
-                                  widget.pageSwiped(index);
-                                },
-                                initialPage: widget.familyPos),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            widget.familyList[widget.familyPos]['Name'],
-                            style: TextStyle(
-                                fontSize: 22.0,
-                                color: Colors.black87,
-                                letterSpacing: 2.0,
-                                fontWeight: FontWeight.w400),
-                          ),
-                          Text(
-                            "Wallet Ballance",
-                            style: TextStyle(
-                                fontSize: 14.0,
-                                color: Colors.grey[600],
-                                letterSpacing: 2.0,
-                                fontWeight: FontWeight.w300),
-                          ),
-                          Text(
-                            'MYR ${double.parse(widget.familyList[widget.familyPos]['Balance'].toString()).toStringAsFixed(2)}',
-                            style: TextStyle(
-                                fontSize: 18.0,
-                                color: Colors.blue[700],
-                                letterSpacing: 2.0,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ]),
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                    topLeft:
+                                                        Radius.circular(60.0),
+                                                    topRight:
+                                                        Radius.circular(60.0),
+                                                    bottomLeft:
+                                                        Radius.circular(60.0),
+                                                    bottomRight:
+                                                        Radius.circular(60.0),
+                                                  ),
+                                                  //BorderRadius.only
+                                                  /************************************/
+                                                  /* The BoxShadow widget  is here */
+                                                  /************************************/
+                                                ),
+                                              ),
+                                              if (data.familyList[
+                                                      data.familyPos]['Name'] ==
+                                                  item["Name"])
+                                                Image.asset(
+                                                  "assets/images/swipe_right.png",
+                                                  width: 25,
+                                                )
+                                            ],
+                                          ),
+                                        ),
+                                        onTap: () => {
+                                          Navigator.of(context).pushNamed(
+                                              '/ProfileMain',
+                                              arguments: item)
+                                        },
+                                      ))
+                                  .toList(),
+
+                              //Slider Container properties
+                              options: CarouselOptions(
+                                  height: 100.0,
+                                  enlargeStrategy:
+                                      CenterPageEnlargeStrategy.scale,
+                                  enlargeCenterPage: true,
+                                  autoPlay: false,
+                                  aspectRatio: 16 / 9,
+                                  autoPlayCurve: Curves.fastOutSlowIn,
+                                  enableInfiniteScroll: true,
+                                  autoPlayAnimationDuration:
+                                      Duration(milliseconds: 800),
+                                  viewportFraction: 0.35,
+                                  onPageChanged: (index, reason) {
+                                    data.pageSwiped(index);
+                                    
+                                  },
+                                  initialPage: data.familyPos),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              data.familyList[data.familyPos]['Name'],
+                              style: TextStyle(
+                                  fontSize: 22.0,
+                                  color: Colors.black87,
+                                  letterSpacing: 2.0,
+                                  fontWeight: FontWeight.w400),
+                            ),
+                            Text(
+                              "Wallet Ballance",
+                              style: TextStyle(
+                                  fontSize: 14.0,
+                                  color: Colors.grey[600],
+                                  letterSpacing: 2.0,
+                                  fontWeight: FontWeight.w300),
+                            ),
+                            Text(
+                              'MYR ${double.parse(data.familyList[data.familyPos]['Balance'].toString()).toStringAsFixed(2)}',
+                              style: TextStyle(
+                                  fontSize: 18.0,
+                                  color: Colors.blue[700],
+                                  letterSpacing: 2.0,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ]);
+                        }),
                       ),
                     ],
                   ),
@@ -593,125 +620,156 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         child: Container(
                           margin: const EdgeInsets.symmetric(vertical: 20.0),
                           height: 80.0,
-                          child: ListView(
-                            // This next line does the trick.
-                            scrollDirection: Axis.horizontal,
-                            children: [
-                              Container(
-                                width: 90.0,
-                                child: InkWell(
-                                    onTap: () => Navigator.of(context)
-                                        .pushNamed('/MealOrder'),
-                                    child: Column(
-                                      children: [
-                                        Image(
-                                            width: 50,
-                                            height: 50,
-                                            image: AssetImage(
-                                                "assets/images/ico_order.png")),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Text(
-                                          "Order Meal",
-                                          style: TextStyle(
-                                              fontSize: 11.0,
-                                              color: Colors.black,
-                                              //letterSpacing: 2.0,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
-                                    )),
-                              ),
-                              Container(
-                                width: 90.0,
-                                child: InkWell(
-                                    onTap: () => Navigator.of(context)
-                                        .pushNamed('/StudentAttendance'),
-                                    child: Column(
-                                      children: [
-                                        Image(
-                                            width: 50,
-                                            height: 50,
-                                            image: AssetImage(
-                                                "assets/images/ico_attendance.png")),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Text(
-                                          "Attendance",
-                                          style: TextStyle(
-                                              fontSize: 11.0,
-                                              color: Colors.black,
-                                              //letterSpacing: 2.0,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
-                                    )),
-                              ),
-                              Container(
-                                width: 90.0,
-                                child: InkWell(
-                                    onTap: () => Navigator.of(context)
-                                        .pushNamed('/MFPTopup'),
-                                    child: Column(
-                                      children: [
-                                        Image(
-                                            width: 50,
-                                            height: 50,
-                                            image: AssetImage(
-                                                "assets/images/ico_top_up.png")),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Text(
-                                          "Topup",
-                                          style: TextStyle(
-                                              fontSize: 11.0,
-                                              color: Colors.black,
-                                              //letterSpacing: 2.0,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
-                                    )),
-                              ),
-                              Container(
-                                width: 90.0,
-                                child: InkWell(
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => HolidayCalendar(
-                                                  new RandomColorModel()
-                                                      ._getCalendarDataSource())));
-                                    },
-                                    child: Column(
-                                      children: [
-                                        Image(
-                                            width: 50,
-                                            height: 50,
-                                            image: AssetImage(
-                                                "assets/images/ico_schoolattendance.png")),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Text(
-                                          "Calender",
-                                          style: TextStyle(
-                                              fontSize: 11.0,
-                                              color: Colors.black,
-                                              //letterSpacing: 2.0,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
-                                    )),
-                              ),
-                            ],
-                          ),
+                          child: Consumer<MySettingsListener>(
+                              builder: (context, data, settingsDta) {
+                            if (data.dashboardMenuList != []) {
+                              return ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                  itemCount: data.dashboardMenuList.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return menuList(
+                                        context, index, data.dashboardMenuList);
+                                  });
+                            } else {
+                              return ListView(
+                                // This next line does the trick.
+                                scrollDirection: Axis.horizontal,
+                                children: [
+                                  Container(
+                                    width: 90.0,
+                                    child: InkWell(
+                                        onTap: () => Navigator.of(context)
+                                            .pushNamed('/MealOrder'),
+                                        child: Column(
+                                          children: [
+                                            Image(
+                                                width: 50,
+                                                height: 50,
+                                                image: AssetImage(
+                                                    "assets/images/ico_order.png")),
+                                            SizedBox(
+                                              height: 10,
+                                            ),
+                                            Text(
+                                              'Meal Order',
+                                              style: TextStyle(
+                                                  fontSize: 11.0,
+                                                  color: Colors.black,
+                                                  //letterSpacing: 2.0,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ],
+                                        )),
+                                  ),
+                                  Container(
+                                    width: 90.0,
+                                    child: InkWell(
+                                        onTap: () => Navigator.of(context)
+                                            .pushNamed('/StudentAttendance'),
+                                        child: Column(
+                                          children: [
+                                            Image(
+                                                width: 50,
+                                                height: 50,
+                                                image: AssetImage(
+                                                    "assets/images/ico_attendance.png")),
+                                            SizedBox(
+                                              height: 10,
+                                            ),
+                                            Text(
+                                              "Attendance",
+                                              style: TextStyle(
+                                                  fontSize: 11.0,
+                                                  color: Colors.black,
+                                                  //letterSpacing: 2.0,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ],
+                                        )),
+                                  ),
+                                  Container(
+                                    width: 90.0,
+                                    child: InkWell(
+                                        onTap: () => Navigator.of(context)
+                                            .pushNamed('/MFPTopup'),
+                                        child: Column(
+                                          children: [
+                                            Image(
+                                                width: 50,
+                                                height: 50,
+                                                image: AssetImage(
+                                                    "assets/images/ico_top_up.png")),
+                                            SizedBox(
+                                              height: 10,
+                                            ),
+                                            Text(
+                                              "Topup",
+                                              style: TextStyle(
+                                                  fontSize: 11.0,
+                                                  color: Colors.black,
+                                                  //letterSpacing: 2.0,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ],
+                                        )),
+                                  ),
+                                  Container(
+                                    width: 90.0,
+                                    child: InkWell(
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      HolidayCalendar(
+                                                          _getCalendarDataSource())));
+                                        },
+                                        child: Column(
+                                          children: [
+                                            Image(
+                                                width: 50,
+                                                height: 50,
+                                                image: AssetImage(
+                                                    "assets/images/ico_schoolattendance.png")),
+                                            SizedBox(
+                                              height: 10,
+                                            ),
+                                            Text(
+                                              "Calender",
+                                              style: TextStyle(
+                                                  fontSize: 11.0,
+                                                  color: Colors.black,
+                                                  //letterSpacing: 2.0,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ],
+                                        )),
+                                  ),
+                                ],
+                              );
+                            }
+                          }),
                         ),
                       ),
                       Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                          borderOnForeground: true,
+                          margin: EdgeInsets.only(
+                              top: 5, bottom: 20, left: 20, right: 20),
+                          child: Padding(
+                            padding: EdgeInsets.all(15),
+                            child: SfCalendar(
+                              view: CalendarView.month,
+                              showDatePickerButton: true,
+                              dataSource: _getCalendarDataSource(),
+                              onTap: calendarTapped,
+                            ),
+                          ),
+                        ),
+                      /* Card(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15.0),
                         ),
@@ -763,6 +821,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           ),
                         ),
                       ),
+                       */
                       /* Align(
                           alignment: Alignment.centerLeft,
                           child: Container(
@@ -776,7 +835,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                     fontSize: 16, fontWeight: FontWeight.bold),
                               )),
                         ), */
-                      Card(
+                      /* Card(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15.0),
                         ),
@@ -926,7 +985,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           ]),
                         ),
                       ),
-                    ],
+                     */],
                   ),
                   SizedBox(
                     height: 10,
@@ -1017,6 +1076,56 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     );
   }
 }
+AppointmentDataSource _getCalendarDataSource() {
+    List<Appointment> appointments = <Appointment>[];
+    appointments.add(Appointment(
+        startTime: DateTime.now(),
+        endTime: DateTime.now().add(Duration(minutes: 10)),
+        subject: 'Public Holiday',
+        color: Colors.greenAccent,
+        startTimeZone: '',
+        endTimeZone: '',
+        notes: jsonEncode({
+          "type": "Holiday",
+          "actual_start_time":
+              DateTime.now().add(Duration(hours: 1)).toString(),
+          "actual_end_time": DateTime.now().add(Duration(hours: 8)).toString(),
+          "clockin_time": DateTime.now().add(Duration(hours: 1)).toString(),
+          "clock_out_time": DateTime.now().add(Duration(hours: 8)).toString()
+        })));
+    appointments.add(Appointment(
+        startTime: DateTime.now().add(Duration(days: 1)),
+        endTime: DateTime.now().add(Duration(days: 1)),
+        subject: 'School Holiday',
+        color: Colors.redAccent,
+        startTimeZone: '',
+        endTimeZone: '',
+        notes: jsonEncode({
+          "type": "Holiday",
+          "actual_start_time":
+              DateTime.now().add(Duration(hours: 1)).toString(),
+          "actual_end_time": DateTime.now().add(Duration(hours: 8)).toString(),
+          "clockin_time": DateTime.now().add(Duration(hours: 1)).toString(),
+          "clock_out_time": DateTime.now().add(Duration(hours: 8)).toString()
+        })));
+    appointments.add(Appointment(
+        startTime: DateTime.now().add(Duration(days: 5)),
+        endTime: DateTime.now().add(Duration(days: 6)),
+        subject: 'Term Holiday',
+        color: Colors.orangeAccent,
+        startTimeZone: '',
+        endTimeZone: '',
+        notes: jsonEncode({
+          "type": "Holiday",
+          "actual_start_time":
+              DateTime.now().add(Duration(hours: 1)).toString(),
+          "actual_end_time": DateTime.now().add(Duration(hours: 8)).toString(),
+          "clockin_time": DateTime.now().add(Duration(hours: 1)).toString(),
+          "clock_out_time": DateTime.now().add(Duration(hours: 8)).toString()
+        })));
+
+    return AppointmentDataSource(appointments);
+  }
 
 class RandomColorModel {
   Random random = Random();
@@ -1081,57 +1190,7 @@ class RandomColorModel {
     return monitorList;
   }
 
-  AppointmentDataSource _getCalendarDataSource() {
-    List<Appointment> appointments = <Appointment>[];
-    appointments.add(Appointment(
-        startTime: DateTime.now(),
-        endTime: DateTime.now().add(Duration(minutes: 10)),
-        subject: 'Public Holiday',
-        color: Colors.greenAccent,
-        startTimeZone: '',
-        endTimeZone: '',
-        notes: jsonEncode({
-          "type": "Holiday",
-          "actual_start_time":
-              DateTime.now().add(Duration(hours: 1)).toString(),
-          "actual_end_time": DateTime.now().add(Duration(hours: 8)).toString(),
-          "clockin_time": DateTime.now().add(Duration(hours: 1)).toString(),
-          "clock_out_time": DateTime.now().add(Duration(hours: 8)).toString()
-        })));
-    appointments.add(Appointment(
-        startTime: DateTime.now().add(Duration(days: 1)),
-        endTime: DateTime.now().add(Duration(days: 1)),
-        subject: 'School Holiday',
-        color: Colors.redAccent,
-        startTimeZone: '',
-        endTimeZone: '',
-        notes: jsonEncode({
-          "type": "Holiday",
-          "actual_start_time":
-              DateTime.now().add(Duration(hours: 1)).toString(),
-          "actual_end_time": DateTime.now().add(Duration(hours: 8)).toString(),
-          "clockin_time": DateTime.now().add(Duration(hours: 1)).toString(),
-          "clock_out_time": DateTime.now().add(Duration(hours: 8)).toString()
-        })));
-    appointments.add(Appointment(
-        startTime: DateTime.now().add(Duration(days: 5)),
-        endTime: DateTime.now().add(Duration(days: 6)),
-        subject: 'Term Holiday',
-        color: Colors.orangeAccent,
-        startTimeZone: '',
-        endTimeZone: '',
-        notes: jsonEncode({
-          "type": "Holiday",
-          "actual_start_time":
-              DateTime.now().add(Duration(hours: 1)).toString(),
-          "actual_end_time": DateTime.now().add(Duration(hours: 8)).toString(),
-          "clockin_time": DateTime.now().add(Duration(hours: 1)).toString(),
-          "clock_out_time": DateTime.now().add(Duration(hours: 8)).toString()
-        })));
-
-    return AppointmentDataSource(appointments);
   }
-}
 
 class MeetingDataSource extends CalendarDataSource {
   MeetingDataSource(List<HolidayModel> source) {
