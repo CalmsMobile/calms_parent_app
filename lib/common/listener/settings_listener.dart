@@ -8,6 +8,7 @@ class MySettingsListener with ChangeNotifier {
   var _driverDetails;
   List _familyList = [];
   List _dashboardMenuList = [];
+  List _holidaysList = [];
   int _familyPos = 0;
   List _notificationList = [];
   List _notificationCategoryList = [];
@@ -28,6 +29,9 @@ class MySettingsListener with ChangeNotifier {
   UnmodifiableListView<dynamic> get notificationList =>
       UnmodifiableListView(_notificationList);
   get size => _notificationList.length;
+
+UnmodifiableListView<dynamic> get holidaysList =>
+      UnmodifiableListView(_holidaysList);
 
   UnmodifiableListView<dynamic> get notificationCategoryList =>
       UnmodifiableListView(_notificationCategoryList);
@@ -50,8 +54,8 @@ class MySettingsListener with ChangeNotifier {
 
   }
 
-  updateGetCalendarData(){
-    
+  updateGetCalendarData(List holidaysList){
+    _holidaysList = holidaysList;
   }
 
   updateSettings(var settingDetails) {

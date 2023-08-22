@@ -1,3 +1,4 @@
+import '../util/common_funtions.dart';
 import '/common/HexColor.dart';
 import '/common/alert_dialog.dart';
 import '/common/app_settings.dart';
@@ -14,30 +15,30 @@ PreferredSizeWidget getMyAppbar(var titleText, List<Widget> actions1) {
       automaticallyImplyLeading: false,
       centerTitle: true,
       title: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                InkWell(
-                  onTap: () {},
-                  child: Image(
-                    width: 50,
-                    height: 50,
-                    image: AssetImage("assets/images/ico_back.png"),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: 10),
-                  child: Text(
-                    titleText,
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold),
-                  ),
-                )
-                // Your widgets here
-              ],
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          InkWell(
+            onTap: () {},
+            child: Image(
+              width: 50,
+              height: 50,
+              image: AssetImage("assets/images/ico_back.png"),
             ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(left: 10),
+            child: Text(
+              titleText,
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold),
+            ),
+          )
+          // Your widgets here
+        ],
+      ),
       /* title: Text(
         titleText,
         style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
@@ -135,8 +136,8 @@ PreferredSizeWidget customBottomSheetActionBar(
 }
 
 void openMemberBottomSheet(
-    BuildContext buildContext, getfamilyList, imageBaseUrl, callback) {
-  print(getfamilyList.toString());
+    BuildContext buildContext, familyList, imageBaseUrl, callback) {
+  print(familyList.toString());
   showModalBottomSheet(
       context: buildContext,
       builder: (context) {
@@ -164,25 +165,42 @@ void openMemberBottomSheet(
               ListView.builder(
                   physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: getfamilyList.length,
+                  itemCount: familyList.length,
                   itemBuilder: (BuildContext context, int index) {
                     return Column(children: <Widget>[
                       new Divider(
                         height: 0.1,
                       ),
                       ListTile(
-                        leading: CircleAvatar(
+                        leading: familyList[index]['UserImgPath'] != null
+                            ? CircleAvatar(
+                                backgroundImage: NetworkImage(imageBaseUrl +
+                                    familyList[index]["UserImgPath"]),
+                              )
+                            : CircleAvatar(
+                                backgroundColor: Colors.blue[700],
+                                child: Text(
+                                  CommonFunctions.getInitials(
+                                      familyList[index]['Name']),
+                                  style: TextStyle(
+                                      fontSize: 22.0,
+                                      color: Colors.white,
+                                      letterSpacing: 2.0,
+                                      fontWeight: FontWeight.w900),
+                                ),
+                              ),
+                        /* CircleAvatar(
                           backgroundColor: Colors.white,
                           backgroundImage: NetworkImage(
-                              getfamilyList[index]['UserImgPath'] != null
+                              familyList[index]['UserImgPath'] != null
                                   ? imageBaseUrl +
-                                      getfamilyList[index]['UserImgPath']
-                                  : AppSettings.avatarPlaceholder),
+                                      familyList[index]['UserImgPath']
+                                  : "assets/images/user.png"),
                           radius: 20,
-                        ),
-                        title: new Text(getfamilyList[index]["Name"]),
+                        ), */
+                        title: new Text(familyList[index]["Name"]),
                         subtitle: new Text(
-                          getfamilyList[index]["MemberId"].toString(),
+                          familyList[index]["MemberId"].toString(),
                           style: TextStyle(fontSize: 12),
                         ),
                         onTap: () {

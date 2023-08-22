@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'dart:math';
 
 import 'package:calms_parent_latest/provider/rest_api.dart';
+import 'package:calms_parent_latest/ui/screens/calendar_transactions/CalendarTransactions_page.dart';
 
 import '/common/app_settings.dart';
 import '/common/constants.dart';
@@ -225,7 +226,8 @@ var myroutes = {
   "/FilterPage": (context) => FilterPage(),
   "/FilterActivities": (context) => FilterActivities(),
   "/ViewImage": (context) => ViewImage(),
-  "/MealDetails": (Context) => MealDetails()
+  "/MealDetails": (context) => MealDetails(),
+  "/calendarTransactions":(context)=> CalendarTransactionsPage()
 };
 
 class MyApp extends StatefulWidget {

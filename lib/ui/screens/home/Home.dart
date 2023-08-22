@@ -7,9 +7,11 @@ import 'package:calms_parent_latest/common/common_api.dart';
 import 'package:calms_parent_latest/common/my_shared_pref.dart';
 import 'package:calms_parent_latest/ui/screens/notifications/notification-view/notification-view.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../common/listener/settings_listener.dart';
+import '../../../common/util/common_funtions.dart';
 import '../widgets/DashboardMenuList.dart';
 import '/common/HexColor.dart';
 import '/common/json_responses.dart';
@@ -296,7 +298,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   void calendarTapped(CalendarTapDetails calendarTapDetails) {
     if (calendarTapDetails.targetElement == CalendarElement.calendarCell) {
       setState(() {
-        _appointmentDetails = calendarTapDetails.appointments!.cast<Appointment>();
+        _appointmentDetails =
+            calendarTapDetails.appointments!.cast<Appointment>();
       });
     }
   }
@@ -330,21 +333,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   Future<void> initValues() async {
     CommonUtil().getEntryToDashboard(context);
-    //CommonUtil().getDashboard(context);
-  }
-
-  String getInitials(name) {
-    List<String> names = name.split(" ");
-    String initials = "";
-    int numWords = 2;
-
-    if (numWords < names.length) {
-      numWords = names.length;
-    }
-    for (var i = 0; i < numWords; i++) {
-      initials += '${names[i][0]}';
-    }
-    return initials;
+    //CommonUtil().getDashboard(context,"106312.0","11001");
   }
 
   @override
@@ -500,8 +489,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                                         backgroundColor:
                                                             Colors.blue[700],
                                                         child: Text(
-                                                          getInitials(
-                                                              item['Name']),
+                                                          CommonFunctions
+                                                              .getInitials(
+                                                                  item['Name']),
                                                           style: TextStyle(
                                                               fontSize: 22.0,
                                                               color:
@@ -552,7 +542,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                         onTap: () => {
                                           Navigator.of(context).pushNamed(
                                               '/ProfileMain',
-                                              arguments: item)
+                                              arguments: {
+                                                "profileData": item,
+                                                "imgBaseUrl": imgBaseUrl
+                                              })
                                         },
                                       ))
                                   .toList(),
@@ -572,7 +565,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                   viewportFraction: 0.35,
                                   onPageChanged: (index, reason) {
                                     data.pageSwiped(index);
-                                    
                                   },
                                   initialPage: data.familyPos),
                             ),
@@ -624,15 +616,15 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                               builder: (context, data, settingsDta) {
                             if (data.dashboardMenuList != []) {
                               return ListView.builder(
-                                scrollDirection: Axis.horizontal,
+                                  scrollDirection: Axis.horizontal,
                                   itemCount: data.dashboardMenuList.length,
                                   itemBuilder:
                                       (BuildContext context, int index) {
                                     return menuList(
-                                        context, index, data.dashboardMenuList);
+                                        context, index, data.dashboardMenuList,data.familyList,imgBaseUrl);
                                   });
                             } else {
-                              return ListView(
+                              return SizedBox(); /* ListView(
                                 // This next line does the trick.
                                 scrollDirection: Axis.horizontal,
                                 children: [
@@ -748,28 +740,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                   ),
                                 ],
                               );
+                             */
                             }
                           }),
                         ),
                       ),
                       Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                          ),
-                          borderOnForeground: true,
-                          margin: EdgeInsets.only(
-                              top: 5, bottom: 20, left: 20, right: 20),
-                          child: Padding(
-                            padding: EdgeInsets.all(15),
-                            child: SfCalendar(
-                              view: CalendarView.month,
-                              showDatePickerButton: true,
-                              dataSource: _getCalendarDataSource(),
-                              onTap: calendarTapped,
-                            ),
-                          ),
-                        ),
-                      /* Card(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15.0),
                         ),
@@ -821,7 +797,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           ),
                         ),
                       ),
-                       */
+
                       /* Align(
                           alignment: Alignment.centerLeft,
                           child: Container(
@@ -835,7 +811,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                     fontSize: 16, fontWeight: FontWeight.bold),
                               )),
                         ), */
-                      /* Card(
+                      Card(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15.0),
                         ),
@@ -985,7 +961,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           ]),
                         ),
                       ),
-                     */],
+                    ],
                   ),
                   SizedBox(
                     height: 10,
@@ -1076,56 +1052,54 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     );
   }
 }
-AppointmentDataSource _getCalendarDataSource() {
-    List<Appointment> appointments = <Appointment>[];
-    appointments.add(Appointment(
-        startTime: DateTime.now(),
-        endTime: DateTime.now().add(Duration(minutes: 10)),
-        subject: 'Public Holiday',
-        color: Colors.greenAccent,
-        startTimeZone: '',
-        endTimeZone: '',
-        notes: jsonEncode({
-          "type": "Holiday",
-          "actual_start_time":
-              DateTime.now().add(Duration(hours: 1)).toString(),
-          "actual_end_time": DateTime.now().add(Duration(hours: 8)).toString(),
-          "clockin_time": DateTime.now().add(Duration(hours: 1)).toString(),
-          "clock_out_time": DateTime.now().add(Duration(hours: 8)).toString()
-        })));
-    appointments.add(Appointment(
-        startTime: DateTime.now().add(Duration(days: 1)),
-        endTime: DateTime.now().add(Duration(days: 1)),
-        subject: 'School Holiday',
-        color: Colors.redAccent,
-        startTimeZone: '',
-        endTimeZone: '',
-        notes: jsonEncode({
-          "type": "Holiday",
-          "actual_start_time":
-              DateTime.now().add(Duration(hours: 1)).toString(),
-          "actual_end_time": DateTime.now().add(Duration(hours: 8)).toString(),
-          "clockin_time": DateTime.now().add(Duration(hours: 1)).toString(),
-          "clock_out_time": DateTime.now().add(Duration(hours: 8)).toString()
-        })));
-    appointments.add(Appointment(
-        startTime: DateTime.now().add(Duration(days: 5)),
-        endTime: DateTime.now().add(Duration(days: 6)),
-        subject: 'Term Holiday',
-        color: Colors.orangeAccent,
-        startTimeZone: '',
-        endTimeZone: '',
-        notes: jsonEncode({
-          "type": "Holiday",
-          "actual_start_time":
-              DateTime.now().add(Duration(hours: 1)).toString(),
-          "actual_end_time": DateTime.now().add(Duration(hours: 8)).toString(),
-          "clockin_time": DateTime.now().add(Duration(hours: 1)).toString(),
-          "clock_out_time": DateTime.now().add(Duration(hours: 8)).toString()
-        })));
 
-    return AppointmentDataSource(appointments);
-  }
+AppointmentDataSource _getCalendarDataSource() {
+  List<Appointment> appointments = <Appointment>[];
+  appointments.add(Appointment(
+      startTime: DateTime.now(),
+      endTime: DateTime.now().add(Duration(minutes: 10)),
+      subject: 'Public Holiday',
+      color: Colors.greenAccent,
+      startTimeZone: '',
+      endTimeZone: '',
+      notes: jsonEncode({
+        "type": "Holiday",
+        "actual_start_time": DateTime.now().add(Duration(hours: 1)).toString(),
+        "actual_end_time": DateTime.now().add(Duration(hours: 8)).toString(),
+        "clockin_time": DateTime.now().add(Duration(hours: 1)).toString(),
+        "clock_out_time": DateTime.now().add(Duration(hours: 8)).toString()
+      })));
+  appointments.add(Appointment(
+      startTime: DateTime.now().add(Duration(days: 1)),
+      endTime: DateTime.now().add(Duration(days: 1)),
+      subject: 'School Holiday',
+      color: Colors.redAccent,
+      startTimeZone: '',
+      endTimeZone: '',
+      notes: jsonEncode({
+        "type": "Holiday",
+        "actual_start_time": DateTime.now().add(Duration(hours: 1)).toString(),
+        "actual_end_time": DateTime.now().add(Duration(hours: 8)).toString(),
+        "clockin_time": DateTime.now().add(Duration(hours: 1)).toString(),
+        "clock_out_time": DateTime.now().add(Duration(hours: 8)).toString()
+      })));
+  appointments.add(Appointment(
+      startTime: DateTime.now().add(Duration(days: 5)),
+      endTime: DateTime.now().add(Duration(days: 6)),
+      subject: 'Term Holiday',
+      color: Colors.orangeAccent,
+      startTimeZone: '',
+      endTimeZone: '',
+      notes: jsonEncode({
+        "type": "Holiday",
+        "actual_start_time": DateTime.now().add(Duration(hours: 1)).toString(),
+        "actual_end_time": DateTime.now().add(Duration(hours: 8)).toString(),
+        "clockin_time": DateTime.now().add(Duration(hours: 1)).toString(),
+        "clock_out_time": DateTime.now().add(Duration(hours: 8)).toString()
+      })));
+
+  return AppointmentDataSource(appointments);
+}
 
 class RandomColorModel {
   Random random = Random();
@@ -1189,8 +1163,7 @@ class RandomColorModel {
         Icons.calendar_today));
     return monitorList;
   }
-
-  }
+}
 
 class MeetingDataSource extends CalendarDataSource {
   MeetingDataSource(List<HolidayModel> source) {

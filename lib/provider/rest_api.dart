@@ -209,7 +209,7 @@ class RestApiProvider {
   Future<Map<String, dynamic>> postData(
       data, apiURL, endPoint, context, showProgress, allowAuth) async {
     apiURL = apiURL + endPoint;
-   
+
     ProgressDialog _progressDialog = ProgressDialog(context: context);
     if (showProgress) {
       _progressDialog.show(max: 100, msg: 'Loading...please wait...');
@@ -285,7 +285,8 @@ class RestApiProvider {
       data = json.encode(data);
       data = CryptoEncryption(AppSettings.commonCryptoKey).encryptMyData(data);
       print("Encrypted data= " + data);
-      print("Decrypted data= " + CryptoEncryption(AppSettings.commonCryptoKey).decryption(data));
+      print("Decrypted data= " +
+          CryptoEncryption(AppSettings.commonCryptoKey).decryption(data));
 
       data = {"Data": data};
     }
@@ -327,7 +328,9 @@ class RestApiProvider {
           if (res['Data'].containsKey("Table")) {
             List<dynamic> tableList = res['Data']['Table'];
             Map<String, dynamic> tableObj = tableList[0];
-            if (tableObj['code'] == 10 || tableObj['Code'] == 10 || tableObj['code'] == 50) {
+            if (tableObj['code'] == 10 ||
+                tableObj['Code'] == 10 ||
+                tableObj['code'] == 50) {
               return Future<Map<String, dynamic>>.value(res['Data']);
             } else if (endPoint == AppSettings.RegisterParentApp &&
                     tableObj['code'] == 40 ||
@@ -363,18 +366,21 @@ class RestApiProvider {
     }
   }
 
- Future<Map<String, dynamic>> authorizedPostRequest(
+  Future<Map<String, dynamic>> authorizedPostRequest(
       ParamData, endPoint, context, showProgress) async {
-      String apiURL = await MySharedPref().getData(AppSettings.Sp_Api_Url);
-      String secureKey = await MySharedPref().getData(AppSettings.Sp_SecureKey);
-      String auth = await MySharedPref().getData(AppSettings.Sp_Payload_Authorize);
-      var Authorize = jsonDecode(auth);
-      ParamData = CryptoEncryption(secureKey).encryptMyData(jsonEncode(ParamData));
-     var payload = {"Authorize": Authorize, "ParamData": ParamData};
-     String encData = CryptoEncryption(AppSettings.commonCryptoKey)
+    print(ParamData);
+    String apiURL = await MySharedPref().getData(AppSettings.Sp_Api_Url);
+    String secureKey = await MySharedPref().getData(AppSettings.Sp_SecureKey);
+    String auth =
+        await MySharedPref().getData(AppSettings.Sp_Payload_Authorize);
+    var Authorize = jsonDecode(auth);
+    ParamData =
+        CryptoEncryption(secureKey).encryptMyData(jsonEncode(ParamData));
+    var payload = {"Authorize": Authorize, "ParamData": ParamData};
+    String encData = CryptoEncryption(AppSettings.commonCryptoKey)
         .encryptMyData(json.encode(payload));
-     var data = {"Data": encData};
-    
+    var data = {"Data": encData};
+
     ProgressDialog _progressDialog = ProgressDialog(context: context);
     if (showProgress) {
       _progressDialog.show(max: 100, msg: 'Loading...please wait...');
@@ -392,7 +398,7 @@ class RestApiProvider {
 
     if (isConnected) {
       final response = await http.post(
-        Uri.parse(apiURL+endPoint),
+        Uri.parse(apiURL + endPoint),
         headers: {"Content-Type": "application/json"},
         body: body,
       );
@@ -402,14 +408,16 @@ class RestApiProvider {
         if (showProgress) {
           _progressDialog.close();
         }
-        
+
         Map<String, dynamic> res = jsonDecode(response.body);
         print(res['Data']);
         if (res['Status']) {
           if (res['Data'].containsKey("Table")) {
             List<dynamic> tableList = res['Data']['Table'];
             Map<String, dynamic> tableObj = tableList[0];
-            if (tableObj['code'] == 10 || tableObj['Code'] == 10 || tableObj['code'] == 50) {
+            if (tableObj['code'] == 10 ||
+                tableObj['Code'] == 10 ||
+                tableObj['code'] == 50) {
               return Future<Map<String, dynamic>>.value(res['Data']);
             } else {
               print("failed ${tableObj['code'] || tableObj['Code']} ");

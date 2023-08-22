@@ -1,3 +1,4 @@
+import '../../../common/util/common_funtions.dart';
 import '/common/widgets/select_member.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +18,9 @@ class _ProfileMainState extends State<ProfileMain> {
   String limitType = '';
   @override
   Widget build(BuildContext context) {
-    final profileData = ModalRoute.of(context)?.settings.arguments as Map;
+    final data = ModalRoute.of(context)?.settings.arguments as Map;
+    final profileData = data['profileData'];
+    final imgBaseUrl = data['imgBaseUrl'];
 
     return Scaffold(
         appBar: getMyAppbar("Profile", []),
@@ -50,12 +53,27 @@ class _ProfileMainState extends State<ProfileMain> {
                         Stack(
                           alignment: Alignment.topRight,
                           children: [
-                            CircleAvatar(
-                              backgroundColor: Colors.white,
-                              backgroundImage:
-                                  NetworkImage(profileData["ImgPathUrl"]),
-                              radius: 72,
-                            ),
+                            if (profileData['UserImgPath'] != null)
+                              CircleAvatar(
+                                backgroundColor: Colors.white,
+                                backgroundImage: NetworkImage(
+                                    imgBaseUrl + profileData["UserImgPath"]),
+                                    radius: 72,
+                              )
+                            else
+                              CircleAvatar(
+                                backgroundColor: Colors.blue[700],
+                                radius: 72,
+                                child: Text(
+                                  CommonFunctions.getInitials(
+                                      profileData['Name']),
+                                  style: TextStyle(
+                                      fontSize: 32.0,
+                                      color: Colors.white,
+                                      letterSpacing: 2.0,
+                                      fontWeight: FontWeight.w900),
+                                ),
+                              ),
                             /*  Container(
                               decoration: BoxDecoration(
                                 color: Colors.purple.shade100,
@@ -460,7 +478,7 @@ class _ProfileMainState extends State<ProfileMain> {
                                                         FontWeight.bold),
                                               ),
                                               Text(
-                                                "nizam@calms.com",
+                                                profileData['Email'],
                                                 style: TextStyle(
                                                     fontSize: 16,
                                                     color: Colors.black,
@@ -482,7 +500,7 @@ class _ProfileMainState extends State<ProfileMain> {
                                                         FontWeight.bold),
                                               ),
                                               Text(
-                                                "9994471706",
+                                                profileData['ContactNo'],
                                                 style: TextStyle(
                                                     fontSize: 16,
                                                     color: Colors.black,
@@ -493,7 +511,7 @@ class _ProfileMainState extends State<ProfileMain> {
                                           ),
                                         ],
                                       ),
-                                      ],
+                                    ],
                                   )),
                             ],
                           ),

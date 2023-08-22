@@ -1,5 +1,6 @@
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 
+import '../../../common/util/common_funtions.dart';
 import '/common/HexColor.dart';
 import '/common/alert_dialog.dart';
 import '/common/constants.dart';
@@ -566,9 +567,8 @@ class _MealOrderState extends State<MealOrder> {
   List mealList_ = [];
   bool searchEnable = false;
   var selectedTab = 'Breakfast';
-  List<Map> familyList = [];
 
-  int senderIndex = 2;
+  int senderIndex = 0;
   var sortList = ["Recent First", "Low to High", "High to Low"];
 
   var termList = ["Term_Student_August", "Daily"];
@@ -583,75 +583,6 @@ class _MealOrderState extends State<MealOrder> {
   void initState() {
     super.initState();
     mealList_ = mealList;
-    familyList = [
-    {
-      "RefPaySeqId": 100,
-      "RefUserSeqId": 100141,
-      "Balance": 945.3,
-      "Name": "IzzaizaParent",
-      "PaymodeName": "e Wallet",
-      "FamilyBased": false,
-      "category": "PARENT",
-      "ImgPathUrl":
-          "http://103.6.163.49:2008/FS/Profile\\ResizeImg\\c3e4-e4c2-2021-11-22-12-24-38-445\\20210506_121427.jpg"
-    },
-    {
-      "RefPaySeqId": 100,
-      "RefUserSeqId": 100873,
-      "Balance": 239.8,
-      "Name": "IzzaizaStudent1",
-      "PaymodeName": "e Wallet",
-      "FamilyBased": false,
-      "category": "STUDENT",
-      "ImgPathUrl":
-          "http://103.6.163.49:2008/FS/Profile\\ResizeImg\\77a1-e4c2-2021-11-10-16-31-43-850\\usser icon 1.png"
-    },
-    {
-      "RefPaySeqId": 100,
-      "RefUserSeqId": 100878,
-      "Balance": 115,
-      "Name": "IzzaizaStudent2",
-      "PaymodeName": "e Wallet",
-      "FamilyBased": false,
-      "category": "STUDENT",
-      "ImgPathUrl":
-          "http://103.6.163.49:2008/FS/Profile\\ResizeImg\\5b43-e4c2-2021-11-10-16-31-58-086\\user icon.png"
-    },
-    {
-      "RefPaySeqId": 100,
-      "RefUserSeqId": 101024,
-      "Balance": 37,
-      "Name": "IzzaizaStudent3",
-      "PaymodeName": "e Wallet",
-      "FamilyBased": false,
-      "category": "STUDENT",
-      "ImgPathUrl":
-          "http://103.6.163.49:2008/FS/Profile\\ResizeImg\\f0d4-e4c2-2022-01-20-10-22-33-589\\user icon 3.png"
-    },
-    {
-      "RefPaySeqId": 100,
-      "RefUserSeqId": 101052,
-      "Balance": 50,
-      "Name": "IzzaizaStudent4",
-      "PaymodeName": "e Wallet",
-      "FamilyBased": false,
-      "category": "STUDENT",
-      "ImgPathUrl":
-          "http://103.6.163.49:2008/FS/Profile\\ResizeImg\\6140-e4c2-2022-08-09-10-42-50-140\\user icon 7.png"
-    },
-    {
-      "RefPaySeqId": 100,
-      "RefUserSeqId": 111128,
-      "Balance": 60,
-      "Name": "IzzaizaStudent5",
-      "PaymodeName": "e Wallet",
-      "FamilyBased": false,
-      "category": "STUDENT",
-      "ImgPathUrl":
-          "http://103.6.163.49:2008/FS/Profile\\ResizeImg\\094b-e4c2-2022-08-22-12-33-50-986\\user icon 4.png"
-    },
-  ];
-
     initDates();
   }
 
@@ -707,6 +638,10 @@ class _MealOrderState extends State<MealOrder> {
 
   @override
   Widget build(BuildContext context) {
+    final data = ModalRoute.of(context)?.settings.arguments as Map;
+    final familyList = data['familyList'];
+    final imgBaseUrl = data['imgBaseUrl'];
+    print(data);
     _list = <Widget>[
       MealPager(mealList_, onCartClick),
       MealPager(mealList_, onCartClick),
@@ -790,17 +725,17 @@ class _MealOrderState extends State<MealOrder> {
                     children: [
                       Flexible(
                         child: ListTile(
-                            horizontalTitleGap: 2,
-                            contentPadding: EdgeInsets.zero,
-                            onTap: () => {
-                                  openMemberBottomSheet(
-                                      context, familyList, null, (index) {
-                                    Navigator.pop(context);
-                                    senderIndex = index;
-                                    setState(() {});
-                                  })
-                                },
-                            title: Column(
+                          horizontalTitleGap: 2,
+                          contentPadding: EdgeInsets.zero,
+                          onTap: () => {
+                            openMemberBottomSheet(
+                                context, familyList, imgBaseUrl, (index) {
+                              Navigator.pop(context);
+                              senderIndex = index;
+                              setState(() {});
+                            })
+                          },
+                          /* title:  Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -813,7 +748,7 @@ class _MealOrderState extends State<MealOrder> {
                                       fontWeight: FontWeight.bold),
                                 ),
                                 Text(
-                                  familyList[senderIndex]['RefUserSeqId']
+                                  familyList[senderIndex]['MemberId']
                                       .toString(),
                                   overflow: TextOverflow.ellipsis,
                                   textAlign: TextAlign.left,
@@ -823,14 +758,32 @@ class _MealOrderState extends State<MealOrder> {
                                       fontWeight: FontWeight.bold),
                                 ),
                               ],
-                            ),
-                            trailing: SizedBox(
+                            ), */
+                          trailing: familyList[senderIndex]['UserImgPath'] !=
+                                  null
+                              ? CircleAvatar(
+                                  backgroundImage: NetworkImage(imgBaseUrl +
+                                      familyList[senderIndex]["UserImgPath"]),
+                                )
+                              : CircleAvatar(
+                                  backgroundColor: Colors.blue[700],
+                                  child: Text(
+                                    CommonFunctions.getInitials(
+                                        familyList[senderIndex]['Name']),
+                                    style: TextStyle(
+                                        fontSize: 22.0,
+                                        color: Colors.white,
+                                        letterSpacing: 2.0,
+                                        fontWeight: FontWeight.w900),
+                                  ),
+                                ),
+                          /* SizedBox(
                               width: 50,
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(60.0),
                                 child: FadeInImage(
-                                  image: NetworkImage(
-                                      familyList[senderIndex]['ImgPathUrl']),
+                                  image: NetworkImage(familyList[senderIndex]['UserImgPath'] != null ?
+                                     imgBaseUrl+familyList[senderIndex]['UserImgPath']:'assets/images/user.png'),
                                   placeholder:
                                       AssetImage("assets/images/user.png"),
                                   imageErrorBuilder:
@@ -841,7 +794,8 @@ class _MealOrderState extends State<MealOrder> {
                                   fit: BoxFit.fitWidth,
                                 ),
                               ),
-                            )),
+                            ) */
+                        ),
                       ),
                     ],
                   ),
@@ -859,7 +813,7 @@ class _MealOrderState extends State<MealOrder> {
               )
           ],
         ),
-       /*  bottomNavigationBar: showMeal
+        /*  bottomNavigationBar: showMeal
             ? Container(
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -970,7 +924,8 @@ class _MealOrderState extends State<MealOrder> {
             : SizedBox(
                 height: 0,
               ),
-         */resizeToAvoidBottomInset: false,
+         */
+        resizeToAvoidBottomInset: false,
         body: Container(
           constraints: BoxConstraints.expand(),
           decoration: BoxDecoration(
@@ -1414,7 +1369,7 @@ class _MealOrderState extends State<MealOrder> {
         floatingActionButton: _getFilterFAB());
   }
 
-  void onCartClick(int index) {
+  void onCartClick(int index,familyList) {
     if (senderIndex <= -1) {
       openMemberBottomSheet(context, familyList, null, (studentindex) {
         senderIndex = studentindex;

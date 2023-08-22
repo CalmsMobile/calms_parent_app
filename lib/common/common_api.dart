@@ -65,8 +65,8 @@ Future<void> getEntryToDashboard(BuildContext context) async {
     }
   }
 
-  Future<void> getGetCalendarData(BuildContext context,RefUserSeqId,RefBranchSeqId,int Year,int Month) async {
-    var ParamData = {"RefUserSeqId": RefUserSeqId, "RefBranchSeqId": RefBranchSeqId,Year:Year,"Month":Month};
+  Future<void> getGetCalendarData(BuildContext context,RefUserSeqId,RefBranchSeqId, Year, Month, Date) async {
+    var ParamData = {"RefUserSeqId": RefUserSeqId, "RefBranchSeqId": RefBranchSeqId,"Year":Year,"Month":Month,"Date":Date};
     Future<Map<String, dynamic>> res = RestApiProvider().authorizedPostRequest(
       ParamData,
       AppSettings.GetCalendarData,
@@ -81,9 +81,10 @@ Future<void> getEntryToDashboard(BuildContext context) async {
   getCalendarDataSuccess(BuildContext context, Map<String, dynamic> response) {
     if (response['Table'][0]['code'] == 10) {
       print("GetCalendarData success");
+      if(response['Table1'] != null || response['Table1'] != [])
       context
           .read<MySettingsListener>()
-          .updateGetCalendarData();
+          .updateGetCalendarData(response['Table1']);
     }
   }
 

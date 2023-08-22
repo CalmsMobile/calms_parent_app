@@ -186,20 +186,4 @@ Widget getCalendarView(BuildContext buildContext, _appointmentDataSource,
   );
 }
 
-getActualTime(appointment) {
-  var actualtime = appointment.notes;
-  var appint = Map<String, String>.from(jsonDecode(actualtime));
-  print(appint['actual_start_time']);
 
-  return DateFormat('hh:mm a')
-      .format(DateTime.parse(appint['actual_start_time']!));
-}
-
-getActualEndTime(appointment) {
-  var actualtime = appointment.notes;
-  var appint = Map<String, String>.from(jsonDecode(actualtime));
-  print(appint['actual_end_time']);
-
-  return DateFormat('hh:mm a')
-      .format(DateTime.parse(appint['actual_end_time']!));
-}
