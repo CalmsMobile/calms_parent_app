@@ -1,13 +1,17 @@
 import 'dart:convert';
 
+import 'package:calms_parent_latest/ui/screens/widgets/HolidayListItemView.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 import '../../../common/common_api.dart';
+import '../../../common/listener/settings_listener.dart';
 import '../../../common/util/common_funtions.dart';
 import '../../../common/widgets/select_member.dart';
 import '../../../model/_AppointmentDataSource.dart';
+import '../widgets/DashBordMenuList.dart';
 
 class CalendarTransactionsPage extends StatefulWidget {
   static const String routeName = '/calendarTransactions';
@@ -19,16 +23,25 @@ class CalendarTransactionsPage extends StatefulWidget {
 
 class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
   CalendarController _controller = CalendarController();
-  List<Appointment> _appointmentDetails = <Appointment>[];
+  //List<Appointment> _appointmentDetails = <Appointment>[];
   int senderIndex = 0;
- late int selectedUserSeqId;
- late String selectedRefBranchSeqId;
+  late int selectedUserSeqId;
+  late String selectedRefBranchSeqId;
+  late DateTime? selectedDateTime;
 
   void calendarTapped(CalendarTapDetails calendarTapDetails) {
     print(calendarTapDetails.date);
     print(selectedUserSeqId);
     print(selectedRefBranchSeqId);
-    getData(selectedUserSeqId,selectedRefBranchSeqId,calendarTapDetails.date?.year,calendarTapDetails.date?.month,calendarTapDetails.date?.day);
+    setState(() {
+      selectedDateTime = calendarTapDetails.date;
+      getData(
+          selectedUserSeqId,
+          selectedRefBranchSeqId,
+          calendarTapDetails.date?.year,
+          calendarTapDetails.date?.month,
+          calendarTapDetails.date?.day);
+    });
     /* if (calendarTapDetails.targetElement == CalendarElement.calendarCell) {
       setState(() {
         _appointmentDetails =
@@ -41,11 +54,10 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    //this.initValues("106312.0","11001",2023, 08, 22);
+    //this.getData("106312.0","11001",2023, 08, 31);
   }
 
-  Future<void> getData(
-      RefUserSeqId, RefBranchSeqId, Year, Month, Date) async {
+  Future<void> getData(RefUserSeqId, RefBranchSeqId, Year, Month, Date) async {
     CommonUtil().getGetCalendarData(
         context, RefUserSeqId, RefBranchSeqId, Year, Month, Date);
   }
@@ -65,7 +77,9 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
       print("initValues");
       selectedUserSeqId = familyList[senderIndex]['UserSeqId'];
       selectedRefBranchSeqId = familyList[senderIndex]['RefBranchSeqId'];
-      getData(selectedUserSeqId,selectedRefBranchSeqId,DateTime.now().year ,DateTime.now().month, DateTime.now().day);
+      // setState(() {
+      //getData(selectedUserSeqId, selectedRefBranchSeqId, DateTime.now().year,DateTime.now().month, DateTime.now().day);
+      // });
     }
 
     return Scaffold(
@@ -86,7 +100,9 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                           (index) {
                         Navigator.pop(context);
                         senderIndex = index;
-                        setState(() {});
+                        setState(() {
+                          getData(selectedUserSeqId, selectedRefBranchSeqId, selectedDateTime!.year,selectedDateTime!.month, selectedDateTime!.day);
+                        });
                       })
                     },
                     trailing: familyList[senderIndex]['UserImgPath'] != null
@@ -141,194 +157,48 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                             child: SfCalendar(
                               view: CalendarView.month,
                               showDatePickerButton: true,
-                             // dataSource: _getCalendarDataSource(),
+                              // dataSource: _getCalendarDataSource(),
                               onTap: calendarTapped,
                             ),
                           ),
                         ),
-                        Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15.0),
-                            ),
-                            borderOnForeground: true,
-                            margin: EdgeInsets.only(
-                                top: 5, bottom: 20, left: 20, right: 20),
-                            child: Column(children: [
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: Container(
-                                    padding: EdgeInsets.only(
-                                        left: 10.0, top: 10.0, bottom: 10.0),
-                                    margin: EdgeInsets.zero,
-                                    width: double.infinity,
-                                    color: Colors.transparent,
-                                    child: Text(
-                                      "Holidays",
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold),
-                                    )),
-                              ),
-                              Container(
-                                height: 180,
-                                margin: EdgeInsets.symmetric(
-                                    vertical: 0, horizontal: 20),
-                                child: ListView.separated(
-                                  itemCount: _appointmentDetails.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return Container(
-                                        padding: EdgeInsets.all(2),
-                                        color: Colors.white,
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Padding(
-                                                  padding: EdgeInsets.all(3),
-                                                  child: Image(
-                                                      width: 30,
-                                                      height: 30,
-                                                      image: AssetImage(
-                                                          "assets/images/ico_classtime.png")),
-                                                ),
-                                                Padding(
-                                                    padding: EdgeInsets.all(3),
-                                                    child: Text(
-                                                      "Class time",
-                                                      textAlign: TextAlign.left,
-                                                      style: TextStyle(
-                                                        fontSize: 14,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
-                                                    )),
-                                                Padding(
-                                                  padding: EdgeInsets.all(3),
-                                                  child: Text(
-                                                    "${DateFormat('hh:mm a').format(_appointmentDetails[index].startTime)} - ${DateFormat('hh:mm a').format(_appointmentDetails[index].endTime)}",
-                                                    textAlign: TextAlign.right,
-                                                    style: TextStyle(
-                                                        color: Colors
-                                                            .blue.shade900,
-                                                        fontSize: 18,
-                                                        fontWeight:
-                                                            FontWeight.normal),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            Divider(
-                                              height: 20,
-                                              thickness: 0.5,
-                                              indent: 2,
-                                              endIndent: 2,
-                                              color: Colors.grey,
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Padding(
-                                                  padding: EdgeInsets.all(3),
-                                                  child: Image(
-                                                      width: 30,
-                                                      height: 30,
-                                                      image: AssetImage(
-                                                          "assets/images/ico_schedule.png")),
-                                                ),
-                                                Padding(
-                                                  padding: EdgeInsets.all(3),
-                                                  child: Text(
-                                                    "Schedule time",
-                                                    textAlign: TextAlign.left,
-                                                    style: TextStyle(
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    ),
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding: EdgeInsets.all(3),
-                                                  child: Text(
-                                                    "${CommonFunctions.getActualTime(_appointmentDetails[index])} - ${CommonFunctions.getActualEndTime(_appointmentDetails[index])}",
-                                                    textAlign: TextAlign.right,
-                                                    style: TextStyle(
-                                                        color: Colors
-                                                            .blue.shade900,
-                                                        fontSize: 18,
-                                                        fontWeight:
-                                                            FontWeight.normal),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            Divider(
-                                              height: 20,
-                                              thickness: 0.5,
-                                              indent: 2,
-                                              endIndent: 2,
-                                              color: Colors.grey,
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Padding(
-                                                  padding: EdgeInsets.all(3),
-                                                  child: Image(
-                                                      width: 30,
-                                                      height: 30,
-                                                      image: AssetImage(
-                                                          "assets/images/ico_time.png")),
-                                                ),
-                                                Padding(
-                                                  padding: EdgeInsets.all(3),
-                                                  child: Text(
-                                                    "Clock time",
-                                                    textAlign: TextAlign.left,
-                                                    style: TextStyle(
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    ),
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding: EdgeInsets.all(3),
-                                                  child: Text(
-                                                    "${CommonFunctions.getActualTime(_appointmentDetails[index])} - ${CommonFunctions.getActualEndTime(_appointmentDetails[index])}",
-                                                    textAlign: TextAlign.right,
-                                                    style: TextStyle(
-                                                        color: Colors
-                                                            .blue.shade900,
-                                                        fontSize: 18,
-                                                        fontWeight:
-                                                            FontWeight.normal),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ));
-                                  },
-                                  separatorBuilder:
-                                      (BuildContext context, int index) =>
-                                          const Divider(
-                                    height: 5,
-                                  ),
+                        Consumer<MySettingsListener>(
+                            builder: (context, data, settingsDta) {
+                          if (data.holidaysList.isNotEmpty) {
+                            print("data.holidaysList.isNotEmpty");
+                            return Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15.0),
                                 ),
-                              ),
-                            ])),
-                        Card(
+                                borderOnForeground: true,
+                                margin: EdgeInsets.only(
+                                    top: 5, bottom: 20, left: 20, right: 20),
+                                child: Column(children: [
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Container(
+                                        padding: EdgeInsets.only(
+                                            left: 10.0,
+                                            top: 10.0,
+                                            bottom: 10.0),
+                                        margin: EdgeInsets.zero,
+                                        width: double.infinity,
+                                        color: Colors.transparent,
+                                        child: Text(
+                                          "Holidays",
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold),
+                                        )),
+                                  ),
+                                  HolidayListItemView(data.holidaysList)
+                                ]));
+                          }else{
+                            return SizedBox();
+                          }
+                        }),
+                       
+                       /*  Card(
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15.0),
                             ),
@@ -490,6 +360,8 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                                 ),
                               ),
                             ]))
+                       */
+                      
                       ],
                     ),
                   ),

@@ -19,8 +19,9 @@ class CommonUtil {
   updateDriverDetailsSettings(var driverDetails, BuildContext context) {
     context.read<MySettingsListener>().updateDriverDetails(driverDetails);
   }
+
 //ParentApp
-Future<void> getEntryToDashboard(BuildContext context) async {
+  Future<void> getEntryToDashboard(BuildContext context) async {
     var ParamData = {
       "MAppDevSeqId": await MySharedPref().getData(AppSettings.Sp_MAppDevSeqId)
     };
@@ -45,8 +46,12 @@ Future<void> getEntryToDashboard(BuildContext context) async {
     }
   }
 
-  Future<void> getDashboard(BuildContext context,RefUserSeqId,RefBranchSeqId) async {
-    var ParamData = {"RefUserSeqId": RefUserSeqId, "RefBranchSeqId": RefBranchSeqId};
+  Future<void> getDashboard(
+      BuildContext context, RefUserSeqId, RefBranchSeqId) async {
+    var ParamData = {
+      "RefUserSeqId": RefUserSeqId,
+      "RefBranchSeqId": RefBranchSeqId
+    };
     Future<Map<String, dynamic>> res = RestApiProvider().authorizedPostRequest(
       ParamData,
       AppSettings.GetDashboard,
@@ -65,8 +70,15 @@ Future<void> getEntryToDashboard(BuildContext context) async {
     }
   }
 
-  Future<void> getGetCalendarData(BuildContext context,RefUserSeqId,RefBranchSeqId, Year, Month, Date) async {
-    var ParamData = {"RefUserSeqId": RefUserSeqId, "RefBranchSeqId": RefBranchSeqId,"Year":Year,"Month":Month,"Date":Date};
+  Future<void> getGetCalendarData(BuildContext context, RefUserSeqId,
+      RefBranchSeqId, Year, Month, Date) async {
+    var ParamData = {
+      "RefUserSeqId": RefUserSeqId,
+      "RefBranchSeqId": RefBranchSeqId,
+      "Year": Year,
+      "Month": Month,
+      "Date": Date
+    };
     Future<Map<String, dynamic>> res = RestApiProvider().authorizedPostRequest(
       ParamData,
       AppSettings.GetCalendarData,
@@ -81,10 +93,10 @@ Future<void> getEntryToDashboard(BuildContext context) async {
   getCalendarDataSuccess(BuildContext context, Map<String, dynamic> response) {
     if (response['Table'][0]['code'] == 10) {
       print("GetCalendarData success");
-      if(response['Table1'] != null || response['Table1'] != [])
-      context
-          .read<MySettingsListener>()
-          .updateGetCalendarData(response['Table1']);
+      if (response['Table1'] != null || response['Table1'] != [])
+        context
+            .read<MySettingsListener>()
+            .updateGetCalendarData(response['Table1']);
     }
   }
 

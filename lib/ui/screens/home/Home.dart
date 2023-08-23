@@ -12,7 +12,7 @@ import 'package:provider/provider.dart';
 
 import '../../../common/listener/settings_listener.dart';
 import '../../../common/util/common_funtions.dart';
-import '../widgets/DashboardMenuList.dart';
+import '../widgets/DashBordMenuList.dart';
 import '/common/HexColor.dart';
 import '/common/json_responses.dart';
 import '/model/HolidayModel.dart';
@@ -333,7 +333,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   Future<void> initValues() async {
     CommonUtil().getEntryToDashboard(context);
-    //CommonUtil().getDashboard(context,"106312.0","11001");
+    CommonUtil().getDashboard(context,"106312.0","11001");
   }
 
   @override
@@ -624,123 +624,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                         context, index, data.dashboardMenuList,data.familyList,imgBaseUrl);
                                   });
                             } else {
-                              return SizedBox(); /* ListView(
-                                // This next line does the trick.
-                                scrollDirection: Axis.horizontal,
-                                children: [
-                                  Container(
-                                    width: 90.0,
-                                    child: InkWell(
-                                        onTap: () => Navigator.of(context)
-                                            .pushNamed('/MealOrder'),
-                                        child: Column(
-                                          children: [
-                                            Image(
-                                                width: 50,
-                                                height: 50,
-                                                image: AssetImage(
-                                                    "assets/images/ico_order.png")),
-                                            SizedBox(
-                                              height: 10,
-                                            ),
-                                            Text(
-                                              'Meal Order',
-                                              style: TextStyle(
-                                                  fontSize: 11.0,
-                                                  color: Colors.black,
-                                                  //letterSpacing: 2.0,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ],
-                                        )),
-                                  ),
-                                  Container(
-                                    width: 90.0,
-                                    child: InkWell(
-                                        onTap: () => Navigator.of(context)
-                                            .pushNamed('/StudentAttendance'),
-                                        child: Column(
-                                          children: [
-                                            Image(
-                                                width: 50,
-                                                height: 50,
-                                                image: AssetImage(
-                                                    "assets/images/ico_attendance.png")),
-                                            SizedBox(
-                                              height: 10,
-                                            ),
-                                            Text(
-                                              "Attendance",
-                                              style: TextStyle(
-                                                  fontSize: 11.0,
-                                                  color: Colors.black,
-                                                  //letterSpacing: 2.0,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ],
-                                        )),
-                                  ),
-                                  Container(
-                                    width: 90.0,
-                                    child: InkWell(
-                                        onTap: () => Navigator.of(context)
-                                            .pushNamed('/MFPTopup'),
-                                        child: Column(
-                                          children: [
-                                            Image(
-                                                width: 50,
-                                                height: 50,
-                                                image: AssetImage(
-                                                    "assets/images/ico_top_up.png")),
-                                            SizedBox(
-                                              height: 10,
-                                            ),
-                                            Text(
-                                              "Topup",
-                                              style: TextStyle(
-                                                  fontSize: 11.0,
-                                                  color: Colors.black,
-                                                  //letterSpacing: 2.0,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ],
-                                        )),
-                                  ),
-                                  Container(
-                                    width: 90.0,
-                                    child: InkWell(
-                                        onTap: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      HolidayCalendar(
-                                                          _getCalendarDataSource())));
-                                        },
-                                        child: Column(
-                                          children: [
-                                            Image(
-                                                width: 50,
-                                                height: 50,
-                                                image: AssetImage(
-                                                    "assets/images/ico_schoolattendance.png")),
-                                            SizedBox(
-                                              height: 10,
-                                            ),
-                                            Text(
-                                              "Calender",
-                                              style: TextStyle(
-                                                  fontSize: 11.0,
-                                                  color: Colors.black,
-                                                  //letterSpacing: 2.0,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ],
-                                        )),
-                                  ),
-                                ],
-                              );
-                             */
+                              return SizedBox(); 
                             }
                           }),
                         ),

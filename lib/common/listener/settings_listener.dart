@@ -30,7 +30,7 @@ class MySettingsListener with ChangeNotifier {
       UnmodifiableListView(_notificationList);
   get size => _notificationList.length;
 
-UnmodifiableListView<dynamic> get holidaysList =>
+  UnmodifiableListView<dynamic> get holidaysList =>
       UnmodifiableListView(_holidaysList);
 
   UnmodifiableListView<dynamic> get notificationCategoryList =>
@@ -50,12 +50,13 @@ UnmodifiableListView<dynamic> get holidaysList =>
     _dashboardMenuList = menuList;
   }
 
-  updateDashBoard(){
-
+  updateDashBoard() {
+    notifyListeners();
   }
 
-  updateGetCalendarData(List holidaysList){
+  updateGetCalendarData(List holidaysList) {
     _holidaysList = holidaysList;
+    notifyListeners();
   }
 
   updateSettings(var settingDetails) {
