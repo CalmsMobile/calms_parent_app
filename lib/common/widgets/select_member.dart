@@ -6,7 +6,7 @@ import 'package:dropdown_button2/custom_dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 
-PreferredSizeWidget getMyAppbar(var titleText, List<Widget> actions1) {
+PreferredSizeWidget getMyAppbar(context,var titleText, List<Widget> actions1) {
   return AppBar(
       toolbarHeight: 70,
       elevation: 0,
@@ -19,7 +19,9 @@ PreferredSizeWidget getMyAppbar(var titleText, List<Widget> actions1) {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           InkWell(
-            onTap: () {},
+            onTap: () {
+              Navigator.pop(context);
+            },
             child: Image(
               width: 50,
               height: 50,

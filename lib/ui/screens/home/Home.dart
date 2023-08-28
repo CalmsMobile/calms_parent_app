@@ -6,6 +6,7 @@ import 'package:calms_parent_latest/common/app_settings.dart';
 import 'package:calms_parent_latest/common/common_api.dart';
 import 'package:calms_parent_latest/common/my_shared_pref.dart';
 import 'package:calms_parent_latest/ui/screens/notifications/notification-view/notification-view.dart';
+import 'package:calms_parent_latest/ui/screens/widgets/RecentActivityListView.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -39,9 +40,9 @@ class HomePage extends StatefulWidget {
   //final int familyPos;
   //final Function pageSwiped;
 
-  final List<ModuleModel> items = RandomColorModel().getModuleList();
-  final List<Map> outstandingList = JsonResponses.outstandingList;
-  final List<Map> topupList = [
+  //final List<ModuleModel> items = RandomColorModel().getModuleList();
+  //final List<Map> outstandingList = JsonResponses.outstandingList;
+  /* final List<Map> topupList = [
     {
       "name": "James",
       "mode_of_topup": "Photocopier",
@@ -145,7 +146,7 @@ class HomePage extends StatefulWidget {
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTI2iHiAT-ICPyezz_uJzuUWArjKnNDaruP-DbfLD0CWrT-oqjcpe2RfBLDl9DTRbFw9qQ&usqp=CAU"
     }
   ];
-  //final List<Map> familyList;
+   */ //final List<Map> familyList;
   final List<Map> storeItem = JsonResponses.storeItem;
   final List<Map> upcomingActivities = [
     {
@@ -333,7 +334,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   Future<void> initValues() async {
     CommonUtil().getEntryToDashboard(context);
-    CommonUtil().getDashboard(context,"106312.0","11001");
   }
 
   @override
@@ -444,158 +444,168 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         padding: EdgeInsets.only(left: 0, right: 0),
                         child: Consumer<MySettingsListener>(
                             builder: (context, data, settingsDta) {
-                          return Column(children: [
-                            SizedBox(
-                              height: 20,
-                            ),
-                            CarouselSlider(
-                              items: data.familyList
-                                  .map((item) => InkWell(
-                                        child: Container(
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceAround,
-                                            children: [
-                                              if (data.familyList[
-                                                      data.familyPos]['Name'] ==
-                                                  item["Name"])
-                                                Image.asset(
-                                                  "assets/images/swipe_left.png",
-                                                  width: 25,
-                                                ),
-                                              Container(
-                                                width: (data.familyList[
-                                                                data.familyPos]
-                                                            ['Name'] ==
-                                                        item["Name"])
-                                                    ? 92
-                                                    : 62,
-                                                height: (data.familyList[
-                                                                data.familyPos]
-                                                            ['Name'] ==
-                                                        item["Name"])
-                                                    ? 92
-                                                    : 62,
-                                                child: item['UserImgPath'] !=
-                                                        null
-                                                    ? CircleAvatar(
-                                                        backgroundImage:
-                                                            NetworkImage(
-                                                                imgBaseUrl +
-                                                                    item[
-                                                                        "UserImgPath"]),
-                                                      )
-                                                    : CircleAvatar(
-                                                        backgroundColor:
-                                                            Colors.blue[700],
-                                                        child: Text(
-                                                          CommonFunctions
-                                                              .getInitials(
-                                                                  item['Name']),
-                                                          style: TextStyle(
-                                                              fontSize: 22.0,
-                                                              color:
-                                                                  Colors.white,
-                                                              letterSpacing:
-                                                                  2.0,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w900),
-                                                        ),
-                                                      ),
-                                                decoration: BoxDecoration(
-                                                  //DecprationImage
-                                                  border: Border.all(
-                                                      color: Theme.of(context)
-                                                          .primaryColor,
-                                                      width: 4.0,
-                                                      style: BorderStyle
-                                                          .solid), //Border.all
-
-                                                  borderRadius:
-                                                      BorderRadius.only(
-                                                    topLeft:
-                                                        Radius.circular(60.0),
-                                                    topRight:
-                                                        Radius.circular(60.0),
-                                                    bottomLeft:
-                                                        Radius.circular(60.0),
-                                                    bottomRight:
-                                                        Radius.circular(60.0),
+                          if (data.familyList.isNotEmpty) {
+                            return Column(children: [
+                              SizedBox(
+                                height: 20,
+                              ),
+                              CarouselSlider(
+                                items: data.familyList
+                                    .map((item) => InkWell(
+                                          child: Container(
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceAround,
+                                              children: [
+                                                if (data.familyList[data
+                                                        .familyPos]['Name'] ==
+                                                    item["Name"])
+                                                  Image.asset(
+                                                    "assets/images/swipe_left.png",
+                                                    width: 25,
                                                   ),
-                                                  //BorderRadius.only
-                                                  /************************************/
-                                                  /* The BoxShadow widget  is here */
-                                                  /************************************/
-                                                ),
-                                              ),
-                                              if (data.familyList[
-                                                      data.familyPos]['Name'] ==
-                                                  item["Name"])
-                                                Image.asset(
-                                                  "assets/images/swipe_right.png",
-                                                  width: 25,
-                                                )
-                                            ],
-                                          ),
-                                        ),
-                                        onTap: () => {
-                                          Navigator.of(context).pushNamed(
-                                              '/ProfileMain',
-                                              arguments: {
-                                                "profileData": item,
-                                                "imgBaseUrl": imgBaseUrl
-                                              })
-                                        },
-                                      ))
-                                  .toList(),
+                                                Container(
+                                                  width: (data.familyList[data
+                                                                  .familyPos]
+                                                              ['Name'] ==
+                                                          item["Name"])
+                                                      ? 92
+                                                      : 62,
+                                                  height: (data.familyList[data
+                                                                  .familyPos]
+                                                              ['Name'] ==
+                                                          item["Name"])
+                                                      ? 92
+                                                      : 62,
+                                                  child: item['UserImgPath'] !=
+                                                          null
+                                                      ? CircleAvatar(
+                                                          backgroundImage:
+                                                              NetworkImage(
+                                                                  imgBaseUrl +
+                                                                      item[
+                                                                          "UserImgPath"]),
+                                                        )
+                                                      : CircleAvatar(
+                                                          backgroundColor:
+                                                              Colors.blue[700],
+                                                          child: Text(
+                                                            CommonFunctions
+                                                                .getInitials(
+                                                                    item[
+                                                                        'Name']),
+                                                            style: TextStyle(
+                                                                fontSize: 22.0,
+                                                                color: Colors
+                                                                    .white,
+                                                                letterSpacing:
+                                                                    2.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w900),
+                                                          ),
+                                                        ),
+                                                  decoration: BoxDecoration(
+                                                    //DecprationImage
+                                                    border: Border.all(
+                                                        color: Theme.of(context)
+                                                            .primaryColor,
+                                                        width: 4.0,
+                                                        style: BorderStyle
+                                                            .solid), //Border.all
 
-                              //Slider Container properties
-                              options: CarouselOptions(
-                                  height: 100.0,
-                                  enlargeStrategy:
-                                      CenterPageEnlargeStrategy.scale,
-                                  enlargeCenterPage: true,
-                                  autoPlay: false,
-                                  aspectRatio: 16 / 9,
-                                  autoPlayCurve: Curves.fastOutSlowIn,
-                                  enableInfiniteScroll: true,
-                                  autoPlayAnimationDuration:
-                                      Duration(milliseconds: 800),
-                                  viewportFraction: 0.35,
-                                  onPageChanged: (index, reason) {
-                                    data.pageSwiped(index);
-                                  },
-                                  initialPage: data.familyPos),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              data.familyList[data.familyPos]['Name'],
-                              style: TextStyle(
-                                  fontSize: 22.0,
-                                  color: Colors.black87,
-                                  letterSpacing: 2.0,
-                                  fontWeight: FontWeight.w400),
-                            ),
-                            Text(
-                              "Wallet Ballance",
-                              style: TextStyle(
-                                  fontSize: 14.0,
-                                  color: Colors.grey[600],
-                                  letterSpacing: 2.0,
-                                  fontWeight: FontWeight.w300),
-                            ),
-                            Text(
-                              'MYR ${double.parse(data.familyList[data.familyPos]['Balance'].toString()).toStringAsFixed(2)}',
-                              style: TextStyle(
-                                  fontSize: 18.0,
-                                  color: Colors.blue[700],
-                                  letterSpacing: 2.0,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ]);
+                                                    borderRadius:
+                                                        BorderRadius.only(
+                                                      topLeft:
+                                                          Radius.circular(60.0),
+                                                      topRight:
+                                                          Radius.circular(60.0),
+                                                      bottomLeft:
+                                                          Radius.circular(60.0),
+                                                      bottomRight:
+                                                          Radius.circular(60.0),
+                                                    ),
+                                                    //BorderRadius.only
+                                                    /************************************/
+                                                    /* The BoxShadow widget  is here */
+                                                    /************************************/
+                                                  ),
+                                                ),
+                                                if (data.familyList[data
+                                                        .familyPos]['Name'] ==
+                                                    item["Name"])
+                                                  Image.asset(
+                                                    "assets/images/swipe_right.png",
+                                                    width: 25,
+                                                  )
+                                              ],
+                                            ),
+                                          ),
+                                          onTap: () => {
+                                            Navigator.of(context).pushNamed(
+                                                '/ProfileMain',
+                                                arguments: {
+                                                  "profileData": item,
+                                                  "imgBaseUrl": imgBaseUrl
+                                                })
+                                          },
+                                        ))
+                                    .toList(),
+
+                                //Slider Container properties
+                                options: CarouselOptions(
+                                    height: 100.0,
+                                    enlargeStrategy:
+                                        CenterPageEnlargeStrategy.scale,
+                                    enlargeCenterPage: true,
+                                    autoPlay: false,
+                                    aspectRatio: 16 / 9,
+                                    autoPlayCurve: Curves.fastOutSlowIn,
+                                    enableInfiniteScroll: true,
+                                    autoPlayAnimationDuration:
+                                        Duration(milliseconds: 800),
+                                    viewportFraction: 0.35,
+                                    onPageChanged: (index, reason) {
+                                      data.pageSwiped(index);
+                                      CommonUtil().getDashboard(
+                                          context,
+                                          data.familyList[index]['UserSeqId'],
+                                          data.familyList[index]
+                                              ['RefBranchSeqId']);
+                                    },
+                                    initialPage: data.familyPos),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                data.familyList[data.familyPos]['Name'],
+                                style: TextStyle(
+                                    fontSize: 22.0,
+                                    color: Colors.black87,
+                                    letterSpacing: 2.0,
+                                    fontWeight: FontWeight.w400),
+                              ),
+                              Text(
+                                "Wallet Ballance",
+                                style: TextStyle(
+                                    fontSize: 14.0,
+                                    color: Colors.grey[600],
+                                    letterSpacing: 2.0,
+                                    fontWeight: FontWeight.w300),
+                              ),
+                              Text(
+                                'MYR ${double.parse(data.familyList[data.familyPos]['Balance'].toString()).toStringAsFixed(2)}',
+                                style: TextStyle(
+                                    fontSize: 18.0,
+                                    color: Colors.blue[700],
+                                    letterSpacing: 2.0,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ]);
+                          } else {
+                            return SizedBox(height: 100);
+                          }
                         }),
                       ),
                     ],
@@ -621,66 +631,163 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                   itemBuilder:
                                       (BuildContext context, int index) {
                                     return menuList(
-                                        context, index, data.dashboardMenuList,data.familyList,imgBaseUrl);
+                                        context,
+                                        index,
+                                        data.dashboardMenuList,
+                                        data.familyList,
+                                        imgBaseUrl);
                                   });
                             } else {
-                              return SizedBox(); 
+                              return SizedBox();
                             }
                           }),
                         ),
                       ),
-                      Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0),
-                        ),
-                        borderOnForeground: true,
-                        margin:
-                            EdgeInsets.only(left: 20, right: 20, bottom: 20),
-                        child: Container(
-                          margin: EdgeInsets.all(10),
-                          child: Column(
-                            children: [
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: Container(
-                                    padding: EdgeInsets.only(
-                                        left: 10.0, top: 10.0, bottom: 10.0),
-                                    margin: EdgeInsets.zero,
-                                    width: double.infinity,
-                                    color: Colors.transparent,
-                                    child: Text(
-                                      "OUTSTANDING",
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold),
-                                    )),
+                      Consumer<MySettingsListener>(
+                          builder: (context, data, settingsDta) {
+                        if (data.dashboardSpendingList.isNotEmpty) {
+                          return Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                            borderOnForeground: true,
+                            margin: EdgeInsets.only(
+                                left: 20, right: 20, bottom: 20),
+                            child: Container(
+                              margin: EdgeInsets.all(10),
+                              child: Column(
+                                children: [
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Container(
+                                        padding: EdgeInsets.only(
+                                            left: 10.0,
+                                            top: 10.0,
+                                            bottom: 10.0),
+                                        margin: EdgeInsets.zero,
+                                        width: double.infinity,
+                                        color: Colors.transparent,
+                                        child: Text(
+                                          "PURCHASE HISTORY",
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold),
+                                        )),
+                                  ),
+                                  PurchaseListView(data.dashboardSpendingList),
+                                ],
                               ),
-                              Column(
-                                children: <Widget>[
-                                  Container(
-                                    width: double.infinity,
-                                    margin: EdgeInsets.zero,
-                                    padding: EdgeInsets.zero,
-                                    child: ListView.builder(
+                            ),
+                          );
+                        } else {
+                          return SizedBox();
+                        }
+                      }),
+                      Consumer<MySettingsListener>(
+                          builder: (context, data, settingsDta) {
+                        if (data.dashboardRecentActivityList.isNotEmpty) {
+                          return Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                            borderOnForeground: true,
+                            margin: EdgeInsets.only(
+                                left: 20, right: 20, bottom: 20),
+                            child: Container(
+                              margin: EdgeInsets.all(10),
+                              child: Column(
+                                children: [
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Container(
+                                        padding: EdgeInsets.only(
+                                            left: 10.0,
+                                            top: 10.0,
+                                            bottom: 10.0),
+                                        margin: EdgeInsets.zero,
+                                        width: double.infinity,
+                                        color: Colors.transparent,
+                                        child: Text(
+                                          "RECENT ACTIVITIES",
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold),
+                                        )),
+                                  ),
+                                  RecentActivityListView(
+                                      data.dashboardRecentActivityList)
+                                ],
+                              ),
+                            ),
+                          );
+                        } else {
+                          return SizedBox();
+                        }
+                      }),
+                      Consumer<MySettingsListener>(
+                          builder: (context, data, settingsDta) {
+                        if (data.dashboardOutStandingList.isNotEmpty) {
+                          return Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                            borderOnForeground: true,
+                            margin: EdgeInsets.only(
+                                left: 20, right: 20, bottom: 20),
+                            child: Container(
+                              margin: EdgeInsets.all(10),
+                              child: Column(
+                                children: [
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Container(
+                                        padding: EdgeInsets.only(
+                                            left: 10.0,
+                                            top: 10.0,
+                                            bottom: 10.0),
+                                        margin: EdgeInsets.zero,
+                                        width: double.infinity,
+                                        color: Colors.transparent,
+                                        child: Text(
+                                          "OUTSTANDING",
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold),
+                                        )),
+                                  ),
+                                  Column(
+                                    children: <Widget>[
+                                      Container(
+                                        width: double.infinity,
+                                        margin: EdgeInsets.zero,
                                         padding: EdgeInsets.zero,
-                                        shrinkWrap: true,
-                                        physics: NeverScrollableScrollPhysics(
-                                            parent:
-                                                AlwaysScrollableScrollPhysics()),
-                                        itemCount:
-                                            widget.outstandingList.length,
-                                        itemBuilder:
-                                            (BuildContext context, int index) {
-                                          return userList(context, index,
-                                              widget.outstandingList);
-                                        }),
+                                        child: ListView.builder(
+                                            padding: EdgeInsets.zero,
+                                            shrinkWrap: true,
+                                            physics: NeverScrollableScrollPhysics(
+                                                parent:
+                                                    AlwaysScrollableScrollPhysics()),
+                                            itemCount: data
+                                                .dashboardOutStandingList
+                                                .length,
+                                            itemBuilder: (BuildContext context,
+                                                int index) {
+                                              return outStandingList(
+                                                  context,
+                                                  index,
+                                                  data.dashboardOutStandingList);
+                                            }),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
-                            ],
-                          ),
-                        ),
-                      ),
+                            ),
+                          );
+                        } else {
+                          return SizedBox();
+                        }
+                      }),
 
                       /* Align(
                           alignment: Alignment.centerLeft,
@@ -695,7 +802,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                     fontSize: 16, fontWeight: FontWeight.bold),
                               )),
                         ), */
-                      Card(
+                      /*Card(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15.0),
                         ),
@@ -738,7 +845,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                             ),
                             if (storeCollapse)
                               StoreItemListView(widget.storeItem),
-                            /* Align(
+                             Align(
                       alignment: Alignment.centerLeft,
                       child: InkWell(
                         child: Container(
@@ -841,10 +948,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         },
                       ),
                     ),
-                    if (purchaseCollapse) PurchaseListView(widget.purchaseList), */
+                    if (purchaseCollapse) PurchaseListView(widget.purchaseList), 
                           ]),
                         ),
-                      ),
+                      ),*/
                     ],
                   ),
                   SizedBox(
@@ -937,7 +1044,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 }
 
-AppointmentDataSource _getCalendarDataSource() {
+/* AppointmentDataSource _getCalendarDataSource() {
   List<Appointment> appointments = <Appointment>[];
   appointments.add(Appointment(
       startTime: DateTime.now(),
@@ -1079,3 +1186,4 @@ class MeetingDataSource extends CalendarDataSource {
     return appointments![index].isAllDay;
   }
 }
+ */

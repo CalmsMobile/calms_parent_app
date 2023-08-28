@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-class PurchaseListView extends StatelessWidget {
-  final List purchaseList;
-  const PurchaseListView(this.purchaseList);
+class AttendanceListView extends StatelessWidget {
+  final List attendanceList;
+  const AttendanceListView(this.attendanceList);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class PurchaseListView extends StatelessWidget {
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(
                     parent: AlwaysScrollableScrollPhysics()),
-                itemCount: purchaseList.length,
+                itemCount: attendanceList.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Column(children: <Widget>[
                     new Divider(
@@ -28,14 +28,14 @@ class PurchaseListView extends StatelessWidget {
                       /* leading: CircleAvatar(
                         backgroundColor: Colors.white,
                         backgroundImage:
-                            NetworkImage(purchaseList[index]['image']),
+                            NetworkImage(attendanceList[index]['image']),
                         radius: 20,
                       ), */
                       title: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            purchaseList[index]['ActionName'],
+                            attendanceList[index]['Status'],
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 14),
                           ),
@@ -55,7 +55,7 @@ class PurchaseListView extends StatelessWidget {
                                         color: Colors.grey.shade500,
                                         fontSize: 10)),
                                 new TextSpan(
-                                    //text: purchaseList[index]['date'],
+                                    //text: attendanceList[index]['date'],
                                     text: '',
                                     style: new TextStyle(
                                         color: Colors.grey.shade500,
@@ -72,7 +72,7 @@ class PurchaseListView extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                               // "# " + purchaseList[index]['orderID'],
+                               // "# " + attendanceList[index]['orderID'],
                                 "",
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
@@ -80,7 +80,7 @@ class PurchaseListView extends StatelessWidget {
                                     fontSize: 10),
                               ),
                               Text(
-                                //"Payment for: " + purchaseList[index]['pay_for'],
+                                //"Payment for: " + attendanceList[index]['pay_for'],
                                 "",
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
@@ -89,7 +89,7 @@ class PurchaseListView extends StatelessWidget {
                               ),
                             ],
                           ),
-                          new RichText(
+                          /* new RichText(
                             text: new TextSpan(
                               // Note: Styles for TextSpans must be explicitly defined.
                               // Child text spans will inherit styles from parent
@@ -105,16 +105,16 @@ class PurchaseListView extends StatelessWidget {
                                         color: Colors.red.shade500,
                                         fontSize: 12)),
                                 new TextSpan(
-                                    text: purchaseList[index]['Purchase'].toString(),
+                                    text: attendanceList[index]['Purchase'].toString(),
                                     style: TextStyle(fontSize: 14)),
                               ],
                             ),
                           ),
-                        ],
+                         */],
                       ),
                       onTap: () {
-                        Navigator.of(context).pushNamed('/PurchaseDetails',
-                            arguments: purchaseList[index]);
+                       /*  Navigator.of(context).pushNamed('/PurchaseDetails',
+                            arguments: attendanceList[index]); */
                       },
                     )
                   ]);

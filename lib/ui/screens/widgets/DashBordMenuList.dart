@@ -19,7 +19,7 @@ Widget menuList(
                   "imgBaseUrl": imgBaseUrl
                 }),
               if (menu[index]['MenuId'] == 2019.0)
-                Navigator.of(context).pushNamed('/MFPTopup'),
+                Navigator.of(context).pushNamed('/TopupPage'),
               if (menu[index]['MenuId'] == 2022.0)
                 Navigator.of(context).pushNamed('/InvoicePayment'),
               if (menu[index]['MenuId'] == 1.0)

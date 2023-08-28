@@ -28,7 +28,9 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.pop(context);
+                },
                 child: Image(
                   width: 50,
                   height: 50,

@@ -43,6 +43,12 @@ class CommonUtil {
       context
           .read<MySettingsListener>()
           .updateEntryToDashboardLists(response['Table1'], response['Table2']);
+      getDashboard(
+          context,
+          response['Table1'][context.read<MySettingsListener>().familyPos]
+              ['UserSeqId'],
+          response['Table1'][context.read<MySettingsListener>().familyPos]
+              ['RefBranchSeqId']);
     }
   }
 
@@ -59,24 +65,23 @@ class CommonUtil {
       false,
     );
     res
-        .then((response) => {EntryToDashboardSuccess(context, response)})
+        .then((response) => {getDashboardSuccess(context, response)})
         .onError((error, stackTrace) => {authorizedPostRequestError(error)});
   }
 
   getDashboardSuccess(BuildContext context, Map<String, dynamic> response) {
     if (response['Table'][0]['code'] == 10) {
       print("getDashboard success");
-      context.read<MySettingsListener>().updateDashBoard();
+      context.read<MySettingsListener>().updateDashBoardList(
+          response['Table1'], response['Table2'], response['Table3']);
     }
   }
 
-  Future<void> getGetCalendarData(BuildContext context, RefUserSeqId,
-      RefBranchSeqId, Year, Month, Date) async {
+  Future<void> getGetCalendarData(
+      BuildContext context, RefUserSeqId, RefBranchSeqId, Date) async {
     var ParamData = {
       "RefUserSeqId": RefUserSeqId,
       "RefBranchSeqId": RefBranchSeqId,
-      "Year": Year,
-      "Month": Month,
       "Date": Date
     };
     Future<Map<String, dynamic>> res = RestApiProvider().authorizedPostRequest(
@@ -94,9 +99,35 @@ class CommonUtil {
     if (response['Table'][0]['code'] == 10) {
       print("GetCalendarData success");
       if (response['Table1'] != null || response['Table1'] != [])
-        context
-            .read<MySettingsListener>()
-            .updateGetCalendarData(response['Table1']);
+        context.read<MySettingsListener>().updateGetCalendarData(
+            response['Table1'], response['Table2'], response['Table3']);
+    }
+  }
+
+  Future<void> getFamilyMemberForTopup(
+      context, RefUserSeqId, RefBranchSeqId, RefMemberTypeSeqId) async {
+    var ParamData = {
+      "RefUserSeqId": RefUserSeqId,
+      "RefBranchSeqId": "11001",
+      "RefMemberTypeSeqId": RefMemberTypeSeqId
+    };
+    Future<Map<String, dynamic>> res = RestApiProvider().authorizedPostRequest(
+      ParamData,
+      AppSettings.GetFamilyMemberForTopup,
+      context,
+      false,
+    );
+    res
+        .then((response) => {getFamilyMemberForTopupSuccess(context, response)})
+        .onError((error, stackTrace) => {authorizedPostRequestError(error)});
+  }
+
+  getFamilyMemberForTopupSuccess(BuildContext context, response) {
+   if (response['Table'][0]['code'] == 10) {
+      print("getFamilyMemberForTopupSuccess success");
+      if (response['Table1'] != null || response['Table1'] != [])
+        context.read<MySettingsListener>().updateTopupMembersList(
+            response['Table1']);
     }
   }
 

@@ -24,7 +24,8 @@ class _MFPTopupState extends State<MFPTopup> {
         "familtid": "FMY0001",
         "relationship": "Father",
         "email": "makame147@gmail.com",
-        "image": "http://103.6.163.49:2008/FS/Profile/ResizeImg/5b43-e4c2-2021-11-10-16-31-58-086/user%20icon.png"
+        "image":
+            "http://103.6.163.49:2008/FS/Profile/ResizeImg/5b43-e4c2-2021-11-10-16-31-58-086/user%20icon.png"
       },
       {
         "name": "SITI KHALIDA",
@@ -35,7 +36,8 @@ class _MFPTopupState extends State<MFPTopup> {
         "familtid": "FMY0001",
         "relationship": "Mother",
         "email": "calms.rnd@gmail.com",
-        "image": "http://103.6.163.49:2008/FS/Profile/ResizeImg/5b43-e4c2-2021-11-10-16-31-58-086/user%20icon.png"
+        "image":
+            "http://103.6.163.49:2008/FS/Profile/ResizeImg/5b43-e4c2-2021-11-10-16-31-58-086/user%20icon.png"
       },
       {
         "name": "HAZIM",
@@ -46,7 +48,8 @@ class _MFPTopupState extends State<MFPTopup> {
         "contact": "0123467589",
         "memberId": "M1001",
         "desc": "",
-        "image": "http://103.6.163.49:2008/FS/Profile/ResizeImg/5b43-e4c2-2021-11-10-16-31-58-086/user%20icon.png"
+        "image":
+            "http://103.6.163.49:2008/FS/Profile/ResizeImg/5b43-e4c2-2021-11-10-16-31-58-086/user%20icon.png"
       },
       {
         "name": "MARIE LIM",
@@ -57,11 +60,12 @@ class _MFPTopupState extends State<MFPTopup> {
         "memberId": "M1001",
         "contact": "1345657",
         "desc": "",
-        "image": "http://103.6.163.49:2008/FS/Profile/ResizeImg/5b43-e4c2-2021-11-10-16-31-58-086/user%20icon.png"
+        "image":
+            "http://103.6.163.49:2008/FS/Profile/ResizeImg/5b43-e4c2-2021-11-10-16-31-58-086/user%20icon.png"
       },
     ];
     return Scaffold(
-      appBar: getMyAppbar("MFP Topup", []),
+      appBar: getMyAppbar(context, "MFP Topup", []),
       body: Container(
           constraints: BoxConstraints.expand(),
           decoration: BoxDecoration(

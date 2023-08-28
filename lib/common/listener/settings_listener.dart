@@ -8,7 +8,17 @@ class MySettingsListener with ChangeNotifier {
   var _driverDetails;
   List _familyList = [];
   List _dashboardMenuList = [];
-  List _holidaysList = [];
+
+  List _dashboardSpendingList = [];
+  List _dashboardRecentActivityList = [];
+  List _dashboardOutStandingList = [];
+
+  List _calendarHolidaysList = [];
+  List _calendarAttendanceList = [];
+  List _calendarTransactionList = [];
+
+  List _topupMembersList = [];
+
   int _familyPos = 0;
   List _notificationList = [];
   List _notificationCategoryList = [];
@@ -26,12 +36,28 @@ class MySettingsListener with ChangeNotifier {
       UnmodifiableListView(_dashboardMenuList);
   get dashboardMenuListsize => _dashboardMenuList.length;
 
+  UnmodifiableListView<dynamic> get dashboardSpendingList =>
+      UnmodifiableListView(_dashboardSpendingList);
+
+  UnmodifiableListView<dynamic> get dashboardRecentActivityList =>
+      UnmodifiableListView(_dashboardRecentActivityList);
+
+  UnmodifiableListView<dynamic> get dashboardOutStandingList =>
+      UnmodifiableListView(_dashboardOutStandingList);
+
   UnmodifiableListView<dynamic> get notificationList =>
       UnmodifiableListView(_notificationList);
   get size => _notificationList.length;
 
-  UnmodifiableListView<dynamic> get holidaysList =>
-      UnmodifiableListView(_holidaysList);
+  UnmodifiableListView<dynamic> get calendarHolidaysList =>
+      UnmodifiableListView(_calendarHolidaysList);
+  UnmodifiableListView<dynamic> get calendarAttendanceList =>
+      UnmodifiableListView(_calendarAttendanceList);
+  UnmodifiableListView<dynamic> get calendarTransactionList =>
+      UnmodifiableListView(_calendarTransactionList);
+
+  UnmodifiableListView<dynamic> get topupMembersList =>
+      UnmodifiableListView(_topupMembersList);
 
   UnmodifiableListView<dynamic> get notificationCategoryList =>
       UnmodifiableListView(_notificationCategoryList);
@@ -48,14 +74,27 @@ class MySettingsListener with ChangeNotifier {
   updateEntryToDashboardLists(List familyList, List menuList) {
     _familyList = familyList;
     _dashboardMenuList = menuList;
-  }
-
-  updateDashBoard() {
     notifyListeners();
   }
 
-  updateGetCalendarData(List holidaysList) {
-    _holidaysList = holidaysList;
+  updateDashBoardList(List dashboardSpendingList,
+      List dashboardRecentActivityList, List dashboardOutStandingList) {
+    this._dashboardSpendingList = dashboardSpendingList;
+    this._dashboardRecentActivityList = dashboardRecentActivityList;
+    this._dashboardOutStandingList = dashboardOutStandingList;
+    notifyListeners();
+  }
+
+  updateGetCalendarData(List calendarHolidaysList, List calendarAttendanceList,
+      List calendarTransactionList) {
+    _calendarHolidaysList = calendarHolidaysList;
+    _calendarAttendanceList = calendarAttendanceList;
+    _calendarTransactionList = calendarTransactionList;
+    notifyListeners();
+  }
+
+  updateTopupMembersList(List topupMembersList) {
+    _topupMembersList = topupMembersList;
     notifyListeners();
   }
 

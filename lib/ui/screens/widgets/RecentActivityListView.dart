@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-class PurchaseListView extends StatelessWidget {
-  final List purchaseList;
-  const PurchaseListView(this.purchaseList);
+class RecentActivityListView extends StatelessWidget {
+  final List recentList;
+  const RecentActivityListView(this.recentList);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class PurchaseListView extends StatelessWidget {
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(
                     parent: AlwaysScrollableScrollPhysics()),
-                itemCount: purchaseList.length,
+                itemCount: recentList.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Column(children: <Widget>[
                     new Divider(
@@ -28,14 +28,14 @@ class PurchaseListView extends StatelessWidget {
                       /* leading: CircleAvatar(
                         backgroundColor: Colors.white,
                         backgroundImage:
-                            NetworkImage(purchaseList[index]['image']),
+                            NetworkImage(recentList[index]['image']),
                         radius: 20,
                       ), */
                       title: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            purchaseList[index]['ActionName'],
+                            recentList[index]['ActionName'],
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 14),
                           ),
@@ -55,7 +55,7 @@ class PurchaseListView extends StatelessWidget {
                                         color: Colors.grey.shade500,
                                         fontSize: 10)),
                                 new TextSpan(
-                                    //text: purchaseList[index]['date'],
+                                    //text: recentList[index]['date'],
                                     text: '',
                                     style: new TextStyle(
                                         color: Colors.grey.shade500,
@@ -72,7 +72,7 @@ class PurchaseListView extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                               // "# " + purchaseList[index]['orderID'],
+                               // "# " + recentList[index]['orderID'],
                                 "",
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
@@ -80,7 +80,7 @@ class PurchaseListView extends StatelessWidget {
                                     fontSize: 10),
                               ),
                               Text(
-                                //"Payment for: " + purchaseList[index]['pay_for'],
+                                //"Payment for: " + recentList[index]['pay_for'],
                                 "",
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
@@ -99,13 +99,13 @@ class PurchaseListView extends StatelessWidget {
                               ),
                               children: <TextSpan>[
                                 new TextSpan(
-                                    text: 'RM: ',
+                                    text: 'TOTAL: ',
                                     style: new TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Colors.red.shade500,
                                         fontSize: 12)),
                                 new TextSpan(
-                                    text: purchaseList[index]['Purchase'].toString(),
+                                    text: recentList[index]['Total'].toString(),
                                     style: TextStyle(fontSize: 14)),
                               ],
                             ),
@@ -114,7 +114,7 @@ class PurchaseListView extends StatelessWidget {
                       ),
                       onTap: () {
                         Navigator.of(context).pushNamed('/PurchaseDetails',
-                            arguments: purchaseList[index]);
+                            arguments: recentList[index]);
                       },
                     )
                   ]);

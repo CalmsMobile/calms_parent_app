@@ -21,7 +21,7 @@ class _ViewImageState extends State<ViewImage> {
     // currentPos = 0;
     print(currentPos);
     return Scaffold(
-      appBar: getMyAppbar("", []),
+      appBar: getMyAppbar(context,"", []),
       body: Stack(alignment: Alignment.bottomCenter, children: [
         Container(
           child: data['images'].length > 0

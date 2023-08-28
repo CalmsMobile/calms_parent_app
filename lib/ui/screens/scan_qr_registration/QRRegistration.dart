@@ -55,17 +55,9 @@ class _QRRegistrationState extends State<QRRegistration> {
       });
       if (kDebugMode) {
         print("QR: start");
-        //store tester account - 1001
-        //var qrdata = "D5qpk1C3xkIxgAIPyzivIXAY1+BrXWHUlQKXDwvQA+a0ENSxKwKvGgdAg7wsIh62QJIMYRk74tBLpCytINKDGfH2IgcCp08LVhD6OEkWBFBWCoLHBsv0C2RptNGLGIp0R8+Jzsh612VXMk+kLirn+JgMg/p9/ZDM2TAjzGQaETHhUuOUptJYcbOQAYPXZRgb";
-        //nizam-parent - rnd
-        var qrdata =
-            "D5qpk1C3xkIxgAIPyzivIXAY1+BrXWHUlQKXDwvQA+YDCq3ZKz2ctrqZBVSRFc5dbHg+7ZKbpZlMkh8NNQatNf83hsXcToACqmlZ+8Tlabb0D0cC211BmzymayoQ3yB9E2U0E7NfkX/TdTmQJdBhG5DFY0LKgT1iYiGytP6PWP4EQbAa+rn7FQx+kyNHA82z";
-        //nizam-parent - 2008
-        // var qrdata = "D5qpk1C3xkIxgAIPyzivIXAY1+BrXWHUlQKXDwvQA+bKsLCI7GP2EMDb8/1tHG/vkPFFxV/ebxiJkiU/wVqVOC7dkd76icciFv3SgUJiIBCpdQ2oQIgBdXE0rSyFVEfiCAA9rSZ9QBMCONEr18fv7Q==";
-        //var qrdata = "D5qpk1C3xkIxgAIPyzivIXAY1+BrXWHUlQKXDwvQA+bKsLCI7GP2EMDb8/1tHG/vkPFFxV/ebxiJkiU/wVqVOC7dkd76icciFv3SgUJiIBCpdQ2oQIgBdXE0rSyFVEfiCAA9rSZ9QBMCONEr18fv7Q==";
-        /*  DECRYPT: {"MAppId":"PARENTAPP","MAppSeqId":"106","RefUserSeqId":"100004","RefBranchSeqId":"11001","ApiUrl":""}
-js_primitives.dart:30 {MAppDevSeqId: 106} */
-        // qrdata ="D5qpk1C3xkIxgAIPyzivIXAY1+BrXWHUlQKXDwvQA+adrrhq0g3nvj3JeZ84JEqfdmMP7QHPtWgIVGBvita/v0pMqyQadCbws1wx4G6khHxrjJ2tlmJcGlUKWo0lnjpyU3XhnsQeYjLgb93luli+oPzUaEQJvhIL2JJh4xmaYZYN+4S/GjPGoj0ZL7Z8yPxj";
+       
+        var qrdata = "D5qpk1C3xkIxgAIPyzivIXAY1+BrXWHUlQKXDwvQA+YDCq3ZKz2ctrqZBVSRFc5dbHg+7ZKbpZlMkh8NNQatNf83hsXcToACqmlZ+8Tlabb0D0cC211BmzymayoQ3yB9E2U0E7NfkX/TdTmQJdBhG5DFY0LKgT1iYiGytP6PWP4EQbAa+rn7FQx+kyNHA82z";
+        // qrdata = "D5qpk1C3xkIxgAIPyzivIXAY1+BrXWHUlQKXDwvQA+YzRfitwG34gkEMm+BNy/raZ/TpAXdzlqrRXy9KiZO2ar/6HhmesOCueLgav5T9kGKjX3uai6u3kxejGHc5ryQbGb0+DGuxx27RzaqASpL4UyREhy3X+wCLON2tZRFIVWzrN9xvjPNJRHNOtP3OYu3n";
         processQRCode(qrdata);
       }
       // String inputdata =

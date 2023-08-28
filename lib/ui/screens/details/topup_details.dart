@@ -14,7 +14,7 @@ class _TopupDetailsState extends State<TopupDetails> {
     final passData = ModalRoute.of(context)?.settings.arguments as Map;
     print(passData);
     return Scaffold(
-      appBar: getMyAppbar("Topup Details", []),
+      appBar: getMyAppbar(context,"Topup Details", []),
       resizeToAvoidBottomInset: false,
       body: SizedBox(
         height: MediaQuery.of(context).size.height,

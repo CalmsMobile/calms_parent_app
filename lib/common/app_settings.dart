@@ -35,8 +35,8 @@ class AppSettings {
       '/Handler/PortalImageHandler.ashx?ScreenType=45&RefSlno=';
 
   // API End Points
-  static String GetQRInfo = 'ParentApp/GetQRInfo';
-  static String RegisterParentApp = 'ParentApp/RegisterParentApp';
+  static String GetQRInfo = 'ParentApp/GetQRInfoV2';
+  static String RegisterParentApp = 'ParentApp/RegisterParentAppV2';
   static String GetNotificationList = 'ParentApp/GetNotificationList';
   static String GetNotificationListWithFilter =
       'ParentApp/GetNotificationListWithFilter';
@@ -46,6 +46,7 @@ class AppSettings {
   static String EntryToDashboard = 'parentapp/EntryToDashboard';
   static String GetDashboard = 'parentapp/GetDashboard';
   static String GetCalendarData = 'parentapp/GetCalendarData';
+  static String GetFamilyMemberForTopup = 'parentapp/GetFamilyMemberForTopup';
 
   static String avatarPlaceholder =
       "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png";

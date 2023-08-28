@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-Widget userList(BuildContext context, int index, List<Map> details) {
+Widget outStandingList(BuildContext context, int index, List details) {
   return Column(children: <Widget>[
     new Divider(
       height: 0.1,
     ),
     ListTile(
-      leading: CircleAvatar(
+      /* leading: CircleAvatar(
         backgroundColor: Colors.white,
         backgroundImage: NetworkImage(details[index]['ImgPathUrl']),
         radius: 20,
-      ),
+      ), */
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -80,7 +80,7 @@ Widget userList(BuildContext context, int index, List<Map> details) {
             ],
           ),
           Text(
-            "Category: " ,
+            "Category: ",
             style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 10,

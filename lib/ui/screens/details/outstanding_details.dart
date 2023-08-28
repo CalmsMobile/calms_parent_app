@@ -14,7 +14,7 @@ class _OutStandingDetailsState extends State<OutStandingDetails> {
     final passData = ModalRoute.of(context)?.settings.arguments as Map;
     print(passData);
     return Scaffold(
-      appBar: getMyAppbar("Outstanding", []),
+      appBar: getMyAppbar(context,"Outstanding", []),
       resizeToAvoidBottomInset: false,
       body: SizedBox(
         height: MediaQuery.of(context).size.height,

@@ -23,7 +23,7 @@ class _ProfileMainState extends State<ProfileMain> {
     final imgBaseUrl = data['imgBaseUrl'];
 
     return Scaffold(
-        appBar: getMyAppbar("Profile", []),
+        appBar: getMyAppbar(context,"Profile", []),
         body: Container(
           constraints: BoxConstraints.expand(),
           decoration: BoxDecoration(

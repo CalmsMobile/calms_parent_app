@@ -227,7 +227,7 @@ var myroutes = {
   "/FilterActivities": (context) => FilterActivities(),
   "/ViewImage": (context) => ViewImage(),
   "/MealDetails": (context) => MealDetails(),
-  "/calendarTransactions":(context)=> CalendarTransactionsPage()
+  "/calendarTransactions": (context) => CalendarTransactionsPage()
 };
 
 class MyApp extends StatefulWidget {
@@ -239,43 +239,6 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
   String _lastMessage = "";
-  List<Map> familyList = [
-    {
-      "UserSeqId": 106312.0,
-      "Name": "Child 1",
-      "FamilyId": "NZ001",
-      "MemberId": "NZChild1",
-      "Email": "",
-      "ContactNo": "",
-      "RelationShip": "",
-      "Grade": "Master of ",
-      "Year": "PR",
-      "Class": null,
-      "UserImgPath": null,
-      "MemberType": "Student",
-      "Balance": 0.0000,
-      "RefMemberTypeSeqId": 10002.0,
-      "RefBranchSeqId": "11001"
-    },
-    {
-      "UserSeqId": 106118.0,
-      "Name": "Nizam Parent",
-      "FamilyId": "NZ001",
-      "MemberId": "NizamParent",
-      "Email": "nizamcseb@outlook.com",
-      "ContactNo": "",
-      "RelationShip": "Father",
-      "Grade": null,
-      "Year": null,
-      "Class": null,
-      "UserImgPath":
-          "Profile\\ResizeImg\\bd69-e4c2-2023-08-15-17-22-08-605\\2.png",
-      "MemberType": "Parent",
-      "Balance": 0.0000,
-      "RefMemberTypeSeqId": 10003.0,
-      "RefBranchSeqId": "11001"
-    }
-  ];
 
   _MyAppState() {
     // subscribe to the message stream fed by foreground message handler
@@ -327,28 +290,6 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
     });
   }
 
- /*  Future<void> getDashBoardDetails() async {
-    var ParamData = {
-      "MAppDevSeqId": await MySharedPref().getData(AppSettings.Sp_MAppDevSeqId)
-    };
-    Future<Map<String, dynamic>> res = RestApiProvider().authorizedPostRequest(
-      ParamData,
-      AppSettings.EntryToDashboard,
-      context,
-      true,
-    );
-    res
-        .then((response) => {dashBoardSuccess(response)})
-        .onError((error, stackTrace) => {dashBoardFailed(error)});
-  }
-
-  dashBoardSuccess(Map<String, dynamic> response) {
-    if (response['Table'][0]['code'] == 10 && response['Table1'][0] != null) {
-      familyList = response['Table1'];
-    }
-  }
-
-  dashBoardFailed(Object? error) {} */
   @override
   void initState() {
     //getDashBoardDetails();
@@ -494,7 +435,8 @@ class _SplashScreenState extends State<SplashScreen> {
     if (res['Table'][0]['code'] == 10) {
       MySharedPref().saveBooleanData(true, AppSettings.Sp_App_Verified);
       MySharedPref().saveData(apiUrl, AppSettings.Sp_Api_Url);
-      MySharedPref().saveData(apiUrl.replaceAll("/api/", "/FS/"), AppSettings.Sp_Img_Base_Url);
+      MySharedPref().saveData(
+          apiUrl.replaceAll("/api/", "/FS/"), AppSettings.Sp_Img_Base_Url);
       MySharedPref().saveData(secureKey, AppSettings.Sp_SecureKey);
       MySharedPref().saveData(MAppSeqId, AppSettings.Sp_MAppDevSeqId);
       MySharedPref().saveData(

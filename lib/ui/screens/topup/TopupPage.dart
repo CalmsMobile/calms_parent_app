@@ -1,3 +1,15 @@
+import 'dart:convert';
+
+import 'package:calms_parent_latest/ui/screens/widgets/TopupListView.dart';
+import 'package:calms_parent_latest/ui/screens/widgets/TopupMemberList.dart';
+import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+
+import '../../../common/alert_dialog.dart';
+import '../../../common/app_settings.dart';
+import '../../../common/common_api.dart';
+import '../../../common/listener/settings_listener.dart';
+import '../../../common/my_shared_pref.dart';
 import '/common/widgets/select_member.dart';
 import '/ui/screens/widgets/TopupView.dart';
 import 'package:flutter/material.dart';
@@ -8,60 +20,65 @@ class TopupPage extends StatefulWidget {
 }
 
 class _TopupPageState extends State<TopupPage> {
-  List<Map<String, dynamic>> get _values => [];
+  String profileData = "";
+  String imgBaseUrl = "";
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getData();
+  }
+  Future<void> getData() async {
+    profileData = await MySharedPref().getData(AppSettings.Sp_ProfileData);
+    imgBaseUrl = await MySharedPref().getData(AppSettings.Sp_Img_Base_Url);
+if(profileData != ""){
+var _profileData = jsonDecode(profileData);
+    CommonUtil().getFamilyMemberForTopup(context,_profileData['RefUserSeqId'],_profileData['RefBranchSeqId'],_profileData['RefMemberTypeSeqId']);
+}
 
+  }
   @override
   Widget build(BuildContext context) {
-    List<Map> familyList = [
-      {
-        "name":
-            "Desmond Henry King Luther Martin John Abraham Luther Martin John Abraham",
-        "category": "PARENT",
-        "memberId": "M1001",
-        "desc": "",
-        "balance": "25012323232",
-        "familtid": "FMY0001",
-        "relationship": "Father",
-        "email": "makame147@gmail.com",
-        "image": "https://randomuser.me/api/portraits/men/11.jpg"
-      },
-      {
-        "name": "SITI KHALIDA",
-        "category": "PARENT",
-        "memberId": "M1002",
-        "desc": "",
-        "balance": "500010000",
-        "familtid": "FMY0001",
-        "relationship": "Mother",
-        "email": "calms.rnd@gmail.com",
-        "image": "https://randomuser.me/api/portraits/women/11.jpg"
-      },
-      {
-        "name": "HAZIM",
-        "category": "STUDENT",
-        "email": "",
-        "balance": "100.00",
-        "class": "Class3",
-        "contact": "0123467589",
-        "memberId": "M1001",
-        "desc": "Member account does not exist in MFP software",
-        "image": "https://randomuser.me/api/portraits/men/2.jpg"
-      },
-      {
-        "name": "MARIE LIM",
-        "category": "STUDENT",
-        "email": "",
-        "balance": "0.00",
-        "class": "Class4",
-        "memberId": "M1001",
-        "contact": "1345657",
-        "desc": "",
-        "image": "https://randomuser.me/api/portraits/men/3.jpg"
-      },
-    ];
     return Scaffold(
-      appBar: getMyAppbar("Topup", []),
-      body: getTopupView(context, familyList, _values),
+      appBar: getMyAppbar(context, "Topup", []),
+      body: Container(
+          constraints: BoxConstraints.expand(),
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            colors: [
+              Color.fromARGB(255, 246, 249, 254),
+              Color.fromARGB(255, 230, 231, 239),
+            ],
+          )),
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height,
+            child: SingleChildScrollView(
+              child: Container(
+                child: Column(
+                  children: [
+                    Consumer<MySettingsListener>(
+                        builder: (context, data, settingsDta) {
+                      if (data.topupMembersList.isNotEmpty) {
+                      return Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                          borderOnForeground: true,
+                          margin: EdgeInsets.only(
+                              top: 20, bottom: 20, left: 20, right: 20),
+                          child: TopupMemberListView(imgBaseUrl,data.topupMembersList),
+                        );
+                      } else {
+                        return SizedBox();
+                      }
+                    }),
+                  ],
+                ),
+              ),
+            ),
+          )),
       bottomNavigationBar: SizedBox(
         height: 110,
         child: Column(
@@ -89,47 +106,22 @@ class _TopupPageState extends State<TopupPage> {
             ),
             InkWell(
               onTap: () {
-                // Navigator.of(buildContext).pop();
-                var paymentList = [
-                  {
-                    "name": "FPX Online Payment",
-                    "id": "fpx",
-                    "image":
-                        "http://103.6.163.49:2008/calmsweb/Images/noimage.png"
-                  },
-                  {
-                    "name": "Boost",
-                    "id": "boost",
-                    "image":
-                        "http://103.6.163.49:2008/calmsweb/Images/noimage.png"
-                  },
-                  {
-                    "name": "Global Payment",
-                    "id": "global",
-                    "image":
-                        "http://103.6.163.49:2008/calmsweb/Images/noimage.png"
-                  },
-                ];
-                showPaymentSelectOption(
-                    context, "Choose your payment method", paymentList,
-                    (index1) {
-                  print(index1);
-                  Navigator.of(context).pop();
-                });
+                Navigator.of(context).pop();
+                MyCustomAlertDialog().showToast(context, "Item added to cart ");
               },
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.pinkAccent,
-                  borderRadius: BorderRadius.circular(1),
+                  color: Colors.blue,
+                  borderRadius: BorderRadius.circular(10),
                   border: Border(
-                    bottom: BorderSide(color: Colors.pinkAccent, width: 1),
-                    right: BorderSide(color: Colors.pinkAccent, width: 1),
-                    top: BorderSide(color: Colors.pinkAccent, width: 1),
-                    left: BorderSide(color: Colors.pinkAccent, width: 1),
+                    bottom: BorderSide(color: Colors.blue, width: 1),
+                    right: BorderSide(color: Colors.blue, width: 1),
+                    top: BorderSide(color: Colors.blue, width: 1),
+                    left: BorderSide(color: Colors.blue, width: 1),
                   ),
                   boxShadow: [
                     new BoxShadow(
-                      color: Colors.pinkAccent,
+                      color: Colors.blue,
                       blurRadius: 1.0,
                     ),
                   ],
@@ -140,14 +132,14 @@ class _TopupPageState extends State<TopupPage> {
                 child: Align(
                   alignment: Alignment.center,
                   child: Container(
-                      color: Colors.pinkAccent,
+                      color: Colors.blue,
                       padding: EdgeInsets.only(left: 15, right: 15),
                       child: Text(
                         "Proceed",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             color: Colors.white,
-                            fontSize: 14,
+                            fontSize: 18,
                             fontWeight: FontWeight.bold),
                       )),
                 ),

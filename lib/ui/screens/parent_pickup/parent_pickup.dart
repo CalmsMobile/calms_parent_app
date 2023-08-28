@@ -113,7 +113,7 @@ class _ParentPickupState extends State<ParentPickup> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: getMyAppbar("Student Pickup", []),
+      appBar: getMyAppbar(context,"Student Pickup", []),
       body: Container(
         color: HexColor("#f5f8fd"),
         width: double.infinity,

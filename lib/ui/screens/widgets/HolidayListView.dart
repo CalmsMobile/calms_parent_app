@@ -1,18 +1,18 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class HolidayListItemView extends StatelessWidget {
-  const HolidayListItemView(this.holidayList);
+class HolidayListView extends StatelessWidget {
   final List holidayList;
+  const HolidayListView(this.holidayList);
+
   @override
   Widget build(BuildContext context) {
-    print("================");
-    print(holidayList);
     return Container(
       child: Column(
         children: <Widget>[
           Container(
             width: double.infinity,
+            margin: EdgeInsets.zero,
+            padding: EdgeInsets.zero,
             child: ListView.builder(
                 padding: EdgeInsets.zero,
                 shrinkWrap: true,
@@ -28,23 +28,18 @@ class HolidayListItemView extends StatelessWidget {
                       /* leading: CircleAvatar(
                         backgroundColor: Colors.white,
                         backgroundImage:
-                            NetworkImage(holidayList[index]['ImgPathUrl']),
-                        radius: 30,
+                            NetworkImage(holidayList[index]['image']),
+                        radius: 20,
                       ), */
                       title: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Flexible(
-                            child: Container(
-                              child: Text(
-                                holidayList[index]['title'],
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 14),
-                              ),
-                            ),
+                          Text(
+                            holidayList[index]['title'],
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 14),
                           ),
-                          /* new RichText(
+                          new RichText(
                             text: new TextSpan(
                               // Note: Styles for TextSpans must be explicitly defined.
                               // Child text spans will inherit styles from parent
@@ -54,33 +49,51 @@ class HolidayListItemView extends StatelessWidget {
                               ),
                               children: <TextSpan>[
                                 new TextSpan(
-                                    text: 'RM: ',
+                                    text: '',
                                     style: new TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        color: Colors.red.shade500,
-                                        fontSize: 14)),
+                                        color: Colors.grey.shade500,
+                                        fontSize: 10)),
                                 new TextSpan(
-                                    text: holidayList[index]['SellingPrice'].toString(),
-                                    style: new TextStyle(fontSize: 14)),
+                                    //text: holidayList[index]['date'],
+                                    text: '',
+                                    style: new TextStyle(
+                                        color: Colors.grey.shade500,
+                                        fontSize: 10)),
                               ],
                             ),
-                          ), */
+                          ),
                         ],
                       ),
                       subtitle: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            holidayList[index]['description'],
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 10,
-                                color: Colors.grey.shade500),
-                          )
-                        ],
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                               // "# " + holidayList[index]['orderID'],
+                                "",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.grey.shade500,
+                                    fontSize: 10),
+                              ),
+                              Text(
+                                "Description: " + holidayList[index]['description'],
+                                
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.grey.shade500,
+                                    fontSize: 10),
+                              ),
+                            ],
+                          ),
+                          ],
                       ),
                       onTap: () {
-                       // Navigator.of(context).pushNamed('/StoreDetails', arguments: holidayList[index]);
+                        Navigator.of(context).pushNamed('/PurchaseDetails',
+                            arguments: holidayList[index]);
                       },
                     )
                   ]);

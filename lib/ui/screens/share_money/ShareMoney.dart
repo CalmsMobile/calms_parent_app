@@ -69,7 +69,7 @@ class _ShareMoneyState extends State<ShareMoney> {
     int senderIndex = widget.senderIndex;
     int receiverIndex = widget.receiverIndex;
     return Scaffold(
-      appBar: getMyAppbar("Transfer money", []),
+      appBar: getMyAppbar(context,"Transfer money", []),
       body: Container(
         color: Colors.white,
         child: Column(

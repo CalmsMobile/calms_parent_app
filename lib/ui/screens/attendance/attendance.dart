@@ -29,7 +29,7 @@ class _StudentAttendanceState extends State<StudentAttendance> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: getMyAppbar("Attendance", []),
+        appBar: getMyAppbar(context,"Attendance", []),
         body: Container(
             constraints: BoxConstraints.expand(),
             decoration: BoxDecoration(

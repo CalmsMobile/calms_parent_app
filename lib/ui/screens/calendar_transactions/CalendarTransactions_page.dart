@@ -1,6 +1,7 @@
 import 'dart:convert';
 
-import 'package:calms_parent_latest/ui/screens/widgets/HolidayListItemView.dart';
+import 'package:calms_parent_latest/ui/screens/widgets/AttendanceListView.dart';
+import 'package:calms_parent_latest/ui/screens/widgets/HolidayListView.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -12,6 +13,7 @@ import '../../../common/util/common_funtions.dart';
 import '../../../common/widgets/select_member.dart';
 import '../../../model/_AppointmentDataSource.dart';
 import '../widgets/DashBordMenuList.dart';
+import '../widgets/PurchaseListView.dart';
 
 class CalendarTransactionsPage extends StatefulWidget {
   static const String routeName = '/calendarTransactions';
@@ -35,12 +37,8 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
     print(selectedRefBranchSeqId);
     setState(() {
       selectedDateTime = calendarTapDetails.date;
-      getData(
-          selectedUserSeqId,
-          selectedRefBranchSeqId,
-          calendarTapDetails.date?.year,
-          calendarTapDetails.date?.month,
-          calendarTapDetails.date?.day);
+      getData(selectedUserSeqId, selectedRefBranchSeqId,
+          DateFormat("yyyy-MM-dd").format(selectedDateTime!));
     });
     /* if (calendarTapDetails.targetElement == CalendarElement.calendarCell) {
       setState(() {
@@ -54,12 +52,14 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    selectedDateTime = DateTime.now();
     //this.getData("106312.0","11001",2023, 08, 31);
+    context.read<MySettingsListener>().updateGetCalendarData([],[],[]);
   }
 
-  Future<void> getData(RefUserSeqId, RefBranchSeqId, Year, Month, Date) async {
-    CommonUtil().getGetCalendarData(
-        context, RefUserSeqId, RefBranchSeqId, Year, Month, Date);
+  Future<void> getData(RefUserSeqId, RefBranchSeqId, Date) async {
+    CommonUtil()
+        .getGetCalendarData(context, RefUserSeqId, RefBranchSeqId, Date);
   }
 
   @override
@@ -83,7 +83,7 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
     }
 
     return Scaffold(
-        appBar: getMyAppbar("Calendar", [
+        appBar: getMyAppbar(context, "Calendar", [
           // Navigate to the Search Screen
           Container(
             height: 30,
@@ -101,7 +101,11 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                         Navigator.pop(context);
                         senderIndex = index;
                         setState(() {
-                          getData(selectedUserSeqId, selectedRefBranchSeqId, selectedDateTime!.year,selectedDateTime!.month, selectedDateTime!.day);
+                          getData(
+                              selectedUserSeqId,
+                              selectedRefBranchSeqId,
+                              DateFormat("yyyy-MM-dd")
+                                  .format(selectedDateTime!));
                         });
                       })
                     },
@@ -164,41 +168,129 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                         ),
                         Consumer<MySettingsListener>(
                             builder: (context, data, settingsDta) {
-                          if (data.holidaysList.isNotEmpty) {
+                          if (data.calendarHolidaysList.isNotEmpty) {
                             print("data.holidaysList.isNotEmpty");
                             return Card(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15.0),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
+                              borderOnForeground: true,
+                              margin: EdgeInsets.only(
+                                  left: 20, right: 20, bottom: 20),
+                              child: Container(
+                                margin: EdgeInsets.all(10),
+                                child: Column(
+                                  children: [
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Container(
+                                          padding: EdgeInsets.only(
+                                              left: 10.0,
+                                              top: 10.0,
+                                              bottom: 10.0),
+                                          margin: EdgeInsets.zero,
+                                          width: double.infinity,
+                                          color: Colors.transparent,
+                                          child: Text(
+                                            "HOLIDAY",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold),
+                                          )),
+                                    ),
+                                    HolidayListView(data.calendarHolidaysList)
+                                  ],
                                 ),
-                                borderOnForeground: true,
-                                margin: EdgeInsets.only(
-                                    top: 5, bottom: 20, left: 20, right: 20),
-                                child: Column(children: [
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Container(
-                                        padding: EdgeInsets.only(
-                                            left: 10.0,
-                                            top: 10.0,
-                                            bottom: 10.0),
-                                        margin: EdgeInsets.zero,
-                                        width: double.infinity,
-                                        color: Colors.transparent,
-                                        child: Text(
-                                          "Holidays",
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold),
-                                        )),
-                                  ),
-                                  HolidayListItemView(data.holidaysList)
-                                ]));
-                          }else{
+                              ),
+                            );
+                          } else {
                             return SizedBox();
                           }
                         }),
-                       
-                       /*  Card(
+                        Consumer<MySettingsListener>(
+                            builder: (context, data, settingsDta) {
+                          if (data.calendarAttendanceList.isNotEmpty) {
+                            return Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
+                              borderOnForeground: true,
+                              margin: EdgeInsets.only(
+                                  left: 20, right: 20, bottom: 20),
+                              child: Container(
+                                margin: EdgeInsets.all(10),
+                                child: Column(
+                                  children: [
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Container(
+                                          padding: EdgeInsets.only(
+                                              left: 10.0,
+                                              top: 10.0,
+                                              bottom: 10.0),
+                                          margin: EdgeInsets.zero,
+                                          width: double.infinity,
+                                          color: Colors.transparent,
+                                          child: Text(
+                                            "ATTENDANCE",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold),
+                                          )),
+                                    ),
+                                    AttendanceListView(
+                                        data.calendarAttendanceList)
+                                  ],
+                                ),
+                              ),
+                            );
+                          } else {
+                            return SizedBox();
+                          }
+                        }),
+                        Consumer<MySettingsListener>(
+                            builder: (context, data, settingsDta) {
+                          if (data.calendarTransactionList.isNotEmpty) {
+                            return Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
+                              borderOnForeground: true,
+                              margin: EdgeInsets.only(
+                                  left: 20, right: 20, bottom: 20),
+                              child: Container(
+                                margin: EdgeInsets.all(10),
+                                child: Column(
+                                  children: [
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Container(
+                                          padding: EdgeInsets.only(
+                                              left: 10.0,
+                                              top: 10.0,
+                                              bottom: 10.0),
+                                          margin: EdgeInsets.zero,
+                                          width: double.infinity,
+                                          color: Colors.transparent,
+                                          child: Text(
+                                            "TRANSACTIONS",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold),
+                                          )),
+                                    ),
+                                    PurchaseListView(
+                                        data.calendarTransactionList),
+                                  ],
+                                ),
+                              ),
+                            );
+                          } else {
+                            return SizedBox();
+                          }
+                        }),
+
+                        /*  Card(
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15.0),
                             ),
@@ -361,7 +453,6 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                               ),
                             ]))
                        */
-                      
                       ],
                     ),
                   ),

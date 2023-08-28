@@ -25,7 +25,7 @@ class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: getMyAppbar("My Cart", []),
+      appBar: getMyAppbar(context,"My Cart", []),
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
         child: Container(

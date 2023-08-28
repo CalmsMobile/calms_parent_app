@@ -71,7 +71,6 @@ class _NotificationsState extends State<Notifications> {
 
   @override
   void dispose() {
-    // controller.removeListener(_scrollListener);
     super.dispose();
   }
 
