@@ -10,7 +10,7 @@ import '../../../common/app_settings.dart';
 import '../../../common/common_api.dart';
 import '../../../common/listener/settings_listener.dart';
 import '../../../common/my_shared_pref.dart';
-import '/common/widgets/select_member.dart';
+import '../../../common/widgets/common.dart';
 import '/ui/screens/widgets/TopupView.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +20,7 @@ class TopupPage extends StatefulWidget {
 }
 
 class _TopupPageState extends State<TopupPage> {
-  String profileData = "";
+  var profileData = {};
   String imgBaseUrl = "";
   @override
   void initState() {
@@ -28,15 +28,17 @@ class _TopupPageState extends State<TopupPage> {
     super.initState();
     getData();
   }
-  Future<void> getData() async {
-    profileData = await MySharedPref().getData(AppSettings.Sp_ProfileData);
-    imgBaseUrl = await MySharedPref().getData(AppSettings.Sp_Img_Base_Url);
-if(profileData != ""){
-var _profileData = jsonDecode(profileData);
-    CommonUtil().getFamilyMemberForTopup(context,_profileData['RefUserSeqId'],_profileData['RefBranchSeqId'],_profileData['RefMemberTypeSeqId']);
-}
 
+  Future<void> getData() async {
+    String profile = await MySharedPref().getData(AppSettings.Sp_ProfileData);
+    imgBaseUrl = await MySharedPref().getData(AppSettings.Sp_Img_Base_Url);
+    if (profile != "") {
+      profileData = jsonDecode(profile);
+      CommonUtil().getFamilyMemberForTopup(context, profileData['RefUserSeqId'],
+          profileData['RefBranchSeqId'], profileData['RefMemberTypeSeqId']);
+    }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,15 +63,8 @@ var _profileData = jsonDecode(profileData);
                     Consumer<MySettingsListener>(
                         builder: (context, data, settingsDta) {
                       if (data.topupMembersList.isNotEmpty) {
-                      return Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                          ),
-                          borderOnForeground: true,
-                          margin: EdgeInsets.only(
-                              top: 20, bottom: 20, left: 20, right: 20),
-                          child: TopupMemberListView(imgBaseUrl,data.topupMembersList),
-                        );
+                        return TopupMemberListView(imgBaseUrl,
+                            data.topupMembersList, profileData['CurrencyCode']);
                       } else {
                         return SizedBox();
                       }
@@ -80,11 +75,49 @@ var _profileData = jsonDecode(profileData);
             ),
           )),
       bottomNavigationBar: SizedBox(
-        height: 110,
+        height: 160,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Container(
+              margin: EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Total',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  ),
+                  Consumer<MySettingsListener>(
+                    builder: (context, data, settingsDta) {
+                      return RichText(
+                        text: new TextSpan(
+                          // Note: Styles for TextSpans must be explicitly defined.
+                          // Child text spans will inherit styles from parent
+                          style: new TextStyle(
+                            fontSize: 20.0,
+                            color: Colors.black,
+                          ),
+                          children: <TextSpan>[
+                            new TextSpan(
+                                text: 'MYR ',
+                                style: new TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Color.fromARGB(255, 0, 0, 0),
+                                    fontSize: 18)),
+                            new TextSpan(
+                                text: data.topupTotal.toStringAsFixed(2),
+                                style: TextStyle(
+                                    fontSize: 24, fontWeight: FontWeight.bold)),
+                          ],
+                        ),
+                      );
+                    },
+                  )
+                ],
+              ),
+            ),
             Flexible(
               child: Container(
                 margin: EdgeInsets.only(top: 10, left: 10, right: 10),
@@ -99,15 +132,16 @@ var _profileData = jsonDecode(profileData);
                       )),
                       TextSpan(
                           text:
-                              " Minimun reload amount is MYR 1.00.  Maximum reload amount is MYR 1000.00",
+                              " Minimum reload amount is MYR 1.00.  Maximum reload amount is MYR 1000.00",
                           style: TextStyle(fontSize: 14, color: Colors.grey)),
                     ])),
               ),
             ),
-            InkWell(
+            Consumer<MySettingsListener>(
+                        builder: (context, data, settingsDta) {
+           return InkWell(
               onTap: () {
-                Navigator.of(context).pop();
-                MyCustomAlertDialog().showToast(context, "Item added to cart ");
+                showPaymentSelectOption(context,"Choose payment type",data.paymentProvidersList,{});
               },
               child: Container(
                 decoration: BoxDecoration(
@@ -135,7 +169,7 @@ var _profileData = jsonDecode(profileData);
                       color: Colors.blue,
                       padding: EdgeInsets.only(left: 15, right: 15),
                       child: Text(
-                        "Proceed",
+                        "Choose Payment Option",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             color: Colors.white,
@@ -144,7 +178,7 @@ var _profileData = jsonDecode(profileData);
                       )),
                 ),
               ),
-            )
+            );}),
           ],
         ),
       ),

@@ -108,7 +108,7 @@ class CommonUtil {
       context, RefUserSeqId, RefBranchSeqId, RefMemberTypeSeqId) async {
     var ParamData = {
       "RefUserSeqId": RefUserSeqId,
-      "RefBranchSeqId": "11001",
+      "RefBranchSeqId": RefBranchSeqId,
       "RefMemberTypeSeqId": RefMemberTypeSeqId
     };
     Future<Map<String, dynamic>> res = RestApiProvider().authorizedPostRequest(
@@ -123,11 +123,17 @@ class CommonUtil {
   }
 
   getFamilyMemberForTopupSuccess(BuildContext context, response) {
-   if (response['Table'][0]['code'] == 10) {
+    if (response['Table'][0]['code'] == 10) {
       print("getFamilyMemberForTopupSuccess success");
       if (response['Table1'] != null || response['Table1'] != [])
-        context.read<MySettingsListener>().updateTopupMembersList(
-            response['Table1']);
+        context
+            .read<MySettingsListener>()
+            .updateTopupMembersList(response['Table1']);
+
+      if (response['Table2'] != null || response['Table2'] != [])
+        context
+            .read<MySettingsListener>()
+            .updateTopupPaymentProvidersList(response['Table2']);
     }
   }
 

@@ -1,7 +1,7 @@
 import 'package:awesome_select/awesome_select.dart';
 import '/common/HexColor.dart';
 import '/common/alert_dialog.dart';
-import '/common/widgets/select_member.dart';
+import '../../../../common/widgets/common.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 

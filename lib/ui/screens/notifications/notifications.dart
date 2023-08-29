@@ -19,7 +19,7 @@ import 'package:flutter/material.dart';
 import 'package:scroll_edge_listener/scroll_edge_listener.dart';
 
 import '../../../common/json_responses.dart';
-import '../../../common/widgets/select_member.dart';
+import '../../../common/widgets/common.dart';
 import '../settings/app_settings.dart';
 
 class Notifications extends StatefulWidget {

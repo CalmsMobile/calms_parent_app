@@ -6,7 +6,7 @@ import '/common/alert_dialog.dart';
 import '/common/constants.dart';
 import '/common/date_util.dart';
 import '/common/json_responses.dart';
-import '/common/widgets/select_member.dart';
+import '../../../common/widgets/common.dart';
 import '/ui/screens/activities/Activities.dart';
 import '/ui/screens/meals/meal_pager.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
-import 'widgets/select_member.dart';
+import 'widgets/common.dart';
 
 class MyCustomAlertDialog {
   bool isShowingAlready = false;

@@ -8,7 +8,7 @@ import '../calendar/calendar_page.dart';
 import '../home/Home.dart';
 
 Widget menuList(
-    BuildContext context, int index, List menu, List familyList, imgBaseUrl) {
+    BuildContext context, int index, List menu, List familyList, imgBaseUrl,CurrencyCode) {
   return Container(
     width: 90.0,
     child: InkWell(
@@ -26,7 +26,8 @@ Widget menuList(
                 Navigator.of(context).pushNamed('/calendarTransactions',
                     arguments: {
                       "familyList": familyList,
-                      "imgBaseUrl": imgBaseUrl
+                      "imgBaseUrl": imgBaseUrl,
+                      "CurrencyCode":CurrencyCode
                     }),
             },
         child: Column(

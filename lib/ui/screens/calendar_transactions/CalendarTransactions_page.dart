@@ -10,7 +10,7 @@ import 'package:syncfusion_flutter_calendar/calendar.dart';
 import '../../../common/common_api.dart';
 import '../../../common/listener/settings_listener.dart';
 import '../../../common/util/common_funtions.dart';
-import '../../../common/widgets/select_member.dart';
+import '../../../common/widgets/common.dart';
 import '../../../model/_AppointmentDataSource.dart';
 import '../widgets/DashBordMenuList.dart';
 import '../widgets/PurchaseListView.dart';
@@ -54,7 +54,7 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
     super.initState();
     selectedDateTime = DateTime.now();
     //this.getData("106312.0","11001",2023, 08, 31);
-    context.read<MySettingsListener>().updateGetCalendarData([],[],[]);
+    context.read<MySettingsListener>().updateGetCalendarData([], [], []);
   }
 
   Future<void> getData(RefUserSeqId, RefBranchSeqId, Date) async {
@@ -73,6 +73,7 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
     final data = ModalRoute.of(context)?.settings.arguments as Map;
     final familyList = data['familyList'];
     final imgBaseUrl = data['imgBaseUrl'];
+    final CurrencyCode = data['CurrencyCode'];
     if (familyList != [] || familyList != null) {
       print("initValues");
       selectedUserSeqId = familyList[senderIndex]['UserSeqId'];
@@ -280,7 +281,8 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                                           )),
                                     ),
                                     PurchaseListView(
-                                        data.calendarTransactionList),
+                                        data.calendarTransactionList,
+                                        CurrencyCode),
                                   ],
                                 ),
                               ),

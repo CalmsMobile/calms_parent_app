@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class PurchaseListView extends StatelessWidget {
   final List purchaseList;
-  const PurchaseListView(this.purchaseList);
+  final String CurrencyCode;
+  const PurchaseListView(this.purchaseList, this.CurrencyCode);
 
   @override
   Widget build(BuildContext context) {
@@ -49,23 +50,21 @@ class PurchaseListView extends StatelessWidget {
                               ),
                               children: <TextSpan>[
                                 new TextSpan(
-                                    text: '',
+                                    text: '${CurrencyCode} ',
                                     style: new TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        color: Colors.grey.shade500,
-                                        fontSize: 10)),
+                                        color: Colors.red.shade500,
+                                        fontSize: 12)),
                                 new TextSpan(
-                                    //text: purchaseList[index]['date'],
-                                    text: '',
-                                    style: new TextStyle(
-                                        color: Colors.grey.shade500,
-                                        fontSize: 10)),
+                                    text: purchaseList[index]['Purchase']
+                                        .toStringAsFixed(2),
+                                    style: TextStyle(fontSize: 14)),
                               ],
                             ),
                           ),
                         ],
                       ),
-                      subtitle: Row(
+                      /* subtitle: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Column(
@@ -99,19 +98,19 @@ class PurchaseListView extends StatelessWidget {
                               ),
                               children: <TextSpan>[
                                 new TextSpan(
-                                    text: 'RM: ',
+                                    text: '${CurrencyCode} ',
                                     style: new TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Colors.red.shade500,
                                         fontSize: 12)),
                                 new TextSpan(
-                                    text: purchaseList[index]['Purchase'].toString(),
+                                    text: purchaseList[index]['Purchase'].toStringAsFixed(2),
                                     style: TextStyle(fontSize: 14)),
                               ],
                             ),
                           ),
                         ],
-                      ),
+                      ), */
                       onTap: () {
                         Navigator.of(context).pushNamed('/PurchaseDetails',
                             arguments: purchaseList[index]);

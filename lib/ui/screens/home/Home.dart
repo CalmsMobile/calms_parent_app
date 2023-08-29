@@ -294,6 +294,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   CalendarController _controller = CalendarController();
   late AnimationController controller;
   String imgBaseUrl = "";
+  var profileData = {};
   List<Appointment> _appointmentDetails = <Appointment>[];
 
   void calendarTapped(CalendarTapDetails calendarTapDetails) {
@@ -307,6 +308,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   Future<void> getLocalData() async {
     imgBaseUrl = await MySharedPref().getData(AppSettings.Sp_Img_Base_Url);
+    String profile = await MySharedPref().getData(AppSettings.Sp_ProfileData);
+    profileData = jsonDecode(profile);
   }
 
   @override
@@ -348,6 +351,21 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         //titleSpacing: -5,
         automaticallyImplyLeading: false,
         centerTitle: true,
+        leading:Padding(padding: EdgeInsets.only(left: 15,top: 5,bottom: 5),child:  profileData['BranchImg'] != null
+            ? CircleAvatar(
+                backgroundImage: NetworkImage(profileData["BranchImg"]),
+              )
+            : CircleAvatar(
+                backgroundColor: Colors.blue[700],
+                child: Text(
+                  CommonFunctions.getInitials(profileData['BranchName']),
+                  style: TextStyle(
+                      fontSize: 22.0,
+                      color: Colors.white,
+                      letterSpacing: 2.0,
+                      fontWeight: FontWeight.w900),
+                ),
+              ),),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -595,7 +613,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                     fontWeight: FontWeight.w300),
                               ),
                               Text(
-                                'MYR ${double.parse(data.familyList[data.familyPos]['Balance'].toString()).toStringAsFixed(2)}',
+                                '${profileData['CurrencyCode']} ${double.parse(data.familyList[data.familyPos]['Balance'].toString()).toStringAsFixed(2)}',
                                 style: TextStyle(
                                     fontSize: 18.0,
                                     color: Colors.blue[700],
@@ -635,7 +653,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                         index,
                                         data.dashboardMenuList,
                                         data.familyList,
-                                        imgBaseUrl);
+                                        imgBaseUrl,
+                                        profileData['CurrencyCode']);
                                   });
                             } else {
                               return SizedBox();
@@ -668,13 +687,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                         width: double.infinity,
                                         color: Colors.transparent,
                                         child: Text(
-                                          "PURCHASE HISTORY",
+                                          "TRANSACTION HISTORY",
                                           style: TextStyle(
                                               fontSize: 16,
                                               fontWeight: FontWeight.bold),
                                         )),
                                   ),
-                                  PurchaseListView(data.dashboardSpendingList),
+                                  PurchaseListView(data.dashboardSpendingList, profileData['CurrencyCode']),
                                 ],
                               ),
                             ),
@@ -775,7 +794,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                               return outStandingList(
                                                   context,
                                                   index,
-                                                  data.dashboardOutStandingList);
+                                                  data.dashboardOutStandingList,profileData['CurrencyCode']);
                                             }),
                                       ),
                                     ],

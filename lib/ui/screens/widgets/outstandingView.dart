@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget outStandingList(BuildContext context, int index, List details) {
+Widget outStandingList(BuildContext context, int index, List details, String CurrencyCode) {
   return Column(children: <Widget>[
     new Divider(
       height: 0.1,
@@ -66,13 +66,13 @@ Widget outStandingList(BuildContext context, int index, List details) {
                   ),
                   children: <TextSpan>[
                     new TextSpan(
-                        text: 'RM: ',
+                        text: '${CurrencyCode} ',
                         style: new TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.red.shade500,
                             fontSize: 14)),
                     new TextSpan(
-                        text: details[index]['PendingAmount'].toString(),
+                        text: details[index]['PendingAmount'].toStringAsFixed(2),
                         style: new TextStyle(fontSize: 14)),
                   ],
                 ),

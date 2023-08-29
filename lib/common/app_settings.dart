@@ -5,7 +5,7 @@ class AppSettings {
   static String mobileDeviceInfo = 'CPA_MOBILE_DEVICE_INFO';
   static String deviceDetails = 'CPA_DEVICE_DETAILS';
   static String Sp_ProfileData = 'CPA_PROFILE_DETAILS';
-  static String parentAppPIN = 'CPA_PIN_LOCK';
+  static String Sp_AppPIN = 'CPA_PIN_LOCK';
   static String parentDetails = 'CPA_DRIVER_DETAILS';
   static String deviceUID = 'CPA_DEVICE_UID';
   static String parentLogin = 'CPA_DRIVER_LOGIN';
@@ -47,6 +47,7 @@ class AppSettings {
   static String GetDashboard = 'parentapp/GetDashboard';
   static String GetCalendarData = 'parentapp/GetCalendarData';
   static String GetFamilyMemberForTopup = 'parentapp/GetFamilyMemberForTopup';
+  static String CheckUserEWalletBalMaxAmt = 'parentapp/CheckUserEWalletBalMaxAmt';
 
   static String avatarPlaceholder =
       "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png";

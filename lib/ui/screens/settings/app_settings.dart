@@ -1,7 +1,7 @@
 import '../../../main.dart';
 import '/common/alert_dialog.dart';
 import '/common/my_shared_pref.dart';
-import '/common/widgets/select_member.dart';
+import '../../../common/widgets/common.dart';
 import '/ui/screens/scan_qr_registration/QRRegistration.dart';
 import 'package:flutter/material.dart';
 

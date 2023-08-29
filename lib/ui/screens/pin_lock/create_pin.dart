@@ -276,7 +276,7 @@ class _CreatePinState extends State<CreatePin> {
   }
 
   _onButtonPressed() async {
-    MySharedPref().saveData(pinController.text, AppSettings.parentAppPIN);
+    MySharedPref().saveData(pinController.text, AppSettings.Sp_AppPIN);
     bool appVerified =
         await MySharedPref().getBooleanData(AppSettings.Sp_App_Verified);
     if (appVerified) {

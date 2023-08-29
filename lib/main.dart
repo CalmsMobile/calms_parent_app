@@ -349,7 +349,7 @@ class _SplashScreenState extends State<SplashScreen> {
     DeviceId = await MySharedPref().getData(AppSettings.Sp_DeviceId);
     appVerified =
         await MySharedPref().getBooleanData(AppSettings.Sp_App_Verified);
-    appPIN = await MySharedPref().getData(AppSettings.parentAppPIN);
+    appPIN = await MySharedPref().getData(AppSettings.Sp_AppPIN);
     qrCodeData = await MySharedPref().getData(AppSettings.Sp_QrCodeData);
     appType = await MySharedPref().getData(AppSettings.Sp_Key_AppType);
     print("profileData >> $profileData");

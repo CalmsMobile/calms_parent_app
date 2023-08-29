@@ -2,7 +2,7 @@ import 'package:awesome_select/awesome_select.dart';
 import '/common/HexColor.dart';
 import '/common/alert_dialog.dart';
 import '/common/constants.dart';
-import '/common/widgets/select_member.dart';
+import '../../../common/widgets/common.dart';
 import '/ui/screens/stores/details/StoreDetails.dart';
 import 'package:flutter/material.dart';
 

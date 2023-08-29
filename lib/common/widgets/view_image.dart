@@ -1,4 +1,4 @@
-import '/common/widgets/select_member.dart';
+import 'common.dart';
 import 'package:flutter/material.dart';
 
 class ViewImage extends StatefulWidget {

@@ -27,7 +27,7 @@ class _PINEnterState extends State<PINEnter> {
   }
 
   initValues() async {
-    appPIN = await MySharedPref().getData(AppSettings.parentAppPIN);
+    appPIN = await MySharedPref().getData(AppSettings.Sp_AppPIN);
     appType = await MySharedPref().getData(AppSettings.Sp_Key_AppType);
     print(appPIN);
   }

@@ -49,23 +49,20 @@ class RecentActivityListView extends StatelessWidget {
                               ),
                               children: <TextSpan>[
                                 new TextSpan(
-                                    text: '',
+                                    text: 'TOTAL: ',
                                     style: new TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        color: Colors.grey.shade500,
-                                        fontSize: 10)),
+                                        color: Colors.red.shade500,
+                                        fontSize: 12)),
                                 new TextSpan(
-                                    //text: recentList[index]['date'],
-                                    text: '',
-                                    style: new TextStyle(
-                                        color: Colors.grey.shade500,
-                                        fontSize: 10)),
+                                    text: recentList[index]['Total'].toString(),
+                                    style: TextStyle(fontSize: 14)),
                               ],
                             ),
                           ),
                         ],
                       ),
-                      subtitle: Row(
+                      /* subtitle: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Column(
@@ -111,7 +108,7 @@ class RecentActivityListView extends StatelessWidget {
                             ),
                           ),
                         ],
-                      ),
+                      ), */
                       onTap: () {
                         Navigator.of(context).pushNamed('/PurchaseDetails',
                             arguments: recentList[index]);

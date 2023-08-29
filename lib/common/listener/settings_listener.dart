@@ -18,6 +18,8 @@ class MySettingsListener with ChangeNotifier {
   List _calendarTransactionList = [];
 
   List _topupMembersList = [];
+  List _paymentProvidersList = [];
+  double _topupTotal = 0.00;
 
   int _familyPos = 0;
   List _notificationList = [];
@@ -58,6 +60,9 @@ class MySettingsListener with ChangeNotifier {
 
   UnmodifiableListView<dynamic> get topupMembersList =>
       UnmodifiableListView(_topupMembersList);
+  UnmodifiableListView<dynamic> get paymentProvidersList =>
+      UnmodifiableListView(_paymentProvidersList);
+  get topupTotal => _topupTotal;
 
   UnmodifiableListView<dynamic> get notificationCategoryList =>
       UnmodifiableListView(_notificationCategoryList);
@@ -95,7 +100,17 @@ class MySettingsListener with ChangeNotifier {
 
   updateTopupMembersList(List topupMembersList) {
     _topupMembersList = topupMembersList;
+
+    _topupTotal = 0;
+    _topupMembersList.forEach((val) {
+      if (val['amount'] != null) _topupTotal += val['amount'];
+    });
+    print(_topupMembersList);
     notifyListeners();
+  }
+
+  updateTopupPaymentProvidersList(List paymentProvidersList) {
+    _paymentProvidersList = paymentProvidersList;
   }
 
   updateSettings(var settingDetails) {

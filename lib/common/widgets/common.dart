@@ -6,7 +6,7 @@ import 'package:dropdown_button2/custom_dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 
-PreferredSizeWidget getMyAppbar(context,var titleText, List<Widget> actions1) {
+PreferredSizeWidget getMyAppbar(context, var titleText, List<Widget> actions1) {
   return AppBar(
       toolbarHeight: 70,
       elevation: 0,
@@ -475,33 +475,33 @@ void showPaymentSelectOption(
                                       child: ListTile(
                                         horizontalTitleGap: -8,
                                         title: new Text(
-                                          paymentList[index]["name"],
-                                          style: TextStyle(fontSize: 12),
+                                          paymentList[index]["Name"],
+                                          style: TextStyle(fontSize: 22),
                                         ),
                                         leading: Icon(
-                                          Icons.done_sharp,
-                                          size: 16,
+                                          Icons.check_circle_outline_rounded,
+                                          size: 20,
                                           color: selectedPaymentMethod ==
-                                                  paymentList[index]["name"]
-                                              ? Colors.pinkAccent
+                                                  paymentList[index]["PayMode"]
+                                              ? Color.fromARGB(255, 6, 150, 47)
                                               : Colors.grey,
                                         ),
                                         trailing: Container(
                                           height: 45,
                                           width: 45,
                                           child: Image.network(
-                                              paymentList[index]["image"]),
+                                              paymentList[index]["ImgPathUrl"]),
                                         ),
                                         onTap: () {
                                           selectedPaymentMethod =
-                                              paymentList[index]["name"];
+                                              paymentList[index]["PayMode"];
                                           setState(() {});
                                         },
                                       ),
                                     ),
                                   ]);
                                 }),
-                            if (selectedPaymentMethod == "FPX Online Payment")
+                            if (selectedPaymentMethod == "FPX")
                               Container(
                                 margin: EdgeInsets.only(left: 0),
                                 width: double.infinity,
