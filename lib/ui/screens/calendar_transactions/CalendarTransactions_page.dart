@@ -32,14 +32,16 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
   late DateTime? selectedDateTime;
 
   void calendarTapped(CalendarTapDetails calendarTapDetails) {
-    print(calendarTapDetails.date);
+    print(calendarTapDetails.targetElement.name);
     print(selectedUserSeqId);
     print(selectedRefBranchSeqId);
+    if(calendarTapDetails.targetElement.name == "calendarCell"){
     setState(() {
       selectedDateTime = calendarTapDetails.date;
       getData(selectedUserSeqId, selectedRefBranchSeqId,
           DateFormat("yyyy-MM-dd").format(selectedDateTime!));
     });
+    }
     /* if (calendarTapDetails.targetElement == CalendarElement.calendarCell) {
       setState(() {
         _appointmentDetails =

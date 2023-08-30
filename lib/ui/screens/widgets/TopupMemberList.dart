@@ -138,7 +138,7 @@ class TopupMemberListView extends StatelessWidget {
                                               ),
                                             ),
                                             TextSpan(
-                                              text: " ${CurrencyCode}  ",
+                                              text: " ${CurrencyCode} ",
                                               style: TextStyle(
                                                 fontSize: 20,
                                                 color: Color.fromARGB(

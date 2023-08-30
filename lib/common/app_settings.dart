@@ -48,6 +48,7 @@ class AppSettings {
   static String GetCalendarData = 'parentapp/GetCalendarData';
   static String GetFamilyMemberForTopup = 'parentapp/GetFamilyMemberForTopup';
   static String CheckUserEWalletBalMaxAmt = 'parentapp/CheckUserEWalletBalMaxAmt';
+  static String GetGatewayDetails = 'parentapp/GetGatewayDetails';
 
   static String avatarPlaceholder =
       "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png";

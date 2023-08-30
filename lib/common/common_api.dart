@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:calms_parent_latest/common/widgets/common.dart';
+
 import '/common/alert_dialog.dart';
 import '/common/app_settings.dart';
 import '/common/listener/settings_listener.dart';
@@ -43,6 +45,10 @@ class CommonUtil {
       context
           .read<MySettingsListener>()
           .updateEntryToDashboardLists(response['Table1'], response['Table2']);
+      if (response['Table3'] != null) {
+        MySharedPref().saveData(
+            jsonEncode(response['Table3'][0]), AppSettings.Sp_ProfileData);
+      }
       getDashboard(
           context,
           response['Table1'][context.read<MySettingsListener>().familyPos]
@@ -134,6 +140,36 @@ class CommonUtil {
         context
             .read<MySettingsListener>()
             .updateTopupPaymentProvidersList(response['Table2']);
+    }
+  }
+
+  Future<void> getGatewayDetails(context, RefBranchSeqId, RefSettingSeqId,
+      topupTotal, CurrencyCode) async {
+    var ParamData = {
+      "RefBranchSeqId": RefBranchSeqId,
+      "RefSettingSeqId": RefSettingSeqId
+    };
+    Future<Map<String, dynamic>> res = RestApiProvider().authorizedPostRequest(
+      ParamData,
+      AppSettings.GetGatewayDetails,
+      context,
+      false,
+    );
+    res
+        .then((response) => {
+              getGatewayDetailsSuccess(
+                  context, response, topupTotal, CurrencyCode)
+            })
+        .onError((error, stackTrace) => {authorizedPostRequestError(error)});
+  }
+
+  getGatewayDetailsSuccess(
+      BuildContext context, response, topupTotal, CurrencyCode) {
+    if (response['Table'][0]['code'] == 10) {
+      print("getGatewayDetailsSuccess success");
+      if (response['Table1'] != null || response['Table1'] != [])
+        showCustomPaymentAlert(
+            context, response['Table1'][0], topupTotal, CurrencyCode);
     }
   }
 

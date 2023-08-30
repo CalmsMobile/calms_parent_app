@@ -325,7 +325,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       });
     controller.repeat(reverse: true);
     super.initState();
-    getLocalData();
+    
     initValues();
   }
 
@@ -337,6 +337,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   Future<void> initValues() async {
     CommonUtil().getEntryToDashboard(context);
+    getLocalData();
   }
 
   @override
@@ -351,7 +352,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         //titleSpacing: -5,
         automaticallyImplyLeading: false,
         centerTitle: true,
-        leading:Padding(padding: EdgeInsets.only(left: 15,top: 5,bottom: 5),child:  profileData['BranchImg'] != null
+        leading:Padding(padding: EdgeInsets.only(left: 15,top: 5,bottom: 5),
+        child:  profileData['BranchImg'] != null
             ? CircleAvatar(
                 backgroundImage: NetworkImage(profileData["BranchImg"]),
               )
@@ -365,7 +367,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       letterSpacing: 2.0,
                       fontWeight: FontWeight.w900),
                 ),
-              ),),
+              ),
+              ),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,

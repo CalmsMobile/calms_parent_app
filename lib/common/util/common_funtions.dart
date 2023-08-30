@@ -34,4 +34,6 @@ class CommonFunctions {
     return DateFormat('hh:mm a')
         .format(DateTime.parse(appint['actual_end_time']!));
   }
+
+  
 }

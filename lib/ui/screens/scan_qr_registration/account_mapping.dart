@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:calms_parent_latest/main.dart';
 
 import '../../../common/crypto_enc.dart';
+import '../../../common/util/common_funtions.dart';
 import '/common/app_settings.dart';
 import '/common/my_shared_pref.dart';
 import '/common/util/linked_checkbox.dart';
@@ -46,15 +47,6 @@ class _AccountMappingState extends State<AccountMapping> {
 
   @override
   Widget build(BuildContext context) {
-    String BranchImg = widget.dataResponseModel["BranchImg"];
-    if (BranchImg != null || BranchImg != "") {
-      BranchImg =
-          BranchImg.replaceAll(RegExp(r'^data:image\/[a-z]+;base64,'), '');
-    } else
-      BranchImg =
-          "iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAQAAAAAYLlVAAAAAmJLR0QA/4ePzL8AAAEfSURBVGje7ZhRDoIwDED9IB7K4AH03xtIdw0kRvRaLp5DIvHHSyAQFZwIK2kHmrZfC5u8tA8bmEwkJMYUqynEcIUMkbdgH3pkALBF3fyZMR1AAlkwQ53wc4AzHUBRfh9zYj3PTyRkAGrXpwVqQwYQenBAA0SEEpZtyH+UY+9vATSkLq+djLU7AHUsr2lj/bctGA3Ao+f66xr/r9E9O94AdNXvxnXGMDt4W2AxO3gBLGYHswPds4PdgQghIXULrPaPCsDGAV4ACwcGb0FrhfpUDA/QUqE+FRMHxAFxQBwQB8QBcUAcEAfEAXOTWkL6eq1Kg4XzN6Pa7Yu8OAEw0+YLGqkDOABmB0wA9w4IgCuA2ndgF6k/AbRLgOrJkJAYPO7iUgnEnQYsGAAAAABJRU5ErkJggg==";
-
-    Uint8List bytesImage = const Base64Decoder().convert(BranchImg);
     return Scaffold(
         body: Stack(children: [
       Scaffold(
@@ -120,10 +112,25 @@ class _AccountMappingState extends State<AccountMapping> {
                           SizedBox(
                             height: 10,
                           ),
-                          CircleAvatar(
-                            radius: 40.0,
-                            backgroundImage: MemoryImage(bytesImage), //here
-                          ),
+                          widget.dataResponseModel['BranchImg'] != null
+                              ? CircleAvatar(
+                                  radius: 40,
+                                  backgroundImage: NetworkImage(
+                                      widget.dataResponseModel["BranchImg"]),
+                                )
+                              : CircleAvatar(
+                                  radius: 40,
+                                  backgroundColor: Colors.blue[700],
+                                  child: Text(
+                                    CommonFunctions.getInitials(
+                                        widget.dataResponseModel['BranchName']),
+                                    style: TextStyle(
+                                        fontSize: 22.0,
+                                        color: Colors.white,
+                                        letterSpacing: 2.0,
+                                        fontWeight: FontWeight.w900),
+                                  ),
+                                ),
                           SizedBox(
                             height: 10,
                           ),
@@ -471,20 +478,19 @@ class _AccountMappingState extends State<AccountMapping> {
     };
     String encParamData = CryptoEncryption(dataResponseModel['SecureKey'])
         .encryptMyData(json.encode(paramData));
-    var payload = { 
-        "Authorize": {
-          "AuMAppDevSeqId": qrJson['MAppSeqId'],
-          "AuDeviceUID": "",
-          "Token": "",
-          "AuRefUserSeqId": ""
-        },
-        "ParamData": encParamData
+    var payload = {
+      "Authorize": {
+        "AuMAppDevSeqId": qrJson['MAppSeqId'],
+        "AuDeviceUID": "",
+        "Token": "",
+        "AuRefUserSeqId": ""
+      },
+      "ParamData": encParamData
     };
     print("Payload == > " + payload.toString());
-    String encData = CryptoEncryption(AppSettings.commonCryptoKey).encryptMyData(json.encode(payload));
-    var data = {
-      "Data":encData
-    };
+    String encData = CryptoEncryption(AppSettings.commonCryptoKey)
+        .encryptMyData(json.encode(payload));
+    var data = {"Data": encData};
     /* var data = {
       'MAppDevSeqId': qrJson['MAppSeqId'],
       'RefUserSeqId': dataResponseModel['RefUserSeqId'],
@@ -499,8 +505,8 @@ class _AccountMappingState extends State<AccountMapping> {
         qrJson["ApiUrl"], AppSettings.RegisterParentApp, context, true, false);
     res
         .then((value) => {
-              successResponse(
-                  value, decryptdata, data, qrJson["ApiUrl"], dataResponseModel,DeviceId)
+              successResponse(value, decryptdata, data, qrJson["ApiUrl"],
+                  dataResponseModel, DeviceId)
             })
         .onError((error, stackTrace) => {responseError(error)});
   }
@@ -514,30 +520,31 @@ class _AccountMappingState extends State<AccountMapping> {
     }, null);
   }
 
-  successResponse(
-      Map<String, dynamic> res, decryptdata, inputData, ApiUrl, profileData,DeviceId) {
+  successResponse(Map<String, dynamic> res, decryptdata, inputData, ApiUrl,
+      profileData, DeviceId) {
     print(res);
     if (res['Table'][0]['code'] == 10) {
       MyCustomAlertDialog().showToast(context, res['Table'][0]['description']);
-      MySharedPref().saveData(jsonEncode(profileData), AppSettings.Sp_ProfileData);
+      MySharedPref()
+          .saveData(jsonEncode(profileData), AppSettings.Sp_ProfileData);
       MySharedPref().saveData(decryptdata, AppSettings.Sp_QrCodeData);
       MySharedPref().saveData(
           AppSettings.appType_Notification, AppSettings.Sp_Key_AppType);
-          MySharedPref().saveData(res['Table1'][0]['Token'], AppSettings.Sp_Token);
-          MySharedPref().saveBooleanData(false, AppSettings.Sp_App_Verified);
-          MySharedPref().saveData(DeviceId, AppSettings.Sp_DeviceId);
+      MySharedPref().saveData(res['Table1'][0]['Token'], AppSettings.Sp_Token);
+      MySharedPref().saveBooleanData(false, AppSettings.Sp_App_Verified);
+      MySharedPref().saveData(DeviceId, AppSettings.Sp_DeviceId);
       /* Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => CreatePin())); */
-          Navigator.of(context).pushReplacement(
+      Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => SplashScreen()));
     } else if (res['Table'][0]['code'] == 40) {
       showAlert(context, res['Table'][0]['description'], inputData, decryptdata,
-          ApiUrl, profileData,DeviceId);
+          ApiUrl, profileData, DeviceId);
     }
   }
 
   showAlert(BuildContext buildContext, msg, inputData, decryptdata, ApiUrl,
-      profileData,DeviceId) {
+      profileData, DeviceId) {
     MyCustomAlertDialog().showCustomAlert(context, "Confirmation", msg, false,
         () {
       Navigator.pop(context);
@@ -548,8 +555,8 @@ class _AccountMappingState extends State<AccountMapping> {
           ApiUrl, AppSettings.RegisterParentApp, context, true, false);
       res
           .then((value) => {
-                successResponse(
-                    value, decryptdata, inputData, ApiUrl, profileData,DeviceId)
+                successResponse(value, decryptdata, inputData, ApiUrl,
+                    profileData, DeviceId)
               })
           .onError((error, stackTrace) => {responseError(error)});
     }, () {

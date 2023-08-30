@@ -101,7 +101,7 @@ class _TopupPageState extends State<TopupPage> {
                           ),
                           children: <TextSpan>[
                             new TextSpan(
-                                text: 'MYR ',
+                                text: profileData['CurrencyCode'] + " ",
                                 style: new TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Color.fromARGB(255, 0, 0, 0),
@@ -137,25 +137,62 @@ class _TopupPageState extends State<TopupPage> {
                     ])),
               ),
             ),
-            Consumer<MySettingsListener>(
-                        builder: (context, data, settingsDta) {
-           return InkWell(
+            Consumer<MySettingsListener>(builder: (context, data, settingsDta) {
+              return Container(
+                alignment: Alignment.bottomRight,
+                  margin: EdgeInsets.all(10),
+                  child: SizedBox(
+                      height: 45,
+                      child: ElevatedButton(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              "Choose Payment Option",
+                              style: TextStyle(
+                                  fontSize: 18.0,
+                                  fontFamily: "Montserrat",
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            Icon(Icons.arrow_forward_ios)
+                          ],
+                        ),
+                        onPressed: data.topupTotal > 0
+                            ? () {
+                                showPaymentSelectOption(
+                                    context,
+                                    "Choose payment type",
+                                    data.paymentProvidersList,
+                                    data.topupTotal,
+                                    profileData['CurrencyCode']);
+                              }
+                            : null,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color.fromARGB(255, 6, 105, 199),
+                          textStyle: TextStyle(color: Colors.white),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(60.0)),
+                        ),
+                      )));
+              /* return InkWell(
               onTap: () {
-                showPaymentSelectOption(context,"Choose payment type",data.paymentProvidersList,{});
+                if(data.topupTotal>0)
+                showPaymentSelectOption(context,"Choose payment type",data.paymentProvidersList,data.topupTotal,profileData['CurrencyCode']);              
               },
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.blue,
+                  color:data.topupTotal>0? Colors.blue:Colors.grey,
                   borderRadius: BorderRadius.circular(10),
                   border: Border(
-                    bottom: BorderSide(color: Colors.blue, width: 1),
-                    right: BorderSide(color: Colors.blue, width: 1),
-                    top: BorderSide(color: Colors.blue, width: 1),
-                    left: BorderSide(color: Colors.blue, width: 1),
+                    bottom: BorderSide(color: data.topupTotal>0? Colors.blue:Colors.grey, width: 1),
+                    right: BorderSide(color: data.topupTotal>0? Colors.blue:Colors.grey, width: 1),
+                    top: BorderSide(color: data.topupTotal>0? Colors.blue:Colors.grey, width: 1),
+                    left: BorderSide(color: data.topupTotal>0? Colors.blue:Colors.grey, width: 1),
                   ),
                   boxShadow: [
                     new BoxShadow(
-                      color: Colors.blue,
+                      color: data.topupTotal>0? Colors.blue:Colors.grey,
                       blurRadius: 1.0,
                     ),
                   ],
@@ -166,7 +203,7 @@ class _TopupPageState extends State<TopupPage> {
                 child: Align(
                   alignment: Alignment.center,
                   child: Container(
-                      color: Colors.blue,
+                      //color: Colors.blue,
                       padding: EdgeInsets.only(left: 15, right: 15),
                       child: Text(
                         "Choose Payment Option",
@@ -178,7 +215,9 @@ class _TopupPageState extends State<TopupPage> {
                       )),
                 ),
               ),
-            );}),
+            );
+            */
+            }),
           ],
         ),
       ),

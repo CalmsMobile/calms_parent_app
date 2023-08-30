@@ -1,3 +1,7 @@
+import 'package:calms_parent_latest/common/common_api.dart';
+import 'package:provider/provider.dart';
+
+import '../listener/settings_listener.dart';
 import '../util/common_funtions.dart';
 import '/common/HexColor.dart';
 import '/common/alert_dialog.dart';
@@ -73,7 +77,7 @@ PreferredSizeWidget getBottomSheetActionBar(
                 padding: EdgeInsets.only(bottom: 3, left: 5),
                 child: Text(
                   titleText,
-                  style: TextStyle(color: Colors.black, fontSize: 16),
+                  style: TextStyle(color: Colors.black, fontSize: 20),
                 ),
               )),
             ]),
@@ -217,11 +221,16 @@ void openMemberBottomSheet(
       });
 }
 
-void showCustomPaymentAlert(BuildContext buildContext) {
+void showCustomPaymentAlert(
+    BuildContext buildContext, gatewayDetail, topupTotal, CurrencyCode) {
   final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
     backgroundColor: Colors.pinkAccent,
     textStyle: TextStyle(color: Colors.white),
   );
+
+  if (gatewayDetail['IsAdminFeeGst'])
+    double adminFee = getAdminFee(gatewayDetail['AdminTransFee'],
+        gatewayDetail['AdminGstType'], gatewayDetail['AdminGstPercentage']);
 
   showModalBottomSheet(
       shape: RoundedRectangleBorder(
@@ -245,7 +254,6 @@ void showCustomPaymentAlert(BuildContext buildContext) {
                       children: [
                         getBottomSheetActionBar(
                             context, "Confirmation", true, Colors.white),
-
                         Container(
                           margin: EdgeInsets.only(top: 0),
                           padding: EdgeInsets.symmetric(horizontal: 20),
@@ -261,8 +269,8 @@ void showCustomPaymentAlert(BuildContext buildContext) {
                                       "Payment Method",
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold),
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.normal),
                                     ),
                                   ),
                                   Divider(
@@ -274,8 +282,8 @@ void showCustomPaymentAlert(BuildContext buildContext) {
                                       "Top-up Amount",
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold),
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.normal),
                                     ),
                                   ),
                                   Divider(
@@ -287,8 +295,8 @@ void showCustomPaymentAlert(BuildContext buildContext) {
                                       "Admin Fee",
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold),
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.normal),
                                     ),
                                   ),
                                   Divider(
@@ -300,7 +308,7 @@ void showCustomPaymentAlert(BuildContext buildContext) {
                                       "Total",
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
-                                          fontSize: 14,
+                                          fontSize: 18,
                                           fontWeight: FontWeight.bold),
                                     ),
                                   ),
@@ -315,36 +323,36 @@ void showCustomPaymentAlert(BuildContext buildContext) {
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Text(
-                                      "Global Payment",
+                                      gatewayDetail['EnvName'],
                                       style: TextStyle(
-                                          fontSize: 14,
+                                          fontSize: 18,
                                           fontWeight: FontWeight.bold),
                                     ),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Text(
-                                      "MYR 1.00",
+                                      "${topupTotal.toStringAsFixed(2)} ${CurrencyCode}",
                                       style: TextStyle(
-                                          fontSize: 14,
+                                          fontSize: 18,
                                           fontWeight: FontWeight.bold),
                                     ),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Text(
-                                      "MYR 5.00",
+                                      "${gatewayDetail['AdminTransFee'].toStringAsFixed(2)} ${CurrencyCode}",
                                       style: TextStyle(
-                                          fontSize: 14,
+                                          fontSize: 18,
                                           fontWeight: FontWeight.bold),
                                     ),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Text(
-                                      "MYR 6.00",
+                                      "${(topupTotal + gatewayDetail['AdminTransFee']).toStringAsFixed(2)} ${CurrencyCode}",
                                       style: TextStyle(
-                                          fontSize: 14,
+                                          fontSize: 18,
                                           fontWeight: FontWeight.bold),
                                     ),
                                   ),
@@ -353,50 +361,43 @@ void showCustomPaymentAlert(BuildContext buildContext) {
                             ],
                           ),
                         ),
-                        // Container(
-                        //   margin: EdgeInsets.only(top: 10),
-                        //   padding: EdgeInsets.symmetric(horizontal: 20),
-                        //   child: Row(
-                        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //     children: [],
-                        //   ),
-                        // ),
-                        // Container(
-                        //   margin: EdgeInsets.only(top: 10),
-                        //   padding: EdgeInsets.symmetric(horizontal: 20),
-                        //   child: Row(
-                        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //     children: [],
-                        //   ),
-                        // ),
-                        // Container(
-                        //   margin: EdgeInsets.only(top: 10),
-                        //   padding: EdgeInsets.symmetric(horizontal: 20),
-                        //   child: Row(
-                        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //     children: [],
-                        //   ),
-                        // ),
-
                         Container(
                           margin: EdgeInsets.only(top: 10),
                           padding: EdgeInsets.symmetric(horizontal: 20),
                           child: SizedBox(
-                            width: double.infinity,
-                            child: /* RaisedButton(
-                              onPressed: () {},
-                              child: Text(
-                                "Topup",
-                                style: TextStyle(color: Colors.white),
-                              ),
-                              color: Colors.pinkAccent,
-                            ), */
-                                ElevatedButton(
-                              style: raisedButtonStyle,
-                              onPressed: () {},
-                              child: Text('Topup'),
-                            ),
-                          ),
+                              width: double.infinity,
+                              child: Container(
+                                  alignment: Alignment.bottomRight,
+                                  margin: EdgeInsets.all(10),
+                                  child: SizedBox(
+                                      height: 45,
+                                      child: ElevatedButton(
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Text(
+                                              "Topup",
+                                              style: TextStyle(
+                                                  fontSize: 18.0,
+                                                  fontFamily: "Montserrat",
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            Icon(Icons.payment)
+                                          ],
+                                        ),
+                                        onPressed: () {},
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor:
+                                              Color.fromARGB(255, 6, 105, 199),
+                                          textStyle:
+                                              TextStyle(color: Colors.white),
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(60.0)),
+                                        ),
+                                      )))),
                         )
                       ],
                     ),
@@ -407,9 +408,21 @@ void showCustomPaymentAlert(BuildContext buildContext) {
       });
 }
 
-void showPaymentSelectOption(
-    BuildContext buildContext, titleText, paymentList, callback) {
-  var selectedPaymentMethod = "FPX Online Payment";
+double getAdminFee(AdminTransFee, AdminGstType, AdminGstPercentage) {
+  double lsval = 0;
+  if (AdminGstType == "10") {
+    lsval = (AdminTransFee * AdminGstPercentage) / (100 + AdminGstPercentage);
+  } else if (AdminGstType == "20") {
+    lsval = (AdminTransFee * AdminGstPercentage) / (100);
+  } else if (AdminGstType == "00") {
+    lsval = AdminTransFee * (AdminGstPercentage / 100);
+  }
+  return lsval;
+}
+
+void showPaymentSelectOption(BuildContext buildContext, titleText, paymentList,
+    topupTotal, CurrencyCode) {
+  var selectedPaymentMethod = {};
   var checkedValue = false;
   final List<String> modalList = [
     'B2C - Retail Banking',
@@ -438,260 +451,304 @@ void showPaymentSelectOption(
               return StatefulBuilder(
                   builder: (BuildContext context, setState) =>
                       SingleChildScrollView(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            AppBar(
-                              title: Text(
-                                titleText,
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 16),
-                              ),
-                              elevation: 1,
-                              backgroundColor: Colors.white,
-                              automaticallyImplyLeading: false,
-                              actions: [
-                                IconButton(
-                                  icon: Icon(Icons.close_sharp,
-                                      color: Colors.black),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                ),
-                              ],
+                        child:
+                            Column(mainAxisSize: MainAxisSize.min, children: <
+                                Widget>[
+                          AppBar(
+                            title: Text(
+                              titleText,
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 16),
                             ),
-                            ListView.builder(
-                                physics: NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                itemCount: paymentList.length,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return Column(children: <Widget>[
-                                    new Divider(
-                                      height: 0.1,
-                                    ),
-                                    Container(
-                                      color: Colors.white,
-                                      height: 45,
-                                      child: ListTile(
-                                        horizontalTitleGap: -8,
-                                        title: new Text(
-                                          paymentList[index]["Name"],
-                                          style: TextStyle(fontSize: 22),
-                                        ),
-                                        leading: Icon(
-                                          Icons.check_circle_outline_rounded,
-                                          size: 20,
-                                          color: selectedPaymentMethod ==
-                                                  paymentList[index]["PayMode"]
-                                              ? Color.fromARGB(255, 6, 150, 47)
-                                              : Colors.grey,
-                                        ),
-                                        trailing: Container(
-                                          height: 45,
-                                          width: 45,
-                                          child: Image.network(
-                                              paymentList[index]["ImgPathUrl"]),
-                                        ),
-                                        onTap: () {
-                                          selectedPaymentMethod =
-                                              paymentList[index]["PayMode"];
-                                          setState(() {});
-                                        },
-                                      ),
-                                    ),
-                                  ]);
-                                }),
-                            if (selectedPaymentMethod == "FPX")
-                              Container(
-                                margin: EdgeInsets.only(left: 0),
-                                width: double.infinity,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      margin: EdgeInsets.only(top: 10),
-                                      height: 30,
-                                      child: getBottomSheetActionBar(context,
-                                          "Select Model", false, Colors.white),
-                                    ),
-                                    Container(
-                                      width: double.infinity,
-                                      color: Colors.grey.shade400,
-                                      margin: EdgeInsets.only(
-                                          top: 0, left: 20, right: 20),
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 10),
-                                      child: DropdownButtonHideUnderline(
-                                        child: DropdownButton2(
-                                          hint: Text(
-                                            'Select Model',
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              color:
-                                                  Theme.of(context).hintColor,
-                                            ),
-                                          ),
-                                          items: modalList
-                                              .map((item) =>
-                                                  DropdownMenuItem<String>(
-                                                    value: item,
-                                                    child: Text(
-                                                      item,
-                                                      style: const TextStyle(
-                                                        fontSize: 14,
-                                                      ),
-                                                    ),
-                                                  ))
-                                              .toList(),
-                                          value: selectedModalValue,
-                                          onChanged: (value) {
-                                            setState(() {
-                                              selectedModalValue =
-                                                  value as String;
-                                            });
-                                          },
-                                          buttonHeight: 40,
-                                          buttonWidth: 140,
-                                          itemHeight: 40,
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      margin: EdgeInsets.only(top: 10),
-                                      height: 30,
-                                      child: getBottomSheetActionBar(context,
-                                          "Select Bank", false, Colors.white),
-                                    ),
-                                    Container(
-                                      width: double.infinity,
-                                      color: Colors.grey.shade400,
-                                      margin: EdgeInsets.only(
-                                          top: 0, left: 20, right: 20),
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 10),
-                                      child: DropdownButtonHideUnderline(
-                                        child: DropdownButton2(
-                                          hint: Text(
-                                            'Select Bank',
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              color:
-                                                  Theme.of(context).hintColor,
-                                            ),
-                                          ),
-                                          items: bankList
-                                              .map((item) =>
-                                                  DropdownMenuItem<String>(
-                                                    value: item,
-                                                    child: Text(
-                                                      item,
-                                                      style: const TextStyle(
-                                                        fontSize: 14,
-                                                      ),
-                                                    ),
-                                                  ))
-                                              .toList(),
-                                          value: selectedBankValue,
-                                          onChanged: (value) {
-                                            setState(() {
-                                              selectedBankValue =
-                                                  value as String;
-                                            });
-                                          },
-                                          buttonHeight: 40,
-                                          buttonWidth: 140,
-                                          itemHeight: 40,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            Container(
-                              margin: EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 10),
-                              child: CheckboxListTile(
-                                checkColor: Colors.white,
-                                activeColor: Colors.pinkAccent,
-                                contentPadding: EdgeInsets.zero,
-                                title: RichText(
-                                  maxLines: 2,
-                                  textAlign: TextAlign.left,
-                                  text: TextSpan(
-                                      text:
-                                          'Click here to indicate that you have read and agree to the terms presented in the ',
-                                      style: TextStyle(
-                                          fontSize: 12,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold),
-                                      children: [
-                                        TextSpan(
-                                          text: 'Terms and Conditions',
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              color: Colors.blue,
-                                              decoration:
-                                                  TextDecoration.underline,
-                                              decorationThickness: 3,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        TextSpan(
-                                          text: ' agreement',
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ]),
-                                ),
-                                value: checkedValue,
-                                onChanged: (newValue) {
-                                  setState(() {
-                                    checkedValue = newValue!;
-                                  });
+                            elevation: 1,
+                            backgroundColor: Colors.white,
+                            automaticallyImplyLeading: false,
+                            actions: [
+                              IconButton(
+                                icon: Icon(Icons.close_sharp,
+                                    color: Colors.black),
+                                onPressed: () {
+                                  Navigator.pop(context);
                                 },
-                                controlAffinity:
-                                    ListTileControlAffinity.leading,
+                              ),
+                            ],
+                          ),
+                          ListView.builder(
+                              physics: NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: paymentList.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return Column(children: <Widget>[
+                                  new Divider(
+                                    height: 0.1,
+                                  ),
+                                  Container(
+                                    color: Colors.white,
+                                    height: 45,
+                                    child: ListTile(
+                                      horizontalTitleGap: -8,
+                                      title: new Text(
+                                        paymentList[index]["Name"],
+                                        style: TextStyle(fontSize: 22),
+                                      ),
+                                      leading: Icon(
+                                        Icons.check_circle_outline_rounded,
+                                        size: 20,
+                                        color: selectedPaymentMethod[
+                                                    'PayMode'] ==
+                                                paymentList[index]['PayMode']
+                                            ? Color.fromARGB(255, 6, 150, 47)
+                                            : Colors.grey,
+                                      ),
+                                      trailing: Container(
+                                        height: 45,
+                                        width: 45,
+                                        child: Image.network(
+                                            paymentList[index]["ImgPathUrl"]),
+                                      ),
+                                      onTap: () {
+                                        selectedPaymentMethod =
+                                            paymentList[index];
+                                        setState(() {});
+                                      },
+                                    ),
+                                  ),
+                                ]);
+                              }),
+                          if (selectedPaymentMethod['PayMode'] == "FPX")
+                            Container(
+                              margin: EdgeInsets.only(left: 0),
+                              width: double.infinity,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.only(top: 10),
+                                    height: 30,
+                                    child: getBottomSheetActionBar(context,
+                                        "Select Model", false, Colors.white),
+                                  ),
+                                  Container(
+                                    width: double.infinity,
+                                    color: Colors.grey.shade400,
+                                    margin: EdgeInsets.only(
+                                        top: 0, left: 20, right: 20),
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 10),
+                                    child: DropdownButtonHideUnderline(
+                                      child: DropdownButton2(
+                                        hint: Text(
+                                          'Select Model',
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color: Theme.of(context).hintColor,
+                                          ),
+                                        ),
+                                        items: modalList
+                                            .map((item) =>
+                                                DropdownMenuItem<String>(
+                                                  value: item,
+                                                  child: Text(
+                                                    item,
+                                                    style: const TextStyle(
+                                                      fontSize: 14,
+                                                    ),
+                                                  ),
+                                                ))
+                                            .toList(),
+                                        value: selectedModalValue,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            selectedModalValue =
+                                                value as String;
+                                          });
+                                        },
+                                        buttonHeight: 40,
+                                        buttonWidth: 140,
+                                        itemHeight: 40,
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(top: 10),
+                                    height: 30,
+                                    child: getBottomSheetActionBar(context,
+                                        "Select Bank", false, Colors.white),
+                                  ),
+                                  Container(
+                                    width: double.infinity,
+                                    color: Colors.grey.shade400,
+                                    margin: EdgeInsets.only(
+                                        top: 0, left: 20, right: 20),
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 10),
+                                    child: DropdownButtonHideUnderline(
+                                      child: DropdownButton2(
+                                        hint: Text(
+                                          'Select Bank',
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color: Theme.of(context).hintColor,
+                                          ),
+                                        ),
+                                        items: bankList
+                                            .map((item) =>
+                                                DropdownMenuItem<String>(
+                                                  value: item,
+                                                  child: Text(
+                                                    item,
+                                                    style: const TextStyle(
+                                                      fontSize: 14,
+                                                    ),
+                                                  ),
+                                                ))
+                                            .toList(),
+                                        value: selectedBankValue,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            selectedBankValue = value as String;
+                                          });
+                                        },
+                                        buttonHeight: 40,
+                                        buttonWidth: 140,
+                                        itemHeight: 40,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                            InkWell(
+                          Container(
+                            margin: EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 10),
+                            child: CheckboxListTile(
+                              checkColor: Colors.white,
+                              activeColor: Colors.pinkAccent,
+                              contentPadding: EdgeInsets.zero,
+                              title: RichText(
+                                maxLines: 2,
+                                textAlign: TextAlign.left,
+                                text: TextSpan(
+                                    text:
+                                        'Click here to indicate that you have read and agree to the terms presented in the ',
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                    children: [
+                                      TextSpan(
+                                        text: 'Terms and Conditions',
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            color: Colors.blue,
+                                            decoration:
+                                                TextDecoration.underline,
+                                            decorationThickness: 3,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      TextSpan(
+                                        text: ' agreement',
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ]),
+                              ),
+                              value: checkedValue,
+                              onChanged: (newValue) {
+                                setState(() {
+                                  checkedValue = newValue!;
+                                });
+                              },
+                              controlAffinity: ListTileControlAffinity.leading,
+                            ),
+                          ),
+                          Container(
+                              alignment: Alignment.bottomRight,
+                              margin: EdgeInsets.all(10),
+                              child: SizedBox(
+                                  height: 45,
+                                  child: ElevatedButton(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(
+                                          "Submit",
+                                          style: TextStyle(
+                                              fontSize: 18.0,
+                                              fontFamily: "Montserrat",
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Icon(Icons.arrow_forward_ios)
+                                      ],
+                                    ),
+                                    onPressed: checkedValue &&
+                                            selectedPaymentMethod != {}
+                                        ? () {
+                                            Navigator.of(buildContext).pop();
+                                            CommonUtil().getGatewayDetails(
+                                                context,
+                                                selectedPaymentMethod[
+                                                    'RefBranchSeqId'],
+                                                selectedPaymentMethod[
+                                                    'SettingsSeqId'],
+                                                topupTotal,
+                                                CurrencyCode);
+                                          }
+                                        : null,
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor:
+                                          Color.fromARGB(255, 6, 105, 199),
+                                      textStyle: TextStyle(color: Colors.white),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(60.0)),
+                                    ),
+                                  )))
+                          /* InkWell(
                               onTap: () {
                                 if (checkedValue &&
-                                    selectedPaymentMethod != "") {
+                                    selectedPaymentMethod != {}) {
                                   Navigator.of(buildContext).pop();
-                                  showCustomPaymentAlert(context);
+                                  CommonUtil().getGatewayDetails(
+                                      context,
+                                      selectedPaymentMethod['RefBranchSeqId'],
+                                      selectedPaymentMethod['SettingsSeqId'],topupTotal,CurrencyCode);
                                 }
                               },
                               child: Container(
                                 decoration: BoxDecoration(
                                   color: checkedValue &&
-                                          selectedPaymentMethod != ""
+                                          selectedPaymentMethod != {}
                                       ? Colors.pinkAccent
                                       : Colors.grey,
                                   borderRadius: BorderRadius.circular(1),
                                   border: Border(
                                     bottom: BorderSide(
                                         color: checkedValue &&
-                                                selectedPaymentMethod != ""
+                                                selectedPaymentMethod != {}
                                             ? Colors.pinkAccent
                                             : Colors.grey,
                                         width: 1),
                                     right: BorderSide(
                                         color: checkedValue &&
-                                                selectedPaymentMethod != ""
+                                                selectedPaymentMethod != {}
                                             ? Colors.pinkAccent
                                             : Colors.grey,
                                         width: 1),
                                     top: BorderSide(
                                         color: checkedValue &&
-                                                selectedPaymentMethod != ""
+                                                selectedPaymentMethod != {}
                                             ? Colors.pinkAccent
                                             : Colors.grey,
                                         width: 1),
                                     left: BorderSide(
                                         color: checkedValue &&
-                                                selectedPaymentMethod != ""
+                                                selectedPaymentMethod != {}
                                             ? Colors.pinkAccent
                                             : Colors.grey,
                                         width: 1),
@@ -699,7 +756,7 @@ void showPaymentSelectOption(
                                   boxShadow: [
                                     new BoxShadow(
                                       color: checkedValue &&
-                                              selectedPaymentMethod != ""
+                                              selectedPaymentMethod != {}
                                           ? Colors.pinkAccent
                                           : Colors.grey,
                                       blurRadius: 1.0,
@@ -713,7 +770,7 @@ void showPaymentSelectOption(
                                   alignment: Alignment.center,
                                   child: Container(
                                       color: checkedValue &&
-                                              selectedPaymentMethod != ""
+                                              selectedPaymentMethod != {}
                                           ? Colors.pinkAccent
                                           : Colors.grey,
                                       padding:
@@ -728,9 +785,9 @@ void showPaymentSelectOption(
                                       )),
                                 ),
                               ),
-                            )
-                          ],
-                        ),
+                            )*/
+                          ,
+                        ]),
                       ));
             });
       });
