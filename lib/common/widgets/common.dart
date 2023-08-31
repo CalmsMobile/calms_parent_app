@@ -221,207 +221,8 @@ void openMemberBottomSheet(
       });
 }
 
-void showCustomPaymentAlert(
-    BuildContext buildContext, gatewayDetail, topupTotal, CurrencyCode) {
-  final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
-    backgroundColor: Colors.pinkAccent,
-    textStyle: TextStyle(color: Colors.white),
-  );
-
-  if (gatewayDetail['IsAdminFeeGst'])
-    double adminFee = getAdminFee(gatewayDetail['AdminTransFee'],
-        gatewayDetail['AdminGstType'], gatewayDetail['AdminGstPercentage']);
-
-  showModalBottomSheet(
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(60.0))),
-      context: buildContext,
-      backgroundColor: Colors.white,
-      isScrollControlled: true,
-      builder: (BuildContext context) {
-        return BottomSheet(
-            enableDrag: true,
-            onClosing: () {},
-            builder: (BuildContext context) {
-              return StatefulBuilder(
-                builder: (BuildContext context, setState) =>
-                    SingleChildScrollView(
-                  child: Container(
-                    color: Colors.white,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        getBottomSheetActionBar(
-                            context, "Confirmation", true, Colors.white),
-                        Container(
-                          margin: EdgeInsets.only(top: 0),
-                          padding: EdgeInsets.symmetric(horizontal: 20),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      "Payment Method",
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.normal),
-                                    ),
-                                  ),
-                                  Divider(
-                                    height: 1,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      "Top-up Amount",
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.normal),
-                                    ),
-                                  ),
-                                  Divider(
-                                    height: 1,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      "Admin Fee",
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.normal),
-                                    ),
-                                  ),
-                                  Divider(
-                                    height: 1,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      "Total",
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                  Divider(
-                                    height: 1,
-                                  ),
-                                ],
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      gatewayDetail['EnvName'],
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      "${topupTotal.toStringAsFixed(2)} ${CurrencyCode}",
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      "${gatewayDetail['AdminTransFee'].toStringAsFixed(2)} ${CurrencyCode}",
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      "${(topupTotal + gatewayDetail['AdminTransFee']).toStringAsFixed(2)} ${CurrencyCode}",
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(top: 10),
-                          padding: EdgeInsets.symmetric(horizontal: 20),
-                          child: SizedBox(
-                              width: double.infinity,
-                              child: Container(
-                                  alignment: Alignment.bottomRight,
-                                  margin: EdgeInsets.all(10),
-                                  child: SizedBox(
-                                      height: 45,
-                                      child: ElevatedButton(
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Text(
-                                              "Topup",
-                                              style: TextStyle(
-                                                  fontSize: 18.0,
-                                                  fontFamily: "Montserrat",
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            Icon(Icons.payment)
-                                          ],
-                                        ),
-                                        onPressed: () {},
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor:
-                                              Color.fromARGB(255, 6, 105, 199),
-                                          textStyle:
-                                              TextStyle(color: Colors.white),
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(60.0)),
-                                        ),
-                                      )))),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              );
-            });
-      });
-}
-
-double getAdminFee(AdminTransFee, AdminGstType, AdminGstPercentage) {
-  double lsval = 0;
-  if (AdminGstType == "10") {
-    lsval = (AdminTransFee * AdminGstPercentage) / (100 + AdminGstPercentage);
-  } else if (AdminGstType == "20") {
-    lsval = (AdminTransFee * AdminGstPercentage) / (100);
-  } else if (AdminGstType == "00") {
-    lsval = AdminTransFee * (AdminGstPercentage / 100);
-  }
-  return lsval;
-}
-
 void showPaymentSelectOption(BuildContext buildContext, titleText, paymentList,
-    topupTotal, CurrencyCode) {
+    topupAmount, CurrencyCode) {
   var selectedPaymentMethod = {};
   var checkedValue = false;
   final List<String> modalList = [
@@ -691,12 +492,12 @@ void showPaymentSelectOption(BuildContext buildContext, titleText, paymentList,
                                         ? () {
                                             Navigator.of(buildContext).pop();
                                             CommonUtil().getGatewayDetails(
-                                                context,
+                                                buildContext,
                                                 selectedPaymentMethod[
                                                     'RefBranchSeqId'],
                                                 selectedPaymentMethod[
                                                     'SettingsSeqId'],
-                                                topupTotal,
+                                                topupAmount,
                                                 CurrencyCode);
                                           }
                                         : null,
@@ -717,7 +518,7 @@ void showPaymentSelectOption(BuildContext buildContext, titleText, paymentList,
                                   CommonUtil().getGatewayDetails(
                                       context,
                                       selectedPaymentMethod['RefBranchSeqId'],
-                                      selectedPaymentMethod['SettingsSeqId'],topupTotal,CurrencyCode);
+                                      selectedPaymentMethod['SettingsSeqId'],topupAmount,CurrencyCode);
                                 }
                               },
                               child: Container(
@@ -789,6 +590,301 @@ void showPaymentSelectOption(BuildContext buildContext, titleText, paymentList,
                           ,
                         ]),
                       ));
+            });
+      });
+}
+
+double calAdminGst(AdminTransFee, AdminGstType, AdminGstPercentage) {
+  double lsval = 0;
+  if (AdminGstType == 10) {
+    lsval = (AdminTransFee * AdminGstPercentage) / (100 + AdminGstPercentage);
+  } else if (AdminGstType == 20) {
+    lsval = (AdminTransFee * AdminGstPercentage) / (100);
+  } else if (AdminGstType == 00) {
+    lsval = AdminTransFee * (AdminGstPercentage / 100);
+  }
+  return lsval;
+}
+
+double calTopupGst(topupAmount, GstType, GstPercentage) {
+  double lsval = 0;
+  if (GstType == 10) {
+    lsval = (topupAmount * GstPercentage) / (100 + GstPercentage);
+  } else if (GstType == 20) {
+    lsval = (topupAmount * GstPercentage) / (100);
+  } else if (GstType == 00) {
+    lsval = topupAmount * (GstPercentage / 100);
+  }
+  return lsval;
+}
+
+double calWithAdminFee(topupAmount, gatewayDetail) {
+  double total = 0;
+  if (gatewayDetail['IsAdminFee']) {
+    if (gatewayDetail['IsAdminFeeGst']) {
+      if (gatewayDetail['AdminGstType'] == 20) {
+        total = topupAmount +
+            gatewayDetail['AdminTransFee'] +
+            calAdminGst(
+                gatewayDetail['AdminTransFee'],
+                gatewayDetail['AdminGstType'],
+                gatewayDetail['AdminGstPercentage']);
+      } else
+        total = topupAmount + gatewayDetail['AdminTransFee'];
+    } else
+      total = topupAmount + gatewayDetail['AdminTransFee'];
+  } else {
+    total = topupAmount;
+  }
+
+  return total;
+}
+
+double grandTotal(amountwithAdminFee, gatewayDetail, topupAmount) {
+  double total = 0;
+  if (gatewayDetail['IsGst']) {
+    if (gatewayDetail['GstType'] == 20) {
+      total = amountwithAdminFee +
+          calTopupGst(topupAmount, gatewayDetail['GstType'],
+              gatewayDetail['GstPercentage']);
+    } else
+      total = amountwithAdminFee;
+  } else
+    total = amountwithAdminFee;
+  return total;
+}
+
+void showCustomPaymentAlert(
+    BuildContext buildContext, gatewayDetail, topupAmount, CurrencyCode) {
+  final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
+    backgroundColor: Colors.pinkAccent,
+    textStyle: TextStyle(color: Colors.white),
+  );
+
+  showModalBottomSheet(
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(60.0))),
+      context: buildContext,
+      backgroundColor: Colors.white,
+      isScrollControlled: true,
+      builder: (BuildContext context) {
+        return BottomSheet(
+            enableDrag: true,
+            onClosing: () {},
+            builder: (BuildContext context) {
+              return StatefulBuilder(
+                builder: (BuildContext context, setState) =>
+                    SingleChildScrollView(
+                  child: Container(
+                    color: Colors.white,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        getBottomSheetActionBar(
+                            context, "Confirmation", true, Colors.white),
+                        Container(
+                          //margin: EdgeInsets.all(10),
+                          //padding: EdgeInsets.symmetric(horizontal: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      "Payment Method",
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.normal),
+                                    ),
+                                  ),
+                                  
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      "Top-up Amount",
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.normal),
+                                    ),
+                                  ),
+                                  
+                                  gatewayDetail['IsGst']
+                                      ? Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                            gatewayDetail['GstType'] == 20
+                                                ? "Top-up Amount GST (Excl.)"
+                                                : "Top-up Amount GST (Incl.)",
+                                            textAlign: TextAlign.left,
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.normal),
+                                          ),
+                                        )
+                                      : SizedBox(),
+                                  
+                                 gatewayDetail['IsAdminFee']? Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      "Admin Fee",
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.normal),
+                                    ),
+                                  ):SizedBox(),
+                                 
+                                  gatewayDetail['IsAdminFee'] &&
+                                          gatewayDetail['IsAdminFeeGst']
+                                      ? Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                            gatewayDetail['AdminGstType'] == 20
+                                                ? "Admin Fee GST (Excl.)"
+                                                : "Admin Fee GST (Incl.)",
+                                            textAlign: TextAlign.left,
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.normal),
+                                          ),
+                                        )
+                                      : SizedBox(),
+                                  
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      "Total",
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  
+                                ],
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      gatewayDetail['EnvName'],
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      "${topupAmount.toStringAsFixed(2)} ${CurrencyCode}",
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  gatewayDetail['IsGst']
+                                      ? Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                            "${calTopupGst(topupAmount, gatewayDetail['GstType'], gatewayDetail['GstPercentage']).toStringAsFixed(2)} ${CurrencyCode}",
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        )
+                                      : SizedBox(),
+                                  gatewayDetail['IsAdminFee']
+                                      ? Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                            gatewayDetail['AdminTransFee']
+                                                    .toStringAsFixed(2) +
+                                                " ${CurrencyCode}",
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        )
+                                      : SizedBox(),
+                                  gatewayDetail['IsAdminFee'] &&
+                                          gatewayDetail['IsAdminFeeGst']
+                                      ? Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                            "${calAdminGst(gatewayDetail['AdminTransFee'], gatewayDetail['AdminGstType'], gatewayDetail['AdminGstPercentage']).toStringAsFixed(2)} ${CurrencyCode}",
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        )
+                                      : SizedBox(),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      "${grandTotal(calWithAdminFee(topupAmount, gatewayDetail), gatewayDetail, topupAmount).toStringAsFixed(2)} ${CurrencyCode}",
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(top: 10),
+                          //padding: EdgeInsets.symmetric(horizontal: 20),
+                          child: SizedBox(
+                              width: double.infinity,
+                              child: Container(
+                                  alignment: Alignment.bottomRight,
+                                  margin: EdgeInsets.all(10),
+                                  child: SizedBox(
+                                      height: 45,
+                                      child: ElevatedButton(
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Text(
+                                              "Proceed & Pay",
+                                              style: TextStyle(
+                                                  fontSize: 18.0,
+                                                  fontFamily: "Montserrat",
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            //Icon(Icons.payment)
+                                          ],
+                                        ),
+                                        onPressed: () {
+                                          
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor:
+                                              Color.fromARGB(255, 6, 105, 199),
+                                          textStyle:
+                                              TextStyle(color: Colors.white),
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(60.0)),
+                                        ),
+                                      )))),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              );
             });
       });
 }

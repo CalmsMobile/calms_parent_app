@@ -164,12 +164,89 @@ class CommonUtil {
   }
 
   getGatewayDetailsSuccess(
-      BuildContext context, response, topupTotal, CurrencyCode) {
+      BuildContext context, response, topupTotal, CurrencyCode) async {
     if (response['Table'][0]['code'] == 10) {
       print("getGatewayDetailsSuccess success");
       if (response['Table1'] != null || response['Table1'] != [])
         showCustomPaymentAlert(
             context, response['Table1'][0], topupTotal, CurrencyCode);
+    }
+  }
+
+  Future<void> MakeTransaction(context,TopupHeader,TopupDetails, RefSettingSeqId,RefPayMode,RefUserSeqId,RefMemberTypeSeqId,topupTotal,CurrencyCode) async {
+    var OrderData = {
+      "Header": [],
+      "Detail": [],
+      "StoreHeader": [],
+      "StoreDetail": [],
+      "ETHeader": [],
+      "ETDetails": [],
+      "InvoiceHeader": [],
+      "InvoiceDetails": [],
+      "InvoiceInstallment": [],
+      "DonationHeader": [],
+      "DonationDetails": [],
+      "TopupHeader": [
+        {
+          "Amount": "1.00",
+          "Discount": "0.00",
+          "GST_Type": 0,
+          "Gst": "0.00",
+          "GstPerc": 0,
+          "RefUserSeqId": "100108"
+        }
+      ],
+      "TopupDetails": [
+        {
+          "RefUserSeqId": "100108",
+          "MemberName": "Student 1",
+          "Amount": 1,
+          "Gst": 0,
+          "GST_Type": 0,
+          "GstPerc": 0,
+          "Discount": 0,
+          "ItemSeqId": "null",
+          "Category": "",
+          "OldBalance": 0
+        }
+      ],
+      "MFPData": [],
+      "MixedPayment": []
+    };
+    var ParamData = {
+      "OrderData": jsonEncode(OrderData),
+      "RefSettingSeqId": RefSettingSeqId,
+      "RefPayMode": RefPayMode,
+      "BankData": "",
+      "NotifyMail": "",
+      "MailBody": "",
+      "FPXToken": "",
+      "Remarks": "",
+      "DKPaymentMethod": "",
+      "RefUserSeqId": RefUserSeqId,
+      "RefMemberTypeSeqId": RefMemberTypeSeqId,
+      "IsTopup": "1",
+      "WalletAmount": "0"
+    };
+    Future<Map<String, dynamic>> res = RestApiProvider().authorizedPostRequest(
+      ParamData,
+      AppSettings.GetGatewayDetails,
+      context,
+      false,
+    );
+    res
+        .then((response) => {
+              MakeTransactionSuccess(
+                  context, response, topupTotal, CurrencyCode)
+            })
+        .onError((error, stackTrace) => {authorizedPostRequestError(error)});
+  }
+
+  MakeTransactionSuccess(
+      BuildContext context, response, topupTotal, CurrencyCode) async {
+    if (response['Table'][0]['code'] == 10) {
+      print("MakeTransactionSuccess success");
+      // if (response['Table1'] != null || response['Table1'] != [])
     }
   }
 
@@ -201,18 +278,6 @@ class CommonUtil {
           .then(
               (value) => {handleApiResponse(value, context, startPosition, "")})
           .onError((error, stackTrace) => {handleNotiApiError(error, context)});
-
-      /* Future<Map<String, dynamic>> res = RestApiProvider().postMethod(
-            payLoad,
-            '',
-            AppSettings.getAllNotification,
-            context,
-            startPosition == 0 ? true : false,
-            true);
-        res
-            .then((value) => {handleApiResponse(value, context, startPosition)})
-            .onError(
-                (error, stackTrace) => {handleNotiApiError(error, context)}); */
     }
   }
 

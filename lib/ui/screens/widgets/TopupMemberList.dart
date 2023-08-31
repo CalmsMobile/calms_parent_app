@@ -33,6 +33,136 @@ class TopupMemberListView extends StatelessWidget {
                 itemCount: membersList.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    margin: EdgeInsets.only(left: 20, right: 20, top: 20),
+                    elevation: 10,
+                    shadowColor: Colors.black,
+                    color: Color.fromARGB(255, 249, 249, 249),
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    membersList[index]['Name'],
+                                    style: TextStyle(
+                                      fontSize: 22,
+                                      color: Colors.green[900],
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  membersList[index]['RelationShip'] != ""?
+                                  Text(
+                                    '(${membersList[index]['RelationShip']})',
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      color: Color.fromARGB(255, 83, 83, 83),
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ):SizedBox()
+                                ],
+                              ),
+                              Container(
+                                child: membersList[index]['ImgPathUrl'] != null
+                                    ? CircleAvatar(
+                                        radius: 30,
+                                        backgroundImage: NetworkImage(
+                                            imgBaseUrl +
+                                                membersList[index]
+                                                    ["ImgPathUrl"]),
+                                      )
+                                    : CircleAvatar(
+                                        radius: 30,
+                                        backgroundColor: Colors.blue[700],
+                                        child: Text(
+                                          CommonFunctions.getInitials(
+                                              membersList[index]['Name']),
+                                          style: TextStyle(
+                                              fontSize: 22.0,
+                                              color: Colors.white,
+                                              letterSpacing: 2.0,
+                                              fontWeight: FontWeight.w900),
+                                        ),
+                                      ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ), 
+                          SizedBox(
+                            width: double.infinity,
+                            child: Text('Enter your amount',
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color.fromARGB(255, 0, 0, 0),
+                                )),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ), //SizedBox
+                          TextField(
+                            onChanged: (value) {
+                              checkMaximumAmount(context, index, value);
+                            },
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 6, 105, 199),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20),
+                            textAlignVertical: TextAlignVertical.center,
+                            decoration: InputDecoration(
+                              isDense: false,
+                              /* prefixIcon: Text(CurrencyCode,textAlign: TextAlign.center, style: TextStyle(
+                                color: Color.fromARGB(255, 6, 105, 199),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20)), */
+                              prefixIconConstraints: const BoxConstraints(),
+                              prefixIcon: Container(
+                                margin: EdgeInsets.symmetric(horizontal: 10),
+                                child: Text(CurrencyCode,
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: Color.fromARGB(255, 6, 105, 199),
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 22)),
+                              ),
+                              border: OutlineInputBorder(),
+                              hintText: "0.00",
+                              helperMaxLines: 5,
+                              helperText: membersList[index]['msg'] != null
+                                  ? membersList[index]['msg']
+                                  : "Minimum reload amount is ${CurrencyCode} 1.00.",
+                              helperStyle: membersList[index]['msg'] != null
+                                  ? TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.redAccent,
+                                      fontWeight: FontWeight.bold)
+                                  : null,
+                            ),
+                            keyboardType:
+                                TextInputType.numberWithOptions(decimal: true),
+                            inputFormatters: [
+                              // Allow Decimal Number With Precision of 2 Only
+                              FilteringTextInputFormatter.allow(
+                                  RegExp(r'^\d*\.?\d{0,2}')),
+                            ],
+                          ),
+                          //SizedBox
+                        ],
+                      ), //Column
+                    ), //Padding
+                    //SizedBox
+                  );
+                  /* return Card(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15.0),
                       ),
@@ -232,6 +362,7 @@ class TopupMemberListView extends StatelessWidget {
                           ],
                         ),
                       ));
+                 */
                 }),
           ),
         ],

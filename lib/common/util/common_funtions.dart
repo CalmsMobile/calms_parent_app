@@ -35,5 +35,7 @@ class CommonFunctions {
         .format(DateTime.parse(appint['actual_end_time']!));
   }
 
-  
+ static String getImageUrlUsingUsingSeqId(userId,userList){
+  return "";
+}
 }

@@ -35,12 +35,12 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
     print(calendarTapDetails.targetElement.name);
     print(selectedUserSeqId);
     print(selectedRefBranchSeqId);
-    if(calendarTapDetails.targetElement.name == "calendarCell"){
-    setState(() {
-      selectedDateTime = calendarTapDetails.date;
-      getData(selectedUserSeqId, selectedRefBranchSeqId,
-          DateFormat("yyyy-MM-dd").format(selectedDateTime!));
-    });
+    if (calendarTapDetails.targetElement.name == "calendarCell") {
+      setState(() {
+        selectedDateTime = calendarTapDetails.date;
+        getData(selectedUserSeqId, selectedRefBranchSeqId,
+            DateFormat("yyyy-MM-dd").format(selectedDateTime!));
+      });
     }
     /* if (calendarTapDetails.targetElement == CalendarElement.calendarCell) {
       setState(() {
@@ -156,6 +156,8 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15.0),
                           ),
+                          elevation: 10,
+                          shadowColor: Colors.black,
                           borderOnForeground: true,
                           margin: EdgeInsets.only(
                               top: 5, bottom: 20, left: 20, right: 20),
@@ -177,6 +179,8 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(15.0),
                               ),
+                              elevation: 10,
+                              shadowColor: Colors.black,
                               borderOnForeground: true,
                               margin: EdgeInsets.only(
                                   left: 20, right: 20, bottom: 20),
@@ -217,6 +221,8 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(15.0),
                               ),
+                              elevation: 10,
+                              shadowColor: Colors.black,
                               borderOnForeground: true,
                               margin: EdgeInsets.only(
                                   left: 20, right: 20, bottom: 20),
@@ -258,6 +264,8 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(15.0),
                               ),
+                              elevation: 10,
+                              shadowColor: Colors.black,
                               borderOnForeground: true,
                               margin: EdgeInsets.only(
                                   left: 20, right: 20, bottom: 20),

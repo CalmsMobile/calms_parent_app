@@ -23,7 +23,7 @@ class _ProfileMainState extends State<ProfileMain> {
     final imgBaseUrl = data['imgBaseUrl'];
 
     return Scaffold(
-        appBar: getMyAppbar(context,"Profile", []),
+        appBar: getMyAppbar(context, "Profile", []),
         body: Container(
           constraints: BoxConstraints.expand(),
           decoration: BoxDecoration(
@@ -58,7 +58,7 @@ class _ProfileMainState extends State<ProfileMain> {
                                 backgroundColor: Colors.white,
                                 backgroundImage: NetworkImage(
                                     imgBaseUrl + profileData["UserImgPath"]),
-                                    radius: 72,
+                                radius: 72,
                               )
                             else
                               CircleAvatar(
@@ -446,6 +446,8 @@ class _ProfileMainState extends State<ProfileMain> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15.0),
                           ),
+                          elevation: 10,
+                          shadowColor: Colors.black,
                           borderOnForeground: true,
                           margin: EdgeInsets.only(
                               top: 0, bottom: 10, left: 10, right: 20),
@@ -526,6 +528,8 @@ class _ProfileMainState extends State<ProfileMain> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15.0),
                           ),
+                          elevation: 10,
+                          shadowColor: Colors.black,
                           borderOnForeground: true,
                           margin: EdgeInsets.only(
                               top: 10, bottom: 10, left: 20, right: 20),
@@ -721,6 +725,8 @@ class _ProfileMainState extends State<ProfileMain> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15.0),
                           ),
+                          elevation: 10,
+                          shadowColor: Colors.black,
                           borderOnForeground: true,
                           margin: EdgeInsets.only(
                               top: 10, bottom: 10, left: 20, right: 20),
@@ -846,6 +852,8 @@ class _ProfileMainState extends State<ProfileMain> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15.0),
                           ),
+                          elevation: 10,
+                          shadowColor: Colors.black,
                           borderOnForeground: true,
                           margin: EdgeInsets.only(
                               top: 0, bottom: 10, left: 20, right: 20),

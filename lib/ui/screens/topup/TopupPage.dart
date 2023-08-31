@@ -175,48 +175,7 @@ class _TopupPageState extends State<TopupPage> {
                               borderRadius: BorderRadius.circular(60.0)),
                         ),
                       )));
-              /* return InkWell(
-              onTap: () {
-                if(data.topupTotal>0)
-                showPaymentSelectOption(context,"Choose payment type",data.paymentProvidersList,data.topupTotal,profileData['CurrencyCode']);              
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  color:data.topupTotal>0? Colors.blue:Colors.grey,
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border(
-                    bottom: BorderSide(color: data.topupTotal>0? Colors.blue:Colors.grey, width: 1),
-                    right: BorderSide(color: data.topupTotal>0? Colors.blue:Colors.grey, width: 1),
-                    top: BorderSide(color: data.topupTotal>0? Colors.blue:Colors.grey, width: 1),
-                    left: BorderSide(color: data.topupTotal>0? Colors.blue:Colors.grey, width: 1),
-                  ),
-                  boxShadow: [
-                    new BoxShadow(
-                      color: data.topupTotal>0? Colors.blue:Colors.grey,
-                      blurRadius: 1.0,
-                    ),
-                  ],
-                ),
-                padding: EdgeInsets.symmetric(vertical: 10),
-                margin:
-                    EdgeInsets.only(top: 25, left: 10, right: 10, bottom: 0),
-                child: Align(
-                  alignment: Alignment.center,
-                  child: Container(
-                      //color: Colors.blue,
-                      padding: EdgeInsets.only(left: 15, right: 15),
-                      child: Text(
-                        "Choose Payment Option",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold),
-                      )),
-                ),
-              ),
-            );
-            */
+              
             }),
           ],
         ),

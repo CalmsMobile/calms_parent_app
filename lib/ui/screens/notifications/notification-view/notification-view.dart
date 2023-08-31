@@ -81,7 +81,8 @@ class NotificationView extends StatelessWidget {
                   width: double.infinity,
                   margin: EdgeInsets.only(top: 20),
                   child: Card(
-                    elevation: 2,
+                   elevation: 10,
+                    shadowColor: Colors.black,
                     child: ClipPath(
                       child: Container(
                         padding: EdgeInsets.symmetric(vertical: 8),

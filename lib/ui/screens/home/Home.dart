@@ -325,7 +325,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       });
     controller.repeat(reverse: true);
     super.initState();
-    
+
     initValues();
   }
 
@@ -352,23 +352,24 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         //titleSpacing: -5,
         automaticallyImplyLeading: false,
         centerTitle: true,
-        leading:Padding(padding: EdgeInsets.only(left: 15,top: 5,bottom: 5),
-        child:  profileData['BranchImg'] != null
-            ? CircleAvatar(
-                backgroundImage: NetworkImage(profileData["BranchImg"]),
-              )
-            : CircleAvatar(
-                backgroundColor: Colors.blue[700],
-                child: Text(
-                  CommonFunctions.getInitials(profileData['BranchName']),
-                  style: TextStyle(
-                      fontSize: 22.0,
-                      color: Colors.white,
-                      letterSpacing: 2.0,
-                      fontWeight: FontWeight.w900),
+        leading: Padding(
+          padding: EdgeInsets.only(left: 15, top: 5, bottom: 5),
+          child: profileData['BranchImg'] != null
+              ? CircleAvatar(
+                  backgroundImage: NetworkImage(profileData["BranchImg"]),
+                )
+              : CircleAvatar(
+                  backgroundColor: Colors.blue[700],
+                  child: Text(
+                    CommonFunctions.getInitials(profileData['BranchName']),
+                    style: TextStyle(
+                        fontSize: 22.0,
+                        color: Colors.white,
+                        letterSpacing: 2.0,
+                        fontWeight: FontWeight.w900),
+                  ),
                 ),
-              ),
-              ),
+        ),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -637,6 +638,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15.0),
                         ),
+                        elevation: 10,
+                        shadowColor: Colors.black,
                         borderOnForeground: true,
                         margin: EdgeInsets.only(
                             top: 5, bottom: 20, left: 20, right: 20),
@@ -672,6 +675,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15.0),
                             ),
+                            elevation: 10,
+                            shadowColor: Colors.black,
                             borderOnForeground: true,
                             margin: EdgeInsets.only(
                                 left: 20, right: 20, bottom: 20),
@@ -696,7 +701,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                               fontWeight: FontWeight.bold),
                                         )),
                                   ),
-                                  PurchaseListView(data.dashboardSpendingList, profileData['CurrencyCode']),
+                                  PurchaseListView(data.dashboardSpendingList,
+                                      profileData['CurrencyCode']),
                                 ],
                               ),
                             ),
@@ -712,6 +718,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15.0),
                             ),
+                            elevation: 10,
+                            shadowColor: Colors.black,
                             borderOnForeground: true,
                             margin: EdgeInsets.only(
                                 left: 20, right: 20, bottom: 20),
@@ -753,6 +761,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15.0),
                             ),
+                            elevation: 10,
+                            shadowColor: Colors.black,
                             borderOnForeground: true,
                             margin: EdgeInsets.only(
                                 left: 20, right: 20, bottom: 20),
@@ -797,7 +807,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                               return outStandingList(
                                                   context,
                                                   index,
-                                                  data.dashboardOutStandingList,profileData['CurrencyCode']);
+                                                  data.dashboardOutStandingList,
+                                                  profileData['CurrencyCode']);
                                             }),
                                       ),
                                     ],

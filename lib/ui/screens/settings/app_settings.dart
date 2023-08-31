@@ -73,6 +73,8 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15.0),
                       ),
+                      elevation: 10,
+                      shadowColor: Colors.black,
                       borderOnForeground: true,
                       margin: EdgeInsets.all(20),
                       child: Container(
@@ -250,9 +252,10 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
   logoutDevice() {
     MyCustomAlertDialog().showCustomAlert(
         context, "Notification", "Do you want to logout?", false, () {
-          print("logout proceed");
+      print("logout proceed");
       MySharedPref().clearAllData();
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder:(context)=> SplashScreen()));
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => SplashScreen()));
       //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => QRRegistration()));
     }, () {
       print("Close alert");

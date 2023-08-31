@@ -6,6 +6,7 @@ import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:provider/provider.dart';
 
+import '../../../common/util/common_funtions.dart';
 import '/common/alert_dialog.dart';
 import '/common/app_settings.dart';
 import '/common/common_api.dart';
@@ -36,7 +37,7 @@ class _NotificationsState extends State<Notifications> {
   int startPosition = 0;
   var notificationList = [];
   var notificationListClone = [];
-  //List<Map> familyList = [];
+  List familyList = [];
   // List<Map> NotificationCategoryList = [];
   int senderIndex = 1;
   late String profileData;
@@ -46,8 +47,7 @@ class _NotificationsState extends State<Notifications> {
   late String imgBaseUrl;
   var appBarTitle = "All Notifications";
 
-  var filterMemberImagePath =
-      'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
+  var filterMemberImagePath = null;
 
   @override
   void initState() {
@@ -160,11 +160,112 @@ class _NotificationsState extends State<Notifications> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
         body: Scaffold(
             backgroundColor: Colors.transparent,
-            appBar: AppBar(
+            appBar: getMyAppbar(context, appBarTitle, [
+              // Navigate to the Search Screen
+              Container(
+                height: 50,
+                width: 100,
+                //margin: EdgeInsets.only(right: 10),
+                child: Row(
+                  children: [
+                    Flexible(
+                      child: ListTile(
+                        horizontalTitleGap: 2,
+                        contentPadding: EdgeInsets.zero,
+                        onTap: () => {
+                          openMemberBottomSheet(
+                              context,
+                              context
+                                  .read<MySettingsListener>()
+                                  .notificationMembersList,
+                              imgBaseUrl, (index) {
+                            Navigator.pop(context);
+                            senderIndex = index;
+                            setState(() {
+                              filterMemberImagePath = null;
+                              if (context
+                                          .read<MySettingsListener>()
+                                          .notificationMembersList[senderIndex]
+                                      ['UserImgPath'] !=
+                                  null) {
+                                filterMemberImagePath = imgBaseUrl +
+                                    context
+                                            .read<MySettingsListener>()
+                                            .notificationMembersList[
+                                        senderIndex]['UserImgPath'];
+                              }
+                              String name = context
+                                  .read<MySettingsListener>()
+                                  .notificationMembersList[senderIndex]["Name"];
+                              appBarTitle = name;
+                              CommonUtil().getMemberFilterNotification(
+                                  context,
+                                  apiURL,
+                                  startPosition,
+                                  profileData,
+                                  qrData,
+                                  context
+                                          .read<MySettingsListener>()
+                                          .notificationMembersList[senderIndex]
+                                      ['UserSeqId']);
+                            });
+                          })
+                        },
+                        trailing: filterMemberImagePath != null
+                            ? CircleAvatar(
+                                backgroundImage:
+                                    NetworkImage(filterMemberImagePath),
+                              )
+                            : CircleAvatar(
+                                backgroundColor: Colors.blue[700],
+                                child: Text(
+                                  CommonFunctions.getInitials(appBarTitle),
+                                  style: TextStyle(
+                                      fontSize: 22.0,
+                                      color: Colors.white,
+                                      letterSpacing: 2.0,
+                                      fontWeight: FontWeight.w900),
+                                ),
+                              ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(right: 10),
+                child: InkWell(
+                    child: Image(
+                        width: 50,
+                        height: 50,
+                        image: AssetImage("assets/images/ico_filter.png")),
+                    onTap: () => openFilterCategoryBottomSheet(
+                            context,
+                            context
+                                .read<MySettingsListener>()
+                                .notificationCategoryList, (index) {
+                          Navigator.pop(context);
+                          //senderIndex = index;
+                          setState(() {
+                            String categoryName = context
+                                .read<MySettingsListener>()
+                                .notificationCategoryList[index]["category"];
+                            int id = context
+                                    .read<MySettingsListener>()
+                                    .notificationCategoryList[index]
+                                ["notificationtype"];
+                            print("++++++++" + id.toString());
+                            appBarTitle = categoryName;
+                            CommonUtil().getCtegoryFilterNotification(context,
+                                apiURL, startPosition, profileData, qrData, id);
+                          });
+                        })),
+              ),
+            ]),
+            /*  appBar: AppBar(
               toolbarHeight: 70,
               elevation: 0,
               backgroundColor: Colors.transparent,
@@ -272,22 +373,10 @@ class _NotificationsState extends State<Notifications> {
                             });
                           })),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(right: 20),
-                  child: InkWell(
-                      child: Image(
-                          width: 50,
-                          height: 50,
-                          image: AssetImage("assets/images/ico_setting.png")),
-                      onTap: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => AppSettingsPage(),
-                            ),
-                          )),
-                ),
+                
               ],
             ),
+             */
             extendBodyBehindAppBar: false,
             body: Container(
               constraints: BoxConstraints.expand(),
@@ -485,21 +574,6 @@ class _NotificationsState extends State<Notifications> {
                           Container(
                             //height: 60,
                             child: ListTile(
-                              // horizontalTitleGap: 0,
-                              //minVerticalPadding: -4,
-                              /* trailing: SizedBox(
-                                width: 20,
-                                height: 20,
-                                child: ClipPath(
-                                    clipper: ShapeBorderClipper(
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10))),
-                                    child: Image.asset(notificationList[index1]
-                                            ["IsRead"]
-                                        ? "assets/images/read_message.png"
-                                        : "assets/images/unread_message.png")),
-                              ), */
                               leading: SizedBox(
                                   width: 45,
                                   height: 45,
@@ -514,19 +588,7 @@ class _NotificationsState extends State<Notifications> {
                                                     ["ImgPathUrl"]
                                             : AppSettings.avatarPlaceholder),
                                     radius: 20,
-                                  ) /* ClipPath(
-                                  clipper: ShapeBorderClipper(
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(50))),
-                                  child: Image.network(notificationList[index1]
-                                              ["ImgPathUrl"] !=
-                                          null
-                                      ? imgBaseUrl +
-                                          notificationList[index1]["ImgPathUrl"]
-                                      : AppSettings.avatarPlaceholder),
-                                ), */
-                                  ),
+                                  )),
                               title: Text(
                                 getCategoryById(notificationList[index1]
                                     ["NotificationType"]),
@@ -537,31 +599,6 @@ class _NotificationsState extends State<Notifications> {
                                   "HtmlContent"])) /* Text(
                                   "${notificationList[index1]["HtmlContent"]}") */
                               ,
-                              // Html(
-                              //   data:
-                              //       "${notificationList[index1]["HtmlContent"]}",
-                              //   style: {
-                              //     "table": Style(
-                              //       backgroundColor:
-                              //           Color.fromARGB(0x50, 0xee, 0xee, 0xee),
-                              //     ),
-                              //     "tr": Style(
-                              //       border: Border(
-                              //           bottom: BorderSide(color: Colors.grey)),
-                              //     ),
-                              //     "th": Style(
-                              //       padding: EdgeInsets.all(6),
-                              //       backgroundColor: Colors.grey,
-                              //     ),
-                              //     "td": Style(
-                              //       padding: EdgeInsets.all(6),
-                              //       alignment: Alignment.topLeft,
-                              //     ),
-                              //     'h5': Style(
-                              //         maxLines: 2,
-                              //         textOverflow: TextOverflow.ellipsis),
-                              //   },
-                              // ),
                             ),
                           ),
                           Align(
