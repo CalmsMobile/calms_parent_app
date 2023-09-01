@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
@@ -58,15 +56,17 @@ class TopupMemberListView extends StatelessWidget {
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
-                                  membersList[index]['RelationShip'] != ""?
-                                  Text(
-                                    '(${membersList[index]['RelationShip']})',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Color.fromARGB(255, 83, 83, 83),
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ):SizedBox()
+                                  membersList[index]['RelationShip'] != ""
+                                      ? Text(
+                                          '(${membersList[index]['RelationShip']})',
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            color:
+                                                Color.fromARGB(255, 83, 83, 83),
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        )
+                                      : SizedBox()
                                 ],
                               ),
                               Container(
@@ -96,7 +96,7 @@ class TopupMemberListView extends StatelessWidget {
                           ),
                           SizedBox(
                             height: 10,
-                          ), 
+                          ),
                           SizedBox(
                             width: double.infinity,
                             child: Text('Enter your amount',
@@ -386,13 +386,14 @@ class TopupMemberListView extends StatelessWidget {
     );
     res.then((response) {
       if (response['Table'][0]['code'] == 10) {
-        if (value.isEmpty)
-          membersList[index]['amount'] = 0;
-        else
-          membersList[index]['amount'] = double.parse(value);
+        if (value.isEmpty) {
+          membersList[index]['Amount'] = 0;
+        } else {
+          membersList[index]['Amount'] = double.parse(value);
+        }
         membersList[index]['msg'] = '';
       } else if (response['Table'][0]['code'] == 20) {
-        membersList[index]['amount'] = 0;
+        membersList[index]['Amount'] = 0;
         membersList[index]['msg'] = response['Table'][0]['description'];
       }
       context.read<MySettingsListener>().updateTopupMembersList(membersList);

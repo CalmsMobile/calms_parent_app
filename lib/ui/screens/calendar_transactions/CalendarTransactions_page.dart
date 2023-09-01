@@ -27,12 +27,12 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
   CalendarController _controller = CalendarController();
   //List<Appointment> _appointmentDetails = <Appointment>[];
   int senderIndex = 0;
-  late int selectedUserSeqId;
+  late double selectedUserSeqId;
   late String selectedRefBranchSeqId;
   late DateTime? selectedDateTime;
 
   void calendarTapped(CalendarTapDetails calendarTapDetails) {
-    print(calendarTapDetails.targetElement.name);
+    //print(calendarTapDetails.targetElement.name);
     print(selectedUserSeqId);
     print(selectedRefBranchSeqId);
     if (calendarTapDetails.targetElement.name == "calendarCell") {
@@ -56,7 +56,7 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
     super.initState();
     selectedDateTime = DateTime.now();
     //this.getData("106312.0","11001",2023, 08, 31);
-    context.read<MySettingsListener>().updateGetCalendarData([], [], []);
+    //context.read<MySettingsListener>().updateGetCalendarData([], [], []);
   }
 
   Future<void> getData(RefUserSeqId, RefBranchSeqId, Date) async {

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:calms_parent_latest/common/widgets/common.dart';
+import 'package:calms_parent_latest/ui/screens/payment/topupPayment_page.dart';
 
 import '/common/alert_dialog.dart';
 import '/common/app_settings.dart';
@@ -144,7 +145,7 @@ class CommonUtil {
   }
 
   Future<void> getGatewayDetails(context, RefBranchSeqId, RefSettingSeqId,
-      topupTotal, CurrencyCode) async {
+      topupTotal, profileData) async {
     var ParamData = {
       "RefBranchSeqId": RefBranchSeqId,
       "RefSettingSeqId": RefSettingSeqId
@@ -158,22 +159,22 @@ class CommonUtil {
     res
         .then((response) => {
               getGatewayDetailsSuccess(
-                  context, response, topupTotal, CurrencyCode)
+                  context, response, topupTotal, profileData)
             })
         .onError((error, stackTrace) => {authorizedPostRequestError(error)});
   }
 
   getGatewayDetailsSuccess(
-      BuildContext context, response, topupTotal, CurrencyCode) async {
+      BuildContext context, response, topupTotal, profileData) async {
     if (response['Table'][0]['code'] == 10) {
       print("getGatewayDetailsSuccess success");
       if (response['Table1'] != null || response['Table1'] != [])
         showCustomPaymentAlert(
-            context, response['Table1'][0], topupTotal, CurrencyCode);
+            context, response['Table1'][0], topupTotal, profileData);
     }
   }
 
-  Future<void> MakeTransaction(context,TopupHeader,TopupDetails, RefSettingSeqId,RefPayMode,RefUserSeqId,RefMemberTypeSeqId,topupTotal,CurrencyCode) async {
+  Future<void> MakeTransaction(context,TopupHeader,TopupDetails, gatewayDetail,profileData) async {
     var OrderData = {
       "Header": [],
       "Detail": [],
@@ -186,67 +187,53 @@ class CommonUtil {
       "InvoiceInstallment": [],
       "DonationHeader": [],
       "DonationDetails": [],
-      "TopupHeader": [
-        {
-          "Amount": "1.00",
-          "Discount": "0.00",
-          "GST_Type": 0,
-          "Gst": "0.00",
-          "GstPerc": 0,
-          "RefUserSeqId": "100108"
-        }
-      ],
-      "TopupDetails": [
-        {
-          "RefUserSeqId": "100108",
-          "MemberName": "Student 1",
-          "Amount": 1,
-          "Gst": 0,
-          "GST_Type": 0,
-          "GstPerc": 0,
-          "Discount": 0,
-          "ItemSeqId": "null",
-          "Category": "",
-          "OldBalance": 0
-        }
-      ],
+      "TopupHeader": TopupHeader,
+      "TopupDetails": TopupDetails,
       "MFPData": [],
       "MixedPayment": []
     };
     var ParamData = {
       "OrderData": jsonEncode(OrderData),
-      "RefSettingSeqId": RefSettingSeqId,
-      "RefPayMode": RefPayMode,
+      "RefSettingSeqId": gatewayDetail['SettingsSeqId'],
+      "RefPayMode": gatewayDetail['PayMode'],
       "BankData": "",
       "NotifyMail": "",
       "MailBody": "",
       "FPXToken": "",
       "Remarks": "",
       "DKPaymentMethod": "",
-      "RefUserSeqId": RefUserSeqId,
-      "RefMemberTypeSeqId": RefMemberTypeSeqId,
+      "RefUserSeqId": profileData['RefUserSeqId'],
+      "RefMemberTypeSeqId": profileData['RefMemberTypeSeqId'],
       "IsTopup": "1",
       "WalletAmount": "0"
     };
+    print(ParamData);
     Future<Map<String, dynamic>> res = RestApiProvider().authorizedPostRequest(
       ParamData,
-      AppSettings.GetGatewayDetails,
+      AppSettings.MakeTransaction,
       context,
       false,
     );
     res
         .then((response) => {
               MakeTransactionSuccess(
-                  context, response, topupTotal, CurrencyCode)
+                  context, response)
             })
         .onError((error, stackTrace) => {authorizedPostRequestError(error)});
   }
 
   MakeTransactionSuccess(
-      BuildContext context, response, topupTotal, CurrencyCode) async {
-    if (response['Table'][0]['code'] == 10) {
+      BuildContext context, response) async {
+    if (response['Table'][0]['code'] == "S") {
       print("MakeTransactionSuccess success");
-      // if (response['Table1'] != null || response['Table1'] != [])
+      /* Navigator.of(context).pushNamed('/topupPayment',
+                    arguments: response['Table'][0]); */
+                    Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => TopupPaymentPage(response['Table'][0]),
+          ),
+        );
     }
   }
 

@@ -1,6 +1,10 @@
 import 'dart:collection';
+import 'dart:convert';
 import 'dart:developer';
 
+import 'package:calms_parent_latest/common/common_api.dart';
+import 'package:calms_parent_latest/common/widgets/common.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
 class MySettingsListener with ChangeNotifier {
@@ -20,6 +24,8 @@ class MySettingsListener with ChangeNotifier {
   List _topupMembersList = [];
   List _paymentProvidersList = [];
   double _topupTotal = 0.00;
+  List _topupHeader = [];
+  List _topupDetails = [];
 
   int _familyPos = 0;
   List _notificationList = [];
@@ -63,6 +69,10 @@ class MySettingsListener with ChangeNotifier {
   UnmodifiableListView<dynamic> get paymentProvidersList =>
       UnmodifiableListView(_paymentProvidersList);
   get topupTotal => _topupTotal;
+  UnmodifiableListView<dynamic> get topupHeader =>
+      UnmodifiableListView(_topupHeader);
+  UnmodifiableListView<dynamic> get topupDetails =>
+      UnmodifiableListView(_topupDetails);
 
   UnmodifiableListView<dynamic> get notificationCategoryList =>
       UnmodifiableListView(_notificationCategoryList);
@@ -103,10 +113,46 @@ class MySettingsListener with ChangeNotifier {
 
     _topupTotal = 0;
     _topupMembersList.forEach((val) {
-      if (val['amount'] != null) _topupTotal += val['amount'];
+      if (val['Amount'] != null) _topupTotal += val['Amount'];
     });
     print(_topupMembersList);
     notifyListeners();
+  }
+
+  updateTopupHeaderAndDetails(BuildContext context,gatewayDetail,profileData) {
+    _topupHeader = [];
+    _topupDetails = [];
+    for (int i = 0; i < topupMembersList.length; i++) {
+      if (topupMembersList[i]['Amount'] != null &&
+          topupMembersList[i]['Amount'] > 0) {
+        _topupHeader.add({
+          "Amount": topupMembersList[i]['Amount'],
+          "Discount": "0.00",
+          "GST_Type":gatewayDetail['IsGst']? gatewayDetail['GstType']:null,
+          "Gst":gatewayDetail['IsGst']? calTopupGst(topupMembersList[i]['Amount'], gatewayDetail['GstType'], gatewayDetail['GstPercentage']):null,
+          "GstPerc":gatewayDetail['IsGst']? gatewayDetail['GstPercentage']:null,
+          "RefUserSeqId": topupMembersList[i]['UserSeqId']
+        });
+        _topupDetails.add({
+          "RefUserSeqId": topupMembersList[i]['UserSeqId'],
+          "MemberName": topupMembersList[i]['Name'],
+          "Amount": topupMembersList[i]['Amount'],
+          "Gst":gatewayDetail['IsGst']? calTopupGst(topupMembersList[i]['Amount'], gatewayDetail['GstType'], gatewayDetail['GstPercentage']):null,
+          "GST_Type":gatewayDetail['IsGst']? gatewayDetail['GstType']:null,
+          "GstPerc":gatewayDetail['IsGst']? gatewayDetail['GstPercentage']:null,
+          "Discount": 0,
+          "ItemSeqId": "null",
+          "Category": "",
+          "OldBalance": 0
+        });
+      }
+    }
+    print("===========topupHeader===========");
+    print(jsonEncode(topupHeader));
+    print("==========topupDetails============");
+    print(jsonEncode(topupDetails));
+    Navigator.of(context).pop();
+    CommonUtil().MakeTransaction(context, topupHeader, topupDetails, gatewayDetail,profileData);
   }
 
   updateTopupPaymentProvidersList(List paymentProvidersList) {

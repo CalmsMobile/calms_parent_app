@@ -68,6 +68,7 @@ dependencies:
   flutter_widget_from_html: ^0.10.0
   html_unescape: ^2.0.0
   flutter_expandable_fab: ^1.8.1
+  webview_flutter: ^4.2.4
 
 #dependency_overrides:
 dev_dependencies:

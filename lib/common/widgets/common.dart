@@ -222,7 +222,7 @@ void openMemberBottomSheet(
 }
 
 void showPaymentSelectOption(BuildContext buildContext, titleText, paymentList,
-    topupAmount, CurrencyCode) {
+    topupAmount, profileData) {
   var selectedPaymentMethod = {};
   var checkedValue = false;
   final List<String> modalList = [
@@ -498,7 +498,7 @@ void showPaymentSelectOption(BuildContext buildContext, titleText, paymentList,
                                                 selectedPaymentMethod[
                                                     'SettingsSeqId'],
                                                 topupAmount,
-                                                CurrencyCode);
+                                                profileData);
                                           }
                                         : null,
                                     style: ElevatedButton.styleFrom(
@@ -655,7 +655,7 @@ double grandTotal(amountwithAdminFee, gatewayDetail, topupAmount) {
 }
 
 void showCustomPaymentAlert(
-    BuildContext buildContext, gatewayDetail, topupAmount, CurrencyCode) {
+    BuildContext buildContext, gatewayDetail, topupAmount, profileData) {
   final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
     backgroundColor: Colors.pinkAccent,
     textStyle: TextStyle(color: Colors.white),
@@ -784,7 +784,7 @@ void showCustomPaymentAlert(
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Text(
-                                      "${topupAmount.toStringAsFixed(2)} ${CurrencyCode}",
+                                      "${topupAmount.toStringAsFixed(2)} ${profileData['CurrencyCode']}",
                                       style: TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold),
@@ -794,7 +794,7 @@ void showCustomPaymentAlert(
                                       ? Padding(
                                           padding: const EdgeInsets.all(8.0),
                                           child: Text(
-                                            "${calTopupGst(topupAmount, gatewayDetail['GstType'], gatewayDetail['GstPercentage']).toStringAsFixed(2)} ${CurrencyCode}",
+                                            "${calTopupGst(topupAmount, gatewayDetail['GstType'], gatewayDetail['GstPercentage']).toStringAsFixed(2)} ${profileData['CurrencyCode']}",
                                             style: TextStyle(
                                                 fontSize: 18,
                                                 fontWeight: FontWeight.bold),
@@ -807,7 +807,7 @@ void showCustomPaymentAlert(
                                           child: Text(
                                             gatewayDetail['AdminTransFee']
                                                     .toStringAsFixed(2) +
-                                                " ${CurrencyCode}",
+                                                " ${profileData['CurrencyCode']}",
                                             style: TextStyle(
                                                 fontSize: 18,
                                                 fontWeight: FontWeight.bold),
@@ -819,7 +819,7 @@ void showCustomPaymentAlert(
                                       ? Padding(
                                           padding: const EdgeInsets.all(8.0),
                                           child: Text(
-                                            "${calAdminGst(gatewayDetail['AdminTransFee'], gatewayDetail['AdminGstType'], gatewayDetail['AdminGstPercentage']).toStringAsFixed(2)} ${CurrencyCode}",
+                                            "${calAdminGst(gatewayDetail['AdminTransFee'], gatewayDetail['AdminGstType'], gatewayDetail['AdminGstPercentage']).toStringAsFixed(2)} ${profileData['CurrencyCode']}",
                                             style: TextStyle(
                                                 fontSize: 18,
                                                 fontWeight: FontWeight.bold),
@@ -829,7 +829,7 @@ void showCustomPaymentAlert(
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Text(
-                                      "${grandTotal(calWithAdminFee(topupAmount, gatewayDetail), gatewayDetail, topupAmount).toStringAsFixed(2)} ${CurrencyCode}",
+                                      "${grandTotal(calWithAdminFee(topupAmount, gatewayDetail), gatewayDetail, topupAmount).toStringAsFixed(2)} ${profileData['CurrencyCode']}",
                                       style: TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold),
@@ -867,7 +867,7 @@ void showCustomPaymentAlert(
                                           ],
                                         ),
                                         onPressed: () {
-                                          
+                                          buildContext.read<MySettingsListener>().updateTopupHeaderAndDetails(buildContext, gatewayDetail,profileData);
                                         },
                                         style: ElevatedButton.styleFrom(
                                           backgroundColor:

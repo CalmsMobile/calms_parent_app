@@ -5,6 +5,7 @@ import 'dart:math';
 
 import 'package:calms_parent_latest/provider/rest_api.dart';
 import 'package:calms_parent_latest/ui/screens/calendar_transactions/CalendarTransactions_page.dart';
+import 'package:calms_parent_latest/ui/screens/payment/topupPayment_page.dart';
 
 import '/common/app_settings.dart';
 import '/common/constants.dart';
@@ -227,7 +228,8 @@ var myroutes = {
   "/FilterActivities": (context) => FilterActivities(),
   "/ViewImage": (context) => ViewImage(),
   "/MealDetails": (context) => MealDetails(),
-  "/calendarTransactions": (context) => CalendarTransactionsPage()
+  "/calendarTransactions": (context) => CalendarTransactionsPage(),
+  "/topupPayment":(context)=>TopupPaymentPage(null)
 };
 
 class MyApp extends StatefulWidget {

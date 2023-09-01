@@ -165,7 +165,7 @@ class _TopupPageState extends State<TopupPage> {
                                     "Choose payment type",
                                     data.paymentProvidersList,
                                     data.topupTotal,
-                                    profileData['CurrencyCode']);
+                                    profileData);
                               }
                             : null,
                         style: ElevatedButton.styleFrom(

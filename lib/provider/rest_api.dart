@@ -417,7 +417,7 @@ class RestApiProvider {
             Map<String, dynamic> tableObj = tableList[0];
             if (tableObj['code'] == 10 ||
                 tableObj['Code'] == 10 ||
-                tableObj['code'] == 50 || tableObj['code'] == 20) {
+                tableObj['code'] == 50 || tableObj['code'] == 20 || tableObj['code'] == "S") {
               return Future<Map<String, dynamic>>.value(res['Data']);
             } else {
               print("failed ${tableObj['code'] || tableObj['Code']} ");
