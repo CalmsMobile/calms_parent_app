@@ -721,7 +721,7 @@ class _MealOrderState extends State<MealOrder> {
               if (familyList.length > 0 && senderIndex > -1)
                 Container(
                   height: 30,
-                  width: 150,
+                  width: 100,
                   margin: EdgeInsets.only(right: 10),
                   child: Row(
                     children: [

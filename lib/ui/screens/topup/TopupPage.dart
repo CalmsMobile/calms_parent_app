@@ -15,13 +15,15 @@ import '/ui/screens/widgets/TopupView.dart';
 import 'package:flutter/material.dart';
 
 class TopupPage extends StatefulWidget {
+  final arguments;
+  const TopupPage(this.arguments, {Key? key}) : super(key: key);
   @override
   _TopupPageState createState() => _TopupPageState();
 }
 
 class _TopupPageState extends State<TopupPage> {
-  var profileData = {};
-  String imgBaseUrl = "";
+  //var profileData = {};
+  //String imgBaseUrl = "";
   @override
   void initState() {
     // TODO: implement initState
@@ -30,13 +32,13 @@ class _TopupPageState extends State<TopupPage> {
   }
 
   Future<void> getData() async {
-    String profile = await MySharedPref().getData(AppSettings.Sp_ProfileData);
-    imgBaseUrl = await MySharedPref().getData(AppSettings.Sp_Img_Base_Url);
-    if (profile != "") {
-      profileData = jsonDecode(profile);
-      CommonUtil().getFamilyMemberForTopup(context, profileData['RefUserSeqId'],
-          profileData['RefBranchSeqId'], profileData['RefMemberTypeSeqId']);
-    }
+    //String profile = await MySharedPref().getData(AppSettings.Sp_ProfileData);
+    //imgBaseUrl = await MySharedPref().getData(AppSettings.Sp_Img_Base_Url);
+    //if (profileData != "") {
+      //profileData = jsonDecode(profile);
+      CommonUtil().getFamilyMemberForTopup(context,widget.arguments['profileData']['RefUserSeqId'],
+          widget.arguments['profileData']['RefBranchSeqId'], widget.arguments['profileData']['RefMemberTypeSeqId']);
+   // }
   }
 
   @override
@@ -63,8 +65,8 @@ class _TopupPageState extends State<TopupPage> {
                     Consumer<MySettingsListener>(
                         builder: (context, data, settingsDta) {
                       if (data.topupMembersList.isNotEmpty) {
-                        return TopupMemberListView(imgBaseUrl,
-                            data.topupMembersList, profileData['CurrencyCode']);
+                        return TopupMemberListView(widget.arguments['imgBaseUrl'],
+                            data.topupMembersList, widget.arguments['profileData']['CurrencyCode']);
                       } else {
                         return SizedBox();
                       }
@@ -101,7 +103,7 @@ class _TopupPageState extends State<TopupPage> {
                           ),
                           children: <TextSpan>[
                             new TextSpan(
-                                text: profileData['CurrencyCode'] + " ",
+                                text: widget.arguments['profileData']['CurrencyCode'] + " ",
                                 style: new TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Color.fromARGB(255, 0, 0, 0),
@@ -132,7 +134,7 @@ class _TopupPageState extends State<TopupPage> {
                       )),
                       TextSpan(
                           text:
-                              " Minimum reload amount is MYR 1.00.  Maximum reload amount is MYR 1000.00",
+                              " Minimum reload amount is ${widget.arguments['profileData']['CurrencyCode']} 1.00.  Maximum reload amount is ${widget.arguments['profileData']['CurrencyCode']} 1000.00",
                           style: TextStyle(fontSize: 14, color: Colors.grey)),
                     ])),
               ),
@@ -165,7 +167,7 @@ class _TopupPageState extends State<TopupPage> {
                                     "Choose payment type",
                                     data.paymentProvidersList,
                                     data.topupTotal,
-                                    profileData);
+                                    widget.arguments['profileData']);
                               }
                             : null,
                         style: ElevatedButton.styleFrom(

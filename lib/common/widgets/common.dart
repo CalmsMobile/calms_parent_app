@@ -59,7 +59,7 @@ PreferredSizeWidget getMyAppbar(context, var titleText, List<Widget> actions1) {
 PreferredSizeWidget getBottomSheetActionBar(
     BuildContext context, var titleText, bool showClose, Color bgcolor) {
   return AppBar(
-    title: titleText == 'Confirmation'
+    title: titleText == 'Confirmation' || titleText.toString().contains("verification")
         ? RichText(
             textAlign: TextAlign.center,
             text: TextSpan(children: [
@@ -90,7 +90,7 @@ PreferredSizeWidget getBottomSheetActionBar(
                 fontWeight: titleText == 'Summary' ||
                         titleText == 'Attendance' ||
                         titleText == 'Select Model' ||
-                        titleText == 'Package'
+                        titleText == 'Package' || titleText.toString().contains("verification")
                     ? FontWeight.bold
                     : FontWeight.normal),
           ),
@@ -293,7 +293,7 @@ void showPaymentSelectOption(BuildContext buildContext, titleText, paymentList,
                                         style: TextStyle(fontSize: 22),
                                       ),
                                       leading: Icon(
-                                        Icons.check_circle_outline_rounded,
+                                        Icons.radio_button_checked_outlined,
                                         size: 20,
                                         color: selectedPaymentMethod[
                                                     'PayMode'] ==
@@ -304,8 +304,8 @@ void showPaymentSelectOption(BuildContext buildContext, titleText, paymentList,
                                       trailing: Container(
                                         height: 45,
                                         width: 45,
-                                        child: Image.network(
-                                            paymentList[index]["ImgPathUrl"]),
+                                        child:paymentList[index]["ImgPathUrl"] != ""? Image.network(
+                                            paymentList[index]["ImgPathUrl"]) : null,
                                       ),
                                       onTap: () {
                                         selectedPaymentMethod =
@@ -425,7 +425,7 @@ void showPaymentSelectOption(BuildContext buildContext, titleText, paymentList,
                                 horizontal: 10, vertical: 10),
                             child: CheckboxListTile(
                               checkColor: Colors.white,
-                              activeColor: Colors.pinkAccent,
+                              activeColor: Colors.blue,
                               contentPadding: EdgeInsets.zero,
                               title: RichText(
                                 maxLines: 2,
@@ -478,7 +478,7 @@ void showPaymentSelectOption(BuildContext buildContext, titleText, paymentList,
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
                                         Text(
-                                          "Submit",
+                                          "Next",
                                           style: TextStyle(
                                               fontSize: 18.0,
                                               fontFamily: "Montserrat",
@@ -684,7 +684,7 @@ void showCustomPaymentAlert(
                         getBottomSheetActionBar(
                             context, "Confirmation", true, Colors.white),
                         Container(
-                          //margin: EdgeInsets.all(10),
+                          margin: EdgeInsets.all(10),
                           //padding: EdgeInsets.symmetric(horizontal: 10),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -698,22 +698,20 @@ void showCustomPaymentAlert(
                                       "Payment Method",
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
-                                          fontSize: 18,
+                                          fontSize: 16,
                                           fontWeight: FontWeight.normal),
                                     ),
                                   ),
-                                  
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Text(
                                       "Top-up Amount",
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
-                                          fontSize: 18,
+                                          fontSize: 16,
                                           fontWeight: FontWeight.normal),
                                     ),
                                   ),
-                                  
                                   gatewayDetail['IsGst']
                                       ? Padding(
                                           padding: const EdgeInsets.all(8.0),
@@ -723,23 +721,23 @@ void showCustomPaymentAlert(
                                                 : "Top-up Amount GST (Incl.)",
                                             textAlign: TextAlign.left,
                                             style: TextStyle(
-                                                fontSize: 18,
+                                                fontSize: 16,
                                                 fontWeight: FontWeight.normal),
                                           ),
                                         )
                                       : SizedBox(),
-                                  
-                                 gatewayDetail['IsAdminFee']? Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      "Admin Fee",
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.normal),
-                                    ),
-                                  ):SizedBox(),
-                                 
+                                  gatewayDetail['IsAdminFee']
+                                      ? Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                            "Admin Fee",
+                                            textAlign: TextAlign.left,
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.normal),
+                                          ),
+                                        )
+                                      : SizedBox(),
                                   gatewayDetail['IsAdminFee'] &&
                                           gatewayDetail['IsAdminFeeGst']
                                       ? Padding(
@@ -750,23 +748,21 @@ void showCustomPaymentAlert(
                                                 : "Admin Fee GST (Incl.)",
                                             textAlign: TextAlign.left,
                                             style: TextStyle(
-                                                fontSize: 18,
+                                                fontSize: 16,
                                                 fontWeight: FontWeight.normal),
                                           ),
                                         )
                                       : SizedBox(),
-                                  
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Text(
                                       "Total",
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
-                                          fontSize: 18,
+                                          fontSize: 16,
                                           fontWeight: FontWeight.bold),
                                     ),
                                   ),
-                                  
                                 ],
                               ),
                               Column(
@@ -777,7 +773,7 @@ void showCustomPaymentAlert(
                                     child: Text(
                                       gatewayDetail['EnvName'],
                                       style: TextStyle(
-                                          fontSize: 18,
+                                          fontSize: 16,
                                           fontWeight: FontWeight.bold),
                                     ),
                                   ),
@@ -786,7 +782,7 @@ void showCustomPaymentAlert(
                                     child: Text(
                                       "${topupAmount.toStringAsFixed(2)} ${profileData['CurrencyCode']}",
                                       style: TextStyle(
-                                          fontSize: 18,
+                                          fontSize: 16,
                                           fontWeight: FontWeight.bold),
                                     ),
                                   ),
@@ -796,7 +792,7 @@ void showCustomPaymentAlert(
                                           child: Text(
                                             "${calTopupGst(topupAmount, gatewayDetail['GstType'], gatewayDetail['GstPercentage']).toStringAsFixed(2)} ${profileData['CurrencyCode']}",
                                             style: TextStyle(
-                                                fontSize: 18,
+                                                fontSize: 16,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                         )
@@ -809,7 +805,7 @@ void showCustomPaymentAlert(
                                                     .toStringAsFixed(2) +
                                                 " ${profileData['CurrencyCode']}",
                                             style: TextStyle(
-                                                fontSize: 18,
+                                                fontSize: 16,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                         )
@@ -821,7 +817,7 @@ void showCustomPaymentAlert(
                                           child: Text(
                                             "${calAdminGst(gatewayDetail['AdminTransFee'], gatewayDetail['AdminGstType'], gatewayDetail['AdminGstPercentage']).toStringAsFixed(2)} ${profileData['CurrencyCode']}",
                                             style: TextStyle(
-                                                fontSize: 18,
+                                                fontSize: 16,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                         )
@@ -831,7 +827,7 @@ void showCustomPaymentAlert(
                                     child: Text(
                                       "${grandTotal(calWithAdminFee(topupAmount, gatewayDetail), gatewayDetail, topupAmount).toStringAsFixed(2)} ${profileData['CurrencyCode']}",
                                       style: TextStyle(
-                                          fontSize: 18,
+                                          fontSize: 16,
                                           fontWeight: FontWeight.bold),
                                     ),
                                   ),
@@ -867,7 +863,12 @@ void showCustomPaymentAlert(
                                           ],
                                         ),
                                         onPressed: () {
-                                          buildContext.read<MySettingsListener>().updateTopupHeaderAndDetails(buildContext, gatewayDetail,profileData);
+                                          buildContext
+                                              .read<MySettingsListener>()
+                                              .updateTopupHeaderAndDetails(
+                                                  buildContext,
+                                                  gatewayDetail,
+                                                  profileData);
                                         },
                                         style: ElevatedButton.styleFrom(
                                           backgroundColor:

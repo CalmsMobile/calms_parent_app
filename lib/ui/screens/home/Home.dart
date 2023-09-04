@@ -333,7 +333,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     controller.dispose(); // you need this
     super.dispose();
   }
-
   Future<void> initValues() async {
     CommonUtil().getEntryToDashboard(context);
     getLocalData();
@@ -461,7 +460,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     children: [
                       Container(
                         width: double.infinity,
-                        height: 220,
+                        //height: 220,
+                        margin: EdgeInsets.only(bottom: 10),
                         padding: EdgeInsets.only(left: 0, right: 0),
                         child: Consumer<MySettingsListener>(
                             builder: (context, data, settingsDta) {
@@ -490,14 +490,14 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                                                   .familyPos]
                                                               ['Name'] ==
                                                           item["Name"])
-                                                      ? 92
-                                                      : 62,
+                                                      ? 81
+                                                      : 51,
                                                   height: (data.familyList[data
                                                                   .familyPos]
                                                               ['Name'] ==
                                                           item["Name"])
-                                                      ? 92
-                                                      : 62,
+                                                      ? 81
+                                                      : 51,
                                                   child: item['UserImgPath'] !=
                                                           null
                                                       ? CircleAvatar(
@@ -659,7 +659,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                         data.dashboardMenuList,
                                         data.familyList,
                                         imgBaseUrl,
-                                        profileData['CurrencyCode']);
+                                        profileData);
                                   });
                             } else {
                               return SizedBox();

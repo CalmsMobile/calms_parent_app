@@ -1,8 +1,12 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 import 'package:calms_parent_latest/common/widgets/common.dart';
-import 'package:calms_parent_latest/ui/screens/payment/topupPayment_page.dart';
+import 'package:calms_parent_latest/ui/screens/payment/topup_payment_webview_page.dart';
+import 'package:calms_parent_latest/ui/screens/payment/topup_after_payment_page.dart';
+import 'package:flutter/foundation.dart';
 
+import '../ui/screens/home/Home.dart';
 import '/common/alert_dialog.dart';
 import '/common/app_settings.dart';
 import '/common/listener/settings_listener.dart';
@@ -144,8 +148,8 @@ class CommonUtil {
     }
   }
 
-  Future<void> getGatewayDetails(context, RefBranchSeqId, RefSettingSeqId,
-      topupTotal, profileData) async {
+  Future<void> getGatewayDetails(
+      context, RefBranchSeqId, RefSettingSeqId, topupTotal, profileData) async {
     var ParamData = {
       "RefBranchSeqId": RefBranchSeqId,
       "RefSettingSeqId": RefSettingSeqId
@@ -174,7 +178,8 @@ class CommonUtil {
     }
   }
 
-  Future<void> MakeTransaction(context,TopupHeader,TopupDetails, gatewayDetail,profileData) async {
+  Future<void> MakeTransaction(
+      context, TopupHeader, TopupDetails, gatewayDetail, profileData) async {
     var OrderData = {
       "Header": [],
       "Detail": [],
@@ -215,23 +220,75 @@ class CommonUtil {
       false,
     );
     res
-        .then((response) => {
-              MakeTransactionSuccess(
-                  context, response)
-            })
+        .then((response) => {MakeTransactionSuccess(context, response)})
         .onError((error, stackTrace) => {authorizedPostRequestError(error)});
   }
 
-  MakeTransactionSuccess(
-      BuildContext context, response) async {
+  MakeTransactionSuccess(BuildContext context, response) async {
     if (response['Table'][0]['code'] == "S") {
       print("MakeTransactionSuccess success");
-      /* Navigator.of(context).pushNamed('/topupPayment',
-                    arguments: response['Table'][0]); */
-                    Navigator.push(
+      if (kIsWeb) {
+       
+        _showMyDialog(context,response['Table'][0]['PaymentOrderId']);
+        
+      } else
+        Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => TopupPaymentPage(response['Table'][0]),
+            builder: (context) => TopupPaymentWebviewPage(response['Table'][0]),
+          ),
+        );
+    }
+  }
+Future<void> _showMyDialog(BuildContext context,PaymentOrderId) async {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false, // user must tap button!
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title:  Text('Test Payment Alert!'),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: [
+              Text('check after payment success or failure'),
+              //Text('Would you like to approve of this message?'),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: const Text('Check Payment'),
+            onPressed: () {
+              CommonUtil().getAfterTopupPaymentSummary(context, PaymentOrderId);
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
+  Future<void> getAfterTopupPaymentSummary(
+      BuildContext context, OrderId) async {
+    var ParamData = {"OrderId": OrderId};
+    Future<Map<String, dynamic>> res = RestApiProvider().authorizedPostRequest(
+      ParamData,
+      AppSettings.GetAfterTopupPaymentSummary,
+      context,
+      false,
+    );
+    res
+        .then((response) =>
+            {getAfterTopupPaymentSummarySuccess(context, response)})
+        .onError((error, stackTrace) => {authorizedPostRequestError(error)});
+  }
+
+  getAfterTopupPaymentSummarySuccess(BuildContext context, response) async {
+    if (response['Table'][0]['OrderId'] != null) {
+      print("getAfterTopupPaymentSummarySuccess success");
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => TopupAfterPaymentPage(response['Table'][0]),
           ),
         );
     }

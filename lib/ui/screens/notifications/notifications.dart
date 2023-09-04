@@ -166,8 +166,8 @@ class _NotificationsState extends State<Notifications> {
             appBar: getMyAppbar(context, appBarTitle, [
               // Navigate to the Search Screen
               Container(
-                height: 50,
-                width: 100,
+                height: 30,
+                width: 80,
                 //margin: EdgeInsets.only(right: 10),
                 child: Row(
                   children: [

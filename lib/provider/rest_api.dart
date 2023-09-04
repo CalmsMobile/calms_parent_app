@@ -380,7 +380,7 @@ class RestApiProvider {
     String encData = CryptoEncryption(AppSettings.commonCryptoKey)
         .encryptMyData(json.encode(payload));
     var data = {"Data": encData};
-
+    debugPrint(data.toString());
     ProgressDialog _progressDialog = ProgressDialog(context: context);
     if (showProgress) {
       _progressDialog.show(max: 100, msg: 'Loading...please wait...');
@@ -417,7 +417,10 @@ class RestApiProvider {
             Map<String, dynamic> tableObj = tableList[0];
             if (tableObj['code'] == 10 ||
                 tableObj['Code'] == 10 ||
-                tableObj['code'] == 50 || tableObj['code'] == 20 || tableObj['code'] == "S") {
+                tableObj['code'] == 50 ||
+                tableObj['code'] == 20 ||
+                endPoint==AppSettings.MakeTransaction && tableObj['code'] == "S" ||
+                endPoint==AppSettings.GetAfterTopupPaymentSummary && tableObj['OrderId'] != null) {
               return Future<Map<String, dynamic>>.value(res['Data']);
             } else {
               print("failed ${tableObj['code'] || tableObj['Code']} ");

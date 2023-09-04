@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:calms_parent_latest/ui/screens/topup/TopupPage.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
@@ -8,7 +9,7 @@ import '../calendar/calendar_page.dart';
 import '../home/Home.dart';
 
 Widget menuList(
-    BuildContext context, int index, List menu, List familyList, imgBaseUrl,CurrencyCode) {
+    BuildContext context, int index, List menu, List familyList, imgBaseUrl,profileData) {
   return Container(
     width: 90.0,
     child: InkWell(
@@ -19,7 +20,10 @@ Widget menuList(
                   "imgBaseUrl": imgBaseUrl
                 }),
               if (menu[index]['MenuId'] == 2019.0)
-                Navigator.of(context).pushNamed('/TopupPage'),
+                Navigator.push(context,MaterialPageRoute(builder:  (context) => TopupPage({
+                      "profileData":profileData ,
+                      "imgBaseUrl": imgBaseUrl,
+                    }))),
               if (menu[index]['MenuId'] == 2022.0)
                 Navigator.of(context).pushNamed('/InvoicePayment'),
               if (menu[index]['MenuId'] == 1.0)
@@ -27,7 +31,7 @@ Widget menuList(
                     arguments: {
                       "familyList": familyList,
                       "imgBaseUrl": imgBaseUrl,
-                      "CurrencyCode":CurrencyCode
+                      "CurrencyCode":profileData['CurrencyCode']
                     }),
             },
         child: Column(

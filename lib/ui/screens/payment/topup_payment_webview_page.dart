@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:calms_parent_latest/common/common_api.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 // #docregion platform_imports
@@ -9,15 +10,15 @@ import 'package:webview_flutter_android/webview_flutter_android.dart';
 import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 // #enddocregion platform_imports
 
-class TopupPaymentPage extends StatefulWidget {
+class TopupPaymentWebviewPage extends StatefulWidget {
   final arguments;
-  const TopupPaymentPage(this.arguments, {Key? key}) : super(key: key);
+  const TopupPaymentWebviewPage(this.arguments, {Key? key}) : super(key: key);
 
   @override
   _TopupPaymentPageState createState() => _TopupPaymentPageState();
 }
 
-class _TopupPaymentPageState extends State<TopupPaymentPage> {
+class _TopupPaymentPageState extends State<TopupPaymentWebviewPage> {
   late WebViewController _controller;
   @override
   void initState() {
@@ -65,19 +66,20 @@ class _TopupPaymentPageState extends State<TopupPaymentPage> {
             debugPrint('Page started loading: $url');
           },
           onPageFinished: (String url) {
-            if(url.contains("common/PaymentStatus.aspx")){
-//api call to finish payment
+            if (url.contains("/common/PaymentStatus.aspx")) {
+            debugPrint("payment success");
+              CommonUtil().getAfterTopupPaymentSummary(context, widget.arguments['PaymentOrderId']);
             }
             debugPrint('Page finished loading: $url');
           },
           onWebResourceError: (WebResourceError error) {
-            debugPrint('''
+            /* debugPrint('''
 Page resource error:
   code: ${error.errorCode}
   description: ${error.description}
   errorType: ${error.errorType}
   isForMainFrame: ${error.isForMainFrame}
-          ''');
+          '''); */
           },
           onNavigationRequest: (NavigationRequest request) {
             /* if (request.url.startsWith('https://www.youtube.com/')) {
