@@ -1,5 +1,9 @@
+import 'package:calms_parent_latest/ui/screens/widgets/MealOrderList.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
+import 'package:provider/provider.dart';
 
+import '../../../common/common_api.dart';
+import '../../../common/listener/settings_listener.dart';
 import '../../../common/util/common_funtions.dart';
 import '/common/HexColor.dart';
 import '/common/alert_dialog.dart';
@@ -14,13 +18,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class MealOrder extends StatefulWidget {
-  const MealOrder();
+  final arguments;
+  const MealOrder(this.arguments, {Key? key}) : super(key: key);
 
   @override
   _MealOrderState createState() => _MealOrderState();
 }
 
 class _MealOrderState extends State<MealOrder> {
+  List familyList = [];
+  String imgBaseUrl = "";
   var dateList = [];
   List packageList = [];
   List mealList = [
@@ -584,6 +591,16 @@ class _MealOrderState extends State<MealOrder> {
     super.initState();
     mealList_ = mealList;
     initDates();
+    getData();
+  }
+
+  Future<void> getData() async {
+    familyList = widget.arguments['familyList'];
+    imgBaseUrl = widget.arguments['imgBaseUrl'];
+    CommonUtil().getPOConfigForUser(
+        context,
+        widget.arguments['familyList'][0]['UserSeqId'],
+        widget.arguments['familyList'][0]['RefBranchSeqId']);
   }
 
   late DateTime _selectedDate;
@@ -638,10 +655,6 @@ class _MealOrderState extends State<MealOrder> {
 
   @override
   Widget build(BuildContext context) {
-    final data = ModalRoute.of(context)?.settings.arguments as Map;
-    final familyList = data['familyList'];
-    final imgBaseUrl = data['imgBaseUrl'];
-    print(data);
     _list = <Widget>[
       MealPager(mealList_, onCartClick),
       MealPager(mealList_, onCartClick),
@@ -799,20 +812,41 @@ class _MealOrderState extends State<MealOrder> {
                             ) */
                         ),
                       ),
+                      InkWell(
+                        onTap: () {},
+                        child: Container(
+                          width: 40,
+                          height: 40,
+                          margin: EdgeInsets.only(left: 10),
+                          child: ClipOval(
+                            child: Material(
+                              color: Colors.blue, // Button color
+                              child: SizedBox(
+                                  width: 40,
+                                  height: 40,
+                                  child: Icon(
+                                    Icons.shopping_cart_rounded,
+                                    color: Colors.white,
+                                    size: 20,
+                                  )),
+                            ),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                 ),
-            if (!searchEnable)
+            /*  if (!searchEnable)
               InkWell(
                 onTap: () {
                   _pickDateDialog();
                 },
                 child: Container(
                   padding: const EdgeInsets.only(right: 15),
-                  child: Icon(Icons.calendar_month,
+                  child: Icon(Icons.calendar_month_rounded,
                       size: 30, color: Colors.grey.shade500),
                 ),
-              )
+              ) */
           ],
         ),
         /*  bottomNavigationBar: showMeal
@@ -948,6 +982,20 @@ class _MealOrderState extends State<MealOrder> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     if (!showMeal)
+                      Consumer<MySettingsListener>(
+                          builder: (context, data, settingsDta) {
+                        if (data.poSettings.isNotEmpty) {
+                          return MealOrderListView(
+                              data.poSettings,
+                              data.poTypesList,
+                              data.poPackagesList,
+                              widget.arguments["profileData"]['CurrencyCode'],
+                              data.poList);
+                        } else {
+                          return SizedBox();
+                        }
+                      }),
+                    /* if (!showMeal)
                       Container(
                         margin: EdgeInsets.only(top: 40, left: 15, bottom: 10),
                         height: 30,
@@ -1149,6 +1197,7 @@ class _MealOrderState extends State<MealOrder> {
                                       ));
                             }),
                       ),
+                     */
                     if (showMeal)
                       Container(
                         height: 66,
@@ -1371,7 +1420,7 @@ class _MealOrderState extends State<MealOrder> {
         floatingActionButton: _getFilterFAB());
   }
 
-  void onCartClick(int index,familyList) {
+  void onCartClick(int index, familyList) {
     if (senderIndex <= -1) {
       openMemberBottomSheet(context, familyList, null, (studentindex) {
         senderIndex = studentindex;

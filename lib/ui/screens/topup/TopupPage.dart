@@ -32,13 +32,10 @@ class _TopupPageState extends State<TopupPage> {
   }
 
   Future<void> getData() async {
-    //String profile = await MySharedPref().getData(AppSettings.Sp_ProfileData);
-    //imgBaseUrl = await MySharedPref().getData(AppSettings.Sp_Img_Base_Url);
-    //if (profileData != "") {
-      //profileData = jsonDecode(profile);
+    
       CommonUtil().getFamilyMemberForTopup(context,widget.arguments['profileData']['RefUserSeqId'],
           widget.arguments['profileData']['RefBranchSeqId'], widget.arguments['profileData']['RefMemberTypeSeqId']);
-   // }
+   
   }
 
   @override

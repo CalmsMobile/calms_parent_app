@@ -4,6 +4,7 @@ import 'dart:developer';
 
 import 'package:calms_parent_latest/common/common_api.dart';
 import 'package:calms_parent_latest/common/widgets/common.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
@@ -26,6 +27,11 @@ class MySettingsListener with ChangeNotifier {
   double _topupTotal = 0.00;
   List _topupHeader = [];
   List _topupDetails = [];
+
+  List _poSettings = [];
+  List _poTypesList = [];
+  List _poPackagesList = [];
+  late Map<dynamic, List<dynamic>> _poList;
 
   int _familyPos = 0;
   List _notificationList = [];
@@ -74,6 +80,14 @@ class MySettingsListener with ChangeNotifier {
   UnmodifiableListView<dynamic> get topupDetails =>
       UnmodifiableListView(_topupDetails);
 
+  UnmodifiableListView<dynamic> get poSettings =>
+      UnmodifiableListView(_poSettings);
+  UnmodifiableListView<dynamic> get poTypesList =>
+      UnmodifiableListView(_poTypesList);
+  UnmodifiableListView<dynamic> get poPackagesList =>
+      UnmodifiableListView(_poPackagesList);
+  get poList => _poList;
+
   UnmodifiableListView<dynamic> get notificationCategoryList =>
       UnmodifiableListView(_notificationCategoryList);
 
@@ -119,7 +133,8 @@ class MySettingsListener with ChangeNotifier {
     notifyListeners();
   }
 
-  updateTopupHeaderAndDetails(BuildContext context,gatewayDetail,profileData) {
+  updateTopupHeaderAndDetails(
+      BuildContext context, gatewayDetail, profileData) {
     _topupHeader = [];
     _topupDetails = [];
     for (int i = 0; i < topupMembersList.length; i++) {
@@ -128,18 +143,26 @@ class MySettingsListener with ChangeNotifier {
         _topupHeader.add({
           "Amount": topupMembersList[i]['Amount'],
           "Discount": "0.00",
-          "GST_Type":gatewayDetail['IsGst']? gatewayDetail['GstType']:null,
-          "Gst":gatewayDetail['IsGst']? calTopupGst(topupMembersList[i]['Amount'], gatewayDetail['GstType'], gatewayDetail['GstPercentage']):null,
-          "GstPerc":gatewayDetail['IsGst']? gatewayDetail['GstPercentage']:null,
+          "GST_Type": gatewayDetail['IsGst'] ? gatewayDetail['GstType'] : null,
+          "Gst": gatewayDetail['IsGst']
+              ? calTopupGst(topupMembersList[i]['Amount'],
+                  gatewayDetail['GstType'], gatewayDetail['GstPercentage'])
+              : null,
+          "GstPerc":
+              gatewayDetail['IsGst'] ? gatewayDetail['GstPercentage'] : null,
           "RefUserSeqId": topupMembersList[i]['UserSeqId']
         });
         _topupDetails.add({
           "RefUserSeqId": topupMembersList[i]['UserSeqId'],
           "MemberName": topupMembersList[i]['Name'],
           "Amount": topupMembersList[i]['Amount'],
-          "Gst":gatewayDetail['IsGst']? calTopupGst(topupMembersList[i]['Amount'], gatewayDetail['GstType'], gatewayDetail['GstPercentage']):null,
-          "GST_Type":gatewayDetail['IsGst']? gatewayDetail['GstType']:null,
-          "GstPerc":gatewayDetail['IsGst']? gatewayDetail['GstPercentage']:null,
+          "Gst": gatewayDetail['IsGst']
+              ? calTopupGst(topupMembersList[i]['Amount'],
+                  gatewayDetail['GstType'], gatewayDetail['GstPercentage'])
+              : null,
+          "GST_Type": gatewayDetail['IsGst'] ? gatewayDetail['GstType'] : null,
+          "GstPerc":
+              gatewayDetail['IsGst'] ? gatewayDetail['GstPercentage'] : null,
           "Discount": 0,
           "ItemSeqId": "null",
           "Category": "",
@@ -152,11 +175,31 @@ class MySettingsListener with ChangeNotifier {
     print("==========topupDetails============");
     print(jsonEncode(topupDetails));
     Navigator.of(context).pop();
-    CommonUtil().MakeTransaction(context, topupHeader, topupDetails, gatewayDetail,profileData);
+    CommonUtil().MakeTransaction(
+        context, topupHeader, topupDetails, gatewayDetail, profileData);
   }
 
   updateTopupPaymentProvidersList(List paymentProvidersList) {
     _paymentProvidersList = paymentProvidersList;
+  }
+
+  updatePOConfigForUser(
+      List poSettings, List poTypesList, List poPackagesList) {
+    _poSettings = poSettings;
+    //_poTypesList = poTypesList;
+    _poPackagesList = poPackagesList;
+
+    _poList =
+        poTypesList.groupListsBy((element) => element['POTypeConfigSeqId']);
+    _poTypesList = [];
+    print("=============================");
+    _poList.values.forEachIndexed((index, element) {
+      _poTypesList.add(element);
+    });
+    print(_poTypesList);
+    print("=============================");
+
+    notifyListeners();
   }
 
   updateSettings(var settingDetails) {

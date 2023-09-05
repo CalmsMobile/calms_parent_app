@@ -228,9 +228,7 @@ class CommonUtil {
     if (response['Table'][0]['code'] == "S") {
       print("MakeTransactionSuccess success");
       if (kIsWeb) {
-       
-        _showMyDialog(context,response['Table'][0]['PaymentOrderId']);
-        
+        _showMyDialog(context, response['Table'][0]['PaymentOrderId']);
       } else
         Navigator.push(
           context,
@@ -240,33 +238,36 @@ class CommonUtil {
         );
     }
   }
-Future<void> _showMyDialog(BuildContext context,PaymentOrderId) async {
-  return showDialog<void>(
-    context: context,
-    barrierDismissible: false, // user must tap button!
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title:  Text('Test Payment Alert!'),
-        content: SingleChildScrollView(
-          child: ListBody(
-            children: [
-              Text('check after payment success or failure'),
-              //Text('Would you like to approve of this message?'),
-            ],
+
+  Future<void> _showMyDialog(BuildContext context, PaymentOrderId) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Test Payment Alert!'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: [
+                Text('check after payment success or failure'),
+                //Text('Would you like to approve of this message?'),
+              ],
+            ),
           ),
-        ),
-        actions: <Widget>[
-          TextButton(
-            child: const Text('Check Payment'),
-            onPressed: () {
-              CommonUtil().getAfterTopupPaymentSummary(context, PaymentOrderId);
-            },
-          ),
-        ],
-      );
-    },
-  );
-}
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Check Payment'),
+              onPressed: () {
+                CommonUtil()
+                    .getAfterTopupPaymentSummary(context, PaymentOrderId);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   Future<void> getAfterTopupPaymentSummary(
       BuildContext context, OrderId) async {
     var ParamData = {"OrderId": OrderId};
@@ -286,11 +287,36 @@ Future<void> _showMyDialog(BuildContext context,PaymentOrderId) async {
     if (response['Table'][0]['OrderId'] != null) {
       print("getAfterTopupPaymentSummarySuccess success");
       Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => TopupAfterPaymentPage(response['Table'][0]),
-          ),
-        );
+        context,
+        MaterialPageRoute(
+          builder: (context) => TopupAfterPaymentPage(response['Table'][0]),
+        ),
+      );
+    }
+  }
+
+  Future<void> getPOConfigForUser(context, RefUserSeqId, RefBranchSeqId) async {
+    var ParamData = {
+      "RefUserSeqId": RefUserSeqId,
+      "RefBranchSeqId": RefBranchSeqId
+    };
+    Future<Map<String, dynamic>> res = RestApiProvider().authorizedPostRequest(
+      ParamData,
+      AppSettings.GetPOConfigForUser,
+      context,
+      false,
+    );
+    res
+        .then((response) => {getPOConfigForUserSuccess(context, response)})
+        .onError((error, stackTrace) => {authorizedPostRequestError(error)});
+  }
+
+  getPOConfigForUserSuccess(BuildContext context, response) {
+    if (response['Table'][0]['code'] == 10) {
+      print("getPOConfigForUserSuccess success");
+
+      context.read<MySettingsListener>().updatePOConfigForUser(
+          response['Table1'], response['Table2'], response['Table3']);
     }
   }
 

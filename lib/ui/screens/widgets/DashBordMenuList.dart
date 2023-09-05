@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:calms_parent_latest/ui/screens/meals/MealOrder.dart';
 import 'package:calms_parent_latest/ui/screens/topup/TopupPage.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
@@ -8,31 +9,38 @@ import '../../../model/_AppointmentDataSource.dart';
 import '../calendar/calendar_page.dart';
 import '../home/Home.dart';
 
-Widget menuList(
-    BuildContext context, int index, List menu, List familyList, imgBaseUrl,profileData) {
+Widget menuList(BuildContext context, int index, List menu, List familyList,
+    imgBaseUrl, profileData) {
   return Container(
     width: 90.0,
     child: InkWell(
         onTap: () => {
               if (menu[index]['MenuId'] == 2017.0)
-                Navigator.of(context).pushNamed('/MealOrder', arguments: {
-                  "familyList": familyList,
-                  "imgBaseUrl": imgBaseUrl
-                }),
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => MealOrder({
+                              "familyList": familyList,
+                              "profileData": profileData,
+                              "imgBaseUrl": imgBaseUrl,
+                            }))),
               if (menu[index]['MenuId'] == 2019.0)
-                Navigator.push(context,MaterialPageRoute(builder:  (context) => TopupPage({
-                      "profileData":profileData ,
-                      "imgBaseUrl": imgBaseUrl,
-                    }))),
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => TopupPage({
+                              "profileData": profileData,
+                              "imgBaseUrl": imgBaseUrl,
+                            }))),
               if (menu[index]['MenuId'] == 2022.0)
                 Navigator.of(context).pushNamed('/InvoicePayment'),
               if (menu[index]['MenuId'] == 1.0)
-                Navigator.of(context).pushNamed('/calendarTransactions',
-                    arguments: {
-                      "familyList": familyList,
-                      "imgBaseUrl": imgBaseUrl,
-                      "CurrencyCode":profileData['CurrencyCode']
-                    }),
+                Navigator.of(context)
+                    .pushNamed('/calendarTransactions', arguments: {
+                  "familyList": familyList,
+                  "imgBaseUrl": imgBaseUrl,
+                  "CurrencyCode": profileData['CurrencyCode']
+                }),
             },
         child: Column(
           children: [
