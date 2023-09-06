@@ -49,7 +49,15 @@ class CommonUtil {
       //familyList = response['Table1'];
       context
           .read<MySettingsListener>()
-          .updateEntryToDashboardLists(response['Table1'], response['Table2']);
+          .updateEntryToDashboardFamilyList(response['Table1']);
+          
+      context
+          .read<MySettingsListener>()
+          .updateFamilyListWithoutParent(response['Table1']);
+
+      context
+          .read<MySettingsListener>()
+          .updateEntryToDashboardMenuList(response['Table2']);
       if (response['Table3'] != null) {
         MySharedPref().saveData(
             jsonEncode(response['Table3'][0]), AppSettings.Sp_ProfileData);

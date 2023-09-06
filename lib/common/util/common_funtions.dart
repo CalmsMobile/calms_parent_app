@@ -38,4 +38,12 @@ class CommonFunctions {
   static String getImageUrlUsingUsingSeqId(userId, userList) {
     return "";
   }
+
+  static int getChildIndexFromFamily(List familyList) {
+    for (int i = 0; familyList.length > 0; i++) {
+      if (familyList[i]['MemberType'] == "Student") ;
+      return i;
+    }
+    return 0;
+  }
 }

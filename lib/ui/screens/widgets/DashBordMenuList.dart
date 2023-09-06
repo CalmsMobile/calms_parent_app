@@ -10,7 +10,8 @@ import '../calendar/calendar_page.dart';
 import '../home/Home.dart';
 
 Widget menuList(BuildContext context, int index, List menu, List familyList,
-    imgBaseUrl, profileData) {
+    imgBaseUrl, profileData,List familyListWithoutParent) {
+  
   return Container(
     width: 90.0,
     child: InkWell(
@@ -20,9 +21,10 @@ Widget menuList(BuildContext context, int index, List menu, List familyList,
                     context,
                     MaterialPageRoute(
                         builder: (context) => MealOrder({
-                              "familyList": familyList,
+                              "familyList": familyListWithoutParent,
                               "profileData": profileData,
                               "imgBaseUrl": imgBaseUrl,
+                              "selectedMemberIndex": 1
                             }))),
               if (menu[index]['MenuId'] == 2019.0)
                 Navigator.push(

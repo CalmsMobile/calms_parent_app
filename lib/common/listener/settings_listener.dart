@@ -12,6 +12,7 @@ class MySettingsListener with ChangeNotifier {
   var _settingDetails;
   var _driverDetails;
   List _familyList = [];
+  List _familyListWithoutParent = [];
   List _dashboardMenuList = [];
 
   List _dashboardSpendingList = [];
@@ -32,6 +33,7 @@ class MySettingsListener with ChangeNotifier {
   List _poTypesList = [];
   List _poPackagesList = [];
   late Map<dynamic, List<dynamic>> _poList;
+  List _cartList = [];
 
   int _familyPos = 0;
   List _notificationList = [];
@@ -40,6 +42,8 @@ class MySettingsListener with ChangeNotifier {
 
   UnmodifiableListView<dynamic> get familyList =>
       UnmodifiableListView(_familyList);
+  UnmodifiableListView<dynamic> get familyListWithoutParent =>
+      UnmodifiableListView(_familyListWithoutParent);
   get familyPos => _familyPos;
   void pageSwiped(int pos) {
     _familyPos = pos;
@@ -88,6 +92,8 @@ class MySettingsListener with ChangeNotifier {
       UnmodifiableListView(_poPackagesList);
   get poList => _poList;
 
+  UnmodifiableListView<dynamic> get cartList => UnmodifiableListView(_cartList);
+
   UnmodifiableListView<dynamic> get notificationCategoryList =>
       UnmodifiableListView(_notificationCategoryList);
 
@@ -100,8 +106,20 @@ class MySettingsListener with ChangeNotifier {
   UnmodifiableMapView get mydriverDetails =>
       UnmodifiableMapView(_driverDetails == null ? {} : _driverDetails);
 
-  updateEntryToDashboardLists(List familyList, List menuList) {
+  updateEntryToDashboardFamilyList(List familyList) {
     _familyList = familyList;
+
+    notifyListeners();
+  }
+
+  updateFamilyListWithoutParent(List family) {
+    this._familyListWithoutParent = family;
+    //this._familyListWithoutParent.removeWhere((element) => element['MemberType'] == "Parent");
+    print(this._familyListWithoutParent);
+    //notifyListeners();
+  }
+
+  updateEntryToDashboardMenuList(List menuList) {
     _dashboardMenuList = menuList;
     notifyListeners();
   }
@@ -186,19 +204,43 @@ class MySettingsListener with ChangeNotifier {
   updatePOConfigForUser(
       List poSettings, List poTypesList, List poPackagesList) {
     _poSettings = poSettings;
-    //_poTypesList = poTypesList;
     _poPackagesList = poPackagesList;
-
+    for (int i = 0; poTypesList.length > i; i++) {
+      poTypesList[i]['addedToCart'] = false;
+    }
     _poList =
         poTypesList.groupListsBy((element) => element['POTypeConfigSeqId']);
     _poTypesList = [];
-    print("=============================");
     _poList.values.forEachIndexed((index, element) {
       _poTypesList.add(element);
     });
-    print(_poTypesList);
-    print("=============================");
+    print("========================");
+    print(_poList);
+    print("========================");
+    notifyListeners();
+  }
 
+  updatePoTypeCartStatus(int i1, int i2, isDelete, UserSeqId) {
+    for (var ip = 0; ip < _poTypesList[i1].length; ip++) {
+      _poTypesList[i1][ip]['addedToCart'] = false;
+    }
+    if (isDelete) {
+      _poTypesList[i1][i2]['addedToCart'] = false;
+
+      _cartList.remove(_poTypesList[i1][i2]);
+    } else {
+      _poTypesList[i1][i2]['addedToCart'] = true;
+      _poTypesList[i1][i2]['UserSeqId'] = UserSeqId;
+      for (var i = 0; i < _cartList.length; i++) {
+        if (_cartList[i]['UserSeqId'] == _poTypesList[i1][i2]['UserSeqId'] &&
+            _cartList[i]['POTypeConfigSeqId'] ==
+                _poTypesList[i1][i2]['POTypeConfigSeqId']) {
+          _cartList.removeAt(i);
+        }
+      }
+      _cartList.add(_poTypesList[i1][i2]);
+    }
+    print(_cartList);
     notifyListeners();
   }
 

@@ -747,7 +747,12 @@ class _MealOrderState extends State<MealOrder> {
                                 context, familyList, imgBaseUrl, (index) {
                               Navigator.pop(context);
                               senderIndex = index;
-                              setState(() {});
+                              setState(() {
+                                CommonUtil().getPOConfigForUser(
+                                    context,
+                                    familyList[index]['UserSeqId'],
+                                    familyList[index]['RefBranchSeqId']);
+                              });
                             })
                           },
                           /* title:  Column(
@@ -812,7 +817,62 @@ class _MealOrderState extends State<MealOrder> {
                             ) */
                         ),
                       ),
-                      InkWell(
+                      Stack(
+                        children: [
+                          InkWell(
+                            onTap: () {},
+                            child: Container(
+                              width: 40,
+                              height: 40,
+                              margin: EdgeInsets.only(left: 10),
+                              child: ClipOval(
+                                child: Material(
+                                  color: Colors.blue, // Button color
+                                  child: SizedBox(
+                                      width: 40,
+                                      height: 40,
+                                      child: Icon(
+                                        Icons.shopping_cart_rounded,
+                                        color: Colors.white,
+                                        size: 18,
+                                      )),
+                                ),
+                              ),
+                            ),
+                          ),
+                          /* IconButton(
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.shopping_cart_rounded,
+                              size: 30,
+                            ),
+                          ), */
+                          Consumer<MySettingsListener>(
+                              builder: (context, data, settingsDta) {
+                            return Positioned(
+                              top: 0,
+                              right: 0,
+                              child: Container(
+                                height: 18,
+                                width: 18,
+                                decoration:  BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.red,
+                                ),
+                                child: Center(
+                                    child: Text(
+                                 data.cartList!=[]? data.cartList.length.toString() :"0",
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                )),
+                              ),
+                            );
+                          })
+                        ],
+                      ),
+                      /* InkWell(
                         onTap: () {},
                         child: Container(
                           width: 40,
@@ -832,7 +892,7 @@ class _MealOrderState extends State<MealOrder> {
                             ),
                           ),
                         ),
-                      )
+                      ) */
                     ],
                   ),
                 ),
@@ -990,7 +1050,8 @@ class _MealOrderState extends State<MealOrder> {
                               data.poTypesList,
                               data.poPackagesList,
                               widget.arguments["profileData"]['CurrencyCode'],
-                              data.poList);
+                              data.poList,
+                              familyList[senderIndex]);
                         } else {
                           return SizedBox();
                         }

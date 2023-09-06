@@ -659,7 +659,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                         data.dashboardMenuList,
                                         data.familyList,
                                         imgBaseUrl,
-                                        profileData);
+                                        profileData,data.familyListWithoutParent);
                                   });
                             } else {
                               return SizedBox();

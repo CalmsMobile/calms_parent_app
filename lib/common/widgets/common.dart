@@ -220,7 +220,6 @@ void openMemberBottomSheet(
         );
       });
 }
-
 void showPaymentSelectOption(BuildContext buildContext, titleText, paymentList,
     topupAmount, profileData) {
   var selectedPaymentMethod = {};
