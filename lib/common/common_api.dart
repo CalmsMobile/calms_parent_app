@@ -7,6 +7,7 @@ import 'package:calms_parent_latest/ui/screens/payment/topup_after_payment_page.
 import 'package:flutter/foundation.dart';
 
 import '../ui/screens/home/Home.dart';
+import '../ui/screens/meals/meal_menu_page.dart';
 import '/common/alert_dialog.dart';
 import '/common/app_settings.dart';
 import '/common/listener/settings_listener.dart';
@@ -50,7 +51,7 @@ class CommonUtil {
       context
           .read<MySettingsListener>()
           .updateEntryToDashboardFamilyList(response['Table1']);
-          
+
       context
           .read<MySettingsListener>()
           .updateFamilyListWithoutParent(response['Table1']);
@@ -110,11 +111,11 @@ class CommonUtil {
       false,
     );
     res
-        .then((response) => {getCalendarDataSuccess(context, response)})
+        .then((response) => {successGetCalendarData(context, response)})
         .onError((error, stackTrace) => {authorizedPostRequestError(error)});
   }
 
-  getCalendarDataSuccess(BuildContext context, Map<String, dynamic> response) {
+  successGetCalendarData(BuildContext context, Map<String, dynamic> response) {
     if (response['Table'][0]['code'] == 10) {
       print("GetCalendarData success");
       if (response['Table1'] != null || response['Table1'] != [])
@@ -137,11 +138,11 @@ class CommonUtil {
       false,
     );
     res
-        .then((response) => {getFamilyMemberForTopupSuccess(context, response)})
+        .then((response) => {successGetFamilyMemberForTopup(context, response)})
         .onError((error, stackTrace) => {authorizedPostRequestError(error)});
   }
 
-  getFamilyMemberForTopupSuccess(BuildContext context, response) {
+  successGetFamilyMemberForTopup(BuildContext context, response) {
     if (response['Table'][0]['code'] == 10) {
       print("getFamilyMemberForTopupSuccess success");
       if (response['Table1'] != null || response['Table1'] != [])
@@ -170,13 +171,13 @@ class CommonUtil {
     );
     res
         .then((response) => {
-              getGatewayDetailsSuccess(
+              successGetGatewayDetails(
                   context, response, topupTotal, profileData)
             })
         .onError((error, stackTrace) => {authorizedPostRequestError(error)});
   }
 
-  getGatewayDetailsSuccess(
+  successGetGatewayDetails(
       BuildContext context, response, topupTotal, profileData) async {
     if (response['Table'][0]['code'] == 10) {
       print("getGatewayDetailsSuccess success");
@@ -228,11 +229,11 @@ class CommonUtil {
       false,
     );
     res
-        .then((response) => {MakeTransactionSuccess(context, response)})
+        .then((response) => {successMakeTransaction(context, response)})
         .onError((error, stackTrace) => {authorizedPostRequestError(error)});
   }
 
-  MakeTransactionSuccess(BuildContext context, response) async {
+  successMakeTransaction(BuildContext context, response) async {
     if (response['Table'][0]['code'] == "S") {
       print("MakeTransactionSuccess success");
       if (kIsWeb) {
@@ -287,11 +288,11 @@ class CommonUtil {
     );
     res
         .then((response) =>
-            {getAfterTopupPaymentSummarySuccess(context, response)})
+            {successGetAfterTopupPaymentSummary(context, response)})
         .onError((error, stackTrace) => {authorizedPostRequestError(error)});
   }
 
-  getAfterTopupPaymentSummarySuccess(BuildContext context, response) async {
+  successGetAfterTopupPaymentSummary(BuildContext context, response) async {
     if (response['Table'][0]['OrderId'] != null) {
       print("getAfterTopupPaymentSummarySuccess success");
       Navigator.push(
@@ -315,16 +316,56 @@ class CommonUtil {
       false,
     );
     res
-        .then((response) => {getPOConfigForUserSuccess(context, response)})
+        .then((response) =>
+            {successGetPOConfigForUser(context, response, RefUserSeqId)})
         .onError((error, stackTrace) => {authorizedPostRequestError(error)});
   }
 
-  getPOConfigForUserSuccess(BuildContext context, response) {
+  successGetPOConfigForUser(BuildContext context, response, RefUserSeqId) {
     if (response['Table'][0]['code'] == 10) {
       print("getPOConfigForUserSuccess success");
 
       context.read<MySettingsListener>().updatePOConfigForUser(
-          response['Table1'], response['Table2'], response['Table3']);
+          response['Table1'],
+          response['Table2'],
+          response['Table3'],
+          RefUserSeqId);
+    }
+  }
+
+  Future<void> getMealItemsForUser(
+      context, RefUserSeqId, RefBranchSeqId, poTypesList,CurrencyCode) async {
+    var ParamData = {
+      "RefBranchSeqId": RefBranchSeqId,
+      "RefUserSeqId": RefUserSeqId,
+      "FromDate": poTypesList['FromDate'] != null
+          ? poTypesList['FromDate'].substring(0, 10)
+          : poTypesList['CurrentDateTime'].substring(0, 10),
+      "ToDate": poTypesList['ToDate'] != null
+          ? poTypesList['ToDate'].substring(0, 10)
+          : poTypesList['CurrentDateTime'].substring(0, 10),
+      "POTypeConfigSeqId": poTypesList['POTypeConfigSeqId'],
+      "MealType": poTypesList['MealType']
+    };
+    print(ParamData);
+    Future<Map<String, dynamic>> res = RestApiProvider().authorizedPostRequest(
+      ParamData,
+      AppSettings.GetMealItemsForUser,
+      context,
+      false,
+    );
+    res
+        .then((response) =>
+            {successGetMealItemsForUser(context, response, RefUserSeqId,poTypesList,CurrencyCode)})
+        .onError((error, stackTrace) => {authorizedPostRequestError(error)});
+  }
+
+  successGetMealItemsForUser(BuildContext context, response, RefUserSeqId,poTypesList,CurrencyCode) {
+    if (response['Table'][0]['code'] == 10) {
+      print("getMealItemsForUser success");
+
+      context.read<MySettingsListener>().updategetMealItemsForUser(
+          context, response['Table1'], response['Table2'], RefUserSeqId,poTypesList,CurrencyCode);
     }
   }
 

@@ -3,10 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MealPager extends StatelessWidget {
-  const MealPager(this.mealList_, this.callbackFun) : super();
+  const MealPager(this.mealList_,this.CurrencyCode, this.callbackFun) : super();
 
   final mealList_;
+  final CurrencyCode;
   final Function callbackFun;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -38,15 +40,19 @@ class MealPager extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     ClipRRect(
-                            borderRadius: BorderRadius.only(topLeft: Radius.circular(15.0),topRight: Radius.circular(15.0)),
-                            child: mealList_[index]['image'] != null &&
-                              mealList_[index]['image'] != ""
-                          ? Image.network(mealList_[index]['image'],width: double.infinity,
-                                    height: 100,
-                                    fit: BoxFit.cover)
-                          : Image.asset("assets/images/meal_default.png",width: double.infinity,
-                                    height: 100,
-                                    fit: BoxFit.cover),
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(15.0),
+                          topRight: Radius.circular(15.0)),
+                      child: mealList_[index]['ImgPathUrl'] != null &&
+                              mealList_[index]['ImgPathUrl'] != ""
+                          ? Image.network(mealList_[index]['ImgPathUrl'],
+                              width: double.infinity,
+                              height: 100,
+                              fit: BoxFit.cover)
+                          : Image.asset("assets/images/meal_default.png",
+                              width: double.infinity,
+                              height: 100,
+                              fit: BoxFit.cover),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -57,56 +63,57 @@ class MealPager extends StatelessWidget {
                           children: [
                             Container(
                               margin: EdgeInsets.only(top: 10),
-                              child: 
-                            Text(
-                              // products is out demo list
-                              mealList_[index]['name'],
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                color: kTextColor,
-                                fontSize: 10,
-                                fontWeight: FontWeight.bold,
+                              child: Text(
+                                // products is out demo list
+                                mealList_[index]['Name'],
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  color: kTextColor,
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            ),),
-                            Row(
-                              children: [
-                                Icon(
-                                  mealList_[index]['ratings'] > 0
-                                      ? Icons.star
-                                      : Icons.star_border_outlined,
-                                  color: Colors.orangeAccent,
-                                  size: 14,
-                                ),
-                                Icon(
-                                  mealList_[index]['ratings'] > 1
-                                      ? Icons.star
-                                      : Icons.star_border_outlined,
-                                  color: Colors.orangeAccent,
-                                  size: 14,
-                                ),
-                                Icon(
-                                  mealList_[index]['ratings'] > 2
-                                      ? Icons.star
-                                      : Icons.star_border_outlined,
-                                  color: Colors.orangeAccent,
-                                  size: 14,
-                                ),
-                                Icon(
-                                  mealList_[index]['ratings'] > 3
-                                      ? Icons.star
-                                      : Icons.star_border_outlined,
-                                  color: Colors.orangeAccent,
-                                  size: 14,
-                                ),
-                                Icon(
-                                  mealList_[index]['ratings'] > 4
-                                      ? Icons.star
-                                      : Icons.star_border_outlined,
-                                  color: Colors.orangeAccent,
-                                  size: 14,
-                                ),
-                              ],
                             ),
+                            if (mealList_[index]['Rating'] != null)
+                              Row(
+                                children: [
+                                  Icon(
+                                    mealList_[index]['Rating'] > 0
+                                        ? Icons.star
+                                        : Icons.star_border_outlined,
+                                    color: Colors.orangeAccent,
+                                    size: 14,
+                                  ),
+                                  Icon(
+                                    mealList_[index]['Rating'] > 1
+                                        ? Icons.star
+                                        : Icons.star_border_outlined,
+                                    color: Colors.orangeAccent,
+                                    size: 14,
+                                  ),
+                                  Icon(
+                                    mealList_[index]['Rating'] > 2
+                                        ? Icons.star
+                                        : Icons.star_border_outlined,
+                                    color: Colors.orangeAccent,
+                                    size: 14,
+                                  ),
+                                  Icon(
+                                    mealList_[index]['Rating'] > 3
+                                        ? Icons.star
+                                        : Icons.star_border_outlined,
+                                    color: Colors.orangeAccent,
+                                    size: 14,
+                                  ),
+                                  Icon(
+                                    mealList_[index]['Rating'] > 4
+                                        ? Icons.star
+                                        : Icons.star_border_outlined,
+                                    color: Colors.orangeAccent,
+                                    size: 14,
+                                  ),
+                                ],
+                              ),
                           ],
                         ),
                         RichText(
@@ -114,7 +121,7 @@ class MealPager extends StatelessWidget {
                             text: TextSpan(children: [
                               TextSpan(
                                 text:
-                                    "MYR ${double.parse(mealList_[index]['price']).toStringAsFixed(2)}",
+                                    "${CurrencyCode} ${mealList_[index]['SellingPrice'].toStringAsFixed(2)}",
                                 style: TextStyle(
                                     fontSize: 10,
                                     fontFamily: appFontFmaily,
@@ -130,20 +137,24 @@ class MealPager extends StatelessWidget {
                         Padding(
                           padding: EdgeInsets.only(
                               right: 2, top: 10, bottom: 5, left: 15),
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 6, horizontal: 15),
-                            decoration: BoxDecoration(
-                                color: Colors.blue,
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(5),
-                                )),
-                            child: Text("${mealList_[index]['mealStyle']}",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.normal)),
-                          ),
+                          child: mealList_[index]['ItemStyle'] != null ||
+                                  mealList_[index]['ItemStyle'] != ""
+                              ? Container(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 6, horizontal: 15),
+                                  decoration: BoxDecoration(
+                                      color: Colors.blue,
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(5),
+                                      )),
+                                  child: Text(
+                                      "${mealList_[index]['ItemStyle']}",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.normal)),
+                                )
+                              : SizedBox(),
                         ),
                         InkWell(
                           onTap: () {

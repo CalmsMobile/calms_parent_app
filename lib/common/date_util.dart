@@ -68,4 +68,12 @@ class DateUtil {
     print("Result : lesser");
     return false;
   }
+
+  List<DateTime> getDaysInBetween(DateTime startDate, DateTime endDate) {
+    List<DateTime> days = [];
+    for (int i = 0; i <= endDate.difference(startDate).inDays; i++) {
+      days.add(startDate.add(Duration(days: i)));
+    }
+    return days;
+  }
 }

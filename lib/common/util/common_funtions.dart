@@ -46,4 +46,8 @@ class CommonFunctions {
     }
     return 0;
   }
+
+  static String getPoCartData(UserSeqId, POTypeConfigSeqId, PackageSeqId) {
+    return "PO_${UserSeqId}_-0_1900-01-01_0_0_${POTypeConfigSeqId}_${PackageSeqId}_";
+  }
 }

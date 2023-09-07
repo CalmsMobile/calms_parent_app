@@ -1,3 +1,4 @@
+import 'package:calms_parent_latest/common/common_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
@@ -17,7 +18,7 @@ class MealOrderListView extends StatelessWidget {
   List poPackagesList;
   var memberDetails = {};
   MealOrderListView(this.poSettings, this.poTypesList, this.poPackagesList,
-      this.CurrencyCode, this.poList,this.memberDetails);
+      this.CurrencyCode, this.poList, this.memberDetails);
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +53,30 @@ class MealOrderListView extends StatelessWidget {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
+                                  Container(
+                                    margin: EdgeInsets.only(bottom: 10),
+                                    child: poTypesList[index][0]
+                                                ['PreOrderType'] ==
+                                            "Daily"
+                                        ? Text(
+                                            "Daily Meals",
+                                            style: TextStyle(
+                                              fontSize: 18,
+                                              color:
+                                                  Color.fromARGB(255, 0, 0, 0),
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          )
+                                        : Text(
+                                            "Package Meals",
+                                            style: TextStyle(
+                                              fontSize: 18,
+                                              color:
+                                                  Color.fromARGB(255, 0, 0, 0),
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                  ),
                                   Text(
                                     poTypesList[index][0]['ConfigName'],
                                     style: TextStyle(
@@ -67,7 +92,13 @@ class MealOrderListView extends StatelessWidget {
                                               ['PreOrderType'] ==
                                           "Daily"
                                       ? InkWell(
-                                          onTap: () {},
+                                          onTap: () {
+                                            CommonUtil().getMealItemsForUser(
+                                                context,
+                                                memberDetails['UserSeqId'],
+                                                memberDetails['RefBranchSeqId'],
+                                                poTypesList[index][0],CurrencyCode);
+                                          },
                                           child: Container(
                                             width: 30,
                                             height: 30,
@@ -129,7 +160,18 @@ class MealOrderListView extends StatelessWidget {
                                                   child: Row(
                                                     children: [
                                                       InkWell(
-                                                        onTap: () {},
+                                                        onTap: () {
+                                                          CommonUtil()
+                                                              .getMealItemsForUser(
+                                                                  context,
+                                                                  memberDetails[
+                                                                      'UserSeqId'],
+                                                                  memberDetails[
+                                                                      'RefBranchSeqId'],
+                                                                  poTypesList[
+                                                                          index]
+                                                                      [i],CurrencyCode);
+                                                        },
                                                         child: Container(
                                                           width: 30,
                                                           height: 30,
@@ -164,11 +206,12 @@ class MealOrderListView extends StatelessWidget {
                                                                   right: 10),
                                                           child: ClipOval(
                                                             child: Material(
-                                                              color:poTypesList[
+                                                              color: poTypesList[
                                                                           index][i]
                                                                       [
-                                                                      'addedToCart']? Colors.red
-                                                                      : Colors
+                                                                      'addedToCart']
+                                                                  ? Colors.red
+                                                                  : Colors
                                                                       .blue, // Button color
                                                               child: InkWell(
                                                                 /* splashColor: Color
@@ -176,49 +219,51 @@ class MealOrderListView extends StatelessWidget {
                                                                         255,
                                                                         36,
                                                                         255,
-                                                                        3), */ 
-                                                                onTap: () async {
-                                                                  if(!poTypesList[
+                                                                        3), */
+                                                                onTap:
+                                                                    () async {
+                                                                  if (!poTypesList[
                                                                           index][i]
                                                                       [
                                                                       'addedToCart'])
-                                                                 await context
-                                                                      .read<
-                                                                          MySettingsListener>()
-                                                                      .updatePoTypeCartStatus(
-                                                                          index,
-                                                                          i,false,memberDetails['UserSeqId']
-                                                                          );
-                                                                          else
-                                                                     await context
-                                                                      .read<
-                                                                          MySettingsListener>()
-                                                                      .updatePoTypeCartStatus(
-                                                                          index,
-                                                                          i,true,memberDetails['UserSeqId']
-                                                                          );
-                                                                          
+                                                                    await context
+                                                                        .read<
+                                                                            MySettingsListener>()
+                                                                        .updatePoTypeCartStatus(
+                                                                            index,
+                                                                            i,
+                                                                            false,
+                                                                            memberDetails['UserSeqId']);
+                                                                  else
+                                                                    await context
+                                                                        .read<
+                                                                            MySettingsListener>()
+                                                                        .updatePoTypeCartStatus(
+                                                                            index,
+                                                                            i,
+                                                                            true,
+                                                                            memberDetails['UserSeqId']);
                                                                 },
                                                                 child: SizedBox(
                                                                     width: 30,
                                                                     height: 30,
-                                                                    child:poTypesList[
-                                                                          index][i]
-                                                                      [
-                                                                      'addedToCart']? Icon(
-                                                                      Icons
-                                                                          .delete_outlined,
-                                                                      color: Colors
-                                                                          .white,
-                                                                      size: 20,
-                                                                    )
-                                                                      : Icon(
-                                                                      Icons
-                                                                          .add_shopping_cart_outlined,
-                                                                      color: Colors
-                                                                          .white,
-                                                                      size: 20,
-                                                                    )),
+                                                                    child: poTypesList[index][i]
+                                                                            [
+                                                                            'addedToCart']
+                                                                        ? Icon(
+                                                                            Icons.delete_outlined,
+                                                                            color:
+                                                                                Colors.white,
+                                                                            size:
+                                                                                20,
+                                                                          )
+                                                                        : Icon(
+                                                                            Icons.add_shopping_cart_outlined,
+                                                                            color:
+                                                                                Colors.white,
+                                                                            size:
+                                                                                20,
+                                                                          )),
                                                               ),
                                                             ),
                                                           ),

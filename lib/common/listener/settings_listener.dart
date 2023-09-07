@@ -3,10 +3,13 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:calms_parent_latest/common/common_api.dart';
+import 'package:calms_parent_latest/common/util/common_funtions.dart';
 import 'package:calms_parent_latest/common/widgets/common.dart';
+import 'package:calms_parent_latest/ui/screens/meals/meal_menu_page.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 class MySettingsListener with ChangeNotifier {
   var _settingDetails;
@@ -34,6 +37,9 @@ class MySettingsListener with ChangeNotifier {
   List _poPackagesList = [];
   late Map<dynamic, List<dynamic>> _poList;
   List _cartList = [];
+
+  List _mealsList = [];
+  List _mealsCtgryList = [];
 
   int _familyPos = 0;
   List _notificationList = [];
@@ -93,6 +99,11 @@ class MySettingsListener with ChangeNotifier {
   get poList => _poList;
 
   UnmodifiableListView<dynamic> get cartList => UnmodifiableListView(_cartList);
+
+  UnmodifiableListView<dynamic> get mealsList =>
+      UnmodifiableListView(_mealsList);
+  UnmodifiableListView<dynamic> get mealsCtgryList =>
+      UnmodifiableListView(_mealsCtgryList);
 
   UnmodifiableListView<dynamic> get notificationCategoryList =>
       UnmodifiableListView(_notificationCategoryList);
@@ -202,11 +213,18 @@ class MySettingsListener with ChangeNotifier {
   }
 
   updatePOConfigForUser(
-      List poSettings, List poTypesList, List poPackagesList) {
+      List poSettings, List poTypesList, List poPackagesList, UserSeqId) {
     _poSettings = poSettings;
     _poPackagesList = poPackagesList;
     for (int i = 0; poTypesList.length > i; i++) {
-      poTypesList[i]['addedToCart'] = false;
+      if (_cartList.length > 0 &&
+          _cartList.contains(CommonFunctions.getPoCartData(
+              UserSeqId,
+              poTypesList[i]['POTypeConfigSeqId'],
+              poTypesList[i]['PackageSeqId'])))
+        poTypesList[i]['addedToCart'] = true;
+      else
+        poTypesList[i]['addedToCart'] = false;
     }
     _poList =
         poTypesList.groupListsBy((element) => element['POTypeConfigSeqId']);
@@ -214,9 +232,13 @@ class MySettingsListener with ChangeNotifier {
     _poList.values.forEachIndexed((index, element) {
       _poTypesList.add(element);
     });
-    print("========================");
+    if (_cartList.length > 0) {
+      print("========================");
+    }
+
+    /*  print("========================");
     print(_poList);
-    print("========================");
+    print("========================"); */
     notifyListeners();
   }
 
@@ -224,24 +246,41 @@ class MySettingsListener with ChangeNotifier {
     for (var ip = 0; ip < _poTypesList[i1].length; ip++) {
       _poTypesList[i1][ip]['addedToCart'] = false;
     }
+    String cartData = CommonFunctions.getPoCartData(
+        UserSeqId,
+        poTypesList[i1][i2]['POTypeConfigSeqId'],
+        poTypesList[i1][i2]['PackageSeqId']);
     if (isDelete) {
       _poTypesList[i1][i2]['addedToCart'] = false;
-
-      _cartList.remove(_poTypesList[i1][i2]);
+      _cartList.remove(cartData);
     } else {
       _poTypesList[i1][i2]['addedToCart'] = true;
-      _poTypesList[i1][i2]['UserSeqId'] = UserSeqId;
       for (var i = 0; i < _cartList.length; i++) {
-        if (_cartList[i]['UserSeqId'] == _poTypesList[i1][i2]['UserSeqId'] &&
-            _cartList[i]['POTypeConfigSeqId'] ==
-                _poTypesList[i1][i2]['POTypeConfigSeqId']) {
+        if (_cartList[i].toString().contains(
+            "PO_${UserSeqId}_-0_1900-01-01_0_0_${_poTypesList[i1][i2]['POTypeConfigSeqId']}_")) {
           _cartList.removeAt(i);
         }
       }
-      _cartList.add(_poTypesList[i1][i2]);
+      _cartList.add(cartData);
     }
     print(_cartList);
     notifyListeners();
+  }
+
+  updategetMealItemsForUser(BuildContext context, List mealsList,
+      List mealsCtgryList, UserSeqId, poTypesList,CurrencyCode) {
+    _mealsList = mealsList;
+    _mealsCtgryList = mealsCtgryList;
+    var arguments = {
+      "mealsList": mealsList,
+      "mealsCtgryList": mealsCtgryList,
+      "UserSeqId": UserSeqId,
+      "poTypesList": poTypesList,
+      "CurrencyCode": CurrencyCode
+    };
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => MealMenuPage(arguments)));
+    //notifyListeners();
   }
 
   updateSettings(var settingDetails) {
