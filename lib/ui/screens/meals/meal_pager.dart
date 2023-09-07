@@ -1,12 +1,17 @@
+import '../../../common/listener/settings_listener.dart';
 import '/common/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MealPager extends StatelessWidget {
-  const MealPager(this.mealList_,this.CurrencyCode, this.callbackFun) : super();
+  const MealPager(
+      this.mealList_,this.CurrencyCode, this.imgBaseUrl,this.PreOrderType, this.callbackFun)
+      : super();
 
   final mealList_;
   final CurrencyCode;
+  final imgBaseUrl;
+  final PreOrderType;
   final Function callbackFun;
 
   @override
@@ -39,20 +44,24 @@ class MealPager extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(15.0),
-                          topRight: Radius.circular(15.0)),
-                      child: mealList_[index]['ImgPathUrl'] != null &&
-                              mealList_[index]['ImgPathUrl'] != ""
-                          ? Image.network(mealList_[index]['ImgPathUrl'],
-                              width: double.infinity,
-                              height: 100,
-                              fit: BoxFit.cover)
-                          : Image.asset("assets/images/meal_default.png",
-                              width: double.infinity,
-                              height: 100,
-                              fit: BoxFit.cover),
+                    Container(
+                      height: 100,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(15.0),
+                            topRight: Radius.circular(15.0)),
+                        child: mealList_[index]['ImgPathUrl'] != null &&
+                                mealList_[index]['ImgPathUrl'] != ""
+                            ? Image.network(
+                                imgBaseUrl + mealList_[index]['ImgPathUrl'],
+                                width: double.infinity,
+                                height: 100,
+                                fit: BoxFit.cover)
+                            : Image.asset("assets/images/meal_default.png",
+                                width: double.infinity,
+                                height: 100,
+                                fit: BoxFit.cover),
+                      ),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -74,6 +83,36 @@ class MealPager extends StatelessWidget {
                                 ),
                               ),
                             ),
+                            if (mealList_[index]['Rating'] == null)
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.star_border_outlined,
+                                    color: Colors.orangeAccent,
+                                    size: 14,
+                                  ),
+                                  Icon(
+                                    Icons.star_border_outlined,
+                                    color: Colors.orangeAccent,
+                                    size: 14,
+                                  ),
+                                  Icon(
+                                    Icons.star_border_outlined,
+                                    color: Colors.orangeAccent,
+                                    size: 14,
+                                  ),
+                                  Icon(
+                                    Icons.star_border_outlined,
+                                    color: Colors.orangeAccent,
+                                    size: 14,
+                                  ),
+                                  Icon(
+                                    Icons.star_border_outlined,
+                                    color: Colors.orangeAccent,
+                                    size: 14,
+                                  ),
+                                ],
+                              ),
                             if (mealList_[index]['Rating'] != null)
                               Row(
                                 children: [
@@ -123,7 +162,7 @@ class MealPager extends StatelessWidget {
                                 text:
                                     "${CurrencyCode} ${mealList_[index]['SellingPrice'].toStringAsFixed(2)}",
                                 style: TextStyle(
-                                    fontSize: 10,
+                                    fontSize: 12,
                                     fontFamily: appFontFmaily,
                                     color: Colors.blue,
                                     fontWeight: FontWeight.bold),
@@ -156,18 +195,43 @@ class MealPager extends StatelessWidget {
                                 )
                               : SizedBox(),
                         ),
+                        if(PreOrderType == 'Daily')
                         InkWell(
-                          onTap: () {
-                            callbackFun(index);
-                          },
+                          onTap: () {},
                           child: Container(
                             width: 30,
                             height: 30,
-                            margin: EdgeInsets.only(right: 15, bottom: 5),
-                            child:
-                                Image.asset("assets/images/ico_cart_white.png"),
+                            margin: EdgeInsets.only(right: 10),
+                            child: ClipOval(
+                              child: Material(
+                                color: mealList_[index]['addedToCart']
+                                    ? Colors.red
+                                    : Colors.blue, // Button color
+                                child: InkWell(
+                                  onTap: () async {
+                                    mealList_[index]['addedToCart']?
+                                    callbackFun(mealList_[index],index,true):
+                                    callbackFun(mealList_[index],index,false);
+                                  },
+                                  child: SizedBox(
+                                      width: 30,
+                                      height: 30,
+                                      child: mealList_[index]['addedToCart']
+                                          ? Icon(
+                                              Icons.delete_outlined,
+                                              color: Colors.white,
+                                              size: 20,
+                                            )
+                                          : Icon(
+                                              Icons.add_shopping_cart_outlined,
+                                              color: Colors.white,
+                                              size: 20,
+                                            )),
+                                ),
+                              ),
+                            ),
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ],

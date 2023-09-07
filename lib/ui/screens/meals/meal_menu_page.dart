@@ -1,5 +1,7 @@
+import 'package:calms_parent_latest/common/listener/settings_listener.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 import '/common/HexColor.dart';
 import '/common/alert_dialog.dart';
@@ -22,548 +24,6 @@ class _MealMenuPageState extends State<MealMenuPage> {
   String imgBaseUrl = "";
   var dateListOld = [];
   late List<DateTime> dateList;
-  /* List mealList = [
-    {
-      "id": "ID001",
-      "allowCancel": true,
-      "mealOrderType": "Daily",
-      "selectionMode": "Multiple",
-      "requirePurchaseCutoff": true,
-      "name": "Sample Menu Name 1",
-      "desc":
-          "Rolled flour tortilla filled with marinated grilled beef, lettuce, tomato, onion and fries",
-      "category": "Breakfast",
-      "mealStyle": "Asian",
-      "ratings": 4,
-      "merchant_name": "Cafe",
-      "merchant_image":
-          "http://103.6.163.49:2008/Handler/ImagePathHandler.ashx?ImagePath=Merchant/04ff-e4c2-2021-11-24-15-58-30-844/coffee-and-cafe-logo-design-inspiration-vector-31020950.jpg&Default=2&PROUrl=http://103.6.163.49:2008/&StoreageUrl=http://103.6.163.49:2008/FS/",
-      "calories": "",
-      "price": "18",
-      "addon": true,
-      "ingredients": [
-        {
-          "name": "Chicken",
-          "image":
-              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
-        },
-        {
-          "name": "Mix Vege",
-          "image":
-              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=118&ScreenType=12"
-        },
-        {
-          "name": "Potato",
-          "image":
-              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=123&ScreenType=12"
-        },
-        {
-          "name": "Chicken1",
-          "image":
-              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
-        },
-        {
-          "name": "Mix Vege1",
-          "image":
-              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=118&ScreenType=12"
-        },
-        {
-          "name": "Potato1",
-          "image":
-              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=123&ScreenType=12"
-        },
-        {
-          "name": "Chicken2",
-          "image":
-              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
-        },
-      ],
-      "date": "2022/05/01",
-      "image":
-          "http://103.6.163.49:2008/FS/Meals/ResizeImg/1c28-e4c2-2021-11-25-11-31-21-929/82861384-baguette-sandwich-with-roast-beef-tomato-and-mixed-salad.jpg"
-    },
-    {
-      "id": "ID002",
-      "allowCancel": true,
-      "mealOrderType": "Daily",
-      "selectionMode": "Multiple",
-      "requirePurchaseCutoff": true,
-      "name": "Sample Menu Name 2",
-      "desc":
-          "Rolled flour tortilla filled with marinated grilled beef, lettuce, tomato, onion and fries",
-      "category": "Lunch",
-      "mealStyle": "Indian",
-      "ratings": 2,
-      "merchant_name": "Cafe",
-      "merchant_image":
-          "http://103.6.163.49:2008/Handler/ImagePathHandler.ashx?ImagePath=Merchant/04ff-e4c2-2021-11-24-15-58-30-844/coffee-and-cafe-logo-design-inspiration-vector-31020950.jpg&Default=2&PROUrl=http://103.6.163.49:2008/&StoreageUrl=http://103.6.163.49:2008/FS/",
-      "calories": "",
-      "price": "120",
-      "addon": true,
-      "ingredients": [],
-      "date": "2022/05/01",
-      "image":
-          "http://103.6.163.49:2008/FS/Meals/ResizeImg/9882-e4c2-2021-11-25-11-24-10-477/Rolled%20flour%20tortilla%20filled%20with%20marinated%20grilled%20chicken%20capsicum%20onion%20lettuce%20and%20fries.jpg"
-    },
-    {
-      "id": "ID003",
-      "allowCancel": true,
-      "mealOrderType": "Daily",
-      "selectionMode": "Multiple",
-      "requirePurchaseCutoff": true,
-      "name": "Dosa",
-      "desc":
-          "Rolled flour tortilla filled with marinated grilled beef, lettuce, tomato, onion and fries",
-      "category": "Dinner",
-      "mealStyle": "Indian",
-      "ratings": 3,
-      "merchant_name": "Cafe",
-      "merchant_image":
-          "http://103.6.163.49:2008/Handler/ImagePathHandler.ashx?ImagePath=Merchant/04ff-e4c2-2021-11-24-15-58-30-844/coffee-and-cafe-logo-design-inspiration-vector-31020950.jpg&Default=2&PROUrl=http://103.6.163.49:2008/&StoreageUrl=http://103.6.163.49:2008/FS/",
-      "calories": "",
-      "price": "10",
-      "addon": false,
-      "ingredients": [
-        {
-          "name": "Chicken",
-          "image":
-              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
-        },
-        {
-          "name": "Mix Vege",
-          "image":
-              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=118&ScreenType=12"
-        },
-        {
-          "name": "Potato",
-          "image":
-              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=123&ScreenType=12"
-        },
-        {
-          "name": "Chicken",
-          "image":
-              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
-        },
-      ],
-      "date": "2022/05/01",
-      "image":
-          "http://103.6.163.49:2008/FS/Meals/ResizeImg/1c28-e4c2-2021-11-25-11-31-21-929/82861384-baguette-sandwich-with-roast-beef-tomato-and-mixed-salad.jpg"
-    },
-    {
-      "id": "ID004",
-      "allowCancel": true,
-      "mealOrderType": "Daily",
-      "selectionMode": "Multiple",
-      "requirePurchaseCutoff": true,
-      "name": "Sample Menu Name 1",
-      "desc":
-          "Rolled flour tortilla filled with marinated grilled beef, lettuce, tomato, onion and fries",
-      "category": "Lunch",
-      "mealStyle": "Asian",
-      "ratings": 1,
-      "merchant_name": "Cafe",
-      "merchant_image":
-          "http://103.6.163.49:2008/Handler/ImagePathHandler.ashx?ImagePath=Merchant/04ff-e4c2-2021-11-24-15-58-30-844/coffee-and-cafe-logo-design-inspiration-vector-31020950.jpg&Default=2&PROUrl=http://103.6.163.49:2008/&StoreageUrl=http://103.6.163.49:2008/FS/",
-      "calories": "",
-      "price": "18",
-      "addon": true,
-      "ingredients": [],
-      "date": "2022/05/02",
-      "image":
-          "http://103.6.163.49:2008/FS/Meals/ResizeImg/1c28-e4c2-2021-11-25-11-31-21-929/82861384-baguette-sandwich-with-roast-beef-tomato-and-mixed-salad.jpg"
-    },
-    {
-      "id": "ID005",
-      "allowCancel": true,
-      "mealOrderType": "Daily",
-      "selectionMode": "Multiple",
-      "requirePurchaseCutoff": true,
-      "name": "Sample Menu Name 1",
-      "desc":
-          "Rolled flour tortilla filled with marinated grilled beef, lettuce, tomato, onion and fries",
-      "category": "Breakfast",
-      "mealStyle": "Asian",
-      "ratings": 5,
-      "merchant_name": "Cafe",
-      "merchant_image":
-          "http://103.6.163.49:2008/Handler/ImagePathHandler.ashx?ImagePath=Merchant/04ff-e4c2-2021-11-24-15-58-30-844/coffee-and-cafe-logo-design-inspiration-vector-31020950.jpg&Default=2&PROUrl=http://103.6.163.49:2008/&StoreageUrl=http://103.6.163.49:2008/FS/",
-      "calories": "",
-      "price": "18",
-      "addon": false,
-      "ingredients": [
-        {
-          "name": "Chicken",
-          "image":
-              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
-        },
-        {
-          "name": "Mix Vege",
-          "image":
-              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=118&ScreenType=12"
-        },
-        {
-          "name": "Potato",
-          "image":
-              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=123&ScreenType=12"
-        },
-        {
-          "name": "Chicken",
-          "image":
-              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
-        },
-      ],
-      "date": "2022/05/03",
-      "image":
-          "http://103.6.163.49:2008/FS/Meals/ResizeImg/1c28-e4c2-2021-11-25-11-31-21-929/82861384-baguette-sandwich-with-roast-beef-tomato-and-mixed-salad.jpg"
-    },
-    {
-      "id": "ID0055",
-      "allowCancel": true,
-      "mealOrderType": "Daily",
-      "selectionMode": "Multiple",
-      "requirePurchaseCutoff": true,
-      "name": "Sample Menu Name 1",
-      "desc":
-          "Rolled flour tortilla filled with marinated grilled beef, lettuce, tomato, onion and fries",
-      "category": "",
-      "mealStyle": "Asian",
-      "ratings": 2,
-      "merchant_name": "Cafe",
-      "merchant_image":
-          "http://103.6.163.49:2008/Handler/ImagePathHandler.ashx?ImagePath=Merchant/04ff-e4c2-2021-11-24-15-58-30-844/coffee-and-cafe-logo-design-inspiration-vector-31020950.jpg&Default=2&PROUrl=http://103.6.163.49:2008/&StoreageUrl=http://103.6.163.49:2008/FS/",
-      "calories": "Lunch",
-      "price": "18",
-      "addon": true,
-      "ingredients": [],
-      "date": "2022/05/04",
-      "image": ""
-    },
-    {
-      "id": "ID006",
-      "allowCancel": true,
-      "mealOrderType": "Daily",
-      "selectionMode": "Multiple",
-      "requirePurchaseCutoff": true,
-      "name": "Sample Menu Name 1",
-      "desc":
-          "Rolled flour tortilla filled with marinated grilled beef, lettuce, tomato, onion and fries",
-      "category": "Breakfast",
-      "mealStyle": "Asian",
-      "ratings": 3,
-      "merchant_name": "Cafe",
-      "merchant_image":
-          "http://103.6.163.49:2008/Handler/ImagePathHandler.ashx?ImagePath=Merchant/04ff-e4c2-2021-11-24-15-58-30-844/coffee-and-cafe-logo-design-inspiration-vector-31020950.jpg&Default=2&PROUrl=http://103.6.163.49:2008/&StoreageUrl=http://103.6.163.49:2008/FS/",
-      "calories": "",
-      "price": "18",
-      "addon": false,
-      "ingredients": [
-        {
-          "name": "Chicken",
-          "image":
-              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
-        },
-        {
-          "name": "Mix Vege",
-          "image":
-              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=118&ScreenType=12"
-        },
-        {
-          "name": "Potato",
-          "image":
-              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=123&ScreenType=12"
-        },
-        {
-          "name": "Chicken",
-          "image":
-              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
-        },
-      ],
-      "date": "2022/05/05",
-      "image":
-          "http://103.6.163.49:2008/FS/Meals/ResizeImg/1c28-e4c2-2021-11-25-11-31-21-929/82861384-baguette-sandwich-with-roast-beef-tomato-and-mixed-salad.jpg"
-    },
-    {
-      "id": "ID007",
-      "allowCancel": true,
-      "mealOrderType": "Daily",
-      "selectionMode": "Multiple",
-      "requirePurchaseCutoff": true,
-      "name": "Sample Menu Name 1",
-      "desc":
-          "Rolled flour tortilla filled with marinated grilled beef, lettuce, tomato, onion and fries",
-      "category": "Breakfast",
-      "mealStyle": "Asian",
-      "ratings": 4,
-      "merchant_name": "Cafe",
-      "merchant_image":
-          "http://103.6.163.49:2008/Handler/ImagePathHandler.ashx?ImagePath=Merchant/04ff-e4c2-2021-11-24-15-58-30-844/coffee-and-cafe-logo-design-inspiration-vector-31020950.jpg&Default=2&PROUrl=http://103.6.163.49:2008/&StoreageUrl=http://103.6.163.49:2008/FS/",
-      "calories": "",
-      "price": "18",
-      "addon": true,
-      "ingredients": [
-        {
-          "name": "Chicken",
-          "image":
-              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
-        },
-        {
-          "name": "Mix Vege",
-          "image":
-              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=118&ScreenType=12"
-        },
-        {
-          "name": "Potato",
-          "image":
-              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=123&ScreenType=12"
-        },
-        {
-          "name": "Chicken",
-          "image":
-              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
-        },
-      ],
-      "date": "2022/05/06",
-      "image": ""
-    },
-    {
-      "id": "ID008",
-      "allowCancel": true,
-      "mealOrderType": "Daily",
-      "selectionMode": "Multiple",
-      "requirePurchaseCutoff": true,
-      "name": "Sample Menu Name 1",
-      "desc":
-          "Rolled flour tortilla filled with marinated grilled beef, lettuce, tomato, onion and fries",
-      "category": "Lunch",
-      "mealStyle": "Asian",
-      "ratings": 5,
-      "merchant_name": "Cafe1",
-      "merchant_image":
-          "http://103.6.163.49:2008/Handler/ImagePathHandler.ashx?ImagePath=Merchant/04ff-e4c2-2021-11-24-15-58-30-844/coffee-and-cafe-logo-design-inspiration-vector-31020950.jpg&Default=2&PROUrl=http://103.6.163.49:2008/&StoreageUrl=http://103.6.163.49:2008/FS/",
-      "calories": "",
-      "price": "18",
-      "addon": false,
-      "ingredients": [
-        {
-          "name": "Chicken",
-          "image":
-              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
-        },
-        {
-          "name": "Mix Vege",
-          "image":
-              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=118&ScreenType=12"
-        },
-        {
-          "name": "Potato",
-          "image":
-              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=123&ScreenType=12"
-        },
-        {
-          "name": "Chicken",
-          "image":
-              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
-        },
-      ],
-      "date": "2022/05/07",
-      "image": ""
-    },
-    {
-      "id": "ID009",
-      "allowCancel": true,
-      "mealOrderType": "Daily",
-      "selectionMode": "Multiple",
-      "requirePurchaseCutoff": true,
-      "name": "Sample Menu Name 1",
-      "desc":
-          "Rolled flour tortilla filled with marinated grilled beef, lettuce, tomato, onion and fries",
-      "category": "Breakfast",
-      "mealStyle": "Asian",
-      "ratings": 1,
-      "merchant_name": "Cafe",
-      "merchant_image":
-          "http://103.6.163.49:2008/Handler/ImagePathHandler.ashx?ImagePath=Merchant/04ff-e4c2-2021-11-24-15-58-30-844/coffee-and-cafe-logo-design-inspiration-vector-31020950.jpg&Default=2&PROUrl=http://103.6.163.49:2008/&StoreageUrl=http://103.6.163.49:2008/FS/",
-      "calories": "",
-      "price": "18",
-      "addon": true,
-      "ingredients": [],
-      "date": "2022/05/08",
-      "image": ""
-    },
-    {
-      "id": "ID010",
-      "allowCancel": true,
-      "mealOrderType": "Daily",
-      "selectionMode": "Multiple",
-      "requirePurchaseCutoff": true,
-      "name": "Sample Menu Name 1",
-      "desc":
-          "Rolled flour tortilla filled with marinated grilled beef, lettuce, tomato, onion and fries",
-      "category": "Lunch",
-      "mealStyle": "Asian",
-      "ratings": 2,
-      "merchant_name": "Cafe",
-      "merchant_image":
-          "http://103.6.163.49:2008/Handler/ImagePathHandler.ashx?ImagePath=Merchant/04ff-e4c2-2021-11-24-15-58-30-844/coffee-and-cafe-logo-design-inspiration-vector-31020950.jpg&Default=2&PROUrl=http://103.6.163.49:2008/&StoreageUrl=http://103.6.163.49:2008/FS/",
-      "calories": "",
-      "price": "18",
-      "addon": false,
-      "ingredients": [
-        {
-          "name": "Chicken",
-          "image":
-              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
-        },
-        {
-          "name": "Mix Vege",
-          "image":
-              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=118&ScreenType=12"
-        },
-        {
-          "name": "Potato",
-          "image":
-              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=123&ScreenType=12"
-        },
-        {
-          "name": "Chicken",
-          "image":
-              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
-        },
-      ],
-      "date": "2022/05/09",
-      "image": ""
-    },
-    {
-      "id": "ID011",
-      "allowCancel": true,
-      "mealOrderType": "Daily",
-      "selectionMode": "Multiple",
-      "requirePurchaseCutoff": true,
-      "name": "Sample Menu Name 1",
-      "desc":
-          "Rolled flour tortilla filled with marinated grilled beef, lettuce, tomato, onion and fries",
-      "category": "Breakfast",
-      "mealStyle": "Asian",
-      "ratings": 4,
-      "merchant_name": "Cafe",
-      "merchant_image":
-          "http://103.6.163.49:2008/Handler/ImagePathHandler.ashx?ImagePath=Merchant/04ff-e4c2-2021-11-24-15-58-30-844/coffee-and-cafe-logo-design-inspiration-vector-31020950.jpg&Default=2&PROUrl=http://103.6.163.49:2008/&StoreageUrl=http://103.6.163.49:2008/FS/",
-      "calories": "",
-      "price": "18",
-      "addon": true,
-      "ingredients": [
-        {
-          "name": "Chicken",
-          "image":
-              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
-        },
-        {
-          "name": "Mix Vege",
-          "image":
-              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=118&ScreenType=12"
-        },
-        {
-          "name": "Potato",
-          "image":
-              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=123&ScreenType=12"
-        },
-        {
-          "name": "Chicken",
-          "image":
-              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
-        },
-      ],
-      "date": "2022/05/10",
-      "image": ""
-    },
-    {
-      "id": "ID012",
-      "allowCancel": true,
-      "mealOrderType": "Daily",
-      "selectionMode": "Multiple",
-      "requirePurchaseCutoff": true,
-      "name": "Sample Menu Name 1",
-      "desc":
-          "Rolled flour tortilla filled with marinated grilled beef, lettuce, tomato, onion and fries",
-      "category": "Lunch",
-      "mealStyle": "Asian",
-      "ratings": 3,
-      "merchant_name": "Cafe",
-      "merchant_image":
-          "http://103.6.163.49:2008/Handler/ImagePathHandler.ashx?ImagePath=Merchant/04ff-e4c2-2021-11-24-15-58-30-844/coffee-and-cafe-logo-design-inspiration-vector-31020950.jpg&Default=2&PROUrl=http://103.6.163.49:2008/&StoreageUrl=http://103.6.163.49:2008/FS/",
-      "calories": "",
-      "price": "18",
-      "addon": false,
-      "ingredients": [
-        {
-          "name": "Chicken",
-          "image":
-              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
-        },
-        {
-          "name": "Mix Vege",
-          "image":
-              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=118&ScreenType=12"
-        },
-        {
-          "name": "Potato",
-          "image":
-              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=123&ScreenType=12"
-        },
-        {
-          "name": "Chicken",
-          "image":
-              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
-        },
-      ],
-      "date": "2022/05/11",
-      "image": ""
-    },
-    {
-      "id": "ID013",
-      "allowCancel": true,
-      "mealOrderType": "Daily",
-      "selectionMode": "Multiple",
-      "requirePurchaseCutoff": true,
-      "name": "Sample Menu Name 1",
-      "desc":
-          "Rolled flour tortilla filled with marinated grilled beef, lettuce, tomato, onion and fries",
-      "category": "Breakfast",
-      "mealStyle": "Asian",
-      "ratings": 4,
-      "merchant_name": "Cafe",
-      "merchant_image":
-          "http://103.6.163.49:2008/Handler/ImagePathHandler.ashx?ImagePath=Merchant/04ff-e4c2-2021-11-24-15-58-30-844/coffee-and-cafe-logo-design-inspiration-vector-31020950.jpg&Default=2&PROUrl=http://103.6.163.49:2008/&StoreageUrl=http://103.6.163.49:2008/FS/",
-      "calories": "",
-      "price": "18",
-      "addon": true,
-      "ingredients": [
-        {
-          "name": "Chicken",
-          "image":
-              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
-        },
-        {
-          "name": "Mix Vege",
-          "image":
-              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=118&ScreenType=12"
-        },
-        {
-          "name": "Potato",
-          "image":
-              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=123&ScreenType=12"
-        },
-        {
-          "name": "Chicken",
-          "image":
-              "http://103.6.163.49:2008/Handler/PortalImageHandler.ashx?RefSlno=107&ScreenType=12"
-        },
-      ],
-      "date": "2022/05/12",
-      "image": ""
-    }
-  ];
-   */
   List mealList_ = [];
   bool searchEnable = false;
   var selectedTab = 'Breakfast';
@@ -573,16 +33,12 @@ class _MealMenuPageState extends State<MealMenuPage> {
 
   var termList = ["Term_Student_August", "Daily"];
   String? selectedTermValue;
-
-  /*  List<Widget> _list = <Widget>[];
-  int _curr = 0; */
   var selectedSortby = "Recent First";
   late DateTime _selectedDate;
   @override
   void initState() {
     super.initState();
-    //mealList_ = mealList;
-    //initDates();
+
     if (widget.arguments['poTypesList']['PreOrderType'] == "Daily")
       initdateList(widget.arguments['poTypesList']['FromDate'],
           widget.arguments['mealsList'][0]['MaxDate']);
@@ -642,19 +98,6 @@ class _MealMenuPageState extends State<MealMenuPage> {
 
   @override
   Widget build(BuildContext context) {
-    /* _list = <Widget>[
-      MealPager(mealList_, onCartClick),
-      MealPager(mealList_, onCartClick),
-      MealPager(mealList_, onCartClick),
-      MealPager(mealList_, onCartClick),
-      MealPager(mealList_, onCartClick),
-      MealPager(mealList_, onCartClick),
-      MealPager(mealList_, onCartClick),
-      MealPager(mealList_, onCartClick),
-      MealPager(mealList_, onCartClick),
-      MealPager(mealList_, onCartClick),
-      MealPager(mealList_, onCartClick),
-    ]; */
     return Scaffold(
         appBar: AppBar(
           toolbarHeight: 70,
@@ -717,16 +160,96 @@ class _MealMenuPageState extends State<MealMenuPage> {
                 ),
           actions: [
             if (!searchEnable)
-              InkWell(
-                onTap: () {
-                  _pickDateDialog();
-                },
-                child: Container(
-                  padding: const EdgeInsets.only(right: 15),
-                  child: Icon(Icons.calendar_month_rounded,
-                      size: 30, color: Colors.grey.shade500),
-                ),
-              )
+              Container(
+                height: 30,
+                width: 100,
+                margin: EdgeInsets.only(right: 10),
+                child: Row(children: [
+                  /* InkWell(
+                    onTap: () {
+                      _pickDateDialog();
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.only(right: 15),
+                      child: Icon(Icons.calendar_month_rounded,
+                          size: 30, color: Colors.grey.shade500),
+                    ),
+                  ), */
+                  InkWell(
+                    onTap: () {
+                      _pickDateDialog();
+                    },
+                    child: Container(
+                      width: 40,
+                      height: 40,
+                      margin: EdgeInsets.only(left: 10),
+                      child: ClipOval(
+                        child: Material(
+                          color: Colors.blue[900], // Button color
+                          child: SizedBox(
+                              width: 40,
+                              height: 40,
+                              child: Icon(
+                                Icons.calendar_month_rounded,
+                                color: Colors.white,
+                                size: 18,
+                              )),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Stack(
+                    children: [
+                      InkWell(
+                        onTap: () {},
+                        child: Container(
+                          width: 40,
+                          height: 40,
+                          margin: EdgeInsets.only(left: 10),
+                          child: ClipOval(
+                            child: Material(
+                              color: Colors.blue, // Button color
+                              child: SizedBox(
+                                  width: 40,
+                                  height: 40,
+                                  child: Icon(
+                                    Icons.shopping_cart_rounded,
+                                    color: Colors.white,
+                                    size: 18,
+                                  )),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Consumer<MySettingsListener>(
+                          builder: (context, data, settingsDta) {
+                        return Positioned(
+                          top: 0,
+                          right: 0,
+                          child: Container(
+                            height: 18,
+                            width: 18,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.red,
+                            ),
+                            child: Center(
+                                child: Text(
+                              data.cartList != []
+                                  ? data.cartList.length.toString()
+                                  : "0",
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )),
+                          ),
+                        );
+                      })
+                    ],
+                  ),
+                ]),
+              ),
           ],
         ),
         resizeToAvoidBottomInset: false,
@@ -760,9 +283,9 @@ class _MealMenuPageState extends State<MealMenuPage> {
                           itemBuilder: (BuildContext context, int index) {
                             return InkWell(
                               onTap: () {
-                                setState(()  {
+                                setState(() {
                                   _selectedDate = dateList[index];
-                                mealList_ =  getMealsListByDate(_selectedDate,
+                                  mealList_ = getMealsListByDate(_selectedDate,
                                       widget.arguments['mealsList']);
                                 });
                               },
@@ -926,7 +449,13 @@ class _MealMenuPageState extends State<MealMenuPage> {
                         ],
                       ),
                     ),
-                    Expanded(child: MealPager(mealList_,widget.arguments['CurrencyCode'], onCartClick))
+                    Expanded(
+                        child: MealPager(
+                            mealList_,
+                            widget.arguments['CurrencyCode'],
+                            imgBaseUrl,
+                            widget.arguments['poTypesList']['PreOrderType'],
+                            onCartClick))
                   ]),
             ),
           ),
@@ -935,7 +464,19 @@ class _MealMenuPageState extends State<MealMenuPage> {
         floatingActionButton: _getFilterFAB());
   }
 
-  void onCartClick(int index, familyList) {
+  void onCartClick(meal, index, isDelete) {
+    print("call back index ${meal.toString()}");
+    context.read<MySettingsListener>().updatePoTypeMealsCartStatus(isDelete,
+        widget.arguments['UserSeqId'], meal, widget.arguments['poTypesList']);
+    setState(() {
+      if (isDelete)
+        mealList_[index]['addedToCart'] = false;
+      else
+        mealList_[index]['addedToCart'] = true;
+    });
+  }
+
+  /*  void onCartClick(int index, familyList) {
     if (senderIndex <= -1) {
       openMemberBottomSheet(context, familyList, null, (studentindex) {
         senderIndex = studentindex;
@@ -947,7 +488,7 @@ class _MealMenuPageState extends State<MealMenuPage> {
       openMealCartBottomSheet(context, mealList_[index]);
     }
   }
-
+ */
   /*  void initDates() {
     dateListOld = [];
     for (var item in mealList) {
@@ -1001,8 +542,8 @@ class _MealMenuPageState extends State<MealMenuPage> {
     print("=======");
     print(dateList);
     print("=======");
-    mealList_ =  getMealsListByDate(_selectedDate,
-                                      widget.arguments['mealsList']);
+    mealList_ =
+        getMealsListByDate(_selectedDate, widget.arguments['mealsList']);
   }
 }
 
@@ -1011,14 +552,14 @@ List<dynamic> getMealsListByDate(DateTime selectedDate, mealsList) {
   List mealsList_ = [];
   for (var meals in mealsList) {
     if (meals['ViewDate'] == sdate) {
-    
       mealsList_.add(meals);
     }
   }
+  print(mealsList_);
   return mealsList_;
 }
 
-void openMealCartBottomSheet(
+/* void openMealCartBottomSheet(
   BuildContext buildContext,
   var storeInfo,
 ) {
@@ -1127,3 +668,4 @@ void openMealCartBottomSheet(
             });
       });
 }
+ */

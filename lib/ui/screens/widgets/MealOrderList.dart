@@ -17,8 +17,9 @@ class MealOrderListView extends StatelessWidget {
   Map<dynamic, List<dynamic>> poList;
   List poPackagesList;
   var memberDetails = {};
+  String imgBaseUrl;
   MealOrderListView(this.poSettings, this.poTypesList, this.poPackagesList,
-      this.CurrencyCode, this.poList, this.memberDetails);
+      this.CurrencyCode, this.poList, this.memberDetails, this.imgBaseUrl);
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +98,9 @@ class MealOrderListView extends StatelessWidget {
                                                 context,
                                                 memberDetails['UserSeqId'],
                                                 memberDetails['RefBranchSeqId'],
-                                                poTypesList[index][0],CurrencyCode);
+                                                poTypesList[index][0],
+                                                CurrencyCode,
+                                                imgBaseUrl);
                                           },
                                           child: Container(
                                             width: 30,
@@ -157,6 +160,39 @@ class MealOrderListView extends StatelessWidget {
                                                       .spaceBetween,
                                               children: [
                                                 Container(
+                                                    // color: Colors.amberAccent,
+                                                    child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      "${poTypesList[index][i]["Name"]}",
+                                                      maxLines: 1,
+                                                      overflow:
+                                                          TextOverflow.fade,
+                                                      style: TextStyle(
+                                                          fontSize: 16,
+                                                          color: Colors.black,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 10,
+                                                    ),
+                                                    Text(
+                                                      "${CurrencyCode} " +
+                                                          "${poTypesList[index][i]["Amount"].toStringAsFixed(2)}",
+                                                      style: TextStyle(
+                                                          fontSize: 16,
+                                                          color: Colors
+                                                              .blue.shade900,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                  ],
+                                                )),
+                                                Container(
+                                                  //color: Colors.amber,
                                                   child: Row(
                                                     children: [
                                                       InkWell(
@@ -169,8 +205,9 @@ class MealOrderListView extends StatelessWidget {
                                                                   memberDetails[
                                                                       'RefBranchSeqId'],
                                                                   poTypesList[
-                                                                          index]
-                                                                      [i],CurrencyCode);
+                                                                      index][i],
+                                                                  CurrencyCode,
+                                                                  imgBaseUrl);
                                                         },
                                                         child: Container(
                                                           width: 30,
@@ -229,7 +266,7 @@ class MealOrderListView extends StatelessWidget {
                                                                     await context
                                                                         .read<
                                                                             MySettingsListener>()
-                                                                        .updatePoTypeCartStatus(
+                                                                        .updatePoTypePackageCartStatus(
                                                                             index,
                                                                             i,
                                                                             false,
@@ -238,7 +275,7 @@ class MealOrderListView extends StatelessWidget {
                                                                     await context
                                                                         .read<
                                                                             MySettingsListener>()
-                                                                        .updatePoTypeCartStatus(
+                                                                        .updatePoTypePackageCartStatus(
                                                                             index,
                                                                             i,
                                                                             true,
@@ -269,36 +306,9 @@ class MealOrderListView extends StatelessWidget {
                                                           ),
                                                         ),
                                                       ),
-                                                      Text(
-                                                        "${poTypesList[index][i]["Name"]}",
-                                                        style: TextStyle(
-                                                            fontSize: 16,
-                                                            color: Colors.black,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
-                                                      )
                                                     ],
                                                   ),
                                                 ),
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  //textDirection: TextDirection.ltr,
-                                                  children: [
-                                                    Text(
-                                                      "${CurrencyCode} " +
-                                                          "${poTypesList[index][i]["Amount"].toStringAsFixed(2)}",
-                                                      style: TextStyle(
-                                                          fontSize: 16,
-                                                          color: Colors
-                                                              .blue.shade900,
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                    ),
-                                                  ],
-                                                )
                                               ],
                                             ));
                                       }),

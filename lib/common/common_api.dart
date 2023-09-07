@@ -334,7 +334,7 @@ class CommonUtil {
   }
 
   Future<void> getMealItemsForUser(
-      context, RefUserSeqId, RefBranchSeqId, poTypesList,CurrencyCode) async {
+      context, RefUserSeqId, RefBranchSeqId, poTypesList,CurrencyCode,imgBaseUrl) async {
     var ParamData = {
       "RefBranchSeqId": RefBranchSeqId,
       "RefUserSeqId": RefUserSeqId,
@@ -356,16 +356,16 @@ class CommonUtil {
     );
     res
         .then((response) =>
-            {successGetMealItemsForUser(context, response, RefUserSeqId,poTypesList,CurrencyCode)})
+            {successGetMealItemsForUser(context, response, RefUserSeqId,poTypesList,CurrencyCode,imgBaseUrl)})
         .onError((error, stackTrace) => {authorizedPostRequestError(error)});
   }
 
-  successGetMealItemsForUser(BuildContext context, response, RefUserSeqId,poTypesList,CurrencyCode) {
+  successGetMealItemsForUser(BuildContext context, response, RefUserSeqId,poTypesList,CurrencyCode,imgBaseUrl) {
     if (response['Table'][0]['code'] == 10) {
       print("getMealItemsForUser success");
 
       context.read<MySettingsListener>().updategetMealItemsForUser(
-          context, response['Table1'], response['Table2'], RefUserSeqId,poTypesList,CurrencyCode);
+          context, response['Table1'], response['Table2'], RefUserSeqId,poTypesList,CurrencyCode,imgBaseUrl);
     }
   }
 

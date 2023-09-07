@@ -50,4 +50,10 @@ class CommonFunctions {
   static String getPoCartData(UserSeqId, POTypeConfigSeqId, PackageSeqId) {
     return "PO_${UserSeqId}_-0_1900-01-01_0_0_${POTypeConfigSeqId}_${PackageSeqId}_";
   }
+
+  static String getPoMealCartData(
+      UserSeqId, ItemSeqId, ViewDate, ItemType, POTypeConfigSeqId) {
+    //PO_100108_1001_2023-09-10_101_0_10000__
+    return "PO_${UserSeqId}_${ItemSeqId}_${ViewDate}_${ItemType}_0_${POTypeConfigSeqId}_";
+  }
 }

@@ -242,7 +242,7 @@ class MySettingsListener with ChangeNotifier {
     notifyListeners();
   }
 
-  updatePoTypeCartStatus(int i1, int i2, isDelete, UserSeqId) {
+  updatePoTypePackageCartStatus(int i1, int i2, isDelete, UserSeqId) {
     for (var ip = 0; ip < _poTypesList[i1].length; ip++) {
       _poTypesList[i1][ip]['addedToCart'] = false;
     }
@@ -268,7 +268,20 @@ class MySettingsListener with ChangeNotifier {
   }
 
   updategetMealItemsForUser(BuildContext context, List mealsList,
-      List mealsCtgryList, UserSeqId, poTypesList,CurrencyCode) {
+      List mealsCtgryList, UserSeqId, poTypesList, CurrencyCode, imgBaseUrl) {
+    if (mealsList.length > 0 && poTypesList['PreOrderType'] == "Daily") {
+      for (var i = 0; i < mealsList.length; i++) {
+        if (_cartList.contains(CommonFunctions.getPoMealCartData(
+            UserSeqId,
+            mealsList[i]['ItemSeqId'],
+            mealsList[i]['ViewDate'],
+            mealsList[i]['ItemType'],
+            poTypesList['POTypeConfigSeqId']))) {
+          mealsList[i]['addedToCart'] = true;
+        } else
+          mealsList[i]['addedToCart'] = false;
+      }
+    }
     _mealsList = mealsList;
     _mealsCtgryList = mealsCtgryList;
     var arguments = {
@@ -276,11 +289,28 @@ class MySettingsListener with ChangeNotifier {
       "mealsCtgryList": mealsCtgryList,
       "UserSeqId": UserSeqId,
       "poTypesList": poTypesList,
-      "CurrencyCode": CurrencyCode
+      "CurrencyCode": CurrencyCode,
+      "imgBaseUrl": imgBaseUrl
     };
     Navigator.push(context,
         MaterialPageRoute(builder: (context) => MealMenuPage(arguments)));
     //notifyListeners();
+  }
+
+  updatePoTypeMealsCartStatus(isDelete, UserSeqId, mealData, poTypesList) {
+    String cartData = CommonFunctions.getPoMealCartData(
+        UserSeqId,
+        mealData['ItemSeqId'],
+        mealData['ViewDate'],
+        mealData['ItemType'],
+        poTypesList['POTypeConfigSeqId']);
+    if (isDelete) {
+      _cartList.remove(cartData);
+    } else {
+      _cartList.add(cartData);
+    }
+    print(_cartList);
+    notifyListeners();
   }
 
   updateSettings(var settingDetails) {

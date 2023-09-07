@@ -201,7 +201,7 @@ class _MealOrderState extends State<MealOrder> {
                           data.poPackagesList,
                           widget.arguments["profileData"]['CurrencyCode'],
                           data.poList,
-                          familyList[senderIndex]);
+                          familyList[senderIndex],imgBaseUrl);
                     } else {
                       return SizedBox();
                     }
