@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'package:calms_parent_latest/common/widgets/common.dart';
+import 'package:calms_parent_latest/ui/screens/meals/details/meal_details.dart';
 import 'package:calms_parent_latest/ui/screens/payment/topup_payment_webview_page.dart';
 import 'package:calms_parent_latest/ui/screens/payment/topup_after_payment_page.dart';
 import 'package:flutter/foundation.dart';
@@ -366,6 +367,37 @@ class CommonUtil {
 
       context.read<MySettingsListener>().updategetMealItemsForUser(
           context, response['Table1'], response['Table2'], RefUserSeqId,poTypesList,CurrencyCode,imgBaseUrl);
+    }
+  }
+ Future<void> getMealItemDetail(
+      context, RefItemSeqId, ViewDate, POTypeConfigSeqId,CurrencyCode,imgBaseUrl) async {
+    var ParamData = {"RefItemSeqId":RefItemSeqId,"ViewDate":ViewDate,"POTypeConfigSeqId":POTypeConfigSeqId};
+    print(ParamData);
+    Future<Map<String, dynamic>> res = RestApiProvider().authorizedPostRequest(
+      ParamData,
+      AppSettings.GetMealItemDetail,
+      context,
+      false,
+    );
+    res
+        .then((response) =>
+            {successGetMealItemDetail(context, response, CurrencyCode,imgBaseUrl,ViewDate)})
+        .onError((error, stackTrace) => {authorizedPostRequestError(error)});
+  }
+
+  successGetMealItemDetail(BuildContext context, response, CurrencyCode,imgBaseUrl,ViewDate) {
+    if (response['Table'][0]['code'] == 10) {
+      print("successGetMealItemDetail");
+
+      var arguments = {
+      "mealInfo": response['Table1'][0],
+      "ingredients": response['Table2'],
+      "ViewDate": ViewDate,
+      "CurrencyCode": CurrencyCode,
+      "imgBaseUrl": imgBaseUrl
+    };
+    print(arguments['mealInfo'][0]);
+   Navigator.push(context,MaterialPageRoute(builder: (context) => MealDetails(arguments)));
     }
   }
 

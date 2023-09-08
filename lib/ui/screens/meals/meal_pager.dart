@@ -1,3 +1,6 @@
+import 'package:calms_parent_latest/common/common_api.dart';
+import 'package:calms_parent_latest/common/util/common_funtions.dart';
+
 import '../../../common/listener/settings_listener.dart';
 import '/common/constants.dart';
 import 'package:flutter/cupertino.dart';
@@ -5,14 +8,16 @@ import 'package:flutter/material.dart';
 
 class MealPager extends StatelessWidget {
   const MealPager(
-      this.mealList_,this.CurrencyCode, this.imgBaseUrl,this.PreOrderType, this.callbackFun)
+      this.mealList_,this.CurrencyCode, this.imgBaseUrl,this.PreOrderType,this.POTypeConfigSeqId, this.callbackFun)
       : super();
 
   final mealList_;
   final CurrencyCode;
   final imgBaseUrl;
   final PreOrderType;
+  final POTypeConfigSeqId;
   final Function callbackFun;
+
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +37,10 @@ class MealPager extends StatelessWidget {
             ),
             itemBuilder: (context, index) => GestureDetector(
               onTap: () {
+               CommonUtil().getMealItemDetail(context,mealList_[index]['ItemSeqId'],mealList_[index]['ViewDate'],POTypeConfigSeqId,CurrencyCode,imgBaseUrl);
                 // moveToDetails(_foundStoreList, index, context);
-                Navigator.of(context)
-                    .pushNamed('/MealDetails', arguments: mealList_[index]);
+                /* Navigator.of(context)
+                    .pushNamed('/MealDetails', arguments: mealList_[index]); */
               },
               child: Card(
                 shape: RoundedRectangleBorder(
@@ -53,7 +59,7 @@ class MealPager extends StatelessWidget {
                         child: mealList_[index]['ImgPathUrl'] != null &&
                                 mealList_[index]['ImgPathUrl'] != ""
                             ? Image.network(
-                                imgBaseUrl + mealList_[index]['ImgPathUrl'],
+                                CommonFunctions.getMealImageUrl(imgBaseUrl, mealList_[index]['ImgPathUrl']),
                                 width: double.infinity,
                                 height: 100,
                                 fit: BoxFit.cover)

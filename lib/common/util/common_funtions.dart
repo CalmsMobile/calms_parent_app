@@ -54,6 +54,11 @@ class CommonFunctions {
   static String getPoMealCartData(
       UserSeqId, ItemSeqId, ViewDate, ItemType, POTypeConfigSeqId) {
     //PO_100108_1001_2023-09-10_101_0_10000__
-    return "PO_${UserSeqId}_${ItemSeqId}_${ViewDate}_${ItemType}_0_${POTypeConfigSeqId}_";
+    return "PO_${UserSeqId}_${ItemSeqId}_${ViewDate}_${ItemType}_0_${POTypeConfigSeqId}__";
+  }
+
+  static String getMealImageUrl(baseUrl,imgPath){
+    baseUrl = baseUrl.toString().replaceAll("/FS/","");
+    return "${baseUrl}/Handler/ImagePathHandler.ashx?ImagePath=${imgPath}&Default=10&PROUrl=${baseUrl}/&StoreageUrl=${baseUrl}/FS/";
   }
 }

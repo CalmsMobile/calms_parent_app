@@ -1,4 +1,5 @@
 import 'package:calms_parent_latest/common/json_responses.dart';
+import 'package:calms_parent_latest/common/util/common_funtions.dart';
 
 import '/common/HexColor.dart';
 import '/common/alert_dialog.dart';
@@ -10,17 +11,19 @@ import 'package:super_tooltip/super_tooltip.dart';
 import 'package:just_the_tooltip/just_the_tooltip.dart';
 
 class MealDetails extends StatefulWidget {
-  const MealDetails({Key? key}) : super(key: key);
+  final arguments;
+  const MealDetails(this.arguments,{Key? key}) : super(key: key);
 
   @override
-  State<MealDetails> createState() => _MealDetailsState();
+  _MealDetailsState createState() => _MealDetailsState();
 }
 
 class _MealDetailsState extends State<MealDetails> {
-  List<Map> familyList = [];
-  int senderIndex = 2;
+  
   var selectedIngi = "";
   SuperTooltip? tooltip;
+  
+  var mealInfo;
   Future<bool> _willPopCallback() async {
     // If the tooltip is open we don't pop the page on a backbutton press
     // but close the ToolTip
@@ -35,7 +38,8 @@ class _MealDetailsState extends State<MealDetails> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    familyList = JsonResponses.familyList;
+    mealInfo = widget.arguments['mealInfo'];
+    
   }
 
   void onTapIngi(textToShow, BuildContext childContext) {
@@ -57,78 +61,12 @@ class _MealDetailsState extends State<MealDetails> {
 
   @override
   Widget build(BuildContext context) {
-    Map<dynamic, dynamic> mealInfo =
-        ModalRoute.of(context)?.settings.arguments as Map;
-    print(mealInfo);
-
-    print(mealInfo['ingredients'].length);
+    
     return WillPopScope(
       onWillPop: _willPopCallback,
       child: Scaffold(
         appBar: getMyAppbar(context,"Meal details", [
-          if (familyList.length > 0 && senderIndex > -1)
-            Container(
-              height: 30,
-              width: 150,
-              margin: EdgeInsets.only(right: 10),
-              child: Row(
-                children: [
-                  Flexible(
-                    child: ListTile(
-                      horizontalTitleGap: 2,
-                      contentPadding: EdgeInsets.zero,
-                      onTap: () => {
-                        openMemberBottomSheet(context, familyList, null,
-                            (index) {
-                          print(index);
-                          Navigator.pop(context);
-                          setState(() {
-                            senderIndex = index;
-                          });
-                        })
-                      },
-                      title: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Text(
-                            familyList[senderIndex]['Name'],
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                fontSize: 12, fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            familyList[senderIndex]['RefUserSeqId'].toString(),
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 10,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                      trailing: SizedBox(
-                        width: 50,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(60.0),
-                          child: FadeInImage(
-                            image: NetworkImage(
-                                familyList[senderIndex]['ImgPathUrl']),
-                            placeholder: AssetImage("assets/images/user.png"),
-                            imageErrorBuilder: (context, error, stackTrace) {
-                              return Image.asset('assets/images/user.png',
-                                  fit: BoxFit.fitWidth);
-                            },
-                            fit: BoxFit.fitWidth,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-        ]),
+          ]),
         resizeToAvoidBottomInset: false,
         body: SizedBox(
           height: MediaQuery.of(context).size.height,
@@ -142,22 +80,22 @@ class _MealDetailsState extends State<MealDetails> {
                     Stack(alignment: Alignment.topLeft, children: [
                       InkWell(
                         onTap: () {
-                          Navigator.of(context)
+                          /* Navigator.of(context)
                               .pushNamed('/ViewImage', arguments: {
                             "images": mealInfo['image'] != ""
                                 ? [mealInfo['image']]
                                 : [],
                             "position": 0
-                          });
+                          }); */
                         },
                         child: Container(
                           child: ClipRRect(
                             borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(20),
                                 topRight: Radius.circular(20)),
-                            child: mealInfo['image'] != null &&
-                                    mealInfo['image'] != ""
-                                ? Image.network(mealInfo['image'],
+                            child: mealInfo['ImgPathUrl'] != null &&
+                                    mealInfo['ImgPathUrl'] != ""
+                                ? Image.network(CommonFunctions.getMealImageUrl(widget.arguments['imgBaseUrl'], mealInfo['ImgPathUrl']),
                                     width: double.infinity,
                                     height: 300,
                                     fit: BoxFit.cover)
@@ -174,11 +112,11 @@ class _MealDetailsState extends State<MealDetails> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Row(
+                            /* Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Container(
+                                 Container(
                                   decoration: BoxDecoration(
                                       color: Colors.white,
                                       boxShadow: [
@@ -222,8 +160,8 @@ class _MealDetailsState extends State<MealDetails> {
                                             fontWeight: FontWeight.bold)),
                                   ),
                               ],
-                            ),
-                            if (mealInfo['ingredients'].length > 0)
+                            ), */
+                             if (widget.arguments['ingredients'].length > 0)
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -233,11 +171,11 @@ class _MealDetailsState extends State<MealDetails> {
                                       height: 100,
                                       child: GridView.builder(
                                         itemCount:
-                                            mealInfo['ingredients'].length,
+                                            widget.arguments['ingredients'].length,
                                         gridDelegate:
                                             SliverGridDelegateWithFixedCrossAxisCount(
                                           crossAxisCount:
-                                              mealInfo['ingredients'].length,
+                                              widget.arguments['ingredients'].length,
                                           mainAxisSpacing: 0,
                                           crossAxisSpacing: 0,
                                         ),
@@ -249,8 +187,8 @@ class _MealDetailsState extends State<MealDetails> {
                                             Flexible(
                                               child: Container(
                                                 decoration: selectedIngi ==
-                                                        mealInfo['ingredients']
-                                                            [index]['name']
+                                                        widget.arguments['ingredients']
+                                                            [index]['Name']
                                                     ? BoxDecoration(
                                                         color: Colors.white,
                                                         borderRadius:
@@ -265,12 +203,12 @@ class _MealDetailsState extends State<MealDetails> {
                                                     children: [
                                                       Text(
                                                         selectedIngi ==
-                                                                mealInfo['ingredients']
+                                                                widget.arguments['ingredients']
                                                                         [index]
-                                                                    ['name']
-                                                            ? mealInfo[
+                                                                    ['Name']
+                                                            ? widget.arguments[
                                                                     'ingredients']
-                                                                [index]['name']
+                                                                [index]['Name']
                                                             : "",
                                                         textAlign:
                                                             TextAlign.center,
@@ -283,11 +221,11 @@ class _MealDetailsState extends State<MealDetails> {
                                                 ),
                                               ),
                                             ),
-                                            InkWell(
+                                            /* InkWell(
                                               onTap: () {
                                                 selectedIngi =
-                                                    mealInfo['ingredients']
-                                                        [index]['name'];
+                                                    widget.arguments['ingredients']
+                                                        [index]['Name'];
                                                 setState(() {});
                                                 Future.delayed(
                                                     const Duration(
@@ -299,13 +237,13 @@ class _MealDetailsState extends State<MealDetails> {
                                                 });
                                               },
                                               child: Image.network(
-                                                mealInfo['ingredients'][index]
-                                                    ['image'],
+                                                widget.arguments['ingredients'][index]
+                                                    ['Icon'],
                                                 width: 35,
                                                 height: 35,
                                                 fit: BoxFit.cover,
                                               ),
-                                            ),
+                                            ), */
                                           ]),
                                         ),
                                       ),
@@ -313,7 +251,7 @@ class _MealDetailsState extends State<MealDetails> {
                                   ),
                                 ],
                               )
-                          ],
+                           ],
                         ),
                       )
                     ]),
@@ -342,7 +280,7 @@ class _MealDetailsState extends State<MealDetails> {
                                   Container(
                                     margin: EdgeInsets.only(left: 3),
                                     child: Text(
-                                      mealInfo['name'],
+                                      mealInfo['Name'],
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                           fontWeight: FontWeight.normal,
@@ -355,7 +293,7 @@ class _MealDetailsState extends State<MealDetails> {
                                       maxLines: 2,
                                       text: TextSpan(
                                         text:
-                                            'MYR ${double.parse(mealInfo["price"]).toStringAsFixed(2)}  ',
+                                            '${widget.arguments['CurrencyCode']} ${mealInfo["SellingPrice"].toStringAsFixed(2)}  ',
                                         style: TextStyle(
                                             fontSize: 14,
                                             color: Colors.orange,
@@ -368,31 +306,31 @@ class _MealDetailsState extends State<MealDetails> {
                                     child: Row(
                                       children: [
                                         Icon(
-                                          mealInfo['ratings'] > 0
+                                          mealInfo['Rating'] > 0
                                               ? Icons.star
                                               : Icons.star_border_outlined,
                                           color: Colors.orange,
                                         ),
                                         Icon(
-                                          mealInfo['ratings'] > 1
+                                          mealInfo['Rating'] > 1
                                               ? Icons.star
                                               : Icons.star_border_outlined,
                                           color: Colors.orange,
                                         ),
                                         Icon(
-                                          mealInfo['ratings'] > 2
+                                          mealInfo['Rating'] > 2
                                               ? Icons.star
                                               : Icons.star_border_outlined,
                                           color: Colors.orange,
                                         ),
                                         Icon(
-                                          mealInfo['ratings'] > 3
+                                          mealInfo['Rating'] > 3
                                               ? Icons.star
                                               : Icons.star_border_outlined,
                                           color: Colors.orange,
                                         ),
                                         Icon(
-                                          mealInfo['ratings'] > 4
+                                          mealInfo['Rating'] > 4
                                               ? Icons.star
                                               : Icons.star_border_outlined,
                                           color: Colors.orange,
@@ -423,8 +361,8 @@ class _MealDetailsState extends State<MealDetails> {
                       height: 10,
                     ),
                     ListTile(
-                      leading: Image.network(mealInfo['merchant_image']),
-                      title: Text(mealInfo['merchant_name']),
+                      leading: Image.network(CommonFunctions.getMealImageUrl(widget.arguments['imgBaseUrl'], mealInfo['MerchantImg'])),
+                      title: Text(mealInfo['MerchantShortName']),
                     ),
                     SizedBox(
                       height: 10,
@@ -447,7 +385,7 @@ class _MealDetailsState extends State<MealDetails> {
                         padding:
                             EdgeInsets.only(left: 15.0, top: 0.0, bottom: 10.0),
                         child: Text(
-                          mealInfo['desc'],
+                          mealInfo['Desc'],
                           style: TextStyle(fontSize: 12),
                         ),
                       ),
@@ -466,7 +404,7 @@ class _MealDetailsState extends State<MealDetails> {
                               fontWeight: FontWeight.normal,
                             ),
                           ),
-                          Text(mealInfo['mealStyle'],
+                          Text(mealInfo['ItemStyle'],
                               style: TextStyle(fontSize: 14))
                         ],
                       ),
@@ -491,7 +429,7 @@ class _MealDetailsState extends State<MealDetails> {
                               fontWeight: FontWeight.normal,
                             ),
                           ),
-                          Text(mealInfo['category'],
+                          Text(mealInfo['ItemTypeName'],
                               style: TextStyle(fontSize: 14))
                         ],
                       ),
@@ -542,9 +480,8 @@ class _MealDetailsState extends State<MealDetails> {
                             ),
                           ),
                           Text(
-                              DateFormat('dd-MMM-yyyy').format(
-                                  DateFormat('yyyy/MM/dd')
-                                      .parse(mealInfo['date'])),
+                              DateFormat('dd-MMM-yyyy').format(DateTime.parse( widget.arguments['ViewDate'])
+                                 ),
                               style: TextStyle(fontSize: 14))
                         ],
                       ),

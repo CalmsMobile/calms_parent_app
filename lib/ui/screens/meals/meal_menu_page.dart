@@ -1,4 +1,5 @@
 import 'package:calms_parent_latest/common/listener/settings_listener.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -21,12 +22,12 @@ class MealMenuPage extends StatefulWidget {
 }
 
 class _MealMenuPageState extends State<MealMenuPage> {
-  String imgBaseUrl = "";
   var dateListOld = [];
   late List<DateTime> dateList;
-  List mealList_ = [];
+  List mealListBydate = [];
+  List mealListByItemType = [];
   bool searchEnable = false;
-  var selectedTab = 'Breakfast';
+  var selectedTab;
 
   int senderIndex = 0;
   var sortList = ["Recent First", "Low to High", "High to Low"];
@@ -95,77 +96,76 @@ class _MealMenuPageState extends State<MealMenuPage> {
  */
   PageController controller = PageController();
   var selectedDate = '';
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          toolbarHeight: 70,
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          //titleSpacing: -5,
-          automaticallyImplyLeading: false,
-          centerTitle: true,
-          title: searchEnable
-              ? Container(
-                  width: double.infinity,
-                  height: 40,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(5)),
-                  child: Center(
-                    child: TextField(
-                      autofocus: true,
-                      onChanged: (value) => {/* _runFilter(value) */},
-                      decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.search),
-                          suffixIcon: IconButton(
-                            icon: Icon(Icons.clear),
-                            onPressed: () {
-                              searchEnable = !searchEnable;
-                              setState(() {});
-                            },
-                          ),
-                          hintText: 'Search by meal name',
-                          border: InputBorder.none),
+      appBar: AppBar(
+        toolbarHeight: 70,
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        //titleSpacing: -5,
+        automaticallyImplyLeading: false,
+        centerTitle: true,
+        title: searchEnable
+            ? Container(
+                width: double.infinity,
+                height: 40,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(5)),
+                child: Center(
+                  child: TextField(
+                    autofocus: true,
+                    onChanged: (value) => {/* _runFilter(value) */},
+                    decoration: InputDecoration(
+                        prefixIcon: Icon(Icons.search),
+                        suffixIcon: IconButton(
+                          icon: Icon(Icons.clear),
+                          onPressed: () {
+                            searchEnable = !searchEnable;
+                            setState(() {});
+                          },
+                        ),
+                        hintText: 'Search by meal name',
+                        border: InputBorder.none),
+                  ),
+                ),
+              )
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Image(
+                      width: 50,
+                      height: 50,
+                      image: AssetImage("assets/images/ico_back.png"),
                     ),
                   ),
-                )
-              : Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: Image(
-                        width: 50,
-                        height: 50,
-                        image: AssetImage("assets/images/ico_back.png"),
-                      ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 10),
+                    child: Text(
+                      "Meal Order",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 10),
-                      child: Text(
-                        "Meal Order",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    )
-                    // Your widgets here
-                  ],
-                ),
-          actions: [
-            if (!searchEnable)
-              Container(
-                height: 30,
-                width: 100,
-                margin: EdgeInsets.only(right: 10),
-                child: Row(children: [
-                  /* InkWell(
+                  )
+                  // Your widgets here
+                ],
+              ),
+        actions: [
+          if (!searchEnable)
+            Container(
+              height: 30,
+              width: 100,
+              margin: EdgeInsets.only(right: 10),
+              child: Row(children: [
+                /* InkWell(
                     onTap: () {
                       _pickDateDialog();
                     },
@@ -175,200 +175,214 @@ class _MealMenuPageState extends State<MealMenuPage> {
                           size: 30, color: Colors.grey.shade500),
                     ),
                   ), */
-                  InkWell(
-                    onTap: () {
-                      _pickDateDialog();
-                    },
-                    child: Container(
-                      width: 40,
-                      height: 40,
-                      margin: EdgeInsets.only(left: 10),
-                      child: ClipOval(
-                        child: Material(
-                          color: Colors.blue[900], // Button color
-                          child: SizedBox(
-                              width: 40,
-                              height: 40,
-                              child: Icon(
-                                Icons.calendar_month_rounded,
-                                color: Colors.white,
-                                size: 18,
-                              )),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Stack(
-                    children: [
-                      InkWell(
-                        onTap: () {},
-                        child: Container(
-                          width: 40,
-                          height: 40,
-                          margin: EdgeInsets.only(left: 10),
-                          child: ClipOval(
-                            child: Material(
-                              color: Colors.blue, // Button color
-                              child: SizedBox(
-                                  width: 40,
-                                  height: 40,
-                                  child: Icon(
-                                    Icons.shopping_cart_rounded,
-                                    color: Colors.white,
-                                    size: 18,
-                                  )),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Consumer<MySettingsListener>(
-                          builder: (context, data, settingsDta) {
-                        return Positioned(
-                          top: 0,
-                          right: 0,
-                          child: Container(
-                            height: 18,
-                            width: 18,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.red,
-                            ),
-                            child: Center(
-                                child: Text(
-                              data.cartList != []
-                                  ? data.cartList.length.toString()
-                                  : "0",
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold,
-                              ),
+                InkWell(
+                  onTap: () {
+                    _pickDateDialog();
+                  },
+                  child: Container(
+                    width: 40,
+                    height: 40,
+                    margin: EdgeInsets.only(left: 10),
+                    child: ClipOval(
+                      child: Material(
+                        color: Colors.blue[900], // Button color
+                        child: SizedBox(
+                            width: 40,
+                            height: 40,
+                            child: Icon(
+                              Icons.calendar_month_rounded,
+                              color: Colors.white,
+                              size: 18,
                             )),
-                          ),
-                        );
-                      })
-                    ],
-                  ),
-                ]),
-              ),
-          ],
-        ),
-        resizeToAvoidBottomInset: false,
-        body: Container(
-          constraints: BoxConstraints.expand(),
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-            colors: [
-              Color.fromARGB(255, 246, 249, 254),
-              Color.fromARGB(255, 230, 231, 239),
-            ],
-          )),
-          child: SizedBox(
-            height: MediaQuery.of(context).size.height,
-            child: Container(
-              color: HexColor("#f5f8fd"),
-              margin: EdgeInsets.only(top: 0),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      height: 66,
-                      margin: EdgeInsets.symmetric(horizontal: 20),
-                      child: ListView.builder(
-                          padding: EdgeInsets.zero,
-                          shrinkWrap: true,
-                          scrollDirection: Axis.horizontal,
-                          itemCount: dateList.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return InkWell(
-                              onTap: () {
-                                setState(() {
-                                  _selectedDate = dateList[index];
-                                  mealList_ = getMealsListByDate(_selectedDate,
-                                      widget.arguments['mealsList']);
-                                });
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    color: _selectedDate == dateList[index]
-                                        ? Colors.amber.shade700
-                                        : Colors.white,
-                                    borderRadius: BorderRadius.circular(20),
-                                    border: _selectedDate == dateList[index]
-                                        ? Border.all(
-                                            color: Colors.amber.shade700,
-                                            width: 2,
-                                          )
-                                        : Border.all(color: Colors.white)),
-                                margin: EdgeInsets.symmetric(horizontal: 5),
-                                // color: Colors.grey,
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 0, vertical: 0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Container(
-                                      padding: EdgeInsets.only(
-                                          top: 0, left: 0, right: 0),
-                                      child: Text(
-                                        //"${DateUtil().getDaysOfDate(dateListOld[index]["date"])["dayString"]}",
-                                        "${DateFormat('EE').format(dateList[index])}",
-                                        style: TextStyle(
-                                            fontSize:
-                                                _selectedDate == dateList[index]
-                                                    ? 12
-                                                    : 10,
-                                            color:
-                                                _selectedDate == dateList[index]
-                                                    ? Colors.white
-                                                    : Colors.black,
-                                            fontWeight:
-                                                _selectedDate == dateList[index]
-                                                    ? FontWeight.bold
-                                                    : FontWeight.normal),
-                                      ),
-                                    ),
-                                    Container(
-                                      padding: EdgeInsets.all(10),
-                                      margin: EdgeInsets.only(top: 3),
-                                      decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(60),
-                                          border: Border.all(
-                                            color: Colors.white,
-                                            width: 2,
-                                          )),
-                                      child: Text(
-                                        "${dateList[index].day}",
-                                        style: TextStyle(
-                                            fontSize:
-                                                _selectedDate == dateList[index]
-                                                    ? 12
-                                                    : 10,
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          }),
+                      ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          InkWell(
+                  ),
+                ),
+                Stack(
+                  children: [
+                    InkWell(
+                      onTap: () {},
+                      child: Container(
+                        width: 40,
+                        height: 40,
+                        margin: EdgeInsets.only(left: 10),
+                        child: ClipOval(
+                          child: Material(
+                            color: Colors.blue, // Button color
+                            child: SizedBox(
+                                width: 40,
+                                height: 40,
+                                child: Icon(
+                                  Icons.shopping_cart_rounded,
+                                  color: Colors.white,
+                                  size: 18,
+                                )),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Consumer<MySettingsListener>(
+                        builder: (context, data, settingsDta) {
+                      return Positioned(
+                        top: 0,
+                        right: 0,
+                        child: Container(
+                          height: 18,
+                          width: 18,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.red,
+                          ),
+                          child: Center(
+                              child: Text(
+                            data.cartList != []
+                                ? data.cartList.length.toString()
+                                : "0",
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )),
+                        ),
+                      );
+                    })
+                  ],
+                ),
+              ]),
+            ),
+        ],
+      ),
+      resizeToAvoidBottomInset: false,
+      body: Container(
+        constraints: BoxConstraints.expand(),
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+          begin: Alignment.topRight,
+          end: Alignment.bottomLeft,
+          colors: [
+            Color.fromARGB(255, 246, 249, 254),
+            Color.fromARGB(255, 230, 231, 239),
+          ],
+        )),
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height,
+          child: Container(
+            color: HexColor("#f5f8fd"),
+            margin: EdgeInsets.only(top: 0),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    height: 66,
+                    margin: EdgeInsets.symmetric(horizontal: 20),
+                    child: ListView.builder(
+                        padding: EdgeInsets.zero,
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemCount: dateList.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return InkWell(
                             onTap: () {
-                              selectedTab = 'Breakfast';
-                              setState(() {});
+                              setState(() {
+                                _selectedDate = dateList[index];
+                                mealListByItemType = [];
+                                mealListBydate = getMealsListByDate(
+                                    _selectedDate,
+                                    widget.arguments['mealsList'],
+                                    widget.arguments['mealsCtgryList']);
+                                if (mealListBydate.isNotEmpty) {
+                                  selectedTab =
+                                      ItemTypeList[0]['ItemTypeSeqId'];
+                                  mealListByItemType = getMealsListByItemType(
+                                      selectedTab, mealListBydate);
+                                }
+                              });
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: _selectedDate == dateList[index]
+                                      ? Colors.amber.shade700
+                                      : Colors.white,
+                                  borderRadius: BorderRadius.circular(20),
+                                  border: _selectedDate == dateList[index]
+                                      ? Border.all(
+                                          color: Colors.amber.shade700,
+                                          width: 2,
+                                        )
+                                      : Border.all(color: Colors.white)),
+                              margin: EdgeInsets.symmetric(horizontal: 5),
+                              // color: Colors.grey,
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 0, vertical: 0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.only(
+                                        top: 0, left: 0, right: 0),
+                                    child: Text(
+                                      //"${DateUtil().getDaysOfDate(dateListOld[index]["date"])["dayString"]}",
+                                      "${DateFormat('EE').format(dateList[index])}",
+                                      style: TextStyle(
+                                          fontSize:
+                                              _selectedDate == dateList[index]
+                                                  ? 12
+                                                  : 10,
+                                          color:
+                                              _selectedDate == dateList[index]
+                                                  ? Colors.white
+                                                  : Colors.black,
+                                          fontWeight:
+                                              _selectedDate == dateList[index]
+                                                  ? FontWeight.bold
+                                                  : FontWeight.normal),
+                                    ),
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.all(10),
+                                    margin: EdgeInsets.only(top: 3),
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(60),
+                                        border: Border.all(
+                                          color: Colors.white,
+                                          width: 2,
+                                        )),
+                                    child: Text(
+                                      "${dateList[index].day}",
+                                      style: TextStyle(
+                                          fontSize:
+                                              _selectedDate == dateList[index]
+                                                  ? 12
+                                                  : 10,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        }),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: List.generate(
+                          ItemTypeList.length,
+                          (index) => InkWell(
+                            onTap: () {
+                              setState(() {
+                                selectedTab =
+                                    ItemTypeList[index]['ItemTypeSeqId'];
+
+                                mealListByItemType = getMealsListByItemType(
+                                    selectedTab, mealListBydate);
+                              });
                             },
                             child: Container(
                               padding: EdgeInsets.symmetric(horizontal: 5),
@@ -376,7 +390,9 @@ class _MealMenuPageState extends State<MealMenuPage> {
                               decoration: BoxDecoration(
                                 border: Border(
                                   bottom: BorderSide(
-                                      color: selectedTab == 'Breakfast'
+                                      color: selectedTab ==
+                                              ItemTypeList[index]
+                                                  ['ItemTypeSeqId']
                                           ? Colors.amber.shade700
                                           : Colors.transparent,
                                       width: 5.0),
@@ -385,7 +401,7 @@ class _MealMenuPageState extends State<MealMenuPage> {
                               child: Padding(
                                 padding: const EdgeInsets.all(12.0),
                                 child: Text(
-                                  "Breakfast",
+                                  ItemTypeList[index]['Name'],
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold),
@@ -393,75 +409,23 @@ class _MealMenuPageState extends State<MealMenuPage> {
                               ),
                             ),
                           ),
-                          InkWell(
-                            onTap: () {
-                              selectedTab = 'Lunch';
-                              setState(() {});
-                            },
-                            child: Container(
-                                padding: EdgeInsets.symmetric(horizontal: 5),
-                                decoration: BoxDecoration(
-                                  border: Border(
-                                    bottom: BorderSide(
-                                        color: selectedTab == 'Lunch'
-                                            ? Colors.amber.shade700
-                                            : Colors.transparent,
-                                        width: 5.0),
-                                  ),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(12.0),
-                                  child: Text(
-                                    "Lunch",
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                )),
-                          ),
-                          InkWell(
-                            onTap: () {
-                              selectedTab = 'Dinner';
-                              setState(() {});
-                            },
-                            child: Container(
-                                padding: EdgeInsets.symmetric(horizontal: 5),
-                                margin: EdgeInsets.symmetric(horizontal: 10),
-                                decoration: BoxDecoration(
-                                  border: Border(
-                                    bottom: BorderSide(
-                                        color: selectedTab == 'Dinner'
-                                            ? Colors.amber.shade700
-                                            : Colors.transparent,
-                                        width: 5.0),
-                                  ),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(12.0),
-                                  child: Text(
-                                    "Dinner",
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                )),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                        child: MealPager(
-                            mealList_,
-                            widget.arguments['CurrencyCode'],
-                            imgBaseUrl,
-                            widget.arguments['poTypesList']['PreOrderType'],
-                            onCartClick))
-                  ]),
-            ),
+                        )),
+                  ),
+                  Expanded(
+                      child: MealPager(
+                          mealListByItemType,
+                          widget.arguments['CurrencyCode'],
+                          widget.arguments['imgBaseUrl'],
+                          widget.arguments['poTypesList']['PreOrderType'],
+                          widget.arguments['poTypesList']['POTypeConfigSeqId'],
+                          onCartClick))
+                ]),
           ),
         ),
-        floatingActionButtonLocation: ExpandableFab.location,
-        floatingActionButton: _getFilterFAB());
+      ),
+      //floatingActionButtonLocation: ExpandableFab.location,
+      // floatingActionButton: _getFilterFAB()
+    );
   }
 
   void onCartClick(meal, index, isDelete) {
@@ -470,37 +434,12 @@ class _MealMenuPageState extends State<MealMenuPage> {
         widget.arguments['UserSeqId'], meal, widget.arguments['poTypesList']);
     setState(() {
       if (isDelete)
-        mealList_[index]['addedToCart'] = false;
+        mealListByItemType[index]['addedToCart'] = false;
       else
-        mealList_[index]['addedToCart'] = true;
+        mealListByItemType[index]['addedToCart'] = true;
     });
   }
 
-  /*  void onCartClick(int index, familyList) {
-    if (senderIndex <= -1) {
-      openMemberBottomSheet(context, familyList, null, (studentindex) {
-        senderIndex = studentindex;
-        Navigator.of(context).pop();
-        setState(() {});
-        openMealCartBottomSheet(context, mealList_[index]);
-      });
-    } else {
-      openMealCartBottomSheet(context, mealList_[index]);
-    }
-  }
- */
-  /*  void initDates() {
-    dateListOld = [];
-    for (var item in mealList) {
-      int index =
-          dateListOld.indexWhere((element) => item['date'] == element['date']);
-      if (index <= -1) {
-        dateListOld.add(item);
-      }
-    }
-    selectedDate = dateListOld[0]["date"];
-  }
- */
   Widget _getFilterFAB() {
     return ExpandableFab(
       children: [
@@ -542,17 +481,38 @@ class _MealMenuPageState extends State<MealMenuPage> {
     print("=======");
     print(dateList);
     print("=======");
-    mealList_ =
-        getMealsListByDate(_selectedDate, widget.arguments['mealsList']);
+
+    mealListBydate = getMealsListByDate(_selectedDate,
+        widget.arguments['mealsList'], widget.arguments['mealsCtgryList']);
   }
 }
 
-List<dynamic> getMealsListByDate(DateTime selectedDate, mealsList) {
+List ItemTypeList = [];
+List<dynamic> getMealsListByDate(
+    DateTime selectedDate, mealsList, List mealsCtgryList) {
   String sdate = DateFormat('yyyy-MM-dd').format(selectedDate);
   List mealsList_ = [];
-  for (var meals in mealsList) {
-    if (meals['ViewDate'] == sdate) {
-      mealsList_.add(meals);
+  List itemTypes = [];
+  for (var meal in mealsList) {
+    if (meal['ViewDate'] == sdate) {
+      mealsList_.add(meal);
+      itemTypes.add(double.parse(meal['ItemType']));
+    }
+  }
+
+  ItemTypeList = mealsCtgryList
+      .where((e) => itemTypes.contains(e['ItemTypeSeqId']))
+      .toList();
+  print(ItemTypeList);
+
+  return mealsList_;
+}
+
+List<dynamic> getMealsListByItemType(ItemType, mealsList) {
+  List mealsList_ = [];
+  for (var meal in mealsList) {
+    if (double.parse(meal['ItemType']) == ItemType) {
+      mealsList_.add(meal);
     }
   }
   print(mealsList_);
