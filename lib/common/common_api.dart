@@ -334,8 +334,8 @@ class CommonUtil {
     }
   }
 
-  Future<void> getMealItemsForUser(
-      context, RefUserSeqId, RefBranchSeqId, poTypesList,CurrencyCode,imgBaseUrl) async {
+  Future<void> getMealItemsForUser(context, RefUserSeqId, RefBranchSeqId,
+      poTypesList, CurrencyCode, imgBaseUrl) async {
     var ParamData = {
       "RefBranchSeqId": RefBranchSeqId,
       "RefUserSeqId": RefUserSeqId,
@@ -356,22 +356,36 @@ class CommonUtil {
       false,
     );
     res
-        .then((response) =>
-            {successGetMealItemsForUser(context, response, RefUserSeqId,poTypesList,CurrencyCode,imgBaseUrl)})
+        .then((response) => {
+              successGetMealItemsForUser(context, response, RefUserSeqId,
+                  poTypesList, CurrencyCode, imgBaseUrl)
+            })
         .onError((error, stackTrace) => {authorizedPostRequestError(error)});
   }
 
-  successGetMealItemsForUser(BuildContext context, response, RefUserSeqId,poTypesList,CurrencyCode,imgBaseUrl) {
+  successGetMealItemsForUser(BuildContext context, response, RefUserSeqId,
+      poTypesList, CurrencyCode, imgBaseUrl) {
     if (response['Table'][0]['code'] == 10) {
       print("getMealItemsForUser success");
 
       context.read<MySettingsListener>().updategetMealItemsForUser(
-          context, response['Table1'], response['Table2'], RefUserSeqId,poTypesList,CurrencyCode,imgBaseUrl);
+          context,
+          response['Table1'],
+          response['Table2'],
+          RefUserSeqId,
+          poTypesList,
+          CurrencyCode,
+          imgBaseUrl);
     }
   }
- Future<void> getMealItemDetail(
-      context, RefItemSeqId, ViewDate, POTypeConfigSeqId,CurrencyCode,imgBaseUrl) async {
-    var ParamData = {"RefItemSeqId":RefItemSeqId,"ViewDate":ViewDate,"POTypeConfigSeqId":POTypeConfigSeqId};
+
+  Future<void> getMealItemDetail(context, RefItemSeqId, ViewDate,
+      POTypeConfigSeqId, CurrencyCode, imgBaseUrl,showCart) async {
+    var ParamData = {
+      "RefItemSeqId": RefItemSeqId,
+      "ViewDate": ViewDate,
+      "POTypeConfigSeqId": POTypeConfigSeqId
+    };
     print(ParamData);
     Future<Map<String, dynamic>> res = RestApiProvider().authorizedPostRequest(
       ParamData,
@@ -380,24 +394,122 @@ class CommonUtil {
       false,
     );
     res
-        .then((response) =>
-            {successGetMealItemDetail(context, response, CurrencyCode,imgBaseUrl,ViewDate)})
+        .then((response) => {
+              successGetMealItemDetail(
+                  context, response, CurrencyCode, imgBaseUrl, ViewDate,showCart)
+            })
         .onError((error, stackTrace) => {authorizedPostRequestError(error)});
   }
 
-  successGetMealItemDetail(BuildContext context, response, CurrencyCode,imgBaseUrl,ViewDate) {
+  successGetMealItemDetail(
+      BuildContext context, response, CurrencyCode, imgBaseUrl, ViewDate,showCart) {
     if (response['Table'][0]['code'] == 10) {
       print("successGetMealItemDetail");
 
       var arguments = {
-      "mealInfo": response['Table1'][0],
-      "ingredients": response['Table2'],
-      "ViewDate": ViewDate,
-      "CurrencyCode": CurrencyCode,
-      "imgBaseUrl": imgBaseUrl
+        "mealInfo": response['Table1'][0],
+        "ingredients": response['Table2'],
+        "showCart": showCart,
+        "ViewDate": ViewDate,
+        "CurrencyCode": CurrencyCode,
+        "imgBaseUrl": imgBaseUrl
+      };
+      print(arguments['mealInfo'][0]);
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => MealDetails(arguments)));
+    }
+  }
+
+  Future<void> getCartPageSettings(context, RefBranchSeqId) async {
+    var ParamData = {"RefBranchSeqId": "11001"};
+    print(ParamData);
+    Future<Map<String, dynamic>> res = RestApiProvider().authorizedPostRequest(
+      ParamData,
+      AppSettings.GetCartPageSettings,
+      context,
+      false,
+    );
+    res
+        .then((response) => {successGetCartPageSettings(context, response)})
+        .onError((error, stackTrace) => {authorizedPostRequestError(error)});
+  }
+
+  successGetCartPageSettings(BuildContext context, response) {
+    if (response['Table'][0]['code'] == 10) {
+      print("successGetCartPageSettings");
+    }
+  }
+
+  Future<void> getCartDailyMealItems(
+      context, RefBranchSeqId, RefItemSeqId) async {
+    var ParamData = {
+      "RefBranchSeqId": RefBranchSeqId,
+      "RefItemSeqId":
+          "<ItemSeqId_OrderDate_POTypeConfigSeqId>,<ItemSeqId_OrderDate_POTypeConfigSeqId>"
     };
-    print(arguments['mealInfo'][0]);
-   Navigator.push(context,MaterialPageRoute(builder: (context) => MealDetails(arguments)));
+    print(ParamData);
+    Future<Map<String, dynamic>> res = RestApiProvider().authorizedPostRequest(
+      ParamData,
+      AppSettings.GetCartDailyMealItems,
+      context,
+      false,
+    );
+    res
+        .then((response) => {successGetCartDailyMealItems(context, response)})
+        .onError((error, stackTrace) => {authorizedPostRequestError(error)});
+  }
+
+  successGetCartDailyMealItems(BuildContext context, response) {
+    if (response['Table'][0]['code'] == 10) {
+      print("successGetCartDailyMealItems");
+    }
+  }
+
+  Future<void> getCartTermMealItems(
+      context, RefBranchSeqId, PackageSeqId) async {
+    var ParamData = {
+      "RefBranchSeqId": RefBranchSeqId,
+      "PackageSeqId": PackageSeqId
+    };
+    print(ParamData);
+    Future<Map<String, dynamic>> res = RestApiProvider().authorizedPostRequest(
+      ParamData,
+      AppSettings.GetCartTermMealItems,
+      context,
+      false,
+    );
+    res
+        .then((response) => {successGetCartTermMealItems(context, response)})
+        .onError((error, stackTrace) => {authorizedPostRequestError(error)});
+  }
+
+  successGetCartTermMealItems(BuildContext context, response) {
+    if (response['Table'][0]['code'] == 10) {
+      print("successGetCartTermMealItems");
+    }
+  }
+
+  Future<void> getGatewayListForCart(
+      context, RefBranchSeqId, RefSettingSeqId) async {
+    var ParamData = {
+      "RefBranchSeqId": RefBranchSeqId,
+      "RefSettingSeqId": RefSettingSeqId
+    };
+    print(ParamData);
+    Future<Map<String, dynamic>> res = RestApiProvider().authorizedPostRequest(
+      ParamData,
+      AppSettings.GetGatewayListForCart,
+      context,
+      false,
+    );
+    res
+        .then((response) => {successgetGatewayListForCart(context, response)})
+        .onError((error, stackTrace) => {authorizedPostRequestError(error)});
+  }
+
+  successgetGatewayListForCart(BuildContext context, response) {
+    if (response['Table'][0]['code'] == 10) {
+      print("successgetGatewayListForCart");
     }
   }
 

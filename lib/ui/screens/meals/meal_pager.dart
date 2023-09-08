@@ -37,7 +37,7 @@ class MealPager extends StatelessWidget {
             ),
             itemBuilder: (context, index) => GestureDetector(
               onTap: () {
-               CommonUtil().getMealItemDetail(context,mealList_[index]['ItemSeqId'],mealList_[index]['ViewDate'],POTypeConfigSeqId,CurrencyCode,imgBaseUrl);
+               CommonUtil().getMealItemDetail(context,mealList_[index]['ItemSeqId'],mealList_[index]['ViewDate'],POTypeConfigSeqId,CurrencyCode,imgBaseUrl,PreOrderType == 'Daily'?true:false);
                 // moveToDetails(_foundStoreList, index, context);
                 /* Navigator.of(context)
                     .pushNamed('/MealDetails', arguments: mealList_[index]); */

@@ -4,6 +4,7 @@ import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+import '../cart/cart.dart';
 import '/common/HexColor.dart';
 import '/common/alert_dialog.dart';
 import '/common/date_util.dart';
@@ -201,7 +202,14 @@ class _MealMenuPageState extends State<MealMenuPage> {
                 Stack(
                   children: [
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CartPage(),
+                  ),
+                );
+                      },
                       child: Container(
                         width: 40,
                         height: 40,

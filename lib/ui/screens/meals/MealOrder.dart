@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../../common/common_api.dart';
 import '../../../common/listener/settings_listener.dart';
 import '../../../common/util/common_funtions.dart';
+import '../cart/cart.dart';
 import '/common/HexColor.dart';
 import '../../../common/widgets/common.dart';
 import 'package:flutter/material.dart';
@@ -120,7 +121,14 @@ class _MealOrderState extends State<MealOrder> {
                     Stack(
                       children: [
                         InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CartPage(),
+                  ),
+                );
+                          },
                           child: Container(
                             width: 40,
                             height: 40,

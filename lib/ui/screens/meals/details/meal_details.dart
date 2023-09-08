@@ -303,7 +303,7 @@ class _MealDetailsState extends State<MealDetails> {
                                   ),
                                   Container(
                                     margin: EdgeInsets.only(top: 5),
-                                    child: Row(
+                                    child:mealInfo['Rating']!=null? Row(
                                       children: [
                                         Icon(
                                           mealInfo['Rating'] > 0
@@ -336,11 +336,35 @@ class _MealDetailsState extends State<MealDetails> {
                                           color: Colors.orange,
                                         ),
                                       ],
-                                    ),
+                                    ):Row(
+                                children: [
+                                  Icon(
+                                    Icons.star_border_outlined,
+                                    color: Colors.orangeAccent
+                                  ),
+                                  Icon(
+                                    Icons.star_border_outlined,
+                                    color: Colors.orangeAccent
+                                  ),
+                                  Icon(
+                                    Icons.star_border_outlined,
+                                    color: Colors.orangeAccent
+                                  ),
+                                  Icon(
+                                    Icons.star_border_outlined,
+                                    color: Colors.orangeAccent
+                                  ),
+                                  Icon(
+                                    Icons.star_border_outlined,
+                                    color: Colors.orangeAccent
+                                  ),
+                                ],
+                              ),
                                   ),
                                 ],
                               ),
                             ),
+                            if(widget.arguments['showCart'])
                             InkWell(
                               onTap: () {
                                 MyCustomAlertDialog()
