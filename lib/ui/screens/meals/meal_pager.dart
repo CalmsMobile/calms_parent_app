@@ -8,14 +8,14 @@ import 'package:flutter/material.dart';
 
 class MealPager extends StatelessWidget {
   const MealPager(
-      this.mealList_,this.CurrencyCode, this.imgBaseUrl,this.PreOrderType,this.POTypeConfigSeqId, this.callbackFun)
+      this.mealList_,this.CurrencyCode, this.imgBaseUrl,this.UserSeqId,this.poTypesList, this.callbackFun)
       : super();
 
   final mealList_;
   final CurrencyCode;
   final imgBaseUrl;
-  final PreOrderType;
-  final POTypeConfigSeqId;
+  final UserSeqId;
+  final poTypesList;
   final Function callbackFun;
 
 
@@ -37,7 +37,7 @@ class MealPager extends StatelessWidget {
             ),
             itemBuilder: (context, index) => GestureDetector(
               onTap: () {
-               CommonUtil().getMealItemDetail(context,mealList_[index]['ItemSeqId'],mealList_[index]['ViewDate'],POTypeConfigSeqId,CurrencyCode,imgBaseUrl,PreOrderType == 'Daily'?true:false);
+               CommonUtil().getMealItemDetail(context,mealList_[index]['ItemSeqId'],mealList_[index]['ViewDate'],mealList_[index]['addedToCart'],poTypesList,CurrencyCode,imgBaseUrl,poTypesList['PreOrderType'] == 'Daily'?true:false,UserSeqId,callbackFun,index);
                 // moveToDetails(_foundStoreList, index, context);
                 /* Navigator.of(context)
                     .pushNamed('/MealDetails', arguments: mealList_[index]); */
@@ -201,7 +201,7 @@ class MealPager extends StatelessWidget {
                                 )
                               : SizedBox(),
                         ),
-                        if(PreOrderType == 'Daily')
+                        if(poTypesList['PreOrderType'] == 'Daily')
                         InkWell(
                           onTap: () {},
                           child: Container(

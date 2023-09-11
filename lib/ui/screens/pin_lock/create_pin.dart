@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 import '/common/app_settings.dart';
 import '/common/my_shared_pref.dart';
 import '/main.dart';
@@ -15,7 +17,6 @@ class CreatePin extends StatefulWidget {
 }
 
 class _CreatePinState extends State<CreatePin> {
-  String appType = '';
   TextEditingController pinController = TextEditingController();
   TextEditingController confirmpinController = TextEditingController();
   @override
@@ -26,12 +27,11 @@ class _CreatePinState extends State<CreatePin> {
   }
 
   initValues() async {
-    appType = await MySharedPref().getData(AppSettings.Sp_Key_AppType);
-    print(appType);
     String auth =
         await MySharedPref().getData(AppSettings.Sp_Payload_Authorize);
     String apiUrl = await MySharedPref().getData(AppSettings.Sp_Api_Url);
-    print(apiUrl);
+    
+   kDebugMode? _onButtonPressed():(){};
   }
 
   @override
@@ -276,17 +276,17 @@ class _CreatePinState extends State<CreatePin> {
   }
 
   _onButtonPressed() async {
+    if(kDebugMode)
+    MySharedPref().saveData("123456", AppSettings.Sp_AppPIN);
+    else
     MySharedPref().saveData(pinController.text, AppSettings.Sp_AppPIN);
     bool appVerified =
         await MySharedPref().getBooleanData(AppSettings.Sp_App_Verified);
     if (appVerified) {
-      if (appType == AppSettings.appType_Notification) {
+     
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => MyApp()));
-      } else {
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => MyApp()));
-      }
+      
     } else {
       Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => SplashScreen()));

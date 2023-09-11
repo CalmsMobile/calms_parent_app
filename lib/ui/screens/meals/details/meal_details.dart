@@ -1,6 +1,9 @@
 import 'package:calms_parent_latest/common/json_responses.dart';
 import 'package:calms_parent_latest/common/util/common_funtions.dart';
+import 'package:provider/provider.dart';
 
+import '../../../../common/listener/settings_listener.dart';
+import '../../cart/cart.dart';
 import '/common/HexColor.dart';
 import '/common/alert_dialog.dart';
 import '../../../../common/widgets/common.dart';
@@ -12,17 +15,18 @@ import 'package:just_the_tooltip/just_the_tooltip.dart';
 
 class MealDetails extends StatefulWidget {
   final arguments;
-  const MealDetails(this.arguments,{Key? key}) : super(key: key);
+  final Function callbackFun;
+  const MealDetails(this.arguments, this.callbackFun, {Key? key})
+      : super(key: key);
 
   @override
   _MealDetailsState createState() => _MealDetailsState();
 }
 
 class _MealDetailsState extends State<MealDetails> {
-  
   var selectedIngi = "";
   SuperTooltip? tooltip;
-  
+
   var mealInfo;
   Future<bool> _willPopCallback() async {
     // If the tooltip is open we don't pop the page on a backbutton press
@@ -39,7 +43,6 @@ class _MealDetailsState extends State<MealDetails> {
     // TODO: implement initState
     super.initState();
     mealInfo = widget.arguments['mealInfo'];
-    
   }
 
   void onTapIngi(textToShow, BuildContext childContext) {
@@ -61,12 +64,74 @@ class _MealDetailsState extends State<MealDetails> {
 
   @override
   Widget build(BuildContext context) {
-    
     return WillPopScope(
       onWillPop: _willPopCallback,
       child: Scaffold(
-        appBar: getMyAppbar(context,"Meal details", [
-          ]),
+        appBar: getMyAppbar(context, "Meal details", [Container(
+              height: 30,
+              //width: 100,
+              margin: EdgeInsets.only(right: 10),
+              child: Row(children: [
+                Stack(
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CartPage(),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        width: 40,
+                        height: 40,
+                        margin: EdgeInsets.only(left: 10),
+                        child: ClipOval(
+                          child: Material(
+                            color: Colors.blue, // Button color
+                            child: SizedBox(
+                                width: 40,
+                                height: 40,
+                                child: Icon(
+                                  Icons.shopping_cart_rounded,
+                                  color: Colors.white,
+                                  size: 18,
+                                )),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Consumer<MySettingsListener>(
+                        builder: (context, data, settingsDta) {
+                      return Positioned(
+                        top: 0,
+                        right: 0,
+                        child: Container(
+                          height: 18,
+                          width: 18,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.red,
+                          ),
+                          child: Center(
+                              child: Text(
+                            data.cartList != []
+                                ? data.cartList.length.toString()
+                                : "0",
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )),
+                        ),
+                      );
+                    })
+                  ],
+                ),
+              ]),
+            ),
+        ]),
         resizeToAvoidBottomInset: false,
         body: SizedBox(
           height: MediaQuery.of(context).size.height,
@@ -95,7 +160,10 @@ class _MealDetailsState extends State<MealDetails> {
                                 topRight: Radius.circular(20)),
                             child: mealInfo['ImgPathUrl'] != null &&
                                     mealInfo['ImgPathUrl'] != ""
-                                ? Image.network(CommonFunctions.getMealImageUrl(widget.arguments['imgBaseUrl'], mealInfo['ImgPathUrl']),
+                                ? Image.network(
+                                    CommonFunctions.getMealImageUrl(
+                                        widget.arguments['imgBaseUrl'],
+                                        mealInfo['ImgPathUrl']),
                                     width: double.infinity,
                                     height: 300,
                                     fit: BoxFit.cover)
@@ -161,7 +229,7 @@ class _MealDetailsState extends State<MealDetails> {
                                   ),
                               ],
                             ), */
-                             if (widget.arguments['ingredients'].length > 0)
+                            if (widget.arguments['ingredients'].length > 0)
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -170,12 +238,12 @@ class _MealDetailsState extends State<MealDetails> {
                                     child: Container(
                                       height: 100,
                                       child: GridView.builder(
-                                        itemCount:
-                                            widget.arguments['ingredients'].length,
+                                        itemCount: widget
+                                            .arguments['ingredients'].length,
                                         gridDelegate:
                                             SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount:
-                                              widget.arguments['ingredients'].length,
+                                          crossAxisCount: widget
+                                              .arguments['ingredients'].length,
                                           mainAxisSpacing: 0,
                                           crossAxisSpacing: 0,
                                         ),
@@ -187,7 +255,8 @@ class _MealDetailsState extends State<MealDetails> {
                                             Flexible(
                                               child: Container(
                                                 decoration: selectedIngi ==
-                                                        widget.arguments['ingredients']
+                                                        widget.arguments[
+                                                                'ingredients']
                                                             [index]['Name']
                                                     ? BoxDecoration(
                                                         color: Colors.white,
@@ -203,7 +272,8 @@ class _MealDetailsState extends State<MealDetails> {
                                                     children: [
                                                       Text(
                                                         selectedIngi ==
-                                                                widget.arguments['ingredients']
+                                                                widget.arguments[
+                                                                            'ingredients']
                                                                         [index]
                                                                     ['Name']
                                                             ? widget.arguments[
@@ -251,7 +321,7 @@ class _MealDetailsState extends State<MealDetails> {
                                   ),
                                 ],
                               )
-                           ],
+                          ],
                         ),
                       )
                     ]),
@@ -303,69 +373,104 @@ class _MealDetailsState extends State<MealDetails> {
                                   ),
                                   Container(
                                     margin: EdgeInsets.only(top: 5),
-                                    child:mealInfo['Rating']!=null? Row(
-                                      children: [
-                                        Icon(
-                                          mealInfo['Rating'] > 0
-                                              ? Icons.star
-                                              : Icons.star_border_outlined,
-                                          color: Colors.orange,
-                                        ),
-                                        Icon(
-                                          mealInfo['Rating'] > 1
-                                              ? Icons.star
-                                              : Icons.star_border_outlined,
-                                          color: Colors.orange,
-                                        ),
-                                        Icon(
-                                          mealInfo['Rating'] > 2
-                                              ? Icons.star
-                                              : Icons.star_border_outlined,
-                                          color: Colors.orange,
-                                        ),
-                                        Icon(
-                                          mealInfo['Rating'] > 3
-                                              ? Icons.star
-                                              : Icons.star_border_outlined,
-                                          color: Colors.orange,
-                                        ),
-                                        Icon(
-                                          mealInfo['Rating'] > 4
-                                              ? Icons.star
-                                              : Icons.star_border_outlined,
-                                          color: Colors.orange,
-                                        ),
-                                      ],
-                                    ):Row(
-                                children: [
-                                  Icon(
-                                    Icons.star_border_outlined,
-                                    color: Colors.orangeAccent
-                                  ),
-                                  Icon(
-                                    Icons.star_border_outlined,
-                                    color: Colors.orangeAccent
-                                  ),
-                                  Icon(
-                                    Icons.star_border_outlined,
-                                    color: Colors.orangeAccent
-                                  ),
-                                  Icon(
-                                    Icons.star_border_outlined,
-                                    color: Colors.orangeAccent
-                                  ),
-                                  Icon(
-                                    Icons.star_border_outlined,
-                                    color: Colors.orangeAccent
-                                  ),
-                                ],
-                              ),
+                                    child: mealInfo['Rating'] != null
+                                        ? Row(
+                                            children: [
+                                              Icon(
+                                                mealInfo['Rating'] > 0
+                                                    ? Icons.star
+                                                    : Icons
+                                                        .star_border_outlined,
+                                                color: Colors.orange,
+                                              ),
+                                              Icon(
+                                                mealInfo['Rating'] > 1
+                                                    ? Icons.star
+                                                    : Icons
+                                                        .star_border_outlined,
+                                                color: Colors.orange,
+                                              ),
+                                              Icon(
+                                                mealInfo['Rating'] > 2
+                                                    ? Icons.star
+                                                    : Icons
+                                                        .star_border_outlined,
+                                                color: Colors.orange,
+                                              ),
+                                              Icon(
+                                                mealInfo['Rating'] > 3
+                                                    ? Icons.star
+                                                    : Icons
+                                                        .star_border_outlined,
+                                                color: Colors.orange,
+                                              ),
+                                              Icon(
+                                                mealInfo['Rating'] > 4
+                                                    ? Icons.star
+                                                    : Icons
+                                                        .star_border_outlined,
+                                                color: Colors.orange,
+                                              ),
+                                            ],
+                                          )
+                                        : Row(
+                                            children: [
+                                              Icon(Icons.star_border_outlined,
+                                                  color: Colors.orangeAccent),
+                                              Icon(Icons.star_border_outlined,
+                                                  color: Colors.orangeAccent),
+                                              Icon(Icons.star_border_outlined,
+                                                  color: Colors.orangeAccent),
+                                              Icon(Icons.star_border_outlined,
+                                                  color: Colors.orangeAccent),
+                                              Icon(Icons.star_border_outlined,
+                                                  color: Colors.orangeAccent),
+                                            ],
+                                          ),
                                   ),
                                 ],
                               ),
                             ),
-                            if(widget.arguments['showCart'])
-                            InkWell(
+                            if (widget.arguments['showCart'])
+                              InkWell(
+                                onTap: () {},
+                                child: Container(
+                                  width: 30,
+                                  height: 30,
+                                  margin: EdgeInsets.only(right: 10),
+                                  child: ClipOval(
+                                    child: Material(
+                                      color: mealInfo['addedToCart']
+                                          ? Colors.red
+                                          : Colors.blue, // Button color
+                                      child: InkWell(
+                                        onTap: () async {
+                                          mealInfo['addedToCart']
+                                              ? onCartClick(true)
+                                              : onCartClick(false);
+                                        },
+                                        child: SizedBox(
+                                            width: 30,
+                                            height: 30,
+                                            child: mealInfo['addedToCart']
+                                                ? Icon(
+                                                    Icons.delete_outlined,
+                                                    color: Colors.white,
+                                                    size: 20,
+                                                  )
+                                                : Icon(
+                                                    Icons
+                                                        .add_shopping_cart_outlined,
+                                                    color: Colors.white,
+                                                    size: 20,
+                                                  )),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+
+                            /* InkWell(
                               onTap: () {
                                 MyCustomAlertDialog()
                                     .showToast(context, "Item added to cart ");
@@ -378,14 +483,16 @@ class _MealDetailsState extends State<MealDetails> {
                                 child: Image.asset(
                                     "assets/images/ico_cart_white.png"),
                               ),
-                            )
+                            ) */
                           ]),
                     ),
                     SizedBox(
                       height: 10,
                     ),
                     ListTile(
-                      leading: Image.network(CommonFunctions.getMealImageUrl(widget.arguments['imgBaseUrl'], mealInfo['MerchantImg'])),
+                      leading: Image.network(CommonFunctions.getMealImageUrl(
+                          widget.arguments['imgBaseUrl'],
+                          mealInfo['MerchantImg'])),
                       title: Text(mealInfo['MerchantShortName']),
                     ),
                     SizedBox(
@@ -464,7 +571,6 @@ class _MealDetailsState extends State<MealDetails> {
                       height: 1,
                       color: Colors.grey.shade300,
                     ),
-
                     Container(
                       margin: EdgeInsets.only(top: 0, left: 5, right: 5),
                       padding:
@@ -504,8 +610,8 @@ class _MealDetailsState extends State<MealDetails> {
                             ),
                           ),
                           Text(
-                              DateFormat('dd-MMM-yyyy').format(DateTime.parse( widget.arguments['ViewDate'])
-                                 ),
+                              DateFormat('dd-MMM-yyyy').format(
+                                  DateTime.parse(widget.arguments['ViewDate'])),
                               style: TextStyle(fontSize: 14))
                         ],
                       ),
@@ -522,5 +628,18 @@ class _MealDetailsState extends State<MealDetails> {
         ),
       ),
     );
+  }
+
+  void onCartClick(isDelete) {
+    print("call back index ${mealInfo.toString()}");
+    isDelete
+        ? widget.callbackFun(mealInfo, widget.arguments['mealIndex'], true)
+        : widget.callbackFun(mealInfo, widget.arguments['mealIndex'], false);
+    setState(() {
+      if (isDelete)
+        mealInfo['addedToCart'] = false;
+      else
+        mealInfo['addedToCart'] = true;
+    });
   }
 }

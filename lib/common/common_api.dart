@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+import 'dart:js_util';
+import 'package:calms_parent_latest/common/util/common_funtions.dart';
 import 'package:calms_parent_latest/common/widgets/common.dart';
 import 'package:calms_parent_latest/ui/screens/meals/details/meal_details.dart';
 import 'package:calms_parent_latest/ui/screens/payment/topup_payment_webview_page.dart';
@@ -379,12 +381,22 @@ class CommonUtil {
     }
   }
 
-  Future<void> getMealItemDetail(context, RefItemSeqId, ViewDate,
-      POTypeConfigSeqId, CurrencyCode, imgBaseUrl,showCart) async {
+  Future<void> getMealItemDetail(
+      context,
+      RefItemSeqId,
+      ViewDate,
+      addedToCart,
+      poTypesList,
+      CurrencyCode,
+      imgBaseUrl,
+      showCart,
+      UserSeqId,
+      callbackFun,
+      mealIndex) async {
     var ParamData = {
       "RefItemSeqId": RefItemSeqId,
       "ViewDate": ViewDate,
-      "POTypeConfigSeqId": POTypeConfigSeqId
+      "POTypeConfigSeqId": poTypesList['POTypeConfigSeqId']
     };
     print(ParamData);
     Future<Map<String, dynamic>> res = RestApiProvider().authorizedPostRequest(
@@ -396,32 +408,58 @@ class CommonUtil {
     res
         .then((response) => {
               successGetMealItemDetail(
-                  context, response, CurrencyCode, imgBaseUrl, ViewDate,showCart)
+                  context,
+                  response,
+                  addedToCart,
+                  poTypesList,
+                  CurrencyCode,
+                  imgBaseUrl,
+                  ViewDate,
+                  showCart,
+                  UserSeqId,
+                  callbackFun,
+                  mealIndex)
             })
         .onError((error, stackTrace) => {authorizedPostRequestError(error)});
   }
 
   successGetMealItemDetail(
-      BuildContext context, response, CurrencyCode, imgBaseUrl, ViewDate,showCart) {
+      BuildContext context,
+      response,
+      addedToCart,
+      poTypesList,
+      CurrencyCode,
+      imgBaseUrl,
+      ViewDate,
+      showCart,
+      UserSeqId,
+      Function callbackFun,
+      mealIndex) {
     if (response['Table'][0]['code'] == 10) {
       print("successGetMealItemDetail");
-
+      response['Table1'][0]['addedToCart'] = addedToCart;
+      response['Table1'][0]['ViewDate'] = ViewDate;
       var arguments = {
         "mealInfo": response['Table1'][0],
         "ingredients": response['Table2'],
         "showCart": showCart,
         "ViewDate": ViewDate,
+        "poTypesList": poTypesList,
         "CurrencyCode": CurrencyCode,
-        "imgBaseUrl": imgBaseUrl
+        "imgBaseUrl": imgBaseUrl,
+        "UserSeqId": UserSeqId,
+        "mealIndex": mealIndex
       };
       print(arguments['mealInfo'][0]);
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => MealDetails(arguments)));
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => MealDetails(arguments, callbackFun)));
     }
   }
 
   Future<void> getCartPageSettings(context, RefBranchSeqId) async {
-    var ParamData = {"RefBranchSeqId": "11001"};
+    var ParamData = {"RefBranchSeqId": RefBranchSeqId};
     print(ParamData);
     Future<Map<String, dynamic>> res = RestApiProvider().authorizedPostRequest(
       ParamData,
@@ -430,22 +468,29 @@ class CommonUtil {
       false,
     );
     res
-        .then((response) => {successGetCartPageSettings(context, response)})
+        .then((response) =>
+            {successGetCartPageSettings(context, response, RefBranchSeqId)})
         .onError((error, stackTrace) => {authorizedPostRequestError(error)});
   }
 
-  successGetCartPageSettings(BuildContext context, response) {
-    if (response['Table'][0]['code'] == 10) {
+  successGetCartPageSettings(BuildContext context, response, RefBranchSeqId) {
+    if (response['Table'][0]['code'] == 10 && response['Table1'][0] != null) {
       print("successGetCartPageSettings");
+      List cartList = context.read<MySettingsListener>().cartList;
+      String RefItemSeqId = CommonFunctions.getDailyMealsInCart(cartList);
+      String PackageSeqId = CommonFunctions.getTermMealsInCart(cartList);
+      if(RefItemSeqId != "")
+      getCartDailyMealItems(context, RefBranchSeqId, cartList,RefItemSeqId);
+      if(PackageSeqId != "")
+      getCartTermMealItems(context, RefBranchSeqId, cartList,PackageSeqId);
     }
   }
 
   Future<void> getCartDailyMealItems(
-      context, RefBranchSeqId, RefItemSeqId) async {
+      BuildContext context, RefBranchSeqId, cartList,RefItemSeqId) async {
     var ParamData = {
       "RefBranchSeqId": RefBranchSeqId,
-      "RefItemSeqId":
-          "<ItemSeqId_OrderDate_POTypeConfigSeqId>,<ItemSeqId_OrderDate_POTypeConfigSeqId>"
+      "RefItemSeqId": RefItemSeqId
     };
     print(ParamData);
     Future<Map<String, dynamic>> res = RestApiProvider().authorizedPostRequest(
@@ -466,7 +511,8 @@ class CommonUtil {
   }
 
   Future<void> getCartTermMealItems(
-      context, RefBranchSeqId, PackageSeqId) async {
+      BuildContext context, RefBranchSeqId, cartList,PackageSeqId) async {
+    
     var ParamData = {
       "RefBranchSeqId": RefBranchSeqId,
       "PackageSeqId": PackageSeqId

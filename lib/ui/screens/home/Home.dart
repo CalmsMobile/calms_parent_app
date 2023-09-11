@@ -385,7 +385,126 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             // Your widgets here
           ],
         ),
-        actions: [
+        actions: [Container(
+              height: 30,
+              //width: 100,
+              margin: EdgeInsets.only(right: 10),
+              child: Row(children: [
+                
+                InkWell(
+                  onTap: () {
+                     Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Notifications()));
+                  },
+                  child: Container(
+                    width: 40,
+                    height: 40,
+                    //margin: EdgeInsets.only(left: 10),
+                    child: ClipOval(
+                      child: Material(
+                        color: Colors.blue[900], // Button color
+                        child: SizedBox(
+                            width: 40,
+                            height: 40,
+                            child: Icon(
+                              Icons.notifications_rounded,
+                              color: Colors.white,
+                              size: 18,
+                            )),
+                      ),
+                    ),
+                  ),
+                ),
+                Stack(
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CartPage(),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        width: 40,
+                        height: 40,
+                        margin: EdgeInsets.only(left: 10),
+                        child: ClipOval(
+                          child: Material(
+                            color: Colors.blue, // Button color
+                            child: SizedBox(
+                                width: 40,
+                                height: 40,
+                                child: Icon(
+                                  Icons.shopping_cart_rounded,
+                                  color: Colors.white,
+                                  size: 18,
+                                )),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Consumer<MySettingsListener>(
+                        builder: (context, data, settingsDta) {
+                      return Positioned(
+                        top: 0,
+                        right: 0,
+                        child: Container(
+                          height: 18,
+                          width: 18,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.red,
+                          ),
+                          child: Center(
+                              child: Text(
+                            data.cartList != []
+                                ? data.cartList.length.toString()
+                                : "0",
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )),
+                        ),
+                      );
+                    })
+                  ],
+                ),
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AppSettingsPage(),
+                  ),
+                );
+                  },
+                  child: Container(
+                    width: 40,
+                    height: 40,
+                    margin: EdgeInsets.only(left: 10),
+                    child: ClipOval(
+                      child: Material(
+                        color: Colors.blue[900], // Button color
+                        child: SizedBox(
+                            width: 40,
+                            height: 40,
+                            child: Icon(
+                              Icons.settings_rounded,
+                              color: Colors.white,
+                              size: 18,
+                            )),
+                      ),
+                    ),
+                  ),
+                ),
+                
+              ]),
+            ),
+        ],
+        /* actions: [
           Padding(
             padding: EdgeInsets.only(right: 20),
             child: InkWell(
@@ -405,20 +524,65 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           ),
           Padding(
             padding: EdgeInsets.only(right: 20),
-            child: InkWell(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => CartPage(),
-                  ),
-                );
-              },
-              child: Image(
-                  width: 50,
-                  height: 50,
-                  image: AssetImage("assets/images/ico_cart_white.png")),
-            ),
+            child: Row(children: [
+                Stack(
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CartPage(),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        width: 40,
+                        height: 40,
+                        margin: EdgeInsets.only(left: 10),
+                        child: ClipOval(
+                          child: Material(
+                            color: Colors.blue, // Button color
+                            child: SizedBox(
+                                width: 40,
+                                height: 40,
+                                child: Icon(
+                                  Icons.shopping_cart_rounded,
+                                  color: Colors.white,
+                                  size: 18,
+                                )),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Consumer<MySettingsListener>(
+                        builder: (context, data, settingsDta) {
+                      return Positioned(
+                        top: 0,
+                        right: 0,
+                        child: Container(
+                          height: 18,
+                          width: 18,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.red,
+                          ),
+                          child: Center(
+                              child: Text(
+                            data.cartList != []
+                                ? data.cartList.length.toString()
+                                : "0",
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )),
+                        ),
+                      );
+                    })
+                  ],
+                ),
+              ]),
           ),
           Padding(
             padding: EdgeInsets.only(right: 20),
@@ -433,7 +597,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   image: AssetImage("assets/images/ico_option.png")),
             ),
           ),
-        ],
+        ], */
       ),
       extendBodyBehindAppBar: false,
       resizeToAvoidBottomInset: false,

@@ -75,112 +75,112 @@ class _MealOrderState extends State<MealOrder> {
         ),
         actions: [
           // Navigate to the Search Screen
-            if (familyList.length > 0 && senderIndex > -1)
-              Container(
-                height: 30,
-                width: 100,
-                margin: EdgeInsets.only(right: 10),
-                child: Row(
-                  children: [
-                    Flexible(
-                      child: ListTile(
-                        horizontalTitleGap: 2,
-                        contentPadding: EdgeInsets.zero,
-                        onTap: () => {
-                          openMemberBottomSheet(context, familyList, imgBaseUrl,
-                              (index) {
-                            Navigator.pop(context);
-                            senderIndex = index;
-                            setState(() {
-                              CommonUtil().getPOConfigForUser(
-                                  context,
-                                  familyList[index]['UserSeqId'],
-                                  familyList[index]['RefBranchSeqId']);
-                            });
-                          })
-                        },
-                        trailing: familyList[senderIndex]['UserImgPath'] != null
-                            ? CircleAvatar(
-                                backgroundImage: NetworkImage(imgBaseUrl +
-                                    familyList[senderIndex]["UserImgPath"]),
-                              )
-                            : CircleAvatar(
-                                backgroundColor: Colors.blue[700],
-                                child: Text(
-                                  CommonFunctions.getInitials(
-                                      familyList[senderIndex]['Name']),
-                                  style: TextStyle(
-                                      fontSize: 22.0,
-                                      color: Colors.white,
-                                      letterSpacing: 2.0,
-                                      fontWeight: FontWeight.w900),
-                                ),
+          if (familyList.length > 0 && senderIndex > -1)
+            Container(
+              height: 30,
+              width: 100,
+              margin: EdgeInsets.only(right: 10),
+              child: Row(
+                children: [
+                  Flexible(
+                    child: ListTile(
+                      horizontalTitleGap: 2,
+                      contentPadding: EdgeInsets.zero,
+                      onTap: () => {
+                        openMemberBottomSheet(context, familyList, imgBaseUrl,
+                            (index) {
+                          Navigator.pop(context);
+                          senderIndex = index;
+                          setState(() {
+                            CommonUtil().getPOConfigForUser(
+                                context,
+                                familyList[index]['UserSeqId'],
+                                familyList[index]['RefBranchSeqId']);
+                          });
+                        })
+                      },
+                      trailing: familyList[senderIndex]['UserImgPath'] != null
+                          ? CircleAvatar(
+                              backgroundImage: NetworkImage(imgBaseUrl +
+                                  familyList[senderIndex]["UserImgPath"]),
+                            )
+                          : CircleAvatar(
+                              backgroundColor: Colors.blue[700],
+                              child: Text(
+                                CommonFunctions.getInitials(
+                                    familyList[senderIndex]['Name']),
+                                style: TextStyle(
+                                    fontSize: 22.0,
+                                    color: Colors.white,
+                                    letterSpacing: 2.0,
+                                    fontWeight: FontWeight.w900),
                               ),
-                      ),
+                            ),
                     ),
-                    Stack(
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => CartPage(),
                   ),
-                );
-                          },
-                          child: Container(
-                            width: 40,
-                            height: 40,
-                            margin: EdgeInsets.only(left: 10),
-                            child: ClipOval(
-                              child: Material(
-                                color: Colors.blue, // Button color
-                                child: SizedBox(
-                                    width: 40,
-                                    height: 40,
-                                    child: Icon(
-                                      Icons.shopping_cart_rounded,
-                                      color: Colors.white,
-                                      size: 18,
-                                    )),
-                              ),
+                  Stack(
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CartPage(),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          width: 40,
+                          height: 40,
+                          margin: EdgeInsets.only(left: 10),
+                          child: ClipOval(
+                            child: Material(
+                              color: Colors.blue, // Button color
+                              child: SizedBox(
+                                  width: 40,
+                                  height: 40,
+                                  child: Icon(
+                                    Icons.shopping_cart_rounded,
+                                    color: Colors.white,
+                                    size: 18,
+                                  )),
                             ),
                           ),
                         ),
-                        Consumer<MySettingsListener>(
-                            builder: (context, data, settingsDta) {
-                          return Positioned(
-                            top: 0,
-                            right: 0,
-                            child: Container(
-                              height: 18,
-                              width: 18,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.red,
-                              ),
-                              child: Center(
-                                  child: Text(
-                                data.cartList != []
-                                    ? data.cartList.length.toString()
-                                    : "0",
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              )),
+                      ),
+                      Consumer<MySettingsListener>(
+                          builder: (context, data, settingsDta) {
+                        return Positioned(
+                          top: 0,
+                          right: 0,
+                          child: Container(
+                            height: 18,
+                            width: 18,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.red,
                             ),
-                          );
-                        })
-                      ],
-                    ),
-                  ],
-                ),
+                            child: Center(
+                                child: Text(
+                              data.cartList != []
+                                  ? data.cartList.length.toString()
+                                  : "0",
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )),
+                          ),
+                        );
+                      })
+                    ],
+                  ),
+                ],
               ),
-          ],
+            ),
+        ],
       ),
-      resizeToAvoidBottomInset: false,
+      //resizeToAvoidBottomInset: false,
       body: Container(
         constraints: BoxConstraints.expand(),
         decoration: BoxDecoration(
@@ -194,27 +194,30 @@ class _MealOrderState extends State<MealOrder> {
         )),
         child: SizedBox(
           height: MediaQuery.of(context).size.height,
-          child: Container(
-            color: HexColor("#f5f8fd"),
-            margin: EdgeInsets.only(top: 0),
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Consumer<MySettingsListener>(
-                      builder: (context, data, settingsDta) {
-                    if (data.poSettings.isNotEmpty) {
-                      return MealOrderListView(
-                          data.poSettings,
-                          data.poTypesList,
-                          data.poPackagesList,
-                          widget.arguments["profileData"]['CurrencyCode'],
-                          data.poList,
-                          familyList[senderIndex],imgBaseUrl);
-                    } else {
-                      return SizedBox();
-                    }
-                  }),
-                ]),
+          child: SingleChildScrollView(
+            child: Container(
+              color: HexColor("#f5f8fd"),
+              margin: EdgeInsets.only(top: 0),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Consumer<MySettingsListener>(
+                        builder: (context, data, settingsDta) {
+                      if (data.poSettings.isNotEmpty) {
+                        return MealOrderListView(
+                            data.poSettings,
+                            data.poTypesList,
+                            data.poPackagesList,
+                            widget.arguments["profileData"]['CurrencyCode'],
+                            data.poList,
+                            familyList[senderIndex],
+                            imgBaseUrl);
+                      } else {
+                        return SizedBox();
+                      }
+                    }),
+                  ]),
+            ),
           ),
         ),
       ),

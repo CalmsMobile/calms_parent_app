@@ -204,11 +204,11 @@ class _MealMenuPageState extends State<MealMenuPage> {
                     InkWell(
                       onTap: () {
                         Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => CartPage(),
-                  ),
-                );
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CartPage(),
+                          ),
+                        );
                       },
                       child: Container(
                         width: 40,
@@ -424,8 +424,10 @@ class _MealMenuPageState extends State<MealMenuPage> {
                           mealListByItemType,
                           widget.arguments['CurrencyCode'],
                           widget.arguments['imgBaseUrl'],
-                          widget.arguments['poTypesList']['PreOrderType'],
-                          widget.arguments['poTypesList']['POTypeConfigSeqId'],
+                          // widget.arguments['poTypesList']['PreOrderType'],
+                          // widget.arguments['poTypesList']['POTypeConfigSeqId'],
+                          widget.arguments['UserSeqId'],
+                          widget.arguments['poTypesList'],
                           onCartClick))
                 ]),
           ),

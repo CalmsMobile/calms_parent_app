@@ -89,7 +89,6 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -180,18 +179,7 @@ void main() async {
   );
 }
 
-List<Map> tabsList = [
-  {
-    "title": "Home",
-  },
-  // {
-  //   "title": "Stores",
-  // },
-  // {
-  //   "title": "Invoice",
-  // },
-  // {"title": "Activities"}
-];
+
 
 var myroutes = {
   "/TopupPage": (context) => new TopupPage({}),
@@ -228,7 +216,7 @@ var myroutes = {
   "/FilterPage": (context) => FilterPage(),
   "/FilterActivities": (context) => FilterActivities(),
   "/ViewImage": (context) => ViewImage(),
-  "/MealDetails": (context) => MealDetails({}),
+  "/MealDetails": (context) => MealDetails({},(){}),
   "/calendarTransactions": (context) => CalendarTransactionsPage(),
   "/topupPayment":(context)=>TopupPaymentWebviewPage({}),
   "/topupAfterPayment":(context)=>TopupAfterPaymentPage({}),

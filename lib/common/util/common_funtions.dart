@@ -1,6 +1,10 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+
+import '../listener/settings_listener.dart';
 
 class CommonFunctions {
   static String getInitials(name) {
@@ -57,8 +61,34 @@ class CommonFunctions {
     return "PO_${UserSeqId}_${ItemSeqId}_${ViewDate}_${ItemType}_0_${POTypeConfigSeqId}__";
   }
 
-  static String getMealImageUrl(baseUrl,imgPath){
-    baseUrl = baseUrl.toString().replaceAll("/FS/","");
+  static String getMealImageUrl(baseUrl, imgPath) {
+    baseUrl = baseUrl.toString().replaceAll("/FS/", "");
     return "${baseUrl}/Handler/ImagePathHandler.ashx?ImagePath=${imgPath}&Default=10&PROUrl=${baseUrl}/&StoreageUrl=${baseUrl}/FS/";
+  }
+
+  static String getDailyMealsInCart(cartList) {
+    List mealsList = [];
+    if (cartList.length > 0) {
+      for (var item in cartList) {
+        mealsList.add(
+            "${item.split("_")[2]}_${item.split("_")[3]}_${item.split("_")[6]}");
+      }
+
+      print(mealsList.join(","));
+    }
+    return (mealsList.join(","));
+  }
+
+  static String getTermMealsInCart(cartList) {
+    List mealsList = [];
+    if (cartList.length > 0) {
+      for (var item in cartList) {
+        if(item.split("_")[7]!="")
+        mealsList.add("${item.split("_")[7]}");
+      }
+
+      print(mealsList.join(","));
+    }
+    return mealsList.join(",");
   }
 }
