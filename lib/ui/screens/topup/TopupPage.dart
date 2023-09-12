@@ -164,7 +164,7 @@ class _TopupPageState extends State<TopupPage> {
                                     "Choose payment type",
                                     data.paymentProvidersList,
                                     data.topupTotal,
-                                    widget.arguments['profileData']);
+                                    widget.arguments['profileData'],AppSettings.paymentTypeTopup);
                               }
                             : null,
                         style: ElevatedButton.styleFrom(

@@ -12,6 +12,7 @@ import '../../../provider/rest_api.dart';
 class MealOrderListView extends StatelessWidget {
   //final String imgBaseUrl;
   final String CurrencyCode;
+  final profileData;
   List poSettings;
   List poTypesList;
   Map<dynamic, List<dynamic>> poList;
@@ -19,7 +20,7 @@ class MealOrderListView extends StatelessWidget {
   var memberDetails = {};
   String imgBaseUrl;
   MealOrderListView(this.poSettings, this.poTypesList, this.poPackagesList,
-      this.CurrencyCode, this.poList, this.memberDetails, this.imgBaseUrl);
+      this.CurrencyCode, this.poList, this.memberDetails, this.imgBaseUrl, this.profileData);
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +101,7 @@ class MealOrderListView extends StatelessWidget {
                                                 memberDetails['RefBranchSeqId'],
                                                 poTypesList[index][0],
                                                 CurrencyCode,
-                                                imgBaseUrl);
+                                                imgBaseUrl,profileData);
                                           },
                                           child: Container(
                                             width: 30,
@@ -207,7 +208,7 @@ class MealOrderListView extends StatelessWidget {
                                                                   poTypesList[
                                                                       index][i],
                                                                   CurrencyCode,
-                                                                  imgBaseUrl);
+                                                                  imgBaseUrl,profileData);
                                                         },
                                                         child: Container(
                                                           width: 30,

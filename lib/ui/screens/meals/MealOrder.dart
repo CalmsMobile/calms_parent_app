@@ -125,7 +125,7 @@ class _MealOrderState extends State<MealOrder> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => CartPage(),
+                              builder: (context) => CartPage(imgBaseUrl,widget.arguments["profileData"]),
                             ),
                           );
                         },
@@ -211,7 +211,7 @@ class _MealOrderState extends State<MealOrder> {
                             widget.arguments["profileData"]['CurrencyCode'],
                             data.poList,
                             familyList[senderIndex],
-                            imgBaseUrl);
+                            imgBaseUrl,widget.arguments["profileData"]);
                       } else {
                         return SizedBox();
                       }

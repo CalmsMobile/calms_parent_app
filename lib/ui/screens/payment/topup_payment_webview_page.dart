@@ -12,7 +12,8 @@ import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 
 class TopupPaymentWebviewPage extends StatefulWidget {
   final arguments;
-  const TopupPaymentWebviewPage(this.arguments, {Key? key}) : super(key: key);
+  final paymentFor;
+  const TopupPaymentWebviewPage(this.arguments,this.paymentFor, {Key? key}) : super(key: key);
 
   @override
   _TopupPaymentPageState createState() => _TopupPaymentPageState();
@@ -68,7 +69,7 @@ class _TopupPaymentPageState extends State<TopupPaymentWebviewPage> {
           onPageFinished: (String url) {
             if (url.contains("/common/PaymentStatus.aspx")) {
             debugPrint("payment success");
-              CommonUtil().getAfterTopupPaymentSummary(context, widget.arguments['PaymentOrderId']);
+              CommonUtil().getAfterTopupPaymentSummary(context, widget.arguments['PaymentOrderId'],widget.paymentFor);
             }
             debugPrint('Page finished loading: $url');
           },

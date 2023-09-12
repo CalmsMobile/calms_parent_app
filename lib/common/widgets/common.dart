@@ -59,7 +59,8 @@ PreferredSizeWidget getMyAppbar(context, var titleText, List<Widget> actions1) {
 PreferredSizeWidget getBottomSheetActionBar(
     BuildContext context, var titleText, bool showClose, Color bgcolor) {
   return AppBar(
-    title: titleText == 'Confirmation' || titleText.toString().contains("verification")
+    title: titleText == 'Confirmation' ||
+            titleText.toString().contains("verification")
         ? RichText(
             textAlign: TextAlign.center,
             text: TextSpan(children: [
@@ -90,7 +91,8 @@ PreferredSizeWidget getBottomSheetActionBar(
                 fontWeight: titleText == 'Summary' ||
                         titleText == 'Attendance' ||
                         titleText == 'Select Model' ||
-                        titleText == 'Package' || titleText.toString().contains("verification")
+                        titleText == 'Package' ||
+                        titleText.toString().contains("verification")
                     ? FontWeight.bold
                     : FontWeight.normal),
           ),
@@ -220,8 +222,9 @@ void openMemberBottomSheet(
         );
       });
 }
+
 void showPaymentSelectOption(BuildContext buildContext, titleText, paymentList,
-    topupAmount, profileData) {
+    topupAmount, profileData, paymentFor) {
   var selectedPaymentMethod = {};
   var checkedValue = false;
   final List<String> modalList = [
@@ -303,8 +306,12 @@ void showPaymentSelectOption(BuildContext buildContext, titleText, paymentList,
                                       trailing: Container(
                                         height: 45,
                                         width: 45,
-                                        child:paymentList[index]["ImgPathUrl"] != ""? Image.network(
-                                            paymentList[index]["ImgPathUrl"]) : null,
+                                        child: paymentList[index]
+                                                    ["ImgPathUrl"] !=
+                                                ""
+                                            ? Image.network(paymentList[index]
+                                                ["ImgPathUrl"])
+                                            : null,
                                       ),
                                       onTap: () {
                                         selectedPaymentMethod =
@@ -497,7 +504,8 @@ void showPaymentSelectOption(BuildContext buildContext, titleText, paymentList,
                                                 selectedPaymentMethod[
                                                     'SettingsSeqId'],
                                                 topupAmount,
-                                                profileData);
+                                                profileData,
+                                                paymentFor);
                                           }
                                         : null,
                                     style: ElevatedButton.styleFrom(
@@ -653,8 +661,8 @@ double grandTotal(amountwithAdminFee, gatewayDetail, topupAmount) {
   return total;
 }
 
-void showCustomPaymentAlert(
-    BuildContext buildContext, gatewayDetail, topupAmount, profileData) {
+void showCustomPaymentAlert(BuildContext buildContext, gatewayDetail,
+    topupAmount, profileData, paymentFor) {
   final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
     backgroundColor: Colors.pinkAccent,
     textStyle: TextStyle(color: Colors.white),
@@ -704,7 +712,7 @@ void showCustomPaymentAlert(
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Text(
-                                      "Top-up Amount",
+                                      "${paymentFor == AppSettings.paymentTypeTopup ? "Top-up" : "Order"} Amount",
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
                                           fontSize: 16,
@@ -716,8 +724,8 @@ void showCustomPaymentAlert(
                                           padding: const EdgeInsets.all(8.0),
                                           child: Text(
                                             gatewayDetail['GstType'] == 20
-                                                ? "Top-up Amount GST (Excl.)"
-                                                : "Top-up Amount GST (Incl.)",
+                                                ? "${paymentFor == AppSettings.paymentTypeTopup ? "Top-up" : "Order"} Amount GST (Excl.)"
+                                                : "${paymentFor == AppSettings.paymentTypeTopup ? "Top-up" : "Order"} Amount GST (Incl.)",
                                             textAlign: TextAlign.left,
                                             style: TextStyle(
                                                 fontSize: 16,
@@ -862,12 +870,24 @@ void showCustomPaymentAlert(
                                           ],
                                         ),
                                         onPressed: () {
-                                          buildContext
-                                              .read<MySettingsListener>()
-                                              .updateTopupHeaderAndDetails(
-                                                  buildContext,
-                                                  gatewayDetail,
-                                                  profileData);
+                                          if (paymentFor ==
+                                              AppSettings.paymentTypeTopup)
+                                            buildContext
+                                                .read<MySettingsListener>()
+                                                .updateTopupHeaderAndDetails(
+                                                    buildContext,
+                                                    gatewayDetail,
+                                                    profileData,
+                                                    paymentFor);
+                                          if (paymentFor ==
+                                              AppSettings.paymentTypeOrder)
+                                            buildContext
+                                                .read<MySettingsListener>()
+                                                .updateOrderHeaderAndDetails(
+                                                    buildContext,
+                                                    gatewayDetail,
+                                                    profileData,
+                                                    paymentFor);
                                         },
                                         style: ElevatedButton.styleFrom(
                                           backgroundColor:

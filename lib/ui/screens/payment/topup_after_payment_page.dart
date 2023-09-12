@@ -7,7 +7,8 @@ import '../../../common/widgets/common.dart';
 
 class TopupAfterPaymentPage extends StatefulWidget {
   final txnDetail;
-  const TopupAfterPaymentPage(this.txnDetail, {Key? key}) : super(key: key);
+  final paymentFor;
+  const TopupAfterPaymentPage(this.txnDetail,this.paymentFor, {Key? key}) : super(key: key);
 
   @override
   _TopupAfterPaymentPageState createState() => _TopupAfterPaymentPageState();

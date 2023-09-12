@@ -7,8 +7,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MealPager extends StatelessWidget {
-  const MealPager(
-      this.mealList_,this.CurrencyCode, this.imgBaseUrl,this.UserSeqId,this.poTypesList, this.callbackFun)
+  const MealPager(this.mealList_, this.CurrencyCode, this.imgBaseUrl,
+      this.UserSeqId, this.poTypesList, this.callbackFun)
       : super();
 
   final mealList_;
@@ -17,7 +17,6 @@ class MealPager extends StatelessWidget {
   final UserSeqId;
   final poTypesList;
   final Function callbackFun;
-
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +36,18 @@ class MealPager extends StatelessWidget {
             ),
             itemBuilder: (context, index) => GestureDetector(
               onTap: () {
-               CommonUtil().getMealItemDetail(context,mealList_[index]['ItemSeqId'],mealList_[index]['ViewDate'],mealList_[index]['addedToCart'],poTypesList,CurrencyCode,imgBaseUrl,poTypesList['PreOrderType'] == 'Daily'?true:false,UserSeqId,callbackFun,index);
+                CommonUtil().getMealItemDetail(
+                    context,
+                    mealList_[index]['ItemSeqId'],
+                    mealList_[index]['ViewDate'],
+                    mealList_[index]['addedToCart'],
+                    poTypesList,
+                    CurrencyCode,
+                    imgBaseUrl,
+                    poTypesList['PreOrderType'] == 'Daily' ? true : false,
+                    UserSeqId,
+                    callbackFun,
+                    index);
                 // moveToDetails(_foundStoreList, index, context);
                 /* Navigator.of(context)
                     .pushNamed('/MealDetails', arguments: mealList_[index]); */
@@ -48,7 +58,7 @@ class MealPager extends StatelessWidget {
                 ),
                 borderOnForeground: true,
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
                       height: 100,
@@ -59,7 +69,8 @@ class MealPager extends StatelessWidget {
                         child: mealList_[index]['ImgPathUrl'] != null &&
                                 mealList_[index]['ImgPathUrl'] != ""
                             ? Image.network(
-                                CommonFunctions.getMealImageUrl(imgBaseUrl, mealList_[index]['ImgPathUrl']),
+                                CommonFunctions.getMealImageUrl(
+                                    imgBaseUrl, mealList_[index]['ImgPathUrl']),
                                 width: double.infinity,
                                 height: 100,
                                 fit: BoxFit.cover)
@@ -73,24 +84,26 @@ class MealPager extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                         // mainAxisAlignment: MainAxisAlignment.start,
+                         // crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
                               margin: EdgeInsets.only(top: 10),
                               child: Text(
                                 // products is out demo list
                                 mealList_[index]['Name'],
-                                overflow: TextOverflow.ellipsis,
+                                overflow: TextOverflow.fade,
+                                maxLines: 1,
                                 style: TextStyle(
                                   color: kTextColor,
-                                  fontSize: 10,
+                                  fontSize: 14,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ),
                             if (mealList_[index]['Rating'] == null)
                               Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Icon(
                                     Icons.star_border_outlined,
@@ -121,6 +134,7 @@ class MealPager extends StatelessWidget {
                               ),
                             if (mealList_[index]['Rating'] != null)
                               Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Icon(
                                     mealList_[index]['Rating'] > 0
@@ -161,85 +175,89 @@ class MealPager extends StatelessWidget {
                               ),
                           ],
                         ),
-                        RichText(
+                       
+                      ],
+                    ),
+                    Container(
+                     margin: EdgeInsets.only(left: 10,right: 10),
+                      child:Row(
+                      //mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                         RichText(
                             maxLines: 1,
                             text: TextSpan(children: [
                               TextSpan(
                                 text:
                                     "${CurrencyCode} ${mealList_[index]['SellingPrice'].toStringAsFixed(2)}",
                                 style: TextStyle(
-                                    fontSize: 12,
+                                    fontSize: 14,
                                     fontFamily: appFontFmaily,
                                     color: Colors.blue,
                                     fontWeight: FontWeight.bold),
                               ),
                             ])),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(
-                              right: 2, top: 10, bottom: 5, left: 15),
-                          child: mealList_[index]['ItemStyle'] != null ||
-                                  mealList_[index]['ItemStyle'] != ""
-                              ? Container(
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: 6, horizontal: 15),
-                                  decoration: BoxDecoration(
-                                      color: Colors.blue,
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(5),
-                                      )),
-                                  child: Text(
-                                      "${mealList_[index]['ItemStyle']}",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 10,
-                                          fontWeight: FontWeight.normal)),
-                                )
-                              : SizedBox(),
-                        ),
-                        if(poTypesList['PreOrderType'] == 'Daily')
-                        InkWell(
-                          onTap: () {},
-                          child: Container(
-                            width: 30,
-                            height: 30,
-                            margin: EdgeInsets.only(right: 10),
-                            child: ClipOval(
-                              child: Material(
-                                color: mealList_[index]['addedToCart']
-                                    ? Colors.red
-                                    : Colors.blue, // Button color
-                                child: InkWell(
-                                  onTap: () async {
-                                    mealList_[index]['addedToCart']?
-                                    callbackFun(mealList_[index],index,true):
-                                    callbackFun(mealList_[index],index,false);
-                                  },
-                                  child: SizedBox(
+                        if (poTypesList['PreOrderType'] == 'Daily')
+                          InkWell(
+                            onTap: () {},
+                            child: Container(
+                              //margin: EdgeInsets.only(bottom: 10),
+                              child: ClipOval(
+                                child: Material(
+                                  color: mealList_[index]['addedToCart']
+                                      ? Colors.red
+                                      : Colors.blue, // Button color
+                                  child: InkWell(
+                                    onTap: () async {
+                                      mealList_[index]['addedToCart']
+                                          ? callbackFun(
+                                              mealList_[index], index, true)
+                                          : callbackFun(
+                                              mealList_[index], index, false);
+                                    },
+                                    child: SizedBox(
                                       width: 30,
-                                      height: 30,
-                                      child: mealList_[index]['addedToCart']
-                                          ? Icon(
-                                              Icons.delete_outlined,
-                                              color: Colors.white,
-                                              size: 20,
-                                            )
-                                          : Icon(
-                                              Icons.add_shopping_cart_outlined,
-                                              color: Colors.white,
-                                              size: 20,
-                                            )),
+                                       height: 30,
+                                        child: mealList_[index]['addedToCart']
+                                            ? Icon(
+                                                Icons.delete_outlined,
+                                                color: Colors.white,
+                                                size: 20,
+                                              )
+                                            : Icon(
+                                                Icons
+                                                    .add_shopping_cart_outlined,
+                                                color: Colors.white,
+                                                size: 20,
+                                              )),
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
                       ],
                     ),
+                    
+                    ),
+                    mealList_[index]['ItemStyle'] != null ||
+                            mealList_[index]['ItemStyle'] != ""
+                        ? Container(
+                            width: double.infinity,
+                            padding: EdgeInsets.symmetric(
+                                vertical: 6, horizontal: 15),
+                            decoration: BoxDecoration(
+                                color: Colors.blue,
+                                borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.circular(15),
+                                    bottomRight: Radius.circular(15))),
+                            child: Text("${mealList_[index]['ItemStyle']}",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.normal)),
+                          )
+                        : SizedBox(),
                   ],
                 ),
               ),

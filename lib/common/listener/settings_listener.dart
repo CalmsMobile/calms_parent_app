@@ -37,6 +37,8 @@ class MySettingsListener with ChangeNotifier {
   List _poPackagesList = [];
   late Map<dynamic, List<dynamic>> _poList;
   List _cartList = [];
+  List _finalCartList = [];
+  double _cartTotal = 0;
 
   List _mealsList = [];
   List _mealsCtgryList = [];
@@ -99,6 +101,9 @@ class MySettingsListener with ChangeNotifier {
   get poList => _poList;
 
   UnmodifiableListView<dynamic> get cartList => UnmodifiableListView(_cartList);
+  UnmodifiableListView<dynamic> get finalCartList =>
+      UnmodifiableListView(_finalCartList);
+  get cartTotal => _cartTotal;
 
   UnmodifiableListView<dynamic> get mealsList =>
       UnmodifiableListView(_mealsList);
@@ -163,7 +168,7 @@ class MySettingsListener with ChangeNotifier {
   }
 
   updateTopupHeaderAndDetails(
-      BuildContext context, gatewayDetail, profileData) {
+      BuildContext context, gatewayDetail, profileData, paymentFor) {
     _topupHeader = [];
     _topupDetails = [];
     for (int i = 0; i < topupMembersList.length; i++) {
@@ -204,12 +209,13 @@ class MySettingsListener with ChangeNotifier {
     print("==========topupDetails============");
     print(jsonEncode(topupDetails));
     Navigator.of(context).pop();
-    CommonUtil().MakeTransaction(
-        context, topupHeader, topupDetails, gatewayDetail, profileData);
+    CommonUtil().MakeTransaction(context, topupHeader, topupDetails,
+        gatewayDetail, profileData, paymentFor);
   }
 
   updateTopupPaymentProvidersList(List paymentProvidersList) {
     _paymentProvidersList = paymentProvidersList;
+    print("_paymentProvidersList updated");
   }
 
   updatePOConfigForUser(
@@ -267,8 +273,15 @@ class MySettingsListener with ChangeNotifier {
     notifyListeners();
   }
 
-  updategetMealItemsForUser(BuildContext context, List mealsList,
-      List mealsCtgryList, UserSeqId, poTypesList, CurrencyCode, imgBaseUrl) {
+  updategetMealItemsForUser(
+      BuildContext context,
+      List mealsList,
+      List mealsCtgryList,
+      UserSeqId,
+      poTypesList,
+      CurrencyCode,
+      imgBaseUrl,
+      profileData) {
     if (mealsList.length > 0 && poTypesList['PreOrderType'] == "Daily") {
       for (var i = 0; i < mealsList.length; i++) {
         if (_cartList.contains(CommonFunctions.getPoMealCartData(
@@ -290,7 +303,8 @@ class MySettingsListener with ChangeNotifier {
       "UserSeqId": UserSeqId,
       "poTypesList": poTypesList,
       "CurrencyCode": CurrencyCode,
-      "imgBaseUrl": imgBaseUrl
+      "imgBaseUrl": imgBaseUrl,
+      "profileData": profileData
     };
     Navigator.push(context,
         MaterialPageRoute(builder: (context) => MealMenuPage(arguments)));
@@ -311,6 +325,95 @@ class MySettingsListener with ChangeNotifier {
     }
     print(_cartList);
     notifyListeners();
+  }
+
+  updateMealsInFinalCartList(List mealsList) {
+    for (var i = 0; i < mealsList.length; i++) {
+      var f = familyList
+          .where((element) => element['UserSeqId'] == 106312.0)
+          .toList();
+      mealsList[i]['isSelected'] = false;
+      mealsList[i]['member'] = f;
+    }
+
+    _finalCartList.addAll(mealsList);
+
+    notifyListeners();
+  }
+
+  updatePackagesInFinalCartList(List packaList) {
+    for (var i = 0; i < packaList.length; i++) {
+      var f = familyList
+          .where((element) => element['UserSeqId'] == 106312.0)
+          .toList();
+      packaList[i]['isSelected'] = false;
+      packaList[i]['member'] = f;
+    }
+
+    _finalCartList.addAll(packaList);
+
+    notifyListeners();
+  }
+
+  clearFinalCartList() {
+    _cartTotal = 0;
+    _finalCartList = [];
+    notifyListeners();
+  }
+
+  updateSelectedOrderCalculateTotal(List updatedCartList) {
+    _finalCartList = updatedCartList;
+    _cartTotal = 0;
+    _finalCartList.forEach((val) {
+      if (val['isSelected']) {
+        if (val['SellingPrice'] != null) _cartTotal += val['SellingPrice'];
+        if (val['Amount'] != null) _cartTotal += val['Amount'];
+      }
+    });
+    print(_finalCartList);
+    notifyListeners();
+  }
+
+  updateOrderHeaderAndDetails(
+      BuildContext context, gatewayDetail, profileData, paymentFor) {
+    List orderHeader = [];
+    List orderDetails = [];
+    orderHeader.add({
+      "Amount": "19.00",
+      "Discount": "0.00",
+      "GST_Type": "",
+      "Gst": "0.00",
+      "GstPerc": 0,
+      "RefUserSeqId": "100108",
+      "RefPOTypeConfigSeqId": 10000
+    });
+    for (var cart in finalCartList) {
+      orderDetails.add({
+        "ItemSeqId": 1001,
+        "Name": "Sample Menu Name 1",
+        "SellingPrice": 18,
+        "GST_Percent": 0,
+        "GST_Type": "",
+        "RefItemType": "101",
+        "AvailableOn": "2023-09-10T00:00:00",
+        "ItemType": "Breakfast",
+        "ItemStyle": "Indian",
+        "RefPOTypeConfigSeqId": 10000,
+        "RefMerchantSeqId": 100,
+        "RefUserSeqId": "100108",
+        "PurchaseDate": "2023-09-10",
+        "ItemFor": "101",
+        "Category": "Breakfast",
+        "IsAddon": "0",
+        "Gst": 0,
+        "RowId": 0,
+        "Discount": 0,
+        "PackageSeqId": 0,
+        "FilterDate": 20230910,
+        "Remarks": "",
+        "lsCheckout": 1
+      });
+    }
   }
 
   updateSettings(var settingDetails) {

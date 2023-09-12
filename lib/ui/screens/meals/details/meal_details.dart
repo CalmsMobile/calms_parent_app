@@ -79,7 +79,7 @@ class _MealDetailsState extends State<MealDetails> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => CartPage(),
+                            builder: (context) => CartPage(widget.arguments['imgBaseUrl'],widget.arguments['CurrencyCode']),
                           ),
                         );
                       },

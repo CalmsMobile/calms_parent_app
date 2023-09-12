@@ -104,7 +104,7 @@ class _QRRegistrationState extends State<QRRegistration> {
 
         if (qrJson['MAppId'] == "PARENTAPP") {
           Future<Map<String, dynamic>> res = RestApiProvider().postNewData(data,
-              qrJson["ApiUrl"], AppSettings.GetQRInfo, context, true, false);
+              qrJson["ApiUrl"], AppSettings.GetQRInfo, context, false, false);
           res
               .then((value) =>
                   {handleApiResponse(value, decryptdata, qrJson["ApiUrl"])})

@@ -67,6 +67,7 @@ class CommonFunctions {
   }
 
   static String getDailyMealsInCart(cartList) {
+    
     List mealsList = [];
     if (cartList.length > 0) {
       for (var item in cartList) {
