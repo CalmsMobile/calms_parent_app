@@ -24,7 +24,6 @@ import '/ui/screens/details/purchase_details.dart';
 import '/ui/screens/details/topup_details.dart';
 import '/ui/screens/donation/Donation.dart';
 import '/ui/screens/home/Home.dart';
-import '/ui/screens/home/tab_view.dart';
 import '/ui/screens/invoice/InvoicePayment.dart';
 import '/ui/screens/invoice/invoice_details/InvoiceDetails.dart';
 import '/ui/screens/meals/MealOrder.dart';
@@ -179,8 +178,6 @@ void main() async {
   );
 }
 
-
-
 var myroutes = {
   "/TopupPage": (context) => new TopupPage({}),
   "/DonationPage": (context) => new DonationPage(),
@@ -200,7 +197,7 @@ var myroutes = {
   "/Notifications": (context) => Notifications(),
   "/NotificationView": (context) => NotificationView(),
   "/AppSettingsPage": (context) => AppSettingsPage(),
-  "/CartPage": (context) => CartPage("",""),
+  "/CartPage": (context) => CartPage("", ""),
   "/ParentPickup": (context) => ParentPickup(),
   "/StudentTracking": (context) => StudentTracking(),
   "/BusTracking": (context) => BusTracking(),
@@ -216,10 +213,10 @@ var myroutes = {
   "/FilterPage": (context) => FilterPage(),
   "/FilterActivities": (context) => FilterActivities(),
   "/ViewImage": (context) => ViewImage(),
-  "/MealDetails": (context) => MealDetails({},(){}),
+  "/MealDetails": (context) => MealDetails({}, () {}),
   "/calendarTransactions": (context) => CalendarTransactionsPage(),
-  "/topupPayment":(context)=>TopupPaymentWebviewPage({},""),
-  "/topupAfterPayment":(context)=>TopupAfterPaymentPage({},""),
+  "/topupPayment": (context) => TopupPaymentWebviewPage({}, ""),
+  "/topupAfterPayment": (context) => TopupAfterPaymentPage({}, ""),
 };
 
 class MyApp extends StatefulWidget {
@@ -412,7 +409,7 @@ class _SplashScreenState extends State<SplashScreen> {
         qrJson["ApiUrl"],
         AppSettings.AppSignIn,
         context,
-        true,
+        false,
         false);
     res
         .then((value) => {
@@ -472,7 +469,7 @@ class _SplashScreenState extends State<SplashScreen> {
         context, "Notification", res['Table'][0]['description'], true, () {
       Navigator.pop(context);
       verifyAgain();
-    }, null);
+    }, null,"Ok","");
   }
 
   void enterFullScreen(FullScreenMode fullScreenMode) async {

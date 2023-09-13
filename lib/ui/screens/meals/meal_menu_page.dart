@@ -4,6 +4,8 @@ import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+import '../../../common/app_settings.dart';
+import '../../../common/widgets/no_data_card.dart';
 import '../cart/cart.dart';
 import '/common/HexColor.dart';
 import '/common/alert_dialog.dart';
@@ -261,7 +263,7 @@ class _MealMenuPageState extends State<MealMenuPage> {
         ],
       ),
       resizeToAvoidBottomInset: false,
-      body: Container(
+      body:dateList.length>0? Container(
         constraints: BoxConstraints.expand(),
         decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -272,12 +274,12 @@ class _MealMenuPageState extends State<MealMenuPage> {
             Color.fromARGB(255, 230, 231, 239),
           ],
         )),
-        child: SizedBox(
+        child:  SizedBox(
           height: MediaQuery.of(context).size.height,
           child: Container(
             color: HexColor("#f5f8fd"),
             margin: EdgeInsets.only(top: 0),
-            child: Column(
+            child:Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
@@ -376,6 +378,9 @@ class _MealMenuPageState extends State<MealMenuPage> {
                           );
                         }),
                   ),
+                  if(mealListBydate.length==0)
+                  NoDataCard(AppSettings.imgAssetNoMeal,
+                                AppSettings.titleNoMeal, AppSettings.msgNoMeal),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
@@ -429,10 +434,11 @@ class _MealMenuPageState extends State<MealMenuPage> {
                           widget.arguments['UserSeqId'],
                           widget.arguments['poTypesList'],
                           onCartClick))
-                ]),
+                ])
           ),
-        ),
-      ),
+        )
+      ):NoDataCard(AppSettings.imgAssetNoMeal,
+                                AppSettings.titleNoMeal, AppSettings.msgNoMeal),
       //floatingActionButtonLocation: ExpandableFab.location,
       // floatingActionButton: _getFilterFAB()
     );
@@ -491,7 +497,6 @@ class _MealMenuPageState extends State<MealMenuPage> {
     print("=======");
     print(dateList);
     print("=======");
-
     mealListBydate = getMealsListByDate(_selectedDate,
         widget.arguments['mealsList'], widget.arguments['mealsCtgryList']);
   }

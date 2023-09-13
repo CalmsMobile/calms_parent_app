@@ -456,7 +456,7 @@ class RestApiProvider {
     MyCustomAlertDialog()
         .showCustomAlert(context, "Notification", message, false, () {
       Navigator.pop(context);
-    }, null);
+    }, null,"Ok","");
   }
 
   Future<void> initPlatformState() async {

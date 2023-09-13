@@ -484,9 +484,10 @@ class CommonUtil {
       getGatewayListForCart(context, profileData['RefBranchSeqId'],
           profileData['RefUserSeqId'], profileData['RefMemberTypeSeqId']);
       print("successGetCartPageSettings");
+      context.read<MySettingsListener>().clearFinalCartList();
       List cartList = context.read<MySettingsListener>().cartList;
       if (cartList.length > 0) {
-        context.read<MySettingsListener>().clearFinalCartList();
+        
         String RefItemSeqId = CommonFunctions.getDailyMealsInCart(cartList);
         String PackageSeqId = CommonFunctions.getTermMealsInCart(cartList);
         if (RefItemSeqId != "")
@@ -684,7 +685,7 @@ class CommonUtil {
       MyCustomAlertDialog().showCustomAlert(
           context, "Notification", response["Description"], true, () {
         Navigator.pop(context);
-      }, null);
+      }, null,"Ok","");
     } else {
       print("response===" + response['Table2'].toString());
       if (Type == "filter") {
@@ -705,6 +706,6 @@ class CommonUtil {
     MyCustomAlertDialog()
         .showCustomAlert(context, "Notification", error.toString(), true, () {
       Navigator.pop(context);
-    }, null);
+    }, null,"Ok","");
   }
 }

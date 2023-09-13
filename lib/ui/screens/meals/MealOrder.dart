@@ -1,3 +1,5 @@
+import 'package:calms_parent_latest/common/app_settings.dart';
+import 'package:calms_parent_latest/common/widgets/no_data_card.dart';
 import 'package:calms_parent_latest/ui/screens/widgets/MealOrderList.dart';
 import 'package:provider/provider.dart';
 
@@ -125,7 +127,8 @@ class _MealOrderState extends State<MealOrder> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => CartPage(imgBaseUrl,widget.arguments["profileData"]),
+                              builder: (context) => CartPage(
+                                  imgBaseUrl, widget.arguments["profileData"]),
                             ),
                           );
                         },
@@ -204,14 +207,18 @@ class _MealOrderState extends State<MealOrder> {
                     Consumer<MySettingsListener>(
                         builder: (context, data, settingsDta) {
                       if (data.poSettings.isNotEmpty) {
-                        return MealOrderListView(
-                            data.poSettings,
-                            data.poTypesList,
-                            data.poPackagesList,
-                            widget.arguments["profileData"]['CurrencyCode'],
-                            data.poList,
-                            familyList[senderIndex],
-                            imgBaseUrl,widget.arguments["profileData"]);
+                        return data.poTypesList.length > 0
+                            ? MealOrderListView(
+                                data.poSettings,
+                                data.poTypesList,
+                                data.poPackagesList,
+                                widget.arguments["profileData"]['CurrencyCode'],
+                                data.poList,
+                                familyList[senderIndex],
+                                imgBaseUrl,
+                                widget.arguments["profileData"])
+                            : NoDataCard(AppSettings.imgAssetNoMeal,
+                                AppSettings.titleNoMeal, AppSettings.msgNoMeal);
                       } else {
                         return SizedBox();
                       }

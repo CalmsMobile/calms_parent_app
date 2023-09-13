@@ -53,15 +53,19 @@ class MealPager extends StatelessWidget {
                     .pushNamed('/MealDetails', arguments: mealList_[index]); */
               },
               child: Card(
+               
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15.0),
                 ),
-                borderOnForeground: true,
-                child: Column(
+                elevation: 10,
+      shadowColor: Colors.black,
+      borderOnForeground: true,
+                child:Container(
+                  width: double.infinity,child:  Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      height: 100,
+                      
                       child: ClipRRect(
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(15.0),
@@ -80,187 +84,185 @@ class MealPager extends StatelessWidget {
                                 fit: BoxFit.cover),
                       ),
                     ),
+                    Container(
+                      height: 15,
+                      width: double.infinity,
+                      //padding:EdgeInsets.symmetric(vertical: 0, horizontal: 5),
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                      ),
+                      child: Text(
+                          "${mealList_[index]['ItemStyle'] != null || mealList_[index]['ItemStyle'] != "" ? mealList_[index]['ItemStyle'] : ""}",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                              fontWeight: FontWeight.normal)),
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Column(
-                         // mainAxisAlignment: MainAxisAlignment.start,
-                         // crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.only(top: 10),
-                              child: Text(
-                                // products is out demo list
-                                mealList_[index]['Name'],
-                                overflow: TextOverflow.fade,
-                                maxLines: 1,
-                                style: TextStyle(
-                                  color: kTextColor,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
+                        Flexible(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            // crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(left: 10, top: 10),
+                                child: Text(
+                                  // products is out demo list
+                                  mealList_[index]['Name'],
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                  style: TextStyle(
+                                    color: kTextColor,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  textAlign: TextAlign.start,
                                 ),
                               ),
-                            ),
-                            if (mealList_[index]['Rating'] == null)
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Icon(
-                                    Icons.star_border_outlined,
-                                    color: Colors.orangeAccent,
-                                    size: 14,
-                                  ),
-                                  Icon(
-                                    Icons.star_border_outlined,
-                                    color: Colors.orangeAccent,
-                                    size: 14,
-                                  ),
-                                  Icon(
-                                    Icons.star_border_outlined,
-                                    color: Colors.orangeAccent,
-                                    size: 14,
-                                  ),
-                                  Icon(
-                                    Icons.star_border_outlined,
-                                    color: Colors.orangeAccent,
-                                    size: 14,
-                                  ),
-                                  Icon(
-                                    Icons.star_border_outlined,
-                                    color: Colors.orangeAccent,
-                                    size: 14,
-                                  ),
-                                ],
-                              ),
-                            if (mealList_[index]['Rating'] != null)
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Icon(
-                                    mealList_[index]['Rating'] > 0
-                                        ? Icons.star
-                                        : Icons.star_border_outlined,
-                                    color: Colors.orangeAccent,
-                                    size: 14,
-                                  ),
-                                  Icon(
-                                    mealList_[index]['Rating'] > 1
-                                        ? Icons.star
-                                        : Icons.star_border_outlined,
-                                    color: Colors.orangeAccent,
-                                    size: 14,
-                                  ),
-                                  Icon(
-                                    mealList_[index]['Rating'] > 2
-                                        ? Icons.star
-                                        : Icons.star_border_outlined,
-                                    color: Colors.orangeAccent,
-                                    size: 14,
-                                  ),
-                                  Icon(
-                                    mealList_[index]['Rating'] > 3
-                                        ? Icons.star
-                                        : Icons.star_border_outlined,
-                                    color: Colors.orangeAccent,
-                                    size: 14,
-                                  ),
-                                  Icon(
-                                    mealList_[index]['Rating'] > 4
-                                        ? Icons.star
-                                        : Icons.star_border_outlined,
-                                    color: Colors.orangeAccent,
-                                    size: 14,
-                                  ),
-                                ],
-                              ),
-                          ],
-                        ),
-                       
+                              if (mealList_[index]['Rating'] == null)
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Icon(
+                                      Icons.star_border_outlined,
+                                      color: Colors.orangeAccent,
+                                      size: 14,
+                                    ),
+                                    Icon(
+                                      Icons.star_border_outlined,
+                                      color: Colors.orangeAccent,
+                                      size: 14,
+                                    ),
+                                    Icon(
+                                      Icons.star_border_outlined,
+                                      color: Colors.orangeAccent,
+                                      size: 14,
+                                    ),
+                                    Icon(
+                                      Icons.star_border_outlined,
+                                      color: Colors.orangeAccent,
+                                      size: 14,
+                                    ),
+                                    Icon(
+                                      Icons.star_border_outlined,
+                                      color: Colors.orangeAccent,
+                                      size: 14,
+                                    ),
+                                  ],
+                                ),
+                              if (mealList_[index]['Rating'] != null)
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Icon(
+                                      mealList_[index]['Rating'] > 0
+                                          ? Icons.star
+                                          : Icons.star_border_outlined,
+                                      color: Colors.orangeAccent,
+                                      size: 14,
+                                    ),
+                                    Icon(
+                                      mealList_[index]['Rating'] > 1
+                                          ? Icons.star
+                                          : Icons.star_border_outlined,
+                                      color: Colors.orangeAccent,
+                                      size: 14,
+                                    ),
+                                    Icon(
+                                      mealList_[index]['Rating'] > 2
+                                          ? Icons.star
+                                          : Icons.star_border_outlined,
+                                      color: Colors.orangeAccent,
+                                      size: 14,
+                                    ),
+                                    Icon(
+                                      mealList_[index]['Rating'] > 3
+                                          ? Icons.star
+                                          : Icons.star_border_outlined,
+                                      color: Colors.orangeAccent,
+                                      size: 14,
+                                    ),
+                                    Icon(
+                                      mealList_[index]['Rating'] > 4
+                                          ? Icons.star
+                                          : Icons.star_border_outlined,
+                                      color: Colors.orangeAccent,
+                                      size: 14,
+                                    ),
+                                  ],
+                                ),
+                            ],
+                          ),
+                        )
                       ],
                     ),
                     Container(
-                     margin: EdgeInsets.only(left: 10,right: 10),
-                      child:Row(
-                      //mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                         RichText(
-                            maxLines: 1,
-                            text: TextSpan(children: [
-                              TextSpan(
-                                text:
-                                    "${CurrencyCode} ${mealList_[index]['SellingPrice'].toStringAsFixed(2)}",
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontFamily: appFontFmaily,
-                                    color: Colors.blue,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ])),
-                        if (poTypesList['PreOrderType'] == 'Daily')
-                          InkWell(
-                            onTap: () {},
-                            child: Container(
-                              //margin: EdgeInsets.only(bottom: 10),
-                              child: ClipOval(
-                                child: Material(
-                                  color: mealList_[index]['addedToCart']
-                                      ? Colors.red
-                                      : Colors.blue, // Button color
-                                  child: InkWell(
-                                    onTap: () async {
-                                      mealList_[index]['addedToCart']
-                                          ? callbackFun(
-                                              mealList_[index], index, true)
-                                          : callbackFun(
-                                              mealList_[index], index, false);
-                                    },
-                                    child: SizedBox(
-                                      width: 30,
-                                       height: 30,
-                                        child: mealList_[index]['addedToCart']
-                                            ? Icon(
-                                                Icons.delete_outlined,
-                                                color: Colors.white,
-                                                size: 20,
-                                              )
-                                            : Icon(
-                                                Icons
-                                                    .add_shopping_cart_outlined,
-                                                color: Colors.white,
-                                                size: 20,
-                                              )),
+                      height: 30,
+                      margin: EdgeInsets.only(left: 10, right: 10,top: 10),
+                      child: Row(
+                        //mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          RichText(
+                              maxLines: 1,
+                              text: TextSpan(children: [
+                                TextSpan(
+                                  text:
+                                      "${CurrencyCode} ${mealList_[index]['SellingPrice'].toStringAsFixed(2)}",
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      fontFamily: appFontFmaily,
+                                      color: Color.fromARGB(255, 4, 101, 14),
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ])),
+                          if (poTypesList['PreOrderType'] == 'Daily')
+                            InkWell(
+                              onTap: () {},
+                              child: Container(
+                                //margin: EdgeInsets.only(bottom: 10),
+                                child: ClipOval(
+                                  child: Material(
+                                    color: mealList_[index]['addedToCart']
+                                        ? Colors.red
+                                        : Colors.blue, // Button color
+                                    child: InkWell(
+                                      onTap: () async {
+                                        mealList_[index]['addedToCart']
+                                            ? callbackFun(
+                                                mealList_[index], index, true)
+                                            : callbackFun(
+                                                mealList_[index], index, false);
+                                      },
+                                      child: SizedBox(
+                                          width: 25,
+                                          height: 25,
+                                          child: mealList_[index]['addedToCart']
+                                              ? Icon(
+                                                  Icons.delete_outlined,
+                                                  color: Colors.white,
+                                                  size: 15,
+                                                )
+                                              : Icon(
+                                                  Icons
+                                                      .add_shopping_cart_outlined,
+                                                  color: Colors.white,
+                                                  size: 15,
+                                                )),
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                      ],
+                        ],
+                      ),
                     ),
-                    
-                    ),
-                    mealList_[index]['ItemStyle'] != null ||
-                            mealList_[index]['ItemStyle'] != ""
-                        ? Container(
-                            width: double.infinity,
-                            padding: EdgeInsets.symmetric(
-                                vertical: 6, horizontal: 15),
-                            decoration: BoxDecoration(
-                                color: Colors.blue,
-                                borderRadius: BorderRadius.only(
-                                    bottomLeft: Radius.circular(15),
-                                    bottomRight: Radius.circular(15))),
-                            child: Text("${mealList_[index]['ItemStyle']}",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.normal)),
-                          )
-                        : SizedBox(),
                   ],
                 ),
-              ),
+              ),)
             ),
           ),
         )),

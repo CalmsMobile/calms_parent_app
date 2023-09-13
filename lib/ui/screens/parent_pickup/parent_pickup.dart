@@ -317,7 +317,7 @@ class _ParentPickupState extends State<ParentPickup> {
                                           Navigator.of(context,
                                                   rootNavigator: true)
                                               .pop();
-                                        });
+                                        },"Yes","No");
                                       } else {
                                         MyCustomAlertDialog().showCustomAlert(
                                           context,
@@ -327,8 +327,7 @@ class _ParentPickupState extends State<ParentPickup> {
                                           null,
                                           () => Navigator.of(context,
                                                   rootNavigator: true)
-                                              .pop(),
-                                        );
+                                              .pop(),"","Ok");
                                       }
                                     },
                                     child: Row(
@@ -394,7 +393,6 @@ class _ParentPickupState extends State<ParentPickup> {
       "Request successfully submitted",
       false,
       null,
-      () => Navigator.of(context, rootNavigator: true).pop(),
-    );
+      () => Navigator.of(context, rootNavigator: true).pop(),"","Ok");
   }
 }

@@ -202,7 +202,7 @@ class NotificationView extends StatelessWidget {
       MyCustomAlertDialog().showCustomAlert(
           context, "Notification", response["Description"], true, () {
         Navigator.pop(context);
-      }, null);
+      }, null,"Ok","");
     } else {
       context.read<MySettingsListener>().updateNotifiactionItem(pos);
     }
@@ -213,6 +213,6 @@ class NotificationView extends StatelessWidget {
     MyCustomAlertDialog()
         .showCustomAlert(context, "Notification", error.toString(), true, () {
       Navigator.pop(context);
-    }, null);
+    }, null,"Ok","");
   }
 }

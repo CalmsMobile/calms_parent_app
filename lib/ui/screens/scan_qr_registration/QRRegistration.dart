@@ -55,9 +55,10 @@ class _QRRegistrationState extends State<QRRegistration> {
       });
       if (kDebugMode) {
         print("QR: start");
-       
+       //rnd
         var qrdata = "D5qpk1C3xkIxgAIPyzivIXAY1+BrXWHUlQKXDwvQA+YDCq3ZKz2ctrqZBVSRFc5dbHg+7ZKbpZlMkh8NNQatNf83hsXcToACqmlZ+8Tlabb0D0cC211BmzymayoQ3yB9E2U0E7NfkX/TdTmQJdBhG5DFY0LKgT1iYiGytP6PWP4EQbAa+rn7FQx+kyNHA82z";
-        // qrdata = "D5qpk1C3xkIxgAIPyzivIXAY1+BrXWHUlQKXDwvQA+YzRfitwG34gkEMm+BNy/raZ/TpAXdzlqrRXy9KiZO2ar/6HhmesOCueLgav5T9kGKjX3uai6u3kxejGHc5ryQbGb0+DGuxx27RzaqASpL4UyREhy3X+wCLON2tZRFIVWzrN9xvjPNJRHNOtP3OYu3n";
+        //demosgl
+         qrdata = "D5qpk1C3xkIxgAIPyzivIXAY1+BrXWHUlQKXDwvQA+bGMdB1tYpmlqbOdBjobyEQK/CCq8T0Wykezki2gLf2+a2slNXa94kS3RqHmwCHUpTzJce9n5KDdpveoXcXM5PCCYQYa/XDmG/Mk3ukf9IPT0K9GXyYA2cc28Sb1a01aHpilFXfzE2tGMS9V5LnvF5p";
         processQRCode(qrdata);
       }
       // String inputdata =
@@ -114,14 +115,14 @@ class _QRRegistrationState extends State<QRRegistration> {
               context, "Notification", "Invalid QR code", true, () {
             Navigator.pop(context);
             resetQRData();
-          }, null);
+          }, null,"Ok","");
         }
       } else {
         MyCustomAlertDialog().showCustomAlert(
             context, "Notification", "Invalid QR code", true, () {
           Navigator.pop(context);
           resetQRData();
-        }, null);
+        }, null,"Ok","");
       }
     }
   }
@@ -132,7 +133,7 @@ class _QRRegistrationState extends State<QRRegistration> {
         .showCustomAlert(context, "Notification", error.toString(), true, () {
       Navigator.pop(context);
       //resetQRData();
-    }, null);
+    }, null,"Ok","");
   }
 
   void handleApiResponse(
@@ -144,7 +145,7 @@ class _QRRegistrationState extends State<QRRegistration> {
           context, "Notification", response["Description"], true, () {
         Navigator.pop(context);
         resetQRData();
-      }, null);
+      }, null,"Ok","");
     } else {
       //MySharedPref().saveData(jsonEncode(response), AppSettings.deviceDetails);
       //print(response['Table1'][0]);

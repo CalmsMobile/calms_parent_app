@@ -47,10 +47,12 @@ class AppSettings {
   static String GetDashboard = 'parentapp/GetDashboard';
   static String GetCalendarData = 'parentapp/GetCalendarData';
   static String GetFamilyMemberForTopup = 'parentapp/GetFamilyMemberForTopup';
-  static String CheckUserEWalletBalMaxAmt = 'parentapp/CheckUserEWalletBalMaxAmt';
+  static String CheckUserEWalletBalMaxAmt =
+      'parentapp/CheckUserEWalletBalMaxAmt';
   static String GetGatewayDetails = 'parentapp/GetGatewayDetails';
   static String MakeTransaction = 'parentapp/MakeTransaction';
-  static String GetAfterTopupPaymentSummary = 'parentapp/GetAfterTopupPaymentSummary';
+  static String GetAfterTopupPaymentSummary =
+      'parentapp/GetAfterTopupPaymentSummary';
   static String GetPOConfigForUser = 'parentapp/GetPOConfigForUser';
   static String GetMealItemsForUser = 'parentapp/GetMealItemsForUser';
   static String GetMealItemDetail = 'parentapp/GetMealItemDetail';
@@ -69,7 +71,16 @@ class AppSettings {
   static String commonCryptoKey = "qweqweqweqweqweq";
   // static String appType_Notification = "NOTIFICATION";
 
-  static String verificationAlertMsg = "Verification link sent to your email. Please verify to access this application. If you have not received the link, Click 'Resend' below to send a verification email again.";
+  static String verificationAlertMsg =
+      "Verification link sent to your email. Please verify to access this application. If you have not received the link, Click 'Resend' below to send a verification email again.";
   static String paymentTypeTopup = "topup";
   static String paymentTypeOrder = "order";
+
+  static String imgAssetNoItemInCart = "assets/images/empty_cart.png";
+  static String titleNoItemInCart = "NO CART ITEM FOUND";
+  static String msgNoItemInCart = "";
+  static String imgAssetNoMeal = "assets/images/no_meal.png";
+  static String titleNoMeal = "NO MEAL ITEM FOUND";
+  static String msgNoMeal =
+      "No meal item found for selected date, we'll update here when there is any new meal been uploaded.";
 }

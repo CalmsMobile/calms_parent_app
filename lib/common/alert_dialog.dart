@@ -5,70 +5,109 @@ import 'widgets/common.dart';
 
 class MyCustomAlertDialog {
   bool isShowingAlready = false;
-  void showCustomAlert(BuildContext buildContext, String title,
-      String description, bool isError, _okPress, _cancelPress) {
+  void showCustomAlert(
+      BuildContext buildContext,
+      String title,
+      String description,
+      bool isError,
+      _okPress,
+      _cancelPress,
+      okBtnText,
+      cancelBtnText) {
     showModalBottomSheet(
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(top: Radius.circular(60.0))),
       context: buildContext,
       enableDrag: false,
+      isDismissible: false,
       isScrollControlled: false,
       builder: (context) {
-        final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
-          backgroundColor: Colors.pinkAccent,
-          textStyle: TextStyle(color: Colors.white),
-        );
-        return SizedBox(
-          height: _okPress == null ? 100 : 150,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              getBottomSheetActionBar(context, title, true, Colors.white),
-              Expanded(
-                child: Container(
-                  margin: EdgeInsets.only(top: 0),
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 5),
-                            child: Text(
-                              "$description",
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                  fontSize: 14, fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          Divider(
-                            height: 1,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              if (_okPress != null)
-                Container(
-                  margin: EdgeInsets.only(top: 10),
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      style: raisedButtonStyle,
-                      onPressed: () {
-                        _okPress();
-                      },
-                      child: Text('Proceed'),
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            getBottomSheetActionBar(context, title, false, Colors.white),
+            Container(
+              margin: EdgeInsets.only(top: 0),
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      description,
+                      style: TextStyle(
+                          fontSize: 18, color:isError?Colors.red: Color.fromARGB(255, 0, 92, 3)),
+                      softWrap: true,
+                      textAlign: TextAlign.start,
                     ),
                   ),
-                )
-            ],
-          ),
+                ],
+              ),
+            ),
+            if (_okPress != null)
+              Container(
+                  alignment: Alignment.centerRight,
+                  margin: EdgeInsets.all(10),
+                  child: SizedBox(
+                      height: 45,
+                      child: ElevatedButton(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              okBtnText,
+                              style: TextStyle(
+                                  fontSize: 18.0,
+                                  fontFamily: "Montserrat",
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            //Icon(Icons.payment)
+                          ],
+                        ),
+                        onPressed: () {
+                          Navigator.pop(context);
+                          _okPress();
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color.fromARGB(255, 6, 105, 199),
+                          textStyle: TextStyle(color: Colors.white),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(60.0)),
+                        ),
+                      ))),
+            if (_cancelPress != null)
+              Container(
+                  alignment: Alignment.centerRight,
+                  margin: EdgeInsets.all(10),
+                  child: SizedBox(
+                      height: 45,
+                      child: ElevatedButton(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              cancelBtnText,
+                              style: TextStyle(
+                                  fontSize: 18.0,
+                                  fontFamily: "Montserrat",
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            //Icon(Icons.payment)
+                          ],
+                        ),
+                        onPressed: () {
+                          Navigator.pop(context);
+                          _cancelPress();
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color.fromARGB(255, 6, 105, 199),
+                          textStyle: TextStyle(color: Colors.white),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(60.0)),
+                        ),
+                      ))),
+          ],
         );
       },
     );

@@ -260,6 +260,6 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
     }, () {
       print("Close alert");
       Navigator.of(context, rootNavigator: true).pop();
-    });
+    },"Logout","Cancel");
   }
 }

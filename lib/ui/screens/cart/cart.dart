@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:calms_parent_latest/common/widgets/no_data_card.dart';
 import 'package:provider/provider.dart';
 
 import '../../../common/app_settings.dart';
@@ -16,7 +17,7 @@ import 'package:flutter/material.dart';
 class CartPage extends StatefulWidget {
   final imgBaseUrl;
   final profileData;
-  const CartPage(this.imgBaseUrl, this.profileData,{Key? key})
+  const CartPage(this.imgBaseUrl, this.profileData, {Key? key})
       : super(key: key);
 
   @override
@@ -37,349 +38,360 @@ class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: getMyAppbar(context, "My Cart", []),
-      resizeToAvoidBottomInset: false,
-      body: SingleChildScrollView(child:
-          Consumer<MySettingsListener>(builder: (context, data, settingsDta) {
-        if (data.finalCartList.isNotEmpty) {
-          print("==================");
-          print(data.finalCartList);
-          print("==================");
-          return Container(
-            color: HexColor("#f5f8fd"),
-            margin: EdgeInsets.symmetric(horizontal: 0),
-            child: Column(children: [
-              Container(
-                margin: EdgeInsets.all(20),
-                child: Column(
-                  children: [
-                    Container(
-                      color: Colors.grey.shade300,
-                      width: double.infinity,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Flexible(
-                            child: Container(
-                              margin: EdgeInsets.only(left: 15, top: 0),
-                              child: Text(
-                                "Orders",
-                                style: TextStyle(
-                                    fontSize: 12, color: Colors.black),
+        appBar: getMyAppbar(context, "My Cart", []),
+        resizeToAvoidBottomInset: false,
+        body: SingleChildScrollView(child:
+            Consumer<MySettingsListener>(builder: (context, data, settingsDta) {
+          if (data.finalCartList.isNotEmpty) {
+            print("==================");
+            print(data.finalCartList);
+            print("==================");
+            return Container(
+              color: HexColor("#f5f8fd"),
+              margin: EdgeInsets.symmetric(horizontal: 0),
+              child: Column(children: [
+                Container(
+                  margin: EdgeInsets.all(20),
+                  child: Column(
+                    children: [
+                      Container(
+                        color: Colors.grey.shade300,
+                        width: double.infinity,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Flexible(
+                              child: Container(
+                                margin: EdgeInsets.only(left: 15, top: 0),
+                                child: Text(
+                                  "Orders",
+                                  style: TextStyle(
+                                      fontSize: 12, color: Colors.black),
+                                ),
                               ),
                             ),
-                          ),
-                          Container(
-                            height: 35,
-                            margin: EdgeInsets.only(right: 0, top: 0),
-                            child: Row(
-                              children: [
-                                RichText(
-                                  maxLines: 2,
-                                  text: TextSpan(
-                                    children: [
-                                      TextSpan(
-                                        text:
-                                            "${data.finalCartList.where((element) => element['isSelected'] == true).length}/${data.finalCartList.length} ITEMS SELECTED",
-                                        style: TextStyle(
-                                          fontSize: 10,
-                                          fontFamily: appFontFmaily,
-                                          color: Colors.black,
+                            Container(
+                              height: 35,
+                              margin: EdgeInsets.only(right: 0, top: 0),
+                              child: Row(
+                                children: [
+                                  RichText(
+                                    maxLines: 2,
+                                    text: TextSpan(
+                                      children: [
+                                        TextSpan(
+                                          text:
+                                              "${data.finalCartList.where((element) => element['isSelected'] == true).length}/${data.finalCartList.length} ITEMS SELECTED",
+                                          style: TextStyle(
+                                            fontSize: 10,
+                                            fontFamily: appFontFmaily,
+                                            color: Colors.black,
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                Transform.scale(
-                                  scale: 0.7,
-                                  child: Checkbox(
-                                    activeColor: Colors.blue,
-                                    // shape: CircleBorder(),
-                                    value: getItemsSelectedState(
-                                            data.finalCartList)
-                                        ? true
-                                        : false,
-                                    onChanged: (bool? value) {
-                                      setState(() {
-                                        // data.finalCartList[index]['isSelected'] = value!;
-                                        selectOrDeselectAll(
-                                            data.finalCartList, value!);
-                                      });
-                                    },
+                                  Transform.scale(
+                                    scale: 0.7,
+                                    child: Checkbox(
+                                      activeColor: Colors.blue,
+                                      // shape: CircleBorder(),
+                                      value: getItemsSelectedState(
+                                              data.finalCartList)
+                                          ? true
+                                          : false,
+                                      onChanged: (bool? value) {
+                                        setState(() {
+                                          // data.finalCartList[index]['isSelected'] = value!;
+                                          selectOrDeselectAll(
+                                              data.finalCartList, value!);
+                                        });
+                                      },
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    ClipRRect(
-                      borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(20),
-                          bottomRight: Radius.circular(20)),
-                      child: Container(
-                        //width: double.infinity,
-                        margin: EdgeInsets.symmetric(horizontal: 0),
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-                        child: ListView.builder(
-                            padding: EdgeInsets.zero,
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(
-                                parent: AlwaysScrollableScrollPhysics()),
-                            itemCount: data.finalCartList.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Container(
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(0)),
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 0, horizontal: 0),
-                                margin: EdgeInsets.only(bottom: 8),
-                                child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: <Widget>[
-                                      Container(
-                                        margin: EdgeInsets.all(10),
-                                        //padding: EdgeInsets.all(5.0),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            Container(
-                                              alignment: Alignment.centerLeft,
+                      ClipRRect(
+                        borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(20),
+                            bottomRight: Radius.circular(20)),
+                        child: Container(
+                          //width: double.infinity,
+                          margin: EdgeInsets.symmetric(horizontal: 0),
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                          child: ListView.builder(
+                              padding: EdgeInsets.zero,
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(
+                                  parent: AlwaysScrollableScrollPhysics()),
+                              itemCount: data.finalCartList.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(0)),
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 0, horizontal: 0),
+                                  margin: EdgeInsets.only(bottom: 8),
+                                  child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: <Widget>[
+                                        Container(
+                                          margin: EdgeInsets.all(10),
+                                          //padding: EdgeInsets.all(5.0),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
+                                            children: [
+                                              Container(
+                                                alignment: Alignment.centerLeft,
 
-                                              /* decoration: BoxDecoration(
+                                                /* decoration: BoxDecoration(
                                                 borderRadius:
                                                     BorderRadius.circular(10),
                                                 color: Color.fromARGB(
                                                     91, 158, 158, 158),
                                               ), */
-                                              padding: EdgeInsets.all(5),
-                                              margin: EdgeInsets.only(
-                                                  bottom: 3, left: 10),
+                                                padding: EdgeInsets.all(5),
+                                                margin: EdgeInsets.only(
+                                                    bottom: 3, left: 10),
 
-                                              // color: Color.fromARGB(178, 158, 158, 158),
-                                              child: RichText(
-                                                maxLines: 2,
-                                                text: TextSpan(
-                                                  children: [
-                                                    TextSpan(
-                                                      text: data.finalCartList[
-                                                          index]['Name'],
-                                                      style: TextStyle(
-                                                          fontFamily:
-                                                              appFontFmaily,
-                                                          color: Color.fromARGB(
-                                                              255, 1, 98, 32),
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize: 15),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Container(
-                                                  margin: EdgeInsets.all(10),
-                                                  child: Row(
+                                                // color: Color.fromARGB(178, 158, 158, 158),
+                                                child: RichText(
+                                                  maxLines: 2,
+                                                  text: TextSpan(
                                                     children: [
-                                                      data.finalCartList[index][
-                                                                      'member'][0]
-                                                                  [
-                                                                  "UserImgPath"] !=
-                                                              null
-                                                          ? CircleAvatar(
-                                                              backgroundImage: NetworkImage(widget
-                                                                      .imgBaseUrl +
-                                                                  data.finalCartList[
-                                                                              index]
-                                                                          [
-                                                                          'member'][0]
-                                                                      [
-                                                                      "UserImgPath"]),
-                                                            )
-                                                          : CircleAvatar(
-                                                              backgroundColor:
-                                                                  Colors.blue[
-                                                                      700],
-                                                              child: Text(
-                                                                CommonFunctions.getInitials(
-                                                                    data.finalCartList[index]
-                                                                            [
-                                                                            'member'][0]
-                                                                        [
-                                                                        'Name']),
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        22.0,
-                                                                    color: Colors
-                                                                        .white,
-                                                                    letterSpacing:
-                                                                        2.0,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w900),
-                                                              ),
-                                                            ),
-                                                      Column(children: [
-                                                        Container(
-                                                          margin:
-                                                              EdgeInsets.only(
-                                                                  left: 10,
-                                                                  top: 10),
-                                                          child: RichText(
-                                                            maxLines: 2,
-                                                            text: TextSpan(
-                                                              children: [
-                                                                TextSpan(
-                                                                  text:
-                                                                      "${data.finalCartList[index]['member'][0]['Name']}",
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          14,
-                                                                      fontFamily:
-                                                                          appFontFmaily,
-                                                                      color: Colors
-                                                                          .black,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        if (data.finalCartList[
-                                                                        index]
-                                                                    ['member']
-                                                                [0]['Grade'] !=
-                                                            null)
-                                                          Container(
-                                                            margin:
-                                                                EdgeInsets.only(
-                                                                    left: 10),
-                                                            child: RichText(
-                                                              maxLines: 1,
-                                                              text: TextSpan(
-                                                                children: [
-                                                                  TextSpan(
-                                                                    text:
-                                                                        "${data.finalCartList[index]['member'][0]['Grade']}",
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                            12,
-                                                                        fontFamily:
-                                                                            appFontFmaily,
-                                                                        color: Colors
-                                                                            .black,
-                                                                        fontWeight:
-                                                                            FontWeight.normal),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          ),
-                                                      ]),
+                                                      TextSpan(
+                                                        text:
+                                                            data.finalCartList[
+                                                                index]['Name'],
+                                                        style: TextStyle(
+                                                            fontFamily:
+                                                                appFontFmaily,
+                                                            color:
+                                                                Color.fromARGB(
+                                                                    255,
+                                                                    1,
+                                                                    98,
+                                                                    32),
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize: 15),
+                                                      ),
                                                     ],
                                                   ),
                                                 ),
-                                                Container(
-                                                  margin: EdgeInsets.all(5),
-                                                  child: Transform.scale(
-                                                    scale: 1.5,
-                                                    child: Checkbox(
-                                                      activeColor: Colors.blue,
-                                                      value: data.finalCartList[
-                                                                      index][
-                                                                  'isSelected'] !=
-                                                              null
-                                                          ? data.finalCartList[
-                                                                  index]
-                                                              ['isSelected']
-                                                          : false,
-                                                      onChanged: (bool? value) {
-                                                        //setState(() {
-
-                                                          data.finalCartList[
-                                                                      index][
-                                                                  'isSelected'] =
-                                                              value;
-                                                              context.read<MySettingsListener>().updateSelectedOrderCalculateTotal(data.finalCartList);
-                                                       // });
-                                                      },
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            Container(
-                                              margin: EdgeInsets.all(10),
-                                              child: Row(
+                                              ),
+                                              Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment
                                                         .spaceBetween,
                                                 children: [
                                                   Container(
-                                                    child: RichText(
-                                                      maxLines: 2,
-                                                      text: TextSpan(
-                                                        children: [
-                                                          TextSpan(
-                                                            text:
-                                                                "${widget.profileData['CurrencyCode']} ${data.finalCartList[index]["SellingPrice"] != null ? data.finalCartList[index]["SellingPrice"].toStringAsFixed(2) : data.finalCartList[index]["Amount"].toStringAsFixed(2)}",
-                                                            style: TextStyle(
-                                                                fontSize: 16,
-                                                                fontFamily:
-                                                                    appFontFmaily,
-                                                                color:
-                                                                    Colors.blue,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
+                                                    margin: EdgeInsets.all(10),
+                                                    child: Row(
+                                                      children: [
+                                                        data.finalCartList[index]
+                                                                        [
+                                                                        'member'][0]
+                                                                    [
+                                                                    "UserImgPath"] !=
+                                                                null
+                                                            ? CircleAvatar(
+                                                                backgroundImage: NetworkImage(widget
+                                                                        .imgBaseUrl +
+                                                                    data.finalCartList[index]
+                                                                            [
+                                                                            'member'][0]
+                                                                        [
+                                                                        "UserImgPath"]),
+                                                              )
+                                                            : CircleAvatar(
+                                                                backgroundColor:
+                                                                    Colors.blue[
+                                                                        700],
+                                                                child: Text(
+                                                                  CommonFunctions.getInitials(
+                                                                      data.finalCartList[index]
+                                                                              [
+                                                                              'member'][0]
+                                                                          [
+                                                                          'Name']),
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          22.0,
+                                                                      color: Colors
+                                                                          .white,
+                                                                      letterSpacing:
+                                                                          2.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w900),
+                                                                ),
+                                                              ),
+                                                        Column(children: [
+                                                          Container(
+                                                            margin:
+                                                                EdgeInsets.only(
+                                                                    left: 10,
+                                                                    top: 10),
+                                                            child: RichText(
+                                                              maxLines: 2,
+                                                              text: TextSpan(
+                                                                children: [
+                                                                  TextSpan(
+                                                                    text:
+                                                                        "${data.finalCartList[index]['member'][0]['Name']}",
+                                                                    style: TextStyle(
+                                                                        fontSize:
+                                                                            14,
+                                                                        fontFamily:
+                                                                            appFontFmaily,
+                                                                        color: Colors
+                                                                            .black,
+                                                                        fontWeight:
+                                                                            FontWeight.bold),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
                                                           ),
-                                                        ],
-                                                      ),
+                                                          if (data.finalCartList[
+                                                                          index]
+                                                                      ['member']
+                                                                  [
+                                                                  0]['Grade'] !=
+                                                              null)
+                                                            Container(
+                                                              margin: EdgeInsets
+                                                                  .only(
+                                                                      left: 10),
+                                                              child: RichText(
+                                                                maxLines: 1,
+                                                                text: TextSpan(
+                                                                  children: [
+                                                                    TextSpan(
+                                                                      text:
+                                                                          "${data.finalCartList[index]['member'][0]['Grade']}",
+                                                                      style: TextStyle(
+                                                                          fontSize:
+                                                                              12,
+                                                                          fontFamily:
+                                                                              appFontFmaily,
+                                                                          color: Colors
+                                                                              .black,
+                                                                          fontWeight:
+                                                                              FontWeight.normal),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ),
+                                                        ]),
+                                                      ],
                                                     ),
                                                   ),
                                                   Container(
-                                                    child: RichText(
-                                                      maxLines: 2,
-                                                      text: TextSpan(
-                                                        children: [
-                                                          TextSpan(
-                                                            text:
-                                                                "${data.finalCartList[index]['ItemStyle'] != null ? data.finalCartList[index]['ItemStyle'] : ""}",
-                                                            style: TextStyle(
-                                                                fontSize: 12,
-                                                                fontFamily:
-                                                                    appFontFmaily,
-                                                                color: Colors
-                                                                    .black26,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                          ),
-                                                        ],
+                                                    margin: EdgeInsets.all(5),
+                                                    child: Transform.scale(
+                                                      scale: 1.5,
+                                                      child: Checkbox(
+                                                        activeColor:
+                                                            Colors.blue,
+                                                        value: data.finalCartList[
+                                                                        index][
+                                                                    'isSelected'] !=
+                                                                null
+                                                            ? data.finalCartList[
+                                                                    index]
+                                                                ['isSelected']
+                                                            : false,
+                                                        onChanged:
+                                                            (bool? value) {
+                                                          //setState(() {
+
+                                                          data.finalCartList[
+                                                                      index][
+                                                                  'isSelected'] =
+                                                              value;
+                                                          context
+                                                              .read<
+                                                                  MySettingsListener>()
+                                                              .updateSelectedOrderCalculateTotal(
+                                                                  data.finalCartList);
+                                                          // });
+                                                        },
                                                       ),
                                                     ),
                                                   ),
                                                 ],
                                               ),
-                                            )
-                                          ],
+                                              Container(
+                                                margin: EdgeInsets.all(10),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Container(
+                                                      child: RichText(
+                                                        maxLines: 2,
+                                                        text: TextSpan(
+                                                          children: [
+                                                            TextSpan(
+                                                              text:
+                                                                  "${widget.profileData['CurrencyCode']} ${data.finalCartList[index]["SellingPrice"] != null ? data.finalCartList[index]["SellingPrice"].toStringAsFixed(2) : data.finalCartList[index]["Amount"].toStringAsFixed(2)}",
+                                                              style: TextStyle(
+                                                                  fontSize: 16,
+                                                                  fontFamily:
+                                                                      appFontFmaily,
+                                                                  color: Colors
+                                                                      .blue,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Container(
+                                                      child: RichText(
+                                                        maxLines: 2,
+                                                        text: TextSpan(
+                                                          children: [
+                                                            TextSpan(
+                                                              text:
+                                                                  "${data.finalCartList[index]['ItemStyle'] != null ? data.finalCartList[index]['ItemStyle'] : ""}",
+                                                              style: TextStyle(
+                                                                  fontSize: 12,
+                                                                  fontFamily:
+                                                                      appFontFmaily,
+                                                                  color: Colors
+                                                                      .black26,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
+                                            ],
+                                          ),
                                         ),
-                                      ),
 
-                                      /* Container(
+                                        /* Container(
                                         child: Padding(
                                           padding: const EdgeInsets.all(8.0),
                                           child: Icon(
@@ -388,37 +400,42 @@ class _CartPageState extends State<CartPage> {
                                           ),
                                         ),
                                       ) */
-                                    ]),
-                              );
-                            }),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ]),
-          );
-        } else
-          return SizedBox();
-      })),
-      bottomNavigationBar: SizedBox(
-        height: 160,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              margin: EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Total',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                                      ]),
+                                );
+                              }),
+                        ),
+                      )
+                    ],
                   ),
-                  Consumer<MySettingsListener>(
-                    builder: (context, data, settingsDta) {
-                      return RichText(
+                ),
+              ]),
+            );
+          } else
+            return data.cartList.isEmpty
+                ? NoDataCard(AppSettings.imgAssetNoItemInCart,
+                    AppSettings.titleNoItemInCart, AppSettings.msgNoItemInCart)
+                : SizedBox();
+        })),
+        bottomNavigationBar:
+            Consumer<MySettingsListener>(builder: (context, data, settingsDta) {
+          return data.cartTotal>0? SizedBox(
+            height: 130,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  margin:
+                      EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Total',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 20),
+                      ),
+                      RichText(
                         text: new TextSpan(
                           // Note: Styles for TextSpans must be explicitly defined.
                           // Child text spans will inherit styles from parent
@@ -439,59 +456,54 @@ class _CartPageState extends State<CartPage> {
                                     fontSize: 24, fontWeight: FontWeight.bold)),
                           ],
                         ),
-                      );
-                    },
-                  )
-                ],
-              ),
-            ),
-            
-            Consumer<MySettingsListener>(builder: (context, data, settingsDta) {
-              return Container(
-                alignment: Alignment.bottomRight,
-                  margin: EdgeInsets.all(10),
-                  child: SizedBox(
-                      height: 45,
-                      child: ElevatedButton(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              "Choose Payment Option",
-                              style: TextStyle(
-                                  fontSize: 18.0,
-                                  fontFamily: "Montserrat",
-                                  fontWeight: FontWeight.bold),
+                      )
+                    ],
+                  ),
+                ),
+               Container(
+                      alignment: Alignment.bottomRight,
+                      margin: EdgeInsets.all(10),
+                      child: SizedBox(
+                          height: 45,
+                          child: ElevatedButton(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  "Choose Payment Option",
+                                  style: TextStyle(
+                                      fontSize: 18.0,
+                                      fontFamily: "Montserrat",
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Icon(Icons.arrow_forward_ios)
+                              ],
                             ),
-                            Icon(Icons.arrow_forward_ios)
-                          ],
-                        ),
-                        onPressed: data.cartTotal > 0
-                            ? () {
-                           
-                                showPaymentSelectOption(
-                                    context,
-                                    "Choose payment type",
-                                    data.paymentProvidersList,
-                                    data.cartTotal,
-                                    widget.profileData,AppSettings.paymentTypeOrder);
-                              }
-                            : null,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color.fromARGB(255, 6, 105, 199),
-                          textStyle: TextStyle(color: Colors.white),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(60.0)),
-                        ),
-                      )));
-              
-            }),
-          ],
-        ),
-      ),
-    
-      /* bottomSheet: isAnySelected()
+                            onPressed: data.cartTotal > 0
+                                ? () {
+                                    showPaymentSelectOption(
+                                        context,
+                                        "Choose payment type",
+                                        data.paymentProvidersList,
+                                        data.cartTotal,
+                                        widget.profileData,
+                                        AppSettings.paymentTypeOrder);
+                                  }
+                                : null,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Color.fromARGB(255, 6, 105, 199),
+                              textStyle: TextStyle(color: Colors.white),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(60.0)),
+                            ),
+                          ))
+                ),
+              ],
+            ),
+          ):SizedBox();
+        })
+        /* bottomSheet: isAnySelected()
           ? Container(
               height: 80,
               decoration: BoxDecoration(
@@ -570,7 +582,8 @@ class _CartPageState extends State<CartPage> {
           : Container(
               height: 0,
             ),
-     */);
+     */
+        );
   }
 
   /* bool isAnySelected() {
@@ -604,7 +617,7 @@ class _CartPageState extends State<CartPage> {
   var profileData = {};
   void initValues() {
     initData();
-   }
+  }
 
   Future<void> initData() async {
     //imgBaseUrl = await MySharedPref().getData(AppSettings.Sp_Img_Base_Url);

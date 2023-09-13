@@ -118,7 +118,7 @@ class _NotificationsState extends State<Notifications> {
       MyCustomAlertDialog().showCustomAlert(
           context, "Notification", response["Description"], true, () {
         Navigator.pop(context);
-      }, null);
+      }, null,"Ok","");
     } else {
       MyCustomAlertDialog()
           .showToast(context, "Notification deleted successfully");
@@ -131,7 +131,7 @@ class _NotificationsState extends State<Notifications> {
     MyCustomAlertDialog()
         .showCustomAlert(context, "Notification", error.toString(), true, () {
       Navigator.pop(context);
-    }, null);
+    }, null,"Ok","");
   }
 
   late DateTime _selectedDate;
@@ -536,7 +536,7 @@ class _NotificationsState extends State<Notifications> {
                   deleteNotification(notificationList[index1]);
                 }, () {
                   Navigator.pop(context);
-                });
+                },"Yes","No");
 
                 return false;
               }

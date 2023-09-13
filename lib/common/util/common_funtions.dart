@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
@@ -9,6 +10,7 @@ import '../listener/settings_listener.dart';
 class CommonFunctions {
   static String getInitials(name) {
     List<String> names = name.split(" ");
+    if (names.length == 1) return names[0].toString()[0];
     String initials = "";
     int numWords = 2;
 
@@ -67,7 +69,6 @@ class CommonFunctions {
   }
 
   static String getDailyMealsInCart(cartList) {
-    
     List mealsList = [];
     if (cartList.length > 0) {
       for (var item in cartList) {
@@ -84,12 +85,16 @@ class CommonFunctions {
     List mealsList = [];
     if (cartList.length > 0) {
       for (var item in cartList) {
-        if(item.split("_")[7]!="")
-        mealsList.add("${item.split("_")[7]}");
+        if (item.split("_")[7] != "") mealsList.add("${item.split("_")[7]}");
       }
 
       print(mealsList.join(","));
     }
     return mealsList.join(",");
+  }
+
+  static Uint8List getUnit8bytesFromB64(String _base64) {
+    return base64Decode(
+        _base64.replaceAll(RegExp(r'^data:image\/[a-z]+;base64,'), ''));
   }
 }

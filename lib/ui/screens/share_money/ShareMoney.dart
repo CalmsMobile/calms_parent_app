@@ -448,6 +448,6 @@ class _ShareMoneyState extends State<ShareMoney> {
       Navigator.of(context).pop();
     }, () {
       Navigator.pop(context);
-    });
+    },"Yes","No");
   }
 }

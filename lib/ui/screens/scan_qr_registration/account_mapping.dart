@@ -43,6 +43,7 @@ class _AccountMappingState extends State<AccountMapping> {
     super.initState();
     print("widget.dataResponseModel['Name'] == " +
         widget.dataResponseModel['Name']);
+    print("UserImgPath" + widget.dataResponseModel["UserImgPath"]);
   }
 
   @override
@@ -115,8 +116,10 @@ class _AccountMappingState extends State<AccountMapping> {
                           widget.dataResponseModel['BranchImg'] != null
                               ? CircleAvatar(
                                   radius: 40,
-                                  backgroundImage: NetworkImage(
-                                      widget.dataResponseModel["BranchImg"]),
+                                  backgroundImage: MemoryImage(
+                                      CommonFunctions.getUnit8bytesFromB64(
+                                          widget
+                                              .dataResponseModel["BranchImg"])),
                                 )
                               : CircleAvatar(
                                   radius: 40,
@@ -150,14 +153,29 @@ class _AccountMappingState extends State<AccountMapping> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
-                                    CircleAvatar(
-                                      backgroundColor: Colors.white,
-                                      backgroundImage: NetworkImage(
-                                          widget.baseUrl +
-                                              widget.dataResponseModel[
-                                                  "UserImgPath"]!),
-                                      radius: 40,
-                                    ),
+                                    widget.dataResponseModel["UserImgPath"] !=
+                                            ""
+                                        ? CircleAvatar(
+                                            backgroundColor: Colors.white,
+                                            backgroundImage: NetworkImage(
+                                                widget.baseUrl +
+                                                    widget.dataResponseModel[
+                                                        "UserImgPath"]),
+                                            radius: 40,
+                                          )
+                                        : CircleAvatar(
+                                            radius: 40,
+                                            backgroundColor: Colors.blue[700],
+                                            child: Text(
+                                              CommonFunctions.getInitials(widget
+                                                  .dataResponseModel['Name']),
+                                              style: TextStyle(
+                                                  fontSize: 22.0,
+                                                  color: Colors.white,
+                                                  letterSpacing: 2.0,
+                                                  fontWeight: FontWeight.w900),
+                                            ),
+                                          ),
                                     SizedBox(
                                       width: 20,
                                     ),
@@ -417,7 +435,6 @@ class _AccountMappingState extends State<AccountMapping> {
                           onPressed: isCheckBox1Selected && isCheckBox2Selected
                               ? () {
                                   _onButtonPressed(
-                                      context,
                                       widget.dataResponseModel,
                                       widget.decryptdata,
                                       widget.DeviceId,
@@ -438,7 +455,7 @@ class _AccountMappingState extends State<AccountMapping> {
   }
 
   _onButtonPressed(
-      context, dataResponseModel, decryptdata, DeviceId, DevicePlatform) async {
+      dataResponseModel, decryptdata, DeviceId, DevicePlatform) async {
     print(dataResponseModel);
     print(decryptdata);
     print("DeviceId " + DeviceId);
@@ -502,7 +519,7 @@ class _AccountMappingState extends State<AccountMapping> {
     };
     print(data); */
     Future<Map<String, dynamic>> res = RestApiProvider().postNewData(data,
-        qrJson["ApiUrl"], AppSettings.RegisterParentApp, context, true, false);
+        qrJson["ApiUrl"], AppSettings.RegisterParentApp, context, false, false);
     res
         .then((value) => {
               successResponse(value, decryptdata, data, qrJson["ApiUrl"],
@@ -517,7 +534,7 @@ class _AccountMappingState extends State<AccountMapping> {
         .showCustomAlert(context, "Notification", error.toString(), true, () {
       Navigator.pop(context);
       //resetQRData();
-    }, null);
+    }, null, "Ok", "");
   }
 
   successResponse(Map<String, dynamic> res, decryptdata, inputData, ApiUrl,
@@ -561,6 +578,6 @@ class _AccountMappingState extends State<AccountMapping> {
           .onError((error, stackTrace) => {responseError(error)});
     }, () {
       Navigator.pop(context);
-    });
+    }, "Ok", "Cancel");
   }
 }

@@ -306,8 +306,9 @@ class MySettingsListener with ChangeNotifier {
       "imgBaseUrl": imgBaseUrl,
       "profileData": profileData
     };
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => MealMenuPage(arguments)));
+    if (mealsList.isNotEmpty)
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => MealMenuPage(arguments)));
     //notifyListeners();
   }
 

@@ -333,6 +333,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     controller.dispose(); // you need this
     super.dispose();
   }
+
   Future<void> initValues() async {
     CommonUtil().getEntryToDashboard(context);
     getLocalData();
@@ -354,7 +355,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           padding: EdgeInsets.only(left: 15, top: 5, bottom: 5),
           child: profileData['BranchImg'] != null
               ? CircleAvatar(
-                  backgroundImage: NetworkImage(profileData["BranchImg"]),
+                  backgroundImage: MemoryImage(
+                      CommonFunctions.getUnit8bytesFromB64(
+                          profileData["BranchImg"])),
                 )
               : CircleAvatar(
                   backgroundColor: Colors.blue[700],
@@ -385,124 +388,124 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             // Your widgets here
           ],
         ),
-        actions: [Container(
-              height: 30,
-              //width: 100,
-              margin: EdgeInsets.only(right: 10),
-              child: Row(children: [
-                
-                InkWell(
-                  onTap: () {
-                     Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Notifications()));
-                  },
-                  child: Container(
-                    width: 40,
-                    height: 40,
-                    //margin: EdgeInsets.only(left: 10),
-                    child: ClipOval(
-                      child: Material(
-                        color: Colors.blue[900], // Button color
-                        child: SizedBox(
-                            width: 40,
-                            height: 40,
-                            child: Icon(
-                              Icons.notifications_rounded,
-                              color: Colors.white,
-                              size: 18,
-                            )),
-                      ),
+        actions: [
+          Container(
+            height: 30,
+            //width: 100,
+            margin: EdgeInsets.only(right: 10),
+            child: Row(children: [
+              InkWell(
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Notifications()));
+                },
+                child: Container(
+                  width: 40,
+                  height: 40,
+                  //margin: EdgeInsets.only(left: 10),
+                  child: ClipOval(
+                    child: Material(
+                      color: Colors.blue[900], // Button color
+                      child: SizedBox(
+                          width: 40,
+                          height: 40,
+                          child: Icon(
+                            Icons.notifications_rounded,
+                            color: Colors.white,
+                            size: 18,
+                          )),
                     ),
                   ),
                 ),
-                Stack(
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => CartPage(imgBaseUrl,profileData),
-                          ),
-                        );
-                      },
-                      child: Container(
-                        width: 40,
-                        height: 40,
-                        margin: EdgeInsets.only(left: 10),
-                        child: ClipOval(
-                          child: Material(
-                            color: Colors.blue, // Button color
-                            child: SizedBox(
-                                width: 40,
-                                height: 40,
-                                child: Icon(
-                                  Icons.shopping_cart_rounded,
-                                  color: Colors.white,
-                                  size: 18,
-                                )),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Consumer<MySettingsListener>(
-                        builder: (context, data, settingsDta) {
-                      return Positioned(
-                        top: 0,
-                        right: 0,
-                        child: Container(
-                          height: 18,
-                          width: 18,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.red,
-                          ),
-                          child: Center(
-                              child: Text(
-                            data.cartList != []
-                                ? data.cartList.length.toString()
-                                : "0",
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          )),
+              ),
+              Stack(
+                children: [
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              CartPage(imgBaseUrl, profileData),
                         ),
                       );
-                    })
-                  ],
-                ),
-                InkWell(
-                  onTap: () {
-                    Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => AppSettingsPage(),
-                  ),
-                );
-                  },
-                  child: Container(
-                    width: 40,
-                    height: 40,
-                    margin: EdgeInsets.only(left: 10),
-                    child: ClipOval(
-                      child: Material(
-                        color: Colors.blue[900], // Button color
-                        child: SizedBox(
-                            width: 40,
-                            height: 40,
-                            child: Icon(
-                              Icons.settings_rounded,
-                              color: Colors.white,
-                              size: 18,
-                            )),
+                    },
+                    child: Container(
+                      width: 40,
+                      height: 40,
+                      margin: EdgeInsets.only(left: 10),
+                      child: ClipOval(
+                        child: Material(
+                          color: Colors.blue, // Button color
+                          child: SizedBox(
+                              width: 40,
+                              height: 40,
+                              child: Icon(
+                                Icons.shopping_cart_rounded,
+                                color: Colors.white,
+                                size: 18,
+                              )),
+                        ),
                       ),
                     ),
                   ),
+                  Consumer<MySettingsListener>(
+                      builder: (context, data, settingsDta) {
+                    return Positioned(
+                      top: 0,
+                      right: 0,
+                      child: Container(
+                        height: 18,
+                        width: 18,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.red,
+                        ),
+                        child: Center(
+                            child: Text(
+                          data.cartList != []
+                              ? data.cartList.length.toString()
+                              : "0",
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        )),
+                      ),
+                    );
+                  })
+                ],
+              ),
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AppSettingsPage(),
+                    ),
+                  );
+                },
+                child: Container(
+                  width: 40,
+                  height: 40,
+                  margin: EdgeInsets.only(left: 10),
+                  child: ClipOval(
+                    child: Material(
+                      color: Colors.blue[900], // Button color
+                      child: SizedBox(
+                          width: 40,
+                          height: 40,
+                          child: Icon(
+                            Icons.settings_rounded,
+                            color: Colors.white,
+                            size: 18,
+                          )),
+                    ),
+                  ),
                 ),
-                
-              ]),
-            ),
+              ),
+            ]),
+          ),
         ],
         /* actions: [
           Padding(
@@ -645,10 +648,14 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                                 if (data.familyList[data
                                                         .familyPos]['Name'] ==
                                                     item["Name"])
-                                                  Image.asset(
+                                                  /* Image.asset(
                                                     "assets/images/swipe_left.png",
                                                     width: 25,
-                                                  ),
+                                                  ) */
+                                                  Icon(
+                                                      Icons
+                                                          .keyboard_double_arrow_left,
+                                                      color: Colors.grey),
                                                 Container(
                                                   width: (data.familyList[data
                                                                   .familyPos]
@@ -719,10 +726,15 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                                 if (data.familyList[data
                                                         .familyPos]['Name'] ==
                                                     item["Name"])
-                                                  Image.asset(
+                                                  /* Image.asset(
                                                     "assets/images/swipe_right.png",
                                                     width: 25,
-                                                  )
+                                                  ) */
+                                                  Icon(
+                                                      Icons
+                                                          .keyboard_double_arrow_right,
+                                                      size: 25,
+                                                      color: Colors.grey),
                                               ],
                                             ),
                                           ),
@@ -823,7 +835,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                         data.dashboardMenuList,
                                         data.familyList,
                                         imgBaseUrl,
-                                        profileData,data.familyListWithoutParent);
+                                        profileData,
+                                        data.familyListWithoutParent);
                                   });
                             } else {
                               return SizedBox();
