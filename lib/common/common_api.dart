@@ -49,14 +49,10 @@ class CommonUtil {
   EntryToDashboardSuccess(BuildContext context, Map<String, dynamic> response) {
     if (response['Table'][0]['code'] == 10 && response['Table1'][0] != null) {
       print("getEntryToDashboard success");
-      //familyList = response['Table1'];
-      context
-          .read<MySettingsListener>()
-          .updateEntryToDashboardFamilyList(response['Table1']);
 
       context
           .read<MySettingsListener>()
-          .updateFamilyListWithoutParent(response['Table1']);
+          .updateEntryToDashboardFamilyList(response['Table1']);
 
       context
           .read<MySettingsListener>()

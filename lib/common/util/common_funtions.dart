@@ -10,7 +10,7 @@ import '../listener/settings_listener.dart';
 class CommonFunctions {
   static String getInitials(name) {
     List<String> names = name.split(" ");
-    if (names.length == 1) return names[0].toString()[0];
+    if (names.length == 1) return names[0].toString()[0]+names[0].toString()[names[0].length-1];
     String initials = "";
     int numWords = 2;
 
@@ -45,12 +45,16 @@ class CommonFunctions {
     return "";
   }
 
-  static int getChildIndexFromFamily(List familyList) {
-    for (int i = 0; familyList.length > 0; i++) {
-      if (familyList[i]['MemberType'] == "Student") ;
-      return i;
+  static List getChildListFromFamilyList(List familyList) {
+    List studentList=[];
+    for (var member in familyList) {
+      if (member['MemberType'] == "Student")
+      studentList.add(member);
     }
-    return 0;
+   
+    print("========"+studentList.toString());
+
+    return studentList;
   }
 
   static String getPoCartData(UserSeqId, POTypeConfigSeqId, PackageSeqId) {

@@ -83,4 +83,7 @@ class AppSettings {
   static String titleNoMeal = "NO MEAL ITEM FOUND";
   static String msgNoMeal =
       "No meal item found for selected date, we'll update here when there is any new meal been uploaded.";
+      static String imgAssetNoCalender = "assets/images/no_calendar.png";
+  static String titleNoCalender = "NO HISTORY";
+  static String msgNoCalender = "";
 }

@@ -69,7 +69,7 @@ dependencies:
   html_unescape: ^2.0.0
   flutter_expandable_fab: ^1.8.1
   webview_flutter: ^4.2.4
-  collection: ^1.18.0
+  collection: ^1.17.0
 
 #dependency_overrides:
 dev_dependencies:

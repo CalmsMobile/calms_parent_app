@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:calms_parent_latest/common/app_settings.dart';
+import 'package:calms_parent_latest/common/widgets/no_data_card.dart';
 import 'package:calms_parent_latest/ui/screens/widgets/AttendanceListView.dart';
 import 'package:calms_parent_latest/ui/screens/widgets/HolidayListView.dart';
 import 'package:flutter/material.dart';
@@ -150,159 +152,156 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                 height: MediaQuery.of(context).size.height,
                 child: SingleChildScrollView(
                   child: Container(
-                    child: Column(
-                      children: [
-                        Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                          ),
-                          elevation: 10,
-                          shadowColor: Colors.black,
-                          borderOnForeground: true,
-                          margin: EdgeInsets.only(
-                              top: 5, bottom: 20, left: 20, right: 20),
-                          child: Padding(
-                            padding: EdgeInsets.all(15),
-                            child: SfCalendar(
-                              view: CalendarView.month,
-                              showDatePickerButton: true,
-                              // dataSource: _getCalendarDataSource(),
-                              onTap: calendarTapped,
-                            ),
+                    child: Column(children: [
+                      Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                        elevation: 10,
+                        shadowColor: Colors.black,
+                        borderOnForeground: true,
+                        margin: EdgeInsets.only(
+                            top: 5, bottom: 20, left: 20, right: 20),
+                        child: Padding(
+                          padding: EdgeInsets.all(15),
+                          child: SfCalendar(
+                            view: CalendarView.month,
+                            showDatePickerButton: true,
+                            // dataSource: _getCalendarDataSource(),
+                            onTap: calendarTapped,
                           ),
                         ),
-                        Consumer<MySettingsListener>(
-                            builder: (context, data, settingsDta) {
-                          if (data.calendarHolidaysList.isNotEmpty) {
-                            print("data.holidaysList.isNotEmpty");
-                            return Card(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15.0),
-                              ),
-                              elevation: 10,
-                              shadowColor: Colors.black,
-                              borderOnForeground: true,
-                              margin: EdgeInsets.only(
-                                  left: 20, right: 20, bottom: 20),
-                              child: Container(
-                                margin: EdgeInsets.all(10),
-                                child: Column(
-                                  children: [
-                                    Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Container(
-                                          padding: EdgeInsets.only(
-                                              left: 10.0,
-                                              top: 10.0,
-                                              bottom: 10.0),
-                                          margin: EdgeInsets.zero,
-                                          width: double.infinity,
-                                          color: Colors.transparent,
-                                          child: Text(
-                                            "HOLIDAY",
-                                            style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.bold),
-                                          )),
-                                    ),
-                                    HolidayListView(data.calendarHolidaysList)
-                                  ],
+                      ),
+                      Consumer<MySettingsListener>(
+                          builder: (context, data, settingsDta) {
+                        return Column(
+                          children: [
+                            if (data.calendarHolidaysList.isNotEmpty)
+                              Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                ),
+                                elevation: 10,
+                                shadowColor: Colors.black,
+                                borderOnForeground: true,
+                                margin: EdgeInsets.only(
+                                    left: 20, right: 20, bottom: 20),
+                                child: Container(
+                                  margin: EdgeInsets.all(10),
+                                  child: Column(
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Container(
+                                            padding: EdgeInsets.only(
+                                                left: 10.0,
+                                                top: 10.0,
+                                                bottom: 10.0),
+                                            margin: EdgeInsets.zero,
+                                            width: double.infinity,
+                                            color: Colors.transparent,
+                                            child: Text(
+                                              "HOLIDAY",
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold),
+                                            )),
+                                      ),
+                                      HolidayListView(data.calendarHolidaysList)
+                                    ],
+                                  ),
                                 ),
                               ),
-                            );
-                          } else {
-                            return SizedBox();
-                          }
-                        }),
-                        Consumer<MySettingsListener>(
-                            builder: (context, data, settingsDta) {
-                          if (data.calendarAttendanceList.isNotEmpty) {
-                            return Card(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15.0),
-                              ),
-                              elevation: 10,
-                              shadowColor: Colors.black,
-                              borderOnForeground: true,
-                              margin: EdgeInsets.only(
-                                  left: 20, right: 20, bottom: 20),
-                              child: Container(
-                                margin: EdgeInsets.all(10),
-                                child: Column(
-                                  children: [
-                                    Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Container(
-                                          padding: EdgeInsets.only(
-                                              left: 10.0,
-                                              top: 10.0,
-                                              bottom: 10.0),
-                                          margin: EdgeInsets.zero,
-                                          width: double.infinity,
-                                          color: Colors.transparent,
-                                          child: Text(
-                                            "ATTENDANCE",
-                                            style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.bold),
-                                          )),
-                                    ),
-                                    AttendanceListView(
-                                        data.calendarAttendanceList)
-                                  ],
+                            if (data.calendarAttendanceList.isNotEmpty)
+                              Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                ),
+                                elevation: 10,
+                                shadowColor: Colors.black,
+                                borderOnForeground: true,
+                                margin: EdgeInsets.only(
+                                    left: 20, right: 20, bottom: 20),
+                                child: Container(
+                                  margin: EdgeInsets.all(10),
+                                  child: Column(
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Container(
+                                            padding: EdgeInsets.only(
+                                                left: 10.0,
+                                                top: 10.0,
+                                                bottom: 10.0),
+                                            margin: EdgeInsets.zero,
+                                            width: double.infinity,
+                                            color: Colors.transparent,
+                                            child: Text(
+                                              "ATTENDANCE",
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold),
+                                            )),
+                                      ),
+                                      AttendanceListView(
+                                          data.calendarAttendanceList)
+                                    ],
+                                  ),
                                 ),
                               ),
-                            );
-                          } else {
-                            return SizedBox();
-                          }
-                        }),
-                        Consumer<MySettingsListener>(
-                            builder: (context, data, settingsDta) {
-                          if (data.calendarTransactionList.isNotEmpty) {
-                            return Card(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15.0),
-                              ),
-                              elevation: 10,
-                              shadowColor: Colors.black,
-                              borderOnForeground: true,
-                              margin: EdgeInsets.only(
-                                  left: 20, right: 20, bottom: 20),
-                              child: Container(
-                                margin: EdgeInsets.all(10),
-                                child: Column(
-                                  children: [
-                                    Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Container(
-                                          padding: EdgeInsets.only(
-                                              left: 10.0,
-                                              top: 10.0,
-                                              bottom: 10.0),
-                                          margin: EdgeInsets.zero,
-                                          width: double.infinity,
-                                          color: Colors.transparent,
-                                          child: Text(
-                                            "TRANSACTIONS",
-                                            style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.bold),
-                                          )),
-                                    ),
-                                    PurchaseListView(
-                                        data.calendarTransactionList,
-                                        CurrencyCode),
-                                  ],
+                            if (data.calendarTransactionList.isNotEmpty)
+                              Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                ),
+                                elevation: 10,
+                                shadowColor: Colors.black,
+                                borderOnForeground: true,
+                                margin: EdgeInsets.only(
+                                    left: 20, right: 20, bottom: 20),
+                                child: Container(
+                                  margin: EdgeInsets.all(10),
+                                  child: Column(
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Container(
+                                            padding: EdgeInsets.only(
+                                                left: 10.0,
+                                                top: 10.0,
+                                                bottom: 10.0),
+                                            margin: EdgeInsets.zero,
+                                            width: double.infinity,
+                                            color: Colors.transparent,
+                                            child: Text(
+                                              "TRANSACTIONS",
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold),
+                                            )),
+                                      ),
+                                      PurchaseListView(
+                                          data.calendarTransactionList,
+                                          CurrencyCode),
+                                    ],
+                                  ),
                                 ),
                               ),
-                            );
-                          } else {
-                            return SizedBox();
-                          }
-                        }),
+                          ],
+                        );
+                      }),
+                      Consumer<MySettingsListener>(
+                          builder: (context, data, child) =>
+                              data.calendarAttendanceList.isEmpty &&
+                                      data.calendarHolidaysList.isEmpty &&
+                                      data.calendarTransactionList.isEmpty
+                                  ? NoDataCard(
+                                      AppSettings.imgAssetNoCalender,
+                                      AppSettings.titleNoCalender,
+                                      AppSettings.msgNoCalender)
+                                  : SizedBox())
 
-                        /*  Card(
+                      /*  Card(
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15.0),
                             ),
@@ -465,8 +464,7 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                               ),
                             ]))
                        */
-                      ],
-                    ),
+                    ]),
                   ),
                 ))));
   }

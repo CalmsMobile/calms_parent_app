@@ -124,16 +124,12 @@ class MySettingsListener with ChangeNotifier {
 
   updateEntryToDashboardFamilyList(List familyList) {
     _familyList = familyList;
-
+    
+ _familyListWithoutParent = CommonFunctions.getChildListFromFamilyList(familyList);
     notifyListeners();
   }
 
-  updateFamilyListWithoutParent(List family) {
-    this._familyListWithoutParent = family;
-    //this._familyListWithoutParent.removeWhere((element) => element['MemberType'] == "Parent");
-    print(this._familyListWithoutParent);
-    //notifyListeners();
-  }
+ 
 
   updateEntryToDashboardMenuList(List menuList) {
     _dashboardMenuList = menuList;
