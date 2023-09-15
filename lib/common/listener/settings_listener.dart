@@ -327,7 +327,7 @@ class MySettingsListener with ChangeNotifier {
   updateMealsInFinalCartList(List mealsList) {
     for (var i = 0; i < mealsList.length; i++) {
       var f = familyList
-          .where((element) => element['UserSeqId'] == 106312.0)
+          .where((element) => element['UserSeqId'] == mealsList[i]['RefUserSeqId'])
           .toList();
       mealsList[i]['isSelected'] = false;
       mealsList[i]['member'] = f;
@@ -341,7 +341,7 @@ class MySettingsListener with ChangeNotifier {
   updatePackagesInFinalCartList(List packaList) {
     for (var i = 0; i < packaList.length; i++) {
       var f = familyList
-          .where((element) => element['UserSeqId'] == 106312.0)
+          .where((element) => element['UserSeqId'] == packaList[i]['RefUserSeqId'])
           .toList();
       packaList[i]['isSelected'] = false;
       packaList[i]['member'] = f;

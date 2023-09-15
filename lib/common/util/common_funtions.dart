@@ -77,7 +77,7 @@ class CommonFunctions {
     if (cartList.length > 0) {
       for (var item in cartList) {
         mealsList.add(
-            "${item.split("_")[2]}_${item.split("_")[3]}_${item.split("_")[6]}");
+            "${item.split("_")[1]}_${item.split("_")[2]}_${item.split("_")[3]}_${item.split("_")[6]}");
       }
 
       print(mealsList.join(","));
@@ -89,7 +89,7 @@ class CommonFunctions {
     List mealsList = [];
     if (cartList.length > 0) {
       for (var item in cartList) {
-        if (item.split("_")[7] != "") mealsList.add("${item.split("_")[7]}");
+        if (item.split("_")[7] != "") mealsList.add("${item.split("_")[1]}_${item.split("_")[7]}");
       }
 
       print(mealsList.join(","));
