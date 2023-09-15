@@ -1,13 +1,12 @@
 class JsonResponses {
-
   //Notification Category
   static List<Map> notificationCategoryList = [
-    {"Name":"General"},
-    {"Name":"Topup"},
-    {"Name":"Purchase"},
-    {"Name":"Attendance"},
-    {"Name":"Payment"}
-    ];
+    {"Name": "General"},
+    {"Name": "Topup"},
+    {"Name": "Purchase"},
+    {"Name": "Attendance"},
+    {"Name": "Payment"}
+  ];
   //getFamilybalance
   static List<Map> familyList = [
     {
@@ -647,6 +646,22 @@ class JsonResponses {
           "MealTypeCount": 1
         }
       ]
+    }
+  ];
+
+//App Settings
+
+  static List appTheme = [
+    {
+      "button": {
+        "textColor": "#fff",
+        "bgColor": "#0669C7",
+        "fontSize": 18.0,
+        "isBold": true,
+        "borderRadius": 60.0,
+        "width":150,
+        "height":50
+      }
     }
   ];
 }
