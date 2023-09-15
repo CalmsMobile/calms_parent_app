@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:calms_parent_latest/common/util/app_button.dart';
 import 'package:calms_parent_latest/main.dart';
 
 import '../../../common/crypto_enc.dart';
@@ -125,8 +126,10 @@ class _AccountMappingState extends State<AccountMapping> {
                                   radius: 40,
                                   backgroundColor: Colors.blue[700],
                                   child: Text(
-                                    CommonFunctions.getInitials(
-                                        widget.dataResponseModel['BranchName']),
+                                    CommonFunctions.getInitials(widget
+                                        .dataResponseModel['BranchName']
+                                        .toString()
+                                        .toUpperCase()),
                                     style: TextStyle(
                                         fontSize: 22.0,
                                         color: Colors.white,
@@ -138,9 +141,10 @@ class _AccountMappingState extends State<AccountMapping> {
                             height: 10,
                           ),
                           Text(
-                            widget.dataResponseModel["BranchName"]!,
+                            widget.dataResponseModel['BranchName'],
                             style: TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold),
+                            textAlign: TextAlign.center,
                           ),
                           SizedBox(
                             height: 10,
@@ -168,7 +172,9 @@ class _AccountMappingState extends State<AccountMapping> {
                                             backgroundColor: Colors.blue[700],
                                             child: Text(
                                               CommonFunctions.getInitials(widget
-                                                  .dataResponseModel['Name']),
+                                                  .dataResponseModel['Name']
+                                                  .toString()
+                                                  .toUpperCase()),
                                               style: TextStyle(
                                                   fontSize: 22.0,
                                                   color: Colors.white,
@@ -179,11 +185,15 @@ class _AccountMappingState extends State<AccountMapping> {
                                     SizedBox(
                                       width: 20,
                                     ),
-                                    Text(
-                                      widget.dataResponseModel["Name"]!,
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold),
+                                    Flexible(
+                                      child: Text(
+                                        widget.dataResponseModel["Name"]!,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold),
+                                      ),
                                     ),
                                     SizedBox(
                                       height: 10,
@@ -413,42 +423,45 @@ class _AccountMappingState extends State<AccountMapping> {
                           ),
                         ]),
                       )),
-                  Padding(
-                      padding: EdgeInsets.only(left: 20, right: 20),
-                      child: SizedBox(
-                        width: 150,
-                        height: 45,
-                        child: ElevatedButton(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Text(
-                                "Register",
-                                style: TextStyle(
-                                    fontSize: 18.0,
-                                    fontFamily: "Montserrat",
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              Icon(Icons.arrow_forward_ios)
-                            ],
-                          ),
-                          onPressed: isCheckBox1Selected && isCheckBox2Selected
-                              ? () {
-                                  _onButtonPressed(
-                                      widget.dataResponseModel,
-                                      widget.decryptdata,
-                                      widget.DeviceId,
-                                      widget.DevicePlatform);
-                                }
-                              : null,
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Color.fromARGB(255, 6, 105, 199),
-                            textStyle: TextStyle(color: Colors.white),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(60.0)),
-                          ),
+                      button( "Register", isCheckBox1Selected, isCheckBox2Selected, () {
+                            _onButtonPressed(
+                                widget.dataResponseModel,
+                                widget.decryptdata,
+                                widget.DeviceId,
+                                widget.DevicePlatform);
+                          }),
+                  /* ElevatedButton(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text(
+                          "Register",
+                          style: TextStyle(
+                              fontSize: 18.0,
+                              fontFamily: "Montserrat",
+                              fontWeight: FontWeight.bold),
                         ),
-                      )),
+                        Icon(Icons.arrow_forward_ios)
+                      ],
+                    ),
+                    onPressed: isCheckBox1Selected && isCheckBox2Selected
+                        ? () {
+                            _onButtonPressed(
+                                widget.dataResponseModel,
+                                widget.decryptdata,
+                                widget.DeviceId,
+                                widget.DevicePlatform);
+                          }
+                        : null,
+                    style: ElevatedButton.styleFrom(
+                      fixedSize: Size(150, 40),
+                      backgroundColor: Color.fromARGB(255, 6, 105, 199),
+                      elevation: 5,
+                      textStyle: TextStyle(color: Colors.white),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(60.0)),
+                    ),
+                  ), */
                 ]),
               ]))))
     ]));

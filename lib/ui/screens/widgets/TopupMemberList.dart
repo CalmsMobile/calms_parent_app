@@ -42,21 +42,51 @@ class TopupMemberListView extends StatelessWidget {
                       padding: const EdgeInsets.all(20.0),
                       child: Column(
                         children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                          
+                              Row(
                                 children: [
-                                  Text(
-                                    membersList[index]['Name'],
-                                    style: TextStyle(
-                                      fontSize: 22,
-                                      color: Colors.green[900],
-                                      fontWeight: FontWeight.w500,
-                                    ),
+                                  Container(
+                                    child: membersList[index]['ImgPathUrl'] !=
+                                            null
+                                        ? CircleAvatar(
+                                            radius: 25,
+                                            backgroundImage: NetworkImage(
+                                                imgBaseUrl +
+                                                    membersList[index]
+                                                        ["ImgPathUrl"]),
+                                          )
+                                        : CircleAvatar(
+                                            radius: 25,
+                                            backgroundColor: Colors.blue[700],
+                                            child: Text(
+                                              CommonFunctions.getInitials(
+                                                  membersList[index]['Name']),
+                                              style: TextStyle(
+                                                  fontSize: 22.0,
+                                                  color: Colors.white,
+                                                  letterSpacing: 2.0,
+                                                  fontWeight: FontWeight.w900),
+                                            ),
+                                          ),
                                   ),
-                                  membersList[index]['RelationShip'] != ""
+                                  Container(
+                                    margin: EdgeInsets.only(left: 10),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                       
+                                        Text(
+                                          membersList[index]['Name'],
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 1,
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            color: Colors.green[900],
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                        /* membersList[index]['RelationShip'] != ""
                                       ? Text(
                                           '(${membersList[index]['RelationShip']})',
                                           style: TextStyle(
@@ -66,34 +96,22 @@ class TopupMemberListView extends StatelessWidget {
                                             fontWeight: FontWeight.w500,
                                           ),
                                         )
-                                      : SizedBox()
+                                      : SizedBox(), */
+                                        Text(
+                                          'Current Balance : ${CurrencyCode} ${membersList[index]['Balance'].toStringAsFixed(2)}',
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color:
+                                                Color.fromARGB(255, 83, 83, 83),
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  )
                                 ],
                               ),
-                              Container(
-                                child: membersList[index]['ImgPathUrl'] != null
-                                    ? CircleAvatar(
-                                        radius: 30,
-                                        backgroundImage: NetworkImage(
-                                            imgBaseUrl +
-                                                membersList[index]
-                                                    ["ImgPathUrl"]),
-                                      )
-                                    : CircleAvatar(
-                                        radius: 30,
-                                        backgroundColor: Colors.blue[700],
-                                        child: Text(
-                                          CommonFunctions.getInitials(
-                                              membersList[index]['Name']),
-                                          style: TextStyle(
-                                              fontSize: 22.0,
-                                              color: Colors.white,
-                                              letterSpacing: 2.0,
-                                              fontWeight: FontWeight.w900),
-                                        ),
-                                      ),
-                              ),
-                            ],
-                          ),
+                             
                           SizedBox(
                             height: 10,
                           ),
@@ -102,7 +120,7 @@ class TopupMemberListView extends StatelessWidget {
                             child: Text('Enter your amount',
                                 textAlign: TextAlign.start,
                                 style: TextStyle(
-                                  fontSize: 15,
+                                  fontSize: 13,
                                   fontWeight: FontWeight.bold,
                                   color: Color.fromARGB(255, 0, 0, 0),
                                 )),
@@ -117,7 +135,7 @@ class TopupMemberListView extends StatelessWidget {
                             style: TextStyle(
                                 color: Color.fromARGB(255, 6, 105, 199),
                                 fontWeight: FontWeight.bold,
-                                fontSize: 20),
+                                fontSize: 17),
                             textAlignVertical: TextAlignVertical.center,
                             decoration: InputDecoration(
                               isDense: false,
@@ -127,13 +145,13 @@ class TopupMemberListView extends StatelessWidget {
                                 fontSize: 20)), */
                               prefixIconConstraints: const BoxConstraints(),
                               prefixIcon: Container(
-                                margin: EdgeInsets.symmetric(horizontal: 10),
+                                margin: EdgeInsets.symmetric(horizontal: 8,vertical: 0),
                                 child: Text(CurrencyCode,
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                         color: Color.fromARGB(255, 6, 105, 199),
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 22)),
+                                        fontSize: 17)),
                               ),
                               border: OutlineInputBorder(),
                               hintText: "0.00",
@@ -162,207 +180,7 @@ class TopupMemberListView extends StatelessWidget {
                     ), //Padding
                     //SizedBox
                   );
-                  /* return Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0),
-                      ),
-                      borderOnForeground: true,
-                      margin: EdgeInsets.only(
-                          top: 20, bottom: 20, left: 20, right: 20),
-                      child: Container(
-                        width: double.infinity,
-                        padding: EdgeInsets.only(bottom: 8, top: 8, left: 8),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                                width: 60,
-                                child: Container(
-                                  height: 50,
-                                  width: 50,
-                                  child: membersList[index]['ImgPathUrl'] !=
-                                          null
-                                      ? CircleAvatar(
-                                          backgroundImage: NetworkImage(
-                                              imgBaseUrl +
-                                                  membersList[index]
-                                                      ["ImgPathUrl"]),
-                                        )
-                                      : CircleAvatar(
-                                          backgroundColor: Colors.blue[700],
-                                          child: Text(
-                                            CommonFunctions.getInitials(
-                                                membersList[index]['Name']),
-                                            style: TextStyle(
-                                                fontSize: 22.0,
-                                                color: Colors.white,
-                                                letterSpacing: 2.0,
-                                                fontWeight: FontWeight.w900),
-                                          ),
-                                        ),
-                                )),
-                            Flexible(
-                              child: Container(
-                                  margin: EdgeInsets.only(left: 5, right: 5),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        padding:
-                                            EdgeInsets.fromLTRB(3, 3, 0, 0),
-                                        child: Text(
-                                          membersList[index]['Name'],
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 20),
-                                        ),
-                                      ),
-                                      (membersList[index]['RelationShip'] != "")
-                                          ? Container(
-                                              padding: EdgeInsets.fromLTRB(
-                                                  3, 5, 0, 0),
-                                              child: RichText(
-                                                textAlign: TextAlign.center,
-                                                text: TextSpan(children: [
-                                                  WidgetSpan(
-                                                      child: Icon(
-                                                    Icons.card_membership,
-                                                    size: 20,
-                                                    color: Colors.grey.shade500,
-                                                  )),
-                                                  TextSpan(
-                                                    text: " " +
-                                                        membersList[index]
-                                                            ['RelationShip'],
-                                                    //text: " ",
-                                                    style: TextStyle(
-                                                        color: Colors.black54,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 20),
-                                                  ),
-                                                ]),
-                                              ),
-                                            )
-                                          : SizedBox(),
-                                      Container(
-                                        padding:
-                                            EdgeInsets.fromLTRB(2, 3, 0, 0),
-                                        child: RichText(
-                                          textAlign: TextAlign.center,
-                                          text: TextSpan(children: [
-                                            /*  WidgetSpan(
-                                              child: Icon(
-                                            Icons.attach_money,
-                                            size: 18,
-                                            color: Colors.grey.shade500,
-                                          )), */
-                                            TextSpan(
-                                              text: " Balance",
-                                              style: TextStyle(
-                                                fontSize: 20,
-                                                color: Colors.black54,
-                                              ),
-                                            ),
-                                            TextSpan(
-                                              text: " ${CurrencyCode} ",
-                                              style: TextStyle(
-                                                fontSize: 20,
-                                                color: Color.fromARGB(
-                                                    255, 0, 61, 10),
-                                              ),
-                                            ),
-                                            TextSpan(
-                                              text:
-                                                  "${membersList[index]['Balance'].toStringAsFixed(2)}",
-                                              style: TextStyle(
-                                                  fontSize: 20,
-                                                  color: Color.fromARGB(
-                                                      132, 0, 0, 0),
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            /*  TextSpan(
-                                              text:
-                                                  "${membersList[index]['RelationShip']}",
-                                              style: TextStyle(
-                                                  fontSize: 12,
-                                                  color: Colors.redAccent,
-                                                  fontWeight: FontWeight.bold),
-                                            ) */
-                                          ]),
-                                        ),
-                                      ),
-                                      Container(
-                                        padding:
-                                            EdgeInsets.fromLTRB(3, 0, 0, 0),
-                                        width: double.infinity,
-                                        child: Row(children: [
-                                          Icon(
-                                            Icons.currency_exchange,
-                                            size: 20,
-                                            color: Colors.grey.shade500,
-                                          ),
-                                          Container(
-                                            width: 250,
-                                            child: TextField(
-                                              onChanged: (value) {
-                                                checkMaximumAmount(
-                                                    context, index, value);
-                                              },
-                                              style: TextStyle(
-                                                  fontSize: 22,
-                                                  color: Colors.green,
-                                                  fontWeight: FontWeight.bold),
-                                              textAlign: TextAlign.left,
-                                              decoration: const InputDecoration(
-                                                hintText: '0.00',
-                                                isDense: true,
-                                                prefixIconConstraints:
-                                                    BoxConstraints(
-                                                        minWidth: 0,
-                                                        minHeight: 0),
-                                                prefixIcon: Text(
-                                                  ' MYR ',
-                                                  style: TextStyle(
-                                                      color: Color.fromARGB(
-                                                          156, 0, 0, 0),
-                                                      fontSize: 20,
-                                                      fontWeight:
-                                                          FontWeight.normal),
-                                                ),
-                                              ),
-                                              keyboardType: TextInputType
-                                                  .numberWithOptions(
-                                                      decimal: true),
-                                              inputFormatters: [
-                                                // Allow Decimal Number With Precision of 2 Only
-                                                FilteringTextInputFormatter
-                                                    .allow(RegExp(
-                                                        r'^\d*\.?\d{0,2}')),
-                                              ],
-                                            ),
-                                          ),
-                                        ]),
-                                      ),
-                                      Text(
-                                        membersList[index]['msg'] != null
-                                            ? membersList[index]['msg']
-                                            : "",
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            color: Colors.redAccent,
-                                            fontWeight: FontWeight.bold),
-                                      )
-                                    ],
-                                  )),
-                            ),
-                          ],
-                        ),
-                      ));
-                 */
+                  
                 }),
           ),
         ],

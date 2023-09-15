@@ -55,7 +55,7 @@ class MySettingsListener with ChangeNotifier {
   get familyPos => _familyPos;
   void pageSwiped(int pos) {
     _familyPos = pos;
-    print(pos);
+    print("*pos* ${pos.toString()} == ${familyList.length.toString()}");
   }
 
   UnmodifiableListView<dynamic> get dashboardMenuList =>

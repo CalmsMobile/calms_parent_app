@@ -343,6 +343,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     //print(widget.familyPos);
     // print(widget.familyList);
+
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 70,
@@ -412,7 +413,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           child: Icon(
                             Icons.notifications_rounded,
                             color: Colors.white,
-                            size: 18,
+                            size: 25,
                           )),
                     ),
                   ),
@@ -443,7 +444,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                               child: Icon(
                                 Icons.shopping_cart_rounded,
                                 color: Colors.white,
-                                size: 18,
+                                size: 25,
                               )),
                         ),
                       ),
@@ -498,7 +499,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           child: Icon(
                             Icons.settings_rounded,
                             color: Colors.white,
-                            size: 18,
+                            size: 25,
                           )),
                     ),
                   ),
@@ -652,10 +653,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                                     "assets/images/swipe_left.png",
                                                     width: 25,
                                                   ) */
-                                                  Icon(
-                                                      Icons
-                                                          .keyboard_double_arrow_left,
-                                                      color: Colors.grey),
+
+                                                  data.familyPos != 0
+                                                      ? Icon(
+                                                          Icons
+                                                              .keyboard_double_arrow_left,
+                                                          color: Colors.grey)
+                                                      : SizedBox(),
                                                 Container(
                                                   width: (data.familyList[data
                                                                   .familyPos]
@@ -730,11 +734,14 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                                     "assets/images/swipe_right.png",
                                                     width: 25,
                                                   ) */
-                                                  Icon(
-                                                      Icons
-                                                          .keyboard_double_arrow_right,
-                                                      size: 25,
-                                                      color: Colors.grey),
+                                                  data.familyPos !=
+                                                          data.familyList.length-1
+                                                      ? Icon(
+                                                          Icons
+                                                              .keyboard_double_arrow_right,
+                                                          size: 25,
+                                                          color: Colors.grey)
+                                                      : SizedBox()
                                               ],
                                             ),
                                           ),
@@ -758,7 +765,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                     autoPlay: false,
                                     aspectRatio: 16 / 9,
                                     autoPlayCurve: Curves.fastOutSlowIn,
-                                    enableInfiniteScroll: true,
+                                    enableInfiniteScroll: false,
                                     autoPlayAnimationDuration:
                                         Duration(milliseconds: 800),
                                     viewportFraction: 0.35,
