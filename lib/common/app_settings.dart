@@ -71,6 +71,7 @@ class AppSettings {
   static String commonCryptoKey = "qweqweqweqweqweq";
   // static String appType_Notification = "NOTIFICATION";
 
+static String colorCurrencyCode = "#0D47A1";
   static String verificationAlertMsg =
       "Verification link sent to your email. Please verify to access this application. If you have not received the link, Click 'Resend' below to send a verification email again.";
   static String paymentTypeTopup = "topup";

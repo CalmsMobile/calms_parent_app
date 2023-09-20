@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
 
+import '../../../common/HexColor.dart';
 import '../../../common/app_settings.dart';
 import '../../../common/listener/settings_listener.dart';
 import '../../../common/util/common_funtions.dart';
@@ -19,8 +20,15 @@ class MealOrderListView extends StatelessWidget {
   List poPackagesList;
   var memberDetails = {};
   String imgBaseUrl;
-  MealOrderListView(this.poSettings, this.poTypesList, this.poPackagesList,
-      this.CurrencyCode, this.poList, this.memberDetails, this.imgBaseUrl, this.profileData);
+  MealOrderListView(
+      this.poSettings,
+      this.poTypesList,
+      this.poPackagesList,
+      this.CurrencyCode,
+      this.poList,
+      this.memberDetails,
+      this.imgBaseUrl,
+      this.profileData);
 
   @override
   Widget build(BuildContext context) {
@@ -48,10 +56,11 @@ class MealOrderListView extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: Column(
-                        children: [
+                        children: [   
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
+                              Expanded(child: 
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -79,8 +88,11 @@ class MealOrderListView extends StatelessWidget {
                                             ),
                                           ),
                                   ),
+                                 
                                   Text(
                                     poTypesList[index][0]['ConfigName'],
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                       fontSize: 22,
                                       color: Colors.green[900],
@@ -88,7 +100,7 @@ class MealOrderListView extends StatelessWidget {
                                     ),
                                   ),
                                 ],
-                              ),
+                              ),),
                               Container(
                                   child: poTypesList[index][0]
                                               ['PreOrderType'] ==
@@ -101,7 +113,8 @@ class MealOrderListView extends StatelessWidget {
                                                 memberDetails['RefBranchSeqId'],
                                                 poTypesList[index][0],
                                                 CurrencyCode,
-                                                imgBaseUrl,profileData);
+                                                imgBaseUrl,
+                                                profileData);
                                           },
                                           child: Container(
                                             width: 30,
@@ -130,7 +143,9 @@ class MealOrderListView extends StatelessWidget {
                           SizedBox(
                             height: 10,
                           ),
-                          (poTypesList[index].length > 1)
+                          (poTypesList[index].length > 0 && poTypesList[index][0]
+                                                ['PreOrderType'] ==
+                                            "Terms")
                               ? Container(
                                   child: ListView.builder(
                                       padding: EdgeInsets.zero,
@@ -141,7 +156,7 @@ class MealOrderListView extends StatelessWidget {
                                           (BuildContext context, int i) {
                                         return Container(
                                             margin: EdgeInsets.symmetric(
-                                                horizontal: 15, vertical: 5),
+                                                horizontal: 0, vertical: 5),
                                             decoration: BoxDecoration(
                                                 boxShadow: [
                                                   new BoxShadow(
@@ -155,14 +170,14 @@ class MealOrderListView extends StatelessWidget {
                                                 border: Border.all(
                                                     color: Colors.white)),
                                             // color: Colors.grey,
-                                            child: Row(
+                                            child:Flexible(child:  Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment
                                                       .spaceBetween,
                                               children: [
                                                 Container(
                                                     // color: Colors.amberAccent,
-                                                    child: Column(
+                                                    child:Expanded(child:  Column(
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.start,
                                                   children: [
@@ -170,7 +185,7 @@ class MealOrderListView extends StatelessWidget {
                                                       "${poTypesList[index][i]["Name"]}",
                                                       maxLines: 1,
                                                       overflow:
-                                                          TextOverflow.fade,
+                                                          TextOverflow.ellipsis,
                                                       style: TextStyle(
                                                           fontSize: 16,
                                                           color: Colors.black,
@@ -185,13 +200,12 @@ class MealOrderListView extends StatelessWidget {
                                                           "${poTypesList[index][i]["Amount"].toStringAsFixed(2)}",
                                                       style: TextStyle(
                                                           fontSize: 16,
-                                                          color: Colors
-                                                              .blue.shade900,
+                                                          color: HexColor(AppSettings.colorCurrencyCode),
                                                           fontWeight:
                                                               FontWeight.bold),
                                                     ),
                                                   ],
-                                                )),
+                                                )),),
                                                 Container(
                                                   //color: Colors.amber,
                                                   child: Row(
@@ -208,7 +222,8 @@ class MealOrderListView extends StatelessWidget {
                                                                   poTypesList[
                                                                       index][i],
                                                                   CurrencyCode,
-                                                                  imgBaseUrl,profileData);
+                                                                  imgBaseUrl,
+                                                                  profileData);
                                                         },
                                                         child: Container(
                                                           width: 30,
@@ -311,8 +326,8 @@ class MealOrderListView extends StatelessWidget {
                                                   ),
                                                 ),
                                               ],
-                                            ));
-                                      }),
+                                            )));
+                                }),
                                 )
                               : SizedBox(), //SizedBox
                         ],

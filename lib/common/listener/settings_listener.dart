@@ -38,6 +38,7 @@ class MySettingsListener with ChangeNotifier {
   late Map<dynamic, List<dynamic>> _poList;
   List _cartList = [];
   List _finalCartList = [];
+  List _finalCartListForBilling = [];
   double _cartTotal = 0;
 
   List _mealsList = [];
@@ -104,6 +105,8 @@ class MySettingsListener with ChangeNotifier {
   UnmodifiableListView<dynamic> get finalCartList =>
       UnmodifiableListView(_finalCartList);
   get cartTotal => _cartTotal;
+  UnmodifiableListView<dynamic> get finalCartListForBilling =>
+      UnmodifiableListView(_finalCartListForBilling);
 
   UnmodifiableListView<dynamic> get mealsList =>
       UnmodifiableListView(_mealsList);
@@ -124,12 +127,11 @@ class MySettingsListener with ChangeNotifier {
 
   updateEntryToDashboardFamilyList(List familyList) {
     _familyList = familyList;
-    
- _familyListWithoutParent = CommonFunctions.getChildListFromFamilyList(familyList);
+
+    _familyListWithoutParent =
+        CommonFunctions.getChildListFromFamilyList(familyList);
     notifyListeners();
   }
-
- 
 
   updateEntryToDashboardMenuList(List menuList) {
     _dashboardMenuList = menuList;
@@ -327,7 +329,8 @@ class MySettingsListener with ChangeNotifier {
   updateMealsInFinalCartList(List mealsList) {
     for (var i = 0; i < mealsList.length; i++) {
       var f = familyList
-          .where((element) => element['UserSeqId'] == mealsList[i]['RefUserSeqId'])
+          .where(
+              (element) => element['UserSeqId'] == mealsList[i]['RefUserSeqId'])
           .toList();
       mealsList[i]['isSelected'] = false;
       mealsList[i]['member'] = f;
@@ -341,7 +344,8 @@ class MySettingsListener with ChangeNotifier {
   updatePackagesInFinalCartList(List packaList) {
     for (var i = 0; i < packaList.length; i++) {
       var f = familyList
-          .where((element) => element['UserSeqId'] == packaList[i]['RefUserSeqId'])
+          .where(
+              (element) => element['UserSeqId'] == packaList[i]['RefUserSeqId'])
           .toList();
       packaList[i]['isSelected'] = false;
       packaList[i]['member'] = f;
@@ -361,13 +365,17 @@ class MySettingsListener with ChangeNotifier {
   updateSelectedOrderCalculateTotal(List updatedCartList) {
     _finalCartList = updatedCartList;
     _cartTotal = 0;
+    _finalCartListForBilling = [];
     _finalCartList.forEach((val) {
       if (val['isSelected']) {
         if (val['SellingPrice'] != null) _cartTotal += val['SellingPrice'];
         if (val['Amount'] != null) _cartTotal += val['Amount'];
+        _finalCartListForBilling.add(val);
       }
     });
-    print(_finalCartList);
+    print("=====finalCartListForBilling=====");
+    print(_finalCartListForBilling);
+    print("=====End=====");
     notifyListeners();
   }
 
@@ -375,41 +383,119 @@ class MySettingsListener with ChangeNotifier {
       BuildContext context, gatewayDetail, profileData, paymentFor) {
     List orderHeader = [];
     List orderDetails = [];
-    orderHeader.add({
-      "Amount": "19.00",
-      "Discount": "0.00",
-      "GST_Type": "",
-      "Gst": "0.00",
-      "GstPerc": 0,
-      "RefUserSeqId": "100108",
-      "RefPOTypeConfigSeqId": 10000
-    });
-    for (var cart in finalCartList) {
-      orderDetails.add({
-        "ItemSeqId": 1001,
-        "Name": "Sample Menu Name 1",
-        "SellingPrice": 18,
-        "GST_Percent": 0,
-        "GST_Type": "",
-        "RefItemType": "101",
-        "AvailableOn": "2023-09-10T00:00:00",
-        "ItemType": "Breakfast",
-        "ItemStyle": "Indian",
-        "RefPOTypeConfigSeqId": 10000,
-        "RefMerchantSeqId": 100,
-        "RefUserSeqId": "100108",
-        "PurchaseDate": "2023-09-10",
-        "ItemFor": "101",
-        "Category": "Breakfast",
-        "IsAddon": "0",
-        "Gst": 0,
-        "RowId": 0,
+
+    for (var item in finalCartListForBilling) {
+      var obj = {
+        "Amount":
+            item['Amount'] != null ? item['Amount'] : item['SellingPrice'],
         "Discount": 0,
-        "PackageSeqId": 0,
-        "FilterDate": 20230910,
-        "Remarks": "",
-        "lsCheckout": 1
-      });
+        "GST_Type": "",
+        "Gst": 0,
+        "GstPerc": 0,
+        "RefUserSeqId": item['RefUserSeqId'],
+        "RefPOTypeConfigSeqId": item['RefPOTypeConfigSeqId']
+      };
+      orderHeader.add(obj);
+    }
+    List finalList = [];
+    Map<dynamic, List<dynamic>> ol =
+        orderHeader.groupListsBy((element) => element['RefUserSeqId']);
+    ol.values.forEachIndexed((index, element) {
+      double total = 0;
+      var data = {};
+      for (var item in element[index]) {
+        data = {
+          "Amount":
+              item['Amount'] != null ?total+= item['Amount'] :total+= item['SellingPrice'],
+          "Discount": 0,
+          "GST_Type": "",
+          "Gst": 0,
+          "GstPerc": 0,
+          "RefUserSeqId": item['RefUserSeqId'],
+          "RefPOTypeConfigSeqId": item['RefPOTypeConfigSeqId']
+        };
+      }
+      finalList.add(data);
+    });
+    print(finalList);
+    for (var item in finalCartListForBilling) {
+      orderDetails.add([
+        {
+          "Amount": 361,
+          "PackageSeqId": 1016,
+          "RefPOTypeConfigSeqId": 10009,
+          "Name": "COMBO (MORNING SNACK + LUNCH)",
+          "PreOrderType": "Terms",
+          "PerDayAmt": 0,
+          "ConfigJSON":
+              '{\\"BPurchaseCutoff\\":\\"0\\",\\"BPurchaseCutoffDays\\":\\"\\",\\"BPurchaseCutoffHours\\":\\"\\",\\"APurchaseCutoff\\":\\"0\\",\\"APurchaseCutoffDays\\":\\"\\",\\"APurchaseCutoffHours\\":\\"\\",\\"ProRatedCutoff\\":\\"1\\",\\"ProRateCutoffNoofDays\\":0,\\"CancelCutoff\\":\\"0\\",\\"Cancellation\\":\\"1\\",\\"CancelWholeTermMeal\\":\\"0\\",\\"CancelCutoffDays\\":\\"\\",\\"CancelCutoffHours\\":\\"\\",\\"CancelAfterTermStart\\":\\"1\\",\\"MenuChangeCutoff\\":\\"0\\",\\"MenuChangeCutoffDays\\":\\"\\",\\"MenuChangeCutoffHours\\":\\"\\"}',
+          "RefUserSeqId": "100122",
+          "PurchaseDate": "1900-01-01",
+          "ItemSeqId": "0",
+          "ItemFor": "0",
+          "Category": "",
+          "SellingPrice": 133,
+          "IsAddon": "0",
+          "Gst": 0,
+          "RowId": 0,
+          "Discount": 0,
+          "GST_Percent": 0,
+          "GST_Type": "",
+          "FilterDate": 20230919,
+          "Remarks": "",
+          "lsCheckout": 1
+        },
+        {
+          "ItemSeqId": 1002,
+          "Name": "NASI LEMAK WITH EGG",
+          "SellingPrice": 2.5,
+          "GST_Percent": 0,
+          "GST_Type": "",
+          "RefItemType": "101",
+          "AvailableOn": "2023-09-20T00:00:00",
+          "ItemType": "Breakfast",
+          "ItemStyle": "Asian",
+          "RefPOTypeConfigSeqId": 10003,
+          "RefMerchantSeqId": 101,
+          "RefUserSeqId": "100122",
+          "PurchaseDate": "2023-09-20",
+          "ItemFor": "101",
+          "Category": "Breakfast",
+          "IsAddon": "0",
+          "Gst": 0,
+          "RowId": 0,
+          "Discount": 0,
+          "PackageSeqId": 0,
+          "FilterDate": 20230920,
+          "Remarks": "",
+          "lsCheckout": 1
+        },
+        {
+          "ItemSeqId": 1017,
+          "Name": "SOTO NOODLES",
+          "SellingPrice": 3,
+          "GST_Percent": 0,
+          "GST_Type": "",
+          "RefItemType": "101",
+          "AvailableOn": "2023-09-20T00:00:00",
+          "ItemType": "Breakfast",
+          "ItemStyle": "Asian",
+          "RefPOTypeConfigSeqId": 10003,
+          "RefMerchantSeqId": 101,
+          "RefUserSeqId": "100123",
+          "PurchaseDate": "2023-09-20",
+          "ItemFor": "101",
+          "Category": "Breakfast",
+          "IsAddon": "0",
+          "Gst": 0,
+          "RowId": 1,
+          "Discount": 0,
+          "PackageSeqId": 0,
+          "FilterDate": 20230920,
+          "Remarks": "",
+          "lsCheckout": 1
+        }
+      ]);
     }
   }
 

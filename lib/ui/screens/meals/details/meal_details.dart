@@ -2,6 +2,7 @@ import 'package:calms_parent_latest/common/json_responses.dart';
 import 'package:calms_parent_latest/common/util/common_funtions.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../common/app_settings.dart';
 import '../../../../common/listener/settings_listener.dart';
 import '../../cart/cart.dart';
 import '/common/HexColor.dart';
@@ -174,6 +175,7 @@ class _MealDetailsState extends State<MealDetails> {
                           ),
                         ),
                       ),
+                      
                       Container(
                         height: 300,
                         width: double.infinity,
@@ -229,6 +231,7 @@ class _MealDetailsState extends State<MealDetails> {
                                   ),
                               ],
                             ), */
+                           
                             if (widget.arguments['ingredients'].length > 0)
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -326,6 +329,22 @@ class _MealDetailsState extends State<MealDetails> {
                       )
                     ]),
                     Container(
+                          height: 25,
+                          width: double.infinity,
+                          padding: EdgeInsets.only(top: 5),
+                          //padding:EdgeInsets.symmetric(vertical: 5, horizontal: 0),
+                          decoration: BoxDecoration(
+                            color:HexColor(mealInfo['Colour']),
+                          ),
+                          child: Text(
+                              "${mealInfo['ItemStyle'] != null ||mealInfo['ItemStyle'] != "" ? mealInfo['ItemStyle'] : ""}",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold)),
+                        ),
+                    Container(
                       decoration: BoxDecoration(
                           color: HexColor("#f0f6f4"),
                           boxShadow: [
@@ -366,7 +385,7 @@ class _MealDetailsState extends State<MealDetails> {
                                             '${widget.arguments['CurrencyCode']} ${mealInfo["SellingPrice"].toStringAsFixed(2)}  ',
                                         style: TextStyle(
                                             fontSize: 14,
-                                            color: Colors.orange,
+                                            color: HexColor(AppSettings.colorCurrencyCode),
                                             fontWeight: FontWeight.bold),
                                       ),
                                     ),
@@ -521,7 +540,7 @@ class _MealDetailsState extends State<MealDetails> {
                         ),
                       ),
                     ),
-                    Container(
+                   /*  Container(
                       margin: EdgeInsets.only(top: 0, left: 5, right: 5),
                       padding:
                           EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -539,7 +558,7 @@ class _MealDetailsState extends State<MealDetails> {
                               style: TextStyle(fontSize: 14))
                         ],
                       ),
-                    ),
+                    ), */
                     Container(
                       margin: EdgeInsets.only(
                           top: 5, left: 25, right: 25, bottom: 0),

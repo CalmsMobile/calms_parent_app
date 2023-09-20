@@ -659,7 +659,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                                           Icons
                                                               .keyboard_double_arrow_left,
                                                           color: Colors.grey)
-                                                      : SizedBox(),
+                                                      : SizedBox(
+                                                          width: 24,
+                                                        ),
                                                 Container(
                                                   width: (data.familyList[data
                                                                   .familyPos]
@@ -735,13 +737,17 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                                     width: 25,
                                                   ) */
                                                   data.familyPos !=
-                                                          data.familyList.length-1
+                                                          data.familyList
+                                                                  .length -
+                                                              1
                                                       ? Icon(
                                                           Icons
                                                               .keyboard_double_arrow_right,
                                                           size: 25,
                                                           color: Colors.grey)
-                                                      : SizedBox()
+                                                      : SizedBox(
+                                                          width: 24,
+                                                        ),
                                               ],
                                             ),
                                           ),
@@ -802,7 +808,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                 '${profileData['CurrencyCode']} ${double.parse(data.familyList[data.familyPos]['Balance'].toString()).toStringAsFixed(2)}',
                                 style: TextStyle(
                                     fontSize: 18.0,
-                                    color: Colors.blue[700],
+                                    color: HexColor(AppSettings.colorCurrencyCode),
                                     letterSpacing: 2.0,
                                     fontWeight: FontWeight.bold),
                               ),
@@ -866,23 +872,29 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                             child: Container(
                               margin: EdgeInsets.all(10),
                               child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Container(
-                                        padding: EdgeInsets.only(
-                                            left: 10.0,
-                                            top: 10.0,
-                                            bottom: 10.0),
-                                        margin: EdgeInsets.zero,
-                                        width: double.infinity,
-                                        color: Colors.transparent,
-                                        child: Text(
-                                          "TRANSACTION HISTORY",
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold),
-                                        )),
+                                  Container(
+                                      padding: EdgeInsets.only(
+                                          left: 10.0, top: 10.0),
+                                      margin: EdgeInsets.zero,
+                                      width: double.infinity,
+                                      color: Colors.transparent,
+                                      child: Text(
+                                        "TRANSACTION SUMMERY",
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold),
+                                      )),
+                                  Container(
+                                    margin:
+                                        EdgeInsets.only(left: 10.0, top: 5.0),
+                                    child: Text(
+                                      "(Last 30 days)",
+                                      style: TextStyle(
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.normal),
+                                    ),
                                   ),
                                   PurchaseListView(data.dashboardSpendingList,
                                       profileData['CurrencyCode']),
@@ -909,23 +921,29 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                             child: Container(
                               margin: EdgeInsets.all(10),
                               child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Container(
-                                        padding: EdgeInsets.only(
-                                            left: 10.0,
-                                            top: 10.0,
-                                            bottom: 10.0),
-                                        margin: EdgeInsets.zero,
-                                        width: double.infinity,
-                                        color: Colors.transparent,
-                                        child: Text(
-                                          "RECENT ACTIVITIES",
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold),
-                                        )),
+                                  Container(
+                                      padding: EdgeInsets.only(
+                                          left: 10.0, top: 10.0),
+                                      margin: EdgeInsets.zero,
+                                      width: double.infinity,
+                                      color: Colors.transparent,
+                                      child: Text(
+                                        "RECENT TRANSACTION",
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold),
+                                      )),
+                                  Container(
+                                    margin:
+                                        EdgeInsets.only(left: 10.0, top: 5.0),
+                                    child: Text(
+                                      "(Last 30 days)",
+                                      style: TextStyle(
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.normal),
+                                    ),
                                   ),
                                   RecentActivityListView(
                                       data.dashboardRecentActivityList)

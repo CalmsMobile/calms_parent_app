@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../../common/HexColor.dart';
+import '../../../common/app_settings.dart';
+
 Widget outStandingList(BuildContext context, int index, List details, String CurrencyCode) {
   return Column(children: <Widget>[
     new Divider(
@@ -69,7 +72,7 @@ Widget outStandingList(BuildContext context, int index, List details, String Cur
                         text: '${CurrencyCode} ',
                         style: new TextStyle(
                             fontWeight: FontWeight.bold,
-                            color: Colors.red.shade500,
+                            color: HexColor(AppSettings.colorCurrencyCode),
                             fontSize: 14)),
                     new TextSpan(
                         text: details[index]['PendingAmount'].toStringAsFixed(2),

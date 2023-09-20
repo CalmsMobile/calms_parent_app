@@ -2,6 +2,7 @@ import 'package:calms_parent_latest/common/HexColor.dart';
 import 'package:calms_parent_latest/common/common_api.dart';
 import 'package:calms_parent_latest/common/util/common_funtions.dart';
 
+import '../../../common/app_settings.dart';
 import '../../../common/listener/settings_listener.dart';
 import '/common/constants.dart';
 import 'package:flutter/cupertino.dart';
@@ -87,8 +88,9 @@ class MealPager extends StatelessWidget {
                           ),
                         ),
                         Container(
-                          height: 15,
+                          height: 20,
                           width: double.infinity,
+                          padding: EdgeInsets.only(top: 5),
                           //padding:EdgeInsets.symmetric(vertical: 0, horizontal: 5),
                           decoration: BoxDecoration(
                             color:HexColor(mealList_[index]['Colour']),
@@ -99,7 +101,7 @@ class MealPager extends StatelessWidget {
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 12,
-                                  fontWeight: FontWeight.normal)),
+                                  fontWeight: FontWeight.bold)),
                         ),
                         Container(
                           margin: EdgeInsets.only(left: 10, top: 10),
@@ -222,8 +224,7 @@ class MealPager extends StatelessWidget {
                                       style: TextStyle(
                                           fontSize: 14,
                                           fontFamily: appFontFmaily,
-                                          color:
-                                              Color.fromARGB(255, 4, 101, 14),
+                                          color: HexColor(AppSettings.colorCurrencyCode),
                                           fontWeight: FontWeight.bold),
                                     ),
                                   ])),

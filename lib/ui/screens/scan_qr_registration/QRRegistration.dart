@@ -58,7 +58,7 @@ class _QRRegistrationState extends State<QRRegistration> {
        //rnd
         var qrdata = "D5qpk1C3xkIxgAIPyzivIXAY1+BrXWHUlQKXDwvQA+YDCq3ZKz2ctrqZBVSRFc5dbHg+7ZKbpZlMkh8NNQatNf83hsXcToACqmlZ+8Tlabb0D0cC211BmzymayoQ3yB9E2U0E7NfkX/TdTmQJdBhG5DFY0LKgT1iYiGytP6PWP4EQbAa+rn7FQx+kyNHA82z";
         //demosgl
-        // qrdata = "D5qpk1C3xkIxgAIPyzivIXAY1+BrXWHUlQKXDwvQA+bGMdB1tYpmlqbOdBjobyEQK/CCq8T0Wykezki2gLf2+a2slNXa94kS3RqHmwCHUpTzJce9n5KDdpveoXcXM5PCCYQYa/XDmG/Mk3ukf9IPT0K9GXyYA2cc28Sb1a01aHpilFXfzE2tGMS9V5LnvF5p";
+         qrdata = "D5qpk1C3xkIxgAIPyzivIXAY1+BrXWHUlQKXDwvQA+bGMdB1tYpmlqbOdBjobyEQK/CCq8T0Wykezki2gLf2+a2slNXa94kS3RqHmwCHUpTzJce9n5KDdpveoXcXM5PCCYQYa/XDmG/Mk3ukf9IPT0K9GXyYA2cc28Sb1a01aHpilFXfzE2tGMS9V5LnvF5p";
         processQRCode(qrdata);
       }
       // String inputdata =

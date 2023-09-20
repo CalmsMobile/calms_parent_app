@@ -5,6 +5,7 @@ import 'package:calms_parent_latest/ui/screens/widgets/TopupMemberList.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
+import '../../../common/HexColor.dart';
 import '../../../common/alert_dialog.dart';
 import '../../../common/app_settings.dart';
 import '../../../common/common_api.dart';
@@ -103,11 +104,12 @@ class _TopupPageState extends State<TopupPage> {
                                 text: widget.arguments['profileData']['CurrencyCode'] + " ",
                                 style: new TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    color: Color.fromARGB(255, 0, 0, 0),
+                                    color: HexColor(AppSettings.colorCurrencyCode),
                                     fontSize: 18)),
                             new TextSpan(
                                 text: data.topupTotal.toStringAsFixed(2),
                                 style: TextStyle(
+                                  color: HexColor(AppSettings.colorCurrencyCode),
                                     fontSize: 24, fontWeight: FontWeight.bold)),
                           ],
                         ),

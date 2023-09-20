@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../../common/HexColor.dart';
+import '../../../common/app_settings.dart';
+
 class PurchaseListView extends StatelessWidget {
   final List purchaseList;
   final String CurrencyCode;
@@ -22,7 +25,7 @@ class PurchaseListView extends StatelessWidget {
                 itemCount: purchaseList.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Column(children: <Widget>[
-                    new Divider(
+                    Divider(
                       height: 0.1,
                     ),
                     ListTile(
@@ -38,27 +41,33 @@ class PurchaseListView extends StatelessWidget {
                           Text(
                             purchaseList[index]['ActionName'],
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 14),
+                                color: HexColor(purchaseList[index]['color']),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14),
                           ),
-                          new RichText(
-                            text: new TextSpan(
+                          RichText(
+                            text: TextSpan(
                               // Note: Styles for TextSpans must be explicitly defined.
                               // Child text spans will inherit styles from parent
-                              style: new TextStyle(
+                              style: TextStyle(
                                 fontSize: 14.0,
                                 color: Colors.black,
                               ),
                               children: <TextSpan>[
-                                new TextSpan(
+                                TextSpan(
                                     text: '${CurrencyCode} ',
-                                    style: new TextStyle(
+                                    style: TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        color: Colors.red.shade500,
+                                        color: HexColor(
+                                            AppSettings.colorCurrencyCode),
                                         fontSize: 12)),
-                                new TextSpan(
+                                TextSpan(
                                     text: purchaseList[index]['Purchase']
                                         .toStringAsFixed(2),
-                                    style: TextStyle(fontSize: 14)),
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: HexColor(
+                                            AppSettings.colorCurrencyCode))),
                               ],
                             ),
                           ),
@@ -88,22 +97,22 @@ class PurchaseListView extends StatelessWidget {
                               ),
                             ],
                           ),
-                          new RichText(
-                            text: new TextSpan(
+                         RichText(
+                            text:TextSpan(
                               // Note: Styles for TextSpans must be explicitly defined.
                               // Child text spans will inherit styles from parent
-                              style: new TextStyle(
+                              style:TextStyle(
                                 fontSize: 14.0,
                                 color: Colors.black,
                               ),
                               children: <TextSpan>[
-                                new TextSpan(
+                               TextSpan(
                                     text: '${CurrencyCode} ',
-                                    style: new TextStyle(
+                                    style:TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Colors.red.shade500,
                                         fontSize: 12)),
-                                new TextSpan(
+                               TextSpan(
                                     text: purchaseList[index]['Purchase'].toStringAsFixed(2),
                                     style: TextStyle(fontSize: 14)),
                               ],

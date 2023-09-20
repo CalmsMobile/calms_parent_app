@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../common/HexColor.dart';
+
 class RecentActivityListView extends StatelessWidget {
   final List recentList;
   const RecentActivityListView(this.recentList);
@@ -21,7 +23,7 @@ class RecentActivityListView extends StatelessWidget {
                 itemCount: recentList.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Column(children: <Widget>[
-                    new Divider(
+                    Divider(
                       height: 0.1,
                     ),
                     ListTile(
@@ -37,24 +39,25 @@ class RecentActivityListView extends StatelessWidget {
                           Text(
                             recentList[index]['ActionName'],
                             style: TextStyle(
+                              color: HexColor(recentList[index]['color']),
                                 fontWeight: FontWeight.bold, fontSize: 14),
                           ),
-                          new RichText(
-                            text: new TextSpan(
+                          RichText(
+                            text: TextSpan(
                               // Note: Styles for TextSpans must be explicitly defined.
                               // Child text spans will inherit styles from parent
-                              style: new TextStyle(
+                              style: TextStyle(
                                 fontSize: 14.0,
                                 color: Colors.black,
                               ),
                               children: <TextSpan>[
-                                new TextSpan(
+                                TextSpan(
                                     text: 'TOTAL: ',
-                                    style: new TextStyle(
+                                    style: TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        color: Colors.red.shade500,
+                                        color: Colors.black,
                                         fontSize: 12)),
-                                new TextSpan(
+                                TextSpan(
                                     text: recentList[index]['Total'].toString(),
                                     style: TextStyle(fontSize: 14)),
                               ],
@@ -86,22 +89,22 @@ class RecentActivityListView extends StatelessWidget {
                               ),
                             ],
                           ),
-                          new RichText(
-                            text: new TextSpan(
+                          RichText(
+                            text: TextSpan(
                               // Note: Styles for TextSpans must be explicitly defined.
                               // Child text spans will inherit styles from parent
-                              style: new TextStyle(
+                              style: TextStyle(
                                 fontSize: 14.0,
                                 color: Colors.black,
                               ),
                               children: <TextSpan>[
-                                new TextSpan(
+                                TextSpan(
                                     text: 'TOTAL: ',
-                                    style: new TextStyle(
+                                    style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Colors.red.shade500,
                                         fontSize: 12)),
-                                new TextSpan(
+                                TextSpan(
                                     text: recentList[index]['Total'].toString(),
                                     style: TextStyle(fontSize: 14)),
                               ],
