@@ -546,7 +546,7 @@ class CommonUtil {
       print("successGetCartTermMealItems");
       context
           .read<MySettingsListener>()
-          .updatePackagesInFinalCartList(response['Table1']);
+          .updatePackagesInFinalCartList(response['Table1'],response['Table3']);
     }
   }
 

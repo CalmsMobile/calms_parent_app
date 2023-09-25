@@ -30,13 +30,14 @@ class MealPager extends StatelessWidget {
           margin: EdgeInsets.only(bottom: 0, left: 0, right: 0),
           child: GridView.builder(
             itemCount: mealList_.length,
-            shrinkWrap: false,
+            shrinkWrap: true,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               mainAxisSpacing: 5,
-              crossAxisSpacing: 8,
-              childAspectRatio: 0.8,
-            ),
+              crossAxisSpacing: 3,
+              childAspectRatio:0.8,
+              mainAxisExtent: 221
+            ),           
             itemBuilder: (context, index) => GestureDetector(
                 onTap: () {
                   CommonUtil().getMealItemDetail(
@@ -55,7 +56,7 @@ class MealPager extends StatelessWidget {
                   /* Navigator.of(context)
                     .pushNamed('/MealDetails', arguments: mealList_[index]); */
                 },
-                child: Card(
+                child:Expanded(child:  Card(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15.0),
                   ),
@@ -274,6 +275,7 @@ class MealPager extends StatelessWidget {
                     ),
                   ),
                 )),
+                ),
           ),
         )),
       ],

@@ -341,7 +341,7 @@ class MySettingsListener with ChangeNotifier {
     notifyListeners();
   }
 
-  updatePackagesInFinalCartList(List packaList) {
+  updatePackagesInFinalCartList(List packaList,List poPackagesList) {
     for (var i = 0; i < packaList.length; i++) {
       var f = familyList
           .where(
@@ -349,6 +349,7 @@ class MySettingsListener with ChangeNotifier {
           .toList();
       packaList[i]['isSelected'] = false;
       packaList[i]['member'] = f;
+      packaList[i]['SellingPrice'] = CommonFunctions.getProRatedAmount(packaList[i]['PackageSeqId'], packaList[i]['ConfigJSON'], packaList[i]['PerDayAmt'], packaList[i]['Amount'], poPackagesList);
     }
 
     _finalCartList.addAll(packaList);
@@ -368,8 +369,9 @@ class MySettingsListener with ChangeNotifier {
     _finalCartListForBilling = [];
     _finalCartList.forEach((val) {
       if (val['isSelected']) {
-        if (val['SellingPrice'] != null) _cartTotal += val['SellingPrice'];
-        if (val['Amount'] != null) _cartTotal += val['Amount'];
+        /* if (val['SellingPrice'] != null) _cartTotal += val['SellingPrice'];
+        if (val['Amount'] != null) _cartTotal += val['Amount']; */
+        _cartTotal += val['SellingPrice'];
         _finalCartListForBilling.add(val);
       }
     });

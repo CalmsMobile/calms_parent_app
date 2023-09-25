@@ -327,7 +327,7 @@ class _CartPageState extends State<CartPage> {
                                                               children: [
                                                                 TextSpan(
                                                                   text:
-                                                                      "${widget.profileData['CurrencyCode']} ${data.finalCartList[index]["SellingPrice"] != null ? data.finalCartList[index]["SellingPrice"].toStringAsFixed(2) : data.finalCartList[index]["Amount"].toStringAsFixed(2)}",
+                                                                      "${widget.profileData['CurrencyCode']} ${data.finalCartList[index]["SellingPrice"].toStringAsFixed(2)}",
                                                                   style: TextStyle(
                                                                       fontSize:
                                                                           16,
