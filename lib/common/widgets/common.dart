@@ -295,7 +295,7 @@ void showPaymentSelectOption(BuildContext buildContext, titleText, paymentList,
                                         style: TextStyle(fontSize: 22),
                                       ),
                                       leading: Icon(
-                                        Icons.radio_button_checked_outlined,
+                                        Icons.check_circle_rounded,
                                         size: 20,
                                         color: selectedPaymentMethod[
                                                     'PayMode'] ==

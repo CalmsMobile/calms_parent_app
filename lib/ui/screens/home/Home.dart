@@ -856,7 +856,56 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                             }
                           }),
                         ),
-                      ),
+                      ),Consumer<MySettingsListener>(
+                          builder: (context, data, settingsDta) {
+                        if (data.dashboardRecentActivityList.isNotEmpty) {
+                          return Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                            elevation: 10,
+                            shadowColor: Colors.black,
+                            borderOnForeground: true,
+                            margin: EdgeInsets.only(
+                                left: 20, right: 20, bottom: 20),
+                            child: Container(
+                              margin: EdgeInsets.all(10),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                      padding: EdgeInsets.only(
+                                          left: 10.0, top: 10.0),
+                                      margin: EdgeInsets.zero,
+                                      width: double.infinity,
+                                      color: Colors.transparent,
+                                      child: Text(
+                                        "RECENT TRANSACTION",
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold),
+                                      )),
+                                  Container(
+                                    margin:
+                                        EdgeInsets.only(left: 10.0, top: 5.0),
+                                    child: Text(
+                                      "(Last 30 days)",
+                                      style: TextStyle(
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.normal),
+                                    ),
+                                  ),
+                                  RecentActivityListView(
+                                      data.dashboardRecentActivityList,profileData['CurrencyCode'])
+                                ],
+                              ),
+                            ),
+                          );
+                        } else {
+                          return SizedBox();
+                        }
+                      }),
+                      
                       Consumer<MySettingsListener>(
                           builder: (context, data, settingsDta) {
                         if (data.dashboardSpendingList.isNotEmpty) {
@@ -898,55 +947,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                   ),
                                   PurchaseListView(data.dashboardSpendingList,
                                       profileData['CurrencyCode']),
-                                ],
-                              ),
-                            ),
-                          );
-                        } else {
-                          return SizedBox();
-                        }
-                      }),
-                      Consumer<MySettingsListener>(
-                          builder: (context, data, settingsDta) {
-                        if (data.dashboardRecentActivityList.isNotEmpty) {
-                          return Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15.0),
-                            ),
-                            elevation: 10,
-                            shadowColor: Colors.black,
-                            borderOnForeground: true,
-                            margin: EdgeInsets.only(
-                                left: 20, right: 20, bottom: 20),
-                            child: Container(
-                              margin: EdgeInsets.all(10),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                      padding: EdgeInsets.only(
-                                          left: 10.0, top: 10.0),
-                                      margin: EdgeInsets.zero,
-                                      width: double.infinity,
-                                      color: Colors.transparent,
-                                      child: Text(
-                                        "RECENT TRANSACTION",
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                  Container(
-                                    margin:
-                                        EdgeInsets.only(left: 10.0, top: 5.0),
-                                    child: Text(
-                                      "(Last 30 days)",
-                                      style: TextStyle(
-                                          fontSize: 10,
-                                          fontWeight: FontWeight.normal),
-                                    ),
-                                  ),
-                                  RecentActivityListView(
-                                      data.dashboardRecentActivityList)
                                 ],
                               ),
                             ),

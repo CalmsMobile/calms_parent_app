@@ -10,6 +10,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class MySettingsListener with ChangeNotifier {
   var _settingDetails;
@@ -341,7 +342,7 @@ class MySettingsListener with ChangeNotifier {
     notifyListeners();
   }
 
-  updatePackagesInFinalCartList(List packaList,List poPackagesList) {
+  updatePackagesInFinalCartList(List packaList, List poPackagesList) {
     for (var i = 0; i < packaList.length; i++) {
       var f = familyList
           .where(
@@ -349,7 +350,12 @@ class MySettingsListener with ChangeNotifier {
           .toList();
       packaList[i]['isSelected'] = false;
       packaList[i]['member'] = f;
-      packaList[i]['SellingPrice'] = CommonFunctions.getProRatedAmount(packaList[i]['PackageSeqId'], packaList[i]['ConfigJSON'], packaList[i]['PerDayAmt'], packaList[i]['Amount'], poPackagesList);
+      packaList[i]['SellingPrice'] = CommonFunctions.getProRatedAmount(
+          packaList[i]['PackageSeqId'],
+          packaList[i]['ConfigJSON'],
+          packaList[i]['PerDayAmt'],
+          packaList[i]['Amount'],
+          poPackagesList);
     }
 
     _finalCartList.addAll(packaList);
@@ -385,22 +391,38 @@ class MySettingsListener with ChangeNotifier {
       BuildContext context, gatewayDetail, profileData, paymentFor) {
     List orderHeader = [];
     List orderDetails = [];
-
+    String currenFiltertDate =
+        DateFormat("yyyy-MM-dd").format(DateTime.now()).replaceAll("-", "");
+    var objHeader = {};
     for (var item in finalCartListForBilling) {
-      var obj = {
-        "Amount":
-            item['Amount'] != null ? item['Amount'] : item['SellingPrice'],
-        "Discount": 0,
-        "GST_Type": "",
-        "Gst": 0,
-        "GstPerc": 0,
-        "RefUserSeqId": item['RefUserSeqId'],
-        "RefPOTypeConfigSeqId": item['RefPOTypeConfigSeqId']
-      };
-      orderHeader.add(obj);
+      if (orderHeader.contains((e) => e['RefUserSeqId']) ==
+          item['RefUserSeqId']) {
+        int index = orderHeader.indexOf(item['RefUserSeqId']);
+        print("index " + index.toString());
+        orderHeader[index]['Amount'] =
+            orderHeader[index]['Amount'] + item['SellingPrice'];
+        /* for (var i = 0; i < orderHeader.length; i++) {
+          if (orderHeader[i]['RefUserSeqId'] == item['RefUserSeqId']) {
+            orderHeader[i]['Amount'] = orderHeader[i]['Amount']+item['RefUserSeqId'];
+          }
+        } */
+      } else {
+        objHeader = {
+          "Amount": item['SellingPrice'],
+          "Discount": 0,
+          "GST_Type": "",
+          "Gst": 0,
+          "GstPerc": 0,
+          "RefUserSeqId": item['RefUserSeqId'],
+          "RefPOTypeConfigSeqId": item['RefPOTypeConfigSeqId']
+        };
+      }
+      orderHeader.add(objHeader);
     }
+    // print(orderHeader);
+    // print(finalCartListForBilling);
     List finalList = [];
-    Map<dynamic, List<dynamic>> ol =
+    /*   Map<dynamic, List<dynamic>> ol =
         orderHeader.groupListsBy((element) => element['RefUserSeqId']);
     ol.values.forEachIndexed((index, element) {
       double total = 0;
@@ -419,9 +441,65 @@ class MySettingsListener with ChangeNotifier {
       }
       finalList.add(data);
     });
-    print(finalList);
+    print(finalList); */
     for (var item in finalCartListForBilling) {
-      orderDetails.add([
+      if (item['ItemSeqId'] == null) {
+        var objTerm = {
+          "Amount": item['Amount'],
+          "PackageSeqId": item['PackageSeqId'],
+          "RefPOTypeConfigSeqId": item['RefPOTypeConfigSeqId'],
+          "Name": item['Name'],
+          "PreOrderType": item['PreOrderType'],
+          "PerDayAmt": item['PerDayAmt'],
+          "ConfigJSON": item['ConfigJSON'],
+          "RefUserSeqId": item['RefUserSeqId'],
+          "PurchaseDate": "1900-01-01",
+          "ItemSeqId": "0",
+          "ItemFor": "0",
+          "Category": "",
+          "SellingPrice": item['SellingPrice'],
+          "IsAddon": "0",
+          "Gst": 0,
+          "RowId": 0,
+          "Discount": 0,
+          "GST_Percent": 0,
+          "GST_Type": "",
+          "FilterDate": currenFiltertDate,
+          "Remarks": "",
+          "lsCheckout": 1
+        };
+        orderDetails.add(objTerm);
+      } else {
+        var objDaily = {
+          "ItemSeqId": item['ItemSeqId'],
+          "Name": item['Name'],
+          "SellingPrice": item['SellingPrice'],
+          "GST_Percent": item['GST_Percent'],
+          "GST_Type": item['GST_Type'],
+          "RefItemType": item['RefItemType'],
+          "AvailableOn": item['AvailableOn'],
+          "ItemType": item['ItemType'],
+          "ItemStyle": item['ItemStyle'],
+          "RefPOTypeConfigSeqId": item['RefPOTypeConfigSeqId'],
+          "RefMerchantSeqId": item['RefMerchantSeqId'],
+          "RefUserSeqId": item['RefUserSeqId'],
+          "PurchaseDate": item['AvailableOn'].substring(0, 10),
+          "ItemFor": item[''],
+          "Category": item['ItemType'],
+          "IsAddon": "0",
+          "Gst": 0,
+          "RowId": 0,
+          "Discount": 0,
+          "PackageSeqId": 0,
+          "FilterDate":
+              item['AvailableOn'].substring(0, 10).replaceAll("-", ""),
+          "Remarks": "",
+          "lsCheckout": 1
+        };
+        orderDetails.add(objDaily);
+      }
+
+      /*  orderDetails.add([
         {
           "Amount": 361,
           "PackageSeqId": 1016,
@@ -498,7 +576,9 @@ class MySettingsListener with ChangeNotifier {
           "lsCheckout": 1
         }
       ]);
+     */
     }
+    print(objHeader);
   }
 
   updateSettings(var settingDetails) {

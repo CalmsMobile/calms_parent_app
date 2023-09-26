@@ -4,7 +4,8 @@ import '../../../common/HexColor.dart';
 
 class RecentActivityListView extends StatelessWidget {
   final List recentList;
-  const RecentActivityListView(this.recentList);
+  final String CurrencyCode;
+  const RecentActivityListView(this.recentList,this.CurrencyCode);
 
   @override
   Widget build(BuildContext context) {
@@ -52,13 +53,13 @@ class RecentActivityListView extends StatelessWidget {
                               ),
                               children: <TextSpan>[
                                 TextSpan(
-                                    text: 'TOTAL: ',
+                                    text: '${CurrencyCode} ',
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Colors.black,
                                         fontSize: 12)),
                                 TextSpan(
-                                    text: recentList[index]['Total'].toString(),
+                                    text: recentList[index]['Total'].toStringAsFixed(2),
                                     style: TextStyle(fontSize: 14)),
                               ],
                             ),
