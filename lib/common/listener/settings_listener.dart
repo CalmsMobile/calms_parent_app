@@ -363,9 +363,12 @@ class MySettingsListener with ChangeNotifier {
     notifyListeners();
   }
 
+ 
+
   clearFinalCartList() {
     _cartTotal = 0;
     _finalCartList = [];
+    _finalCartListForBilling = [];
     notifyListeners();
   }
 
@@ -395,17 +398,13 @@ class MySettingsListener with ChangeNotifier {
         DateFormat("yyyy-MM-dd").format(DateTime.now()).replaceAll("-", "");
     var objHeader = {};
     for (var item in finalCartListForBilling) {
-      if (orderHeader.contains((e) => e['RefUserSeqId']) ==
-          item['RefUserSeqId']) {
-        int index = orderHeader.indexOf(item['RefUserSeqId']);
-        print("index " + index.toString());
+      int index = -1;
+      index = orderHeader.indexWhere(
+          (element) => element['RefUserSeqId'] == item['RefUserSeqId']);
+      print("index " + index.toString());
+      if (index > -1) {
         orderHeader[index]['Amount'] =
             orderHeader[index]['Amount'] + item['SellingPrice'];
-        /* for (var i = 0; i < orderHeader.length; i++) {
-          if (orderHeader[i]['RefUserSeqId'] == item['RefUserSeqId']) {
-            orderHeader[i]['Amount'] = orderHeader[i]['Amount']+item['RefUserSeqId'];
-          }
-        } */
       } else {
         objHeader = {
           "Amount": item['SellingPrice'],
@@ -416,32 +415,12 @@ class MySettingsListener with ChangeNotifier {
           "RefUserSeqId": item['RefUserSeqId'],
           "RefPOTypeConfigSeqId": item['RefPOTypeConfigSeqId']
         };
+        orderHeader.add(objHeader);
       }
-      orderHeader.add(objHeader);
     }
-    // print(orderHeader);
-    // print(finalCartListForBilling);
+    print(orderHeader);
     List finalList = [];
-    /*   Map<dynamic, List<dynamic>> ol =
-        orderHeader.groupListsBy((element) => element['RefUserSeqId']);
-    ol.values.forEachIndexed((index, element) {
-      double total = 0;
-      var data = {};
-      for (var item in element[index]) {
-        data = {
-          "Amount":
-              item['Amount'] != null ?total+= item['Amount'] :total+= item['SellingPrice'],
-          "Discount": 0,
-          "GST_Type": "",
-          "Gst": 0,
-          "GstPerc": 0,
-          "RefUserSeqId": item['RefUserSeqId'],
-          "RefPOTypeConfigSeqId": item['RefPOTypeConfigSeqId']
-        };
-      }
-      finalList.add(data);
-    });
-    print(finalList); */
+
     for (var item in finalCartListForBilling) {
       if (item['ItemSeqId'] == null) {
         var objTerm = {
@@ -578,7 +557,13 @@ class MySettingsListener with ChangeNotifier {
       ]);
      */
     }
-    print(objHeader);
+    print("===========topupHeader===========");
+    print(jsonEncode(orderHeader));
+    print("==========topupDetails============");
+    print(jsonEncode(orderDetails));
+    Navigator.of(context).pop();
+    CommonUtil().MakeTransaction(context, orderHeader, orderDetails,
+        gatewayDetail, profileData, paymentFor);
   }
 
   updateSettings(var settingDetails) {

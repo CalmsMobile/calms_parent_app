@@ -756,6 +756,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                                 '/ProfileMain',
                                                 arguments: {
                                                   "profileData": item,
+                                                  "CurrencyCode":profileData['CurrencyCode'],
                                                   "imgBaseUrl": imgBaseUrl
                                                 })
                                           },

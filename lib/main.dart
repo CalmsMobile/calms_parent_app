@@ -5,8 +5,8 @@ import 'dart:math';
 
 import 'package:calms_parent_latest/provider/rest_api.dart';
 import 'package:calms_parent_latest/ui/screens/calendar_transactions/CalendarTransactions_page.dart';
-import 'package:calms_parent_latest/ui/screens/payment/topup_payment_webview_page.dart';
-import 'package:calms_parent_latest/ui/screens/payment/topup_after_payment_page.dart';
+import 'package:calms_parent_latest/ui/screens/payment/payment_webview_page.dart';
+import 'package:calms_parent_latest/ui/screens/payment/after_payment_page.dart';
 
 import '/common/app_settings.dart';
 import '/common/constants.dart';
@@ -215,8 +215,8 @@ var myroutes = {
   "/ViewImage": (context) => ViewImage(),
   "/MealDetails": (context) => MealDetails({}, () {}),
   "/calendarTransactions": (context) => CalendarTransactionsPage(),
-  "/topupPayment": (context) => TopupPaymentWebviewPage({}, ""),
-  "/topupAfterPayment": (context) => TopupAfterPaymentPage({}, ""),
+  "/topupPayment": (context) => PaymentWebviewPage({}, ""),
+  "/topupAfterPayment": (context) => AfterPaymentPage({}, ""),
 };
 
 class MyApp extends StatefulWidget {

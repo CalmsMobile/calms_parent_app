@@ -4,12 +4,12 @@ import 'dart:io';
 import 'package:calms_parent_latest/common/util/common_funtions.dart';
 import 'package:calms_parent_latest/common/widgets/common.dart';
 import 'package:calms_parent_latest/ui/screens/meals/details/meal_details.dart';
-import 'package:calms_parent_latest/ui/screens/payment/topup_payment_webview_page.dart';
-import 'package:calms_parent_latest/ui/screens/payment/topup_after_payment_page.dart';
+import 'package:calms_parent_latest/ui/screens/payment/after_payment_page.dart';
 import 'package:flutter/foundation.dart';
 
 import '../ui/screens/home/Home.dart';
 import '../ui/screens/meals/meal_menu_page.dart';
+import '../ui/screens/payment/payment_webview_page.dart';
 import '/common/alert_dialog.dart';
 import '/common/app_settings.dart';
 import '/common/listener/settings_listener.dart';
@@ -243,7 +243,7 @@ class CommonUtil {
           context,
           MaterialPageRoute(
             builder: (context) =>
-                TopupPaymentWebviewPage(response['Table'][0], paymentFor),
+                PaymentWebviewPage(response['Table'][0], paymentFor),
           ),
         );
     }
@@ -302,7 +302,7 @@ class CommonUtil {
         context,
         MaterialPageRoute(
           builder: (context) =>
-              TopupAfterPaymentPage(response['Table'][0], paymentFor),
+              AfterPaymentPage(response['Table'][0], paymentFor),
         ),
       );
     }

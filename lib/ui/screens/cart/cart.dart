@@ -39,7 +39,74 @@ class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: getMyAppbar(context, "My Cart", []),
+        appBar: getMyAppbar(context, "My Cart", [
+          Consumer<MySettingsListener>(builder: (context, data, settingsDta) {
+            return data.finalCartList
+                        .where((element) => element['isSelected'] == true)
+                        .length >
+                    0
+                ? Container(
+                    height: 30,
+                    //width: 100,
+                    margin: EdgeInsets.only(right: 10),
+                    child: Row(children: [
+                      Stack(
+                        children: [
+                          InkWell(
+                            onTap: () {},
+                            child: Container(
+                              width: 40,
+                              height: 40,
+                              margin: EdgeInsets.only(left: 10),
+                              child: ClipOval(
+                                child: Material(
+                                  color: Colors.red, // Button color
+                                  child: SizedBox(
+                                      width: 40,
+                                      height: 40,
+                                      child: Icon(
+                                        Icons.delete,
+                                        color: Colors.white,
+                                        size: 18,
+                                      )),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            top: 0,
+                            right: 0,
+                            child: Container(
+                              height: 18,
+                              width: 18,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.white,
+                              ),
+                              child: Center(
+                                  child: Text(
+                                data.finalCartListForBilling != []
+                                    ? data.finalCartList
+                                        .where((element) =>
+                                            element['isSelected'] == true)
+                                        .length
+                                        .toString()
+                                    : "0",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              )),
+                            ),
+                          )
+                        ],
+                      ),
+                    ]),
+                  )
+                : SizedBox();
+          })
+        ]),
         resizeToAvoidBottomInset: false,
         body: SingleChildScrollView(child:
             Consumer<MySettingsListener>(builder: (context, data, settingsDta) {

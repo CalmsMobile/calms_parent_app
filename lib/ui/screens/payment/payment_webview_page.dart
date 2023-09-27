@@ -1,7 +1,10 @@
 import 'dart:io';
 
+import 'package:calms_parent_latest/common/app_settings.dart';
 import 'package:calms_parent_latest/common/common_api.dart';
+import 'package:calms_parent_latest/common/listener/settings_listener.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 // #docregion platform_imports
 // Import for Android features.
@@ -10,22 +13,22 @@ import 'package:webview_flutter_android/webview_flutter_android.dart';
 import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 // #enddocregion platform_imports
 
-class TopupPaymentWebviewPage extends StatefulWidget {
+class PaymentWebviewPage extends StatefulWidget {
   final arguments;
   final paymentFor;
-  const TopupPaymentWebviewPage(this.arguments,this.paymentFor, {Key? key}) : super(key: key);
+  const PaymentWebviewPage(this.arguments,this.paymentFor, {Key? key}) : super(key: key);
 
   @override
-  _TopupPaymentPageState createState() => _TopupPaymentPageState();
+  _PaymentWebviewPageState createState() => _PaymentWebviewPageState();
 }
 
-class _TopupPaymentPageState extends State<TopupPaymentWebviewPage> {
+class _PaymentWebviewPageState extends State<PaymentWebviewPage> {
   late WebViewController _controller;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    initWebViewController();
+    initWebViewController(context);
   }
 
   @override
@@ -36,7 +39,7 @@ class _TopupPaymentPageState extends State<TopupPaymentWebviewPage> {
     );
   }
 
-  initWebViewController() async {
+  initWebViewController(BuildContext context) async {
     // #docregion platform_features
     print("==========================");
     print(widget.arguments);
@@ -68,6 +71,8 @@ class _TopupPaymentPageState extends State<TopupPaymentWebviewPage> {
           },
           onPageFinished: (String url) {
             if (url.contains("/common/PaymentStatus.aspx")) {
+              if(widget.paymentFor == AppSettings.paymentTypeOrder)
+              context.read<MySettingsListener>().clearFinalCartList();
             debugPrint("payment success");
               CommonUtil().getAfterTopupPaymentSummary(context, widget.arguments['PaymentOrderId'],widget.paymentFor);
             }

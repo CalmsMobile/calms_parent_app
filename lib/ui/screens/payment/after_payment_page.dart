@@ -5,16 +5,16 @@ import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
 import '../../../common/widgets/common.dart';
 
-class TopupAfterPaymentPage extends StatefulWidget {
+class AfterPaymentPage extends StatefulWidget {
   final txnDetail;
   final paymentFor;
-  const TopupAfterPaymentPage(this.txnDetail,this.paymentFor, {Key? key}) : super(key: key);
+  const AfterPaymentPage(this.txnDetail,this.paymentFor, {Key? key}) : super(key: key);
 
   @override
-  _TopupAfterPaymentPageState createState() => _TopupAfterPaymentPageState();
+  _AfterPaymentPageState createState() => _AfterPaymentPageState();
 }
 
-class _TopupAfterPaymentPageState extends State<TopupAfterPaymentPage> {
+class _AfterPaymentPageState extends State<AfterPaymentPage> {
   @override
   void initState() {
     // TODO: implement initState

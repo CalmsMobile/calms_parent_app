@@ -68,7 +68,8 @@ class _MealDetailsState extends State<MealDetails> {
     return WillPopScope(
       onWillPop: _willPopCallback,
       child: Scaffold(
-        appBar: getMyAppbar(context, "Meal details", [Container(
+        appBar: getMyAppbar(context, "Meal details", [
+          Container(
               height: 30,
               //width: 100,
               margin: EdgeInsets.only(right: 10),
