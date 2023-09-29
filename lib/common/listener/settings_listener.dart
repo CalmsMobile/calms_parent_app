@@ -180,7 +180,7 @@ class MySettingsListener with ChangeNotifier {
           "Gst": gatewayDetail['IsGst']
               ? calTopupGst(topupMembersList[i]['Amount'],
                   gatewayDetail['GstType'], gatewayDetail['GstPercentage'])
-              : null,
+              : 0,
           "GstPerc":
               gatewayDetail['IsGst'] ? gatewayDetail['GstPercentage'] : null,
           "RefUserSeqId": topupMembersList[i]['UserSeqId']
@@ -192,7 +192,7 @@ class MySettingsListener with ChangeNotifier {
           "Gst": gatewayDetail['IsGst']
               ? calTopupGst(topupMembersList[i]['Amount'],
                   gatewayDetail['GstType'], gatewayDetail['GstPercentage'])
-              : null,
+              : 0,
           "GST_Type": gatewayDetail['IsGst'] ? gatewayDetail['GstType'] : null,
           "GstPerc":
               gatewayDetail['IsGst'] ? gatewayDetail['GstPercentage'] : null,
@@ -209,10 +209,16 @@ class MySettingsListener with ChangeNotifier {
     print(jsonEncode(topupDetails));
     Navigator.of(context).pop();
     CommonUtil().MakeTransaction(context, topupHeader, topupDetails,
-        gatewayDetail, profileData, paymentFor);
+        gatewayDetail, profileData,0,0, paymentFor);
   }
 
   updateTopupPaymentProvidersList(List paymentProvidersList) {
+    paymentProvidersList.removeWhere((element) => element['IsWallet'] == 1);
+    _paymentProvidersList = paymentProvidersList;
+    print("_paymentProvidersList updated");
+  }
+  updateMealOrderPaymentProvidersList(List paymentProvidersList) {
+    //paymentProvidersList.removeWhere((element) => element['IsWallet'] == 1);
     _paymentProvidersList = paymentProvidersList;
     print("_paymentProvidersList updated");
   }
@@ -391,7 +397,7 @@ class MySettingsListener with ChangeNotifier {
   }
 
   updateOrderHeaderAndDetails(
-      BuildContext context, gatewayDetail, profileData, paymentFor) {
+      BuildContext context, gatewayDetail, profileData,IsWallet,Balance, paymentFor) {
     List orderHeader = [];
     List orderDetails = [];
     String currenFiltertDate =
@@ -422,7 +428,7 @@ class MySettingsListener with ChangeNotifier {
     List finalList = [];
 
     for (var item in finalCartListForBilling) {
-      if (item['ItemSeqId'] == null) {
+      if (item['PreOrderType'] == "Terms") {
         var objTerm = {
           "Amount": item['Amount'],
           "PackageSeqId": item['PackageSeqId'],
@@ -432,9 +438,9 @@ class MySettingsListener with ChangeNotifier {
           "PerDayAmt": item['PerDayAmt'],
           "ConfigJSON": item['ConfigJSON'],
           "RefUserSeqId": item['RefUserSeqId'],
-          "PurchaseDate": "1900-01-01",
+          "PurchaseDate": item['PurchaseDate'],
           "ItemSeqId": "0",
-          "ItemFor": "0",
+          "ItemFor": item['ItemFor'],
           "Category": "",
           "SellingPrice": item['SellingPrice'],
           "IsAddon": "0",
@@ -443,7 +449,7 @@ class MySettingsListener with ChangeNotifier {
           "Discount": 0,
           "GST_Percent": 0,
           "GST_Type": "",
-          "FilterDate": currenFiltertDate,
+          "FilterDate": item['FilterDate'],
           "Remarks": "",
           "lsCheckout": 1
         };
@@ -462,8 +468,8 @@ class MySettingsListener with ChangeNotifier {
           "RefPOTypeConfigSeqId": item['RefPOTypeConfigSeqId'],
           "RefMerchantSeqId": item['RefMerchantSeqId'],
           "RefUserSeqId": item['RefUserSeqId'],
-          "PurchaseDate": item['AvailableOn'].substring(0, 10),
-          "ItemFor": item[''],
+          "PurchaseDate": item['PurchaseDate'],
+          "ItemFor": item['ItemFor'],
           "Category": item['ItemType'],
           "IsAddon": "0",
           "Gst": 0,
@@ -471,7 +477,7 @@ class MySettingsListener with ChangeNotifier {
           "Discount": 0,
           "PackageSeqId": 0,
           "FilterDate":
-              item['AvailableOn'].substring(0, 10).replaceAll("-", ""),
+              item['FilterDate'],
           "Remarks": "",
           "lsCheckout": 1
         };
@@ -557,13 +563,13 @@ class MySettingsListener with ChangeNotifier {
       ]);
      */
     }
-    print("===========topupHeader===========");
+    print("===========orderHeader===========");
     print(jsonEncode(orderHeader));
-    print("==========topupDetails============");
+    print("==========orderDetails============");
     print(jsonEncode(orderDetails));
     Navigator.of(context).pop();
     CommonUtil().MakeTransaction(context, orderHeader, orderDetails,
-        gatewayDetail, profileData, paymentFor);
+        gatewayDetail, profileData,IsWallet,Balance, paymentFor);
   }
 
   updateSettings(var settingDetails) {

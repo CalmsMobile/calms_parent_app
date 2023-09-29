@@ -165,7 +165,7 @@ class _MealMenuPageState extends State<MealMenuPage> {
           if (!searchEnable)
             Container(
               height: 30,
-              width: 100,
+              width: 60,
               margin: EdgeInsets.only(right: 10),
               child: Row(children: [
                 /* InkWell(
@@ -178,7 +178,7 @@ class _MealMenuPageState extends State<MealMenuPage> {
                           size: 30, color: Colors.grey.shade500),
                     ),
                   ), */
-                InkWell(
+               /*  InkWell(
                   onTap: () {
                     _pickDateDialog();
                   },
@@ -201,7 +201,7 @@ class _MealMenuPageState extends State<MealMenuPage> {
                     ),
                   ),
                 ),
-                Stack(
+                 */Stack(
                   children: [
                     InkWell(
                       onTap: () {

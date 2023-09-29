@@ -156,37 +156,73 @@ class CommonUtil {
   }
 
   Future<void> getGatewayDetails(context, RefBranchSeqId, RefSettingSeqId,
-      topupTotal, profileData, paymentFor) async {
+      topupTotal, profileData, Balance, IsWallet, paymentFor) async {
     var ParamData = {
       "RefBranchSeqId": RefBranchSeqId,
       "RefSettingSeqId": RefSettingSeqId
     };
-    Future<Map<String, dynamic>> res = RestApiProvider().authorizedPostRequest(
-      ParamData,
-      AppSettings.GetGatewayDetails,
-      context,
-      false,
-    );
-    res
-        .then((response) => {
-              successGetGatewayDetails(
-                  context, response, topupTotal, profileData, paymentFor)
-            })
-        .onError((error, stackTrace) => {authorizedPostRequestError(error)});
-  }
+    if (IsWallet == 0) {
+      Future<Map<String, dynamic>> res =
+          RestApiProvider().authorizedPostRequest(
+        ParamData,
+        AppSettings.GetGatewayDetails,
+        context,
+        false,
+      );
+      res
+          .then((response) => {
+                successGetGatewayDetails(context, response, topupTotal,
+                    profileData, IsWallet, Balance, paymentFor)
+              })
+          .onError((error, stackTrace) => {authorizedPostRequestError(error)});
+    } else {
+      var WT = {
+        "CurrentDate": "2023-09-29T14:38:47.717",
+        "SettingsSeqId": RefSettingSeqId,
+        "IsGst": false,
+        "GstType": null,
+        "GstPercentage": null,
+        "IsAdminFee": false,
+        "AdminTransFee": 0,
+        "IsAdminFeeGst": false,
+        "AdminGstType": null,
+        "AdminGstPercentage": null,
+        "TopMinAmt": 1,
+        "TopMaxAmt": 1000000,
+        "EnvType": 30,
+        "EnvName": "Wallet Payment",
+        "IsEnvBlock": false,
+        "ShutDownType": 0,
+        "BlockMsg": "",
+        "FromDate": "1900-01-01T00:00:00",
+        "ToDate": "1900-01-01T00:00:00",
+        "EnableTnC": false,
+        "TnC_Desc": "Test Global Payment",
+        "PayMode": "WT"
+      };
 
-  successGetGatewayDetails(BuildContext context, response, topupTotal,
-      profileData, paymentFor) async {
-    if (response['Table'][0]['code'] == 10) {
-      print("getGatewayDetailsSuccess success");
-      if (response['Table1'] != null || response['Table1'] != [])
-        showCustomPaymentAlert(context, response['Table1'][0], topupTotal,
-            profileData, paymentFor);
+      successGetGatewayDetails(
+          context, WT, topupTotal, profileData, IsWallet, Balance, paymentFor);
     }
   }
 
-  Future<void> MakeTransaction(
-      context, Header, Details, gatewayDetail, profileData, paymentFor) async {
+  successGetGatewayDetails(BuildContext context, response, topupTotal,
+      profileData, IsWallet, Balance, paymentFor) async {
+    if (IsWallet == 0) {
+      if (response['Table'][0]['code'] == 10) {
+        print("getGatewayDetailsSuccess success");
+        if (response['Table1'] != null || response['Table1'] != [])
+          showCustomPaymentAlert(context, response['Table1'][0], topupTotal,
+              profileData, IsWallet, Balance, paymentFor);
+      }
+    } else {
+      showCustomPaymentAlert(context, response, topupTotal, profileData,
+          IsWallet, Balance, paymentFor);
+    }
+  }
+
+  Future<void> MakeTransaction(context, Header, Details, gatewayDetail,
+      profileData, IsWallet, Balance, paymentFor) async {
     var OrderData = {
       "Header": paymentFor == AppSettings.paymentTypeOrder ? Header : [],
       "Detail": paymentFor == AppSettings.paymentTypeOrder ? Details : [],
@@ -235,17 +271,30 @@ class CommonUtil {
   successMakeTransaction(BuildContext context, response, paymentFor) async {
     if (response['Table'][0]['code'] == "S") {
       print("MakeTransactionSuccess success");
-      if (kIsWeb) {
-        _showMyDialog(
-            context, response['Table'][0]['PaymentOrderId'], paymentFor);
-      } else
+      if (response['Table'][0]['PayMode'] == "WT") {
+        var res = {
+          "Message":"Your Order Id: ${response['Table'][0]['OrderId']} has been confirmed successfully!"
+        };
         Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) =>
-                PaymentWebviewPage(response['Table'][0], paymentFor),
-          ),
-        );
+        context,
+        MaterialPageRoute(
+          builder: (context) =>
+              AfterPaymentPage(res, paymentFor),
+        ),
+      );
+      } else {
+        if (kIsWeb) {
+          _showMyDialog(
+              context, response['Table'][0]['PaymentOrderId'], paymentFor);
+        } else
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  PaymentWebviewPage(response['Table'][0], paymentFor),
+            ),
+          );
+      }
     }
   }
 
@@ -483,7 +532,6 @@ class CommonUtil {
       context.read<MySettingsListener>().clearFinalCartList();
       List cartList = context.read<MySettingsListener>().cartList;
       if (cartList.length > 0) {
-        
         String RefItemSeqId = CommonFunctions.getDailyMealsInCart(cartList);
         String PackageSeqId = CommonFunctions.getTermMealsInCart(cartList);
         if (RefItemSeqId != "")
@@ -544,9 +592,8 @@ class CommonUtil {
   successGetCartTermMealItems(BuildContext context, response) {
     if (response['Table'][0]['code'] == 10) {
       print("successGetCartTermMealItems");
-      context
-          .read<MySettingsListener>()
-          .updatePackagesInFinalCartList(response['Table1'],response['Table3']);
+      context.read<MySettingsListener>().updatePackagesInFinalCartList(
+          response['Table1'], response['Table3']);
     }
   }
 
@@ -575,7 +622,7 @@ class CommonUtil {
       print("successgetGatewayListForCart");
       context
           .read<MySettingsListener>()
-          .updateTopupPaymentProvidersList(response['Table1']);
+          .updateMealOrderPaymentProvidersList(response['Table1']);
     }
   }
 
@@ -681,7 +728,7 @@ class CommonUtil {
       MyCustomAlertDialog().showCustomAlert(
           context, "Notification", response["Description"], true, () {
         Navigator.pop(context);
-      }, null,"Ok","");
+      }, null, "Ok", "");
     } else {
       print("response===" + response['Table2'].toString());
       if (Type == "filter") {
@@ -702,6 +749,6 @@ class CommonUtil {
     MyCustomAlertDialog()
         .showCustomAlert(context, "Notification", error.toString(), true, () {
       Navigator.pop(context);
-    }, null,"Ok","");
+    }, null, "Ok", "");
   }
 }

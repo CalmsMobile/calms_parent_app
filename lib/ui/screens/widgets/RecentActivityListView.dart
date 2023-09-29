@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../../../common/HexColor.dart';
+import '../../../common/app_settings.dart';
 
 class RecentActivityListView extends StatelessWidget {
   final List recentList;
   final String CurrencyCode;
-  const RecentActivityListView(this.recentList,this.CurrencyCode);
+  const RecentActivityListView(this.recentList, this.CurrencyCode);
 
   @override
   Widget build(BuildContext context) {
@@ -37,33 +38,59 @@ class RecentActivityListView extends StatelessWidget {
                       title: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            recentList[index]['ActionName'],
-                            style: TextStyle(
-                              color: HexColor(recentList[index]['color']),
-                                fontWeight: FontWeight.bold, fontSize: 14),
-                          ),
-                          RichText(
-                            text: TextSpan(
-                              // Note: Styles for TextSpans must be explicitly defined.
-                              // Child text spans will inherit styles from parent
-                              style: TextStyle(
-                                fontSize: 14.0,
-                                color: Colors.black,
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                recentList[index]['ActionName'],
+                                style: TextStyle(
+                                    color: HexColor(recentList[index]['color']),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14),
                               ),
-                              children: <TextSpan>[
-                                TextSpan(
-                                    text: '${CurrencyCode} ',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black,
-                                        fontSize: 12)),
-                                TextSpan(
-                                    text: recentList[index]['Total'].toStringAsFixed(2),
-                                    style: TextStyle(fontSize: 14)),
-                              ],
-                            ),
+                               Text(
+                                recentList[index]['CreatedOn'].toString().substring(0,10),
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 10),
+                              ),
+                            ],
                           ),
+                          Container(
+                            width: 70,
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: HexColor(recentList[index]['color']),
+                                    width: 0.5)),
+                            child: RichText(
+                              text: TextSpan(
+                                // Note: Styles for TextSpans must be explicitly defined.
+                                // Child text spans will inherit styles from parent
+                                style: TextStyle(
+                                  fontSize: 14.0,
+                                  color: Colors.black,
+                                ),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                      text: ' ${CurrencyCode} ',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: HexColor(
+                                              AppSettings.colorCurrencyCode),
+                                          fontSize: 12)),
+                                  TextSpan(
+                                      text: recentList[index]['Total']
+                                          .toStringAsFixed(2),
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                          fontSize: 14,
+                                          color: HexColor(
+                                              AppSettings.colorCurrencyCode))),
+                                ],
+                              ),
+                            ),
+                          )
                         ],
                       ),
                       /* subtitle: Row(

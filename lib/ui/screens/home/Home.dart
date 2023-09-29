@@ -857,7 +857,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                             }
                           }),
                         ),
-                      ),Consumer<MySettingsListener>(
+                      ),
+                      //RECENT TRANSACTION
+                      Consumer<MySettingsListener>(
                           builder: (context, data, settingsDta) {
                         if (data.dashboardRecentActivityList.isNotEmpty) {
                           return Card(
@@ -906,7 +908,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           return SizedBox();
                         }
                       }),
-                      
+                      //TRANSACTION SUMMERY
                       Consumer<MySettingsListener>(
                           builder: (context, data, settingsDta) {
                         if (data.dashboardSpendingList.isNotEmpty) {

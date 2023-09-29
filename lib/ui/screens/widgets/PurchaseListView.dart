@@ -45,6 +45,10 @@ class PurchaseListView extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                                 fontSize: 14),
                           ),
+                          Container(
+                            width: 70,
+                            decoration: BoxDecoration(border: Border.all(color: HexColor(purchaseList[index]['color']),width: 0.5)),
+                            child:
                           RichText(
                             text: TextSpan(
                               // Note: Styles for TextSpans must be explicitly defined.
@@ -55,9 +59,9 @@ class PurchaseListView extends StatelessWidget {
                               ),
                               children: <TextSpan>[
                                 TextSpan(
-                                    text: '${CurrencyCode} ',
+                                    text: ' ${CurrencyCode} ',
                                     style: TextStyle(
-                                        fontWeight: FontWeight.bold,
+                                       fontWeight: FontWeight.bold,
                                         color: HexColor(
                                             AppSettings.colorCurrencyCode),
                                         fontSize: 12)),
@@ -65,13 +69,13 @@ class PurchaseListView extends StatelessWidget {
                                     text: purchaseList[index]['Purchase']
                                         .toStringAsFixed(2),
                                     style: TextStyle(
+                                      fontWeight: FontWeight.bold,
                                         fontSize: 14,
-                                        color: HexColor(
-                                            AppSettings.colorCurrencyCode))),
+                                        color: HexColor(AppSettings.colorCurrencyCode))),
                               ],
                             ),
                           ),
-                        ],
+                       ) ],
                       ),
                       /* subtitle: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,

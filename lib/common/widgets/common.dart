@@ -282,26 +282,47 @@ void showPaymentSelectOption(BuildContext buildContext, titleText, paymentList,
                               itemCount: paymentList.length,
                               itemBuilder: (BuildContext context, int index) {
                                 return Column(children: <Widget>[
-                                  new Divider(
-                                    height: 0.1,
-                                  ),
+                                  
                                   Container(
                                     color: Colors.white,
                                     height: 45,
                                     child: ListTile(
                                       horizontalTitleGap: -8,
-                                      title: new Text(
-                                        paymentList[index]["Name"],
-                                        style: TextStyle(fontSize: 22),
-                                      ),
+                                      title: paymentList[index]["IsWallet"] == 1
+                                            ? 
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+
+                                        Text(
+                                          paymentList[index]["Name"],
+                                          style: TextStyle(fontSize: 22),
+                                        ),
+                                        Text(
+                                                "Wallet Balance = ${profileData['CurrencyCode']} " +
+                                                    paymentList[index]
+                                                            ["Balance"]
+                                                        .toStringAsFixed(2),
+                                                style: TextStyle(
+                                                    fontSize: 12,
+                                                    color: HexColor(AppSettings
+                                                        .colorCurrencyCode),
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              )
+                                            
+                                      ]): Text(
+                                          paymentList[index]["Name"],
+                                          style: TextStyle(fontSize: 22),
+                                        ),
                                       leading: Icon(
                                         Icons.check_circle_rounded,
-                                        size: 20,
+                                        size: 25,
                                         color: selectedPaymentMethod[
                                                     'PayMode'] ==
                                                 paymentList[index]['PayMode']
                                             ? Color.fromARGB(255, 6, 150, 47)
-                                            : Colors.grey,
+                                            : Color.fromARGB(102, 158, 158, 158),
                                       ),
                                       trailing: Container(
                                         height: 45,
@@ -319,6 +340,9 @@ void showPaymentSelectOption(BuildContext buildContext, titleText, paymentList,
                                         setState(() {});
                                       },
                                     ),
+                                  ),
+                                  Divider(
+                                    height:1,
                                   ),
                                 ]);
                               }),
@@ -427,52 +451,6 @@ void showPaymentSelectOption(BuildContext buildContext, titleText, paymentList,
                               ),
                             ),
                           Container(
-                            margin: EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 10),
-                            child: CheckboxListTile(
-                              checkColor: Colors.white,
-                              activeColor: Colors.blue,
-                              contentPadding: EdgeInsets.zero,
-                              title: RichText(
-                                maxLines: 2,
-                                textAlign: TextAlign.left,
-                                text: TextSpan(
-                                    text:
-                                        'Click here to indicate that you have read and agree to the terms presented in the ',
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold),
-                                    children: [
-                                      TextSpan(
-                                        text: 'Terms and Conditions',
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            color: Colors.blue,
-                                            decoration:
-                                                TextDecoration.underline,
-                                            decorationThickness: 3,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      TextSpan(
-                                        text: ' agreement',
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ]),
-                              ),
-                              value: checkedValue,
-                              onChanged: (newValue) {
-                                setState(() {
-                                  checkedValue = newValue!;
-                                });
-                              },
-                              controlAffinity: ListTileControlAffinity.leading,
-                            ),
-                          ),
-                          Container(
                               alignment: Alignment.bottomRight,
                               margin: EdgeInsets.all(10),
                               child: SizedBox(
@@ -493,7 +471,7 @@ void showPaymentSelectOption(BuildContext buildContext, titleText, paymentList,
                                         Icon(Icons.arrow_forward_ios)
                                       ],
                                     ),
-                                    onPressed: checkedValue &&
+                                    onPressed: 
                                             selectedPaymentMethod != {}
                                         ? () {
                                             Navigator.of(buildContext).pop();
@@ -505,6 +483,14 @@ void showPaymentSelectOption(BuildContext buildContext, titleText, paymentList,
                                                     'SettingsSeqId'],
                                                 topupAmount,
                                                 profileData,
+                                                selectedPaymentMethod[
+                                                    'IsWallet'],
+                                                selectedPaymentMethod[
+                                                            'Balance'] !=
+                                                        null
+                                                    ? selectedPaymentMethod[
+                                                        'Balance']
+                                                    : 0,
                                                 paymentFor);
                                           }
                                         : null,
@@ -662,12 +648,12 @@ double grandTotal(amountwithAdminFee, gatewayDetail, topupAmount) {
 }
 
 void showCustomPaymentAlert(BuildContext buildContext, gatewayDetail,
-    topupAmount, profileData, paymentFor) {
+    topupAmount, profileData, IsWallet, Balance, paymentFor) {
   final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
     backgroundColor: Colors.pinkAccent,
     textStyle: TextStyle(color: Colors.white),
   );
-
+var checkedValue=false;
   showModalBottomSheet(
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(top: Radius.circular(60.0))),
@@ -679,6 +665,7 @@ void showCustomPaymentAlert(BuildContext buildContext, gatewayDetail,
             enableDrag: true,
             onClosing: () {},
             builder: (BuildContext context) {
+              
               return StatefulBuilder(
                 builder: (BuildContext context, setState) =>
                     SingleChildScrollView(
@@ -844,6 +831,53 @@ void showCustomPaymentAlert(BuildContext buildContext, gatewayDetail,
                           ),
                         ),
                         Container(
+                            margin: EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 10),
+                            child: CheckboxListTile(
+                              checkColor: Colors.white,
+                              activeColor: Colors.blue,
+                              contentPadding: EdgeInsets.zero,
+                              title: RichText(
+                                maxLines: 2,
+                                textAlign: TextAlign.left,
+                                text: TextSpan(
+                                    text:
+                                        'Click here to indicate that you have read and agree to the terms presented in the ',
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                    children: [
+                                      TextSpan(
+                                        text: 'Terms and Conditions',
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            color: Colors.blue,
+                                            decoration:
+                                                TextDecoration.underline,
+                                            decorationThickness: 3,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      TextSpan(
+                                        text: ' agreement',
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ]),
+                              ),
+                              value: checkedValue,
+                              onChanged: (newValue) {
+                                setState(() {
+                                  checkedValue = newValue!;
+                                });
+                              },
+                              controlAffinity: ListTileControlAffinity.leading,
+                            ),
+                          ),
+                          
+                        Container(
                           margin: EdgeInsets.only(top: 10),
                           //padding: EdgeInsets.symmetric(horizontal: 20),
                           child: SizedBox(
@@ -871,7 +905,7 @@ void showCustomPaymentAlert(BuildContext buildContext, gatewayDetail,
                                         ),
                                         onPressed: () {
                                           if (paymentFor ==
-                                              AppSettings.paymentTypeTopup)
+                                              AppSettings.paymentTypeTopup && checkedValue)
                                             buildContext
                                                 .read<MySettingsListener>()
                                                 .updateTopupHeaderAndDetails(
@@ -880,13 +914,15 @@ void showCustomPaymentAlert(BuildContext buildContext, gatewayDetail,
                                                     profileData,
                                                     paymentFor);
                                           if (paymentFor ==
-                                              AppSettings.paymentTypeOrder)
+                                              AppSettings.paymentTypeOrder && checkedValue)
                                             buildContext
                                                 .read<MySettingsListener>()
                                                 .updateOrderHeaderAndDetails(
                                                     buildContext,
                                                     gatewayDetail,
                                                     profileData,
+                                                    IsWallet,
+                                                    Balance,
                                                     paymentFor);
                                         },
                                         style: ElevatedButton.styleFrom(
