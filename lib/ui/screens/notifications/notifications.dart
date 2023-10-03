@@ -265,118 +265,6 @@ class _NotificationsState extends State<Notifications> {
                         })),
               ),
             ]),
-            /*  appBar: AppBar(
-              toolbarHeight: 70,
-              elevation: 0,
-              backgroundColor: Colors.transparent,
-              //titleSpacing: -5,
-              centerTitle: true,
-              automaticallyImplyLeading: false,
-              title: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  InkWell(
-                      onTap: () {
-                        openMemberBottomSheet(
-                            context,
-                            context
-                                .read<MySettingsListener>()
-                                .notificationMembersList,
-                            imgBaseUrl, (index) {
-                          Navigator.pop(context);
-                          senderIndex = index;
-                          setState(() {
-                            if (context
-                                        .read<MySettingsListener>()
-                                        .notificationMembersList[senderIndex]
-                                    ['UserImgPath'] !=
-                                null) {
-                              filterMemberImagePath = imgBaseUrl +
-                                  context
-                                          .read<MySettingsListener>()
-                                          .notificationMembersList[senderIndex]
-                                      ['UserImgPath'];
-                            }
-                            String name = context
-                                .read<MySettingsListener>()
-                                .notificationMembersList[senderIndex]["Name"];
-                            appBarTitle = name;
-                            CommonUtil().getMemberFilterNotification(
-                                context,
-                                apiURL,
-                                startPosition,
-                                profileData,
-                                qrData,
-                                context
-                                        .read<MySettingsListener>()
-                                        .notificationMembersList[senderIndex]
-                                    ['UserSeqId']);
-                           
-                          });
-                        });
-                      },
-                      child: SizedBox(
-                        width: 50,
-                        height: 50,
-                        child: CircleAvatar(
-                          backgroundColor: Colors.white,
-                          backgroundImage: NetworkImage(filterMemberImagePath),
-                          radius: 20,
-                        ),
-                      )),
-                  Padding(
-                    padding: EdgeInsets.only(left: 10),
-                    child: Text(
-                      appBarTitle,
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  )
-                  // Your widgets here
-                ],
-              ),
-              actions: [
-                Padding(
-                  padding: EdgeInsets.only(right: 10),
-                  child: InkWell(
-                      child: Image(
-                          width: 50,
-                          height: 50,
-                          image: AssetImage("assets/images/ico_filter.png")),
-                      onTap: () => openFilterCategoryBottomSheet(
-                              context,
-                              context
-                                  .read<MySettingsListener>()
-                                  .notificationCategoryList, (index) {
-                            Navigator.pop(context);
-                            //senderIndex = index;
-                            setState(() {
-                              String categoryName = context
-                                  .read<MySettingsListener>()
-                                  .notificationCategoryList[index]["category"];
-                              int id = context
-                                      .read<MySettingsListener>()
-                                      .notificationCategoryList[index]
-                                  ["notificationtype"];
-                              print("++++++++" + id.toString());
-                              appBarTitle = categoryName;
-                              CommonUtil().getCtegoryFilterNotification(
-                                  context,
-                                  apiURL,
-                                  startPosition,
-                                  profileData,
-                                  qrData,
-                                  id);
-                            });
-                          })),
-                ),
-                
-              ],
-            ),
-             */
             extendBodyBehindAppBar: false,
             body: Container(
               constraints: BoxConstraints.expand(),
@@ -594,17 +482,16 @@ class _NotificationsState extends State<Notifications> {
                                     ["NotificationType"]),
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
-                              subtitle: HtmlWidget(getContent(notificationList[
+                              subtitle:HtmlWidget(getContent(notificationList[
                                       index1][
-                                  "HtmlContent"])) /* Text(
-                                  "${notificationList[index1]["HtmlContent"]}") */
-                              ,
+                                  "HtmlContent"]))
+                              )
                             ),
-                          ),
+                          
                           Align(
                             alignment: Alignment.topRight,
                             child: Container(
-                              margin: EdgeInsets.only(bottom: 0, right: 10),
+                              margin: EdgeInsets.only(top:10,bottom: 0, right: 10),
                               child: Text.rich(
                                 TextSpan(
                                   style: TextStyle(color: Colors.black),

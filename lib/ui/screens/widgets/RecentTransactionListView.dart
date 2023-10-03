@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import '../../../common/HexColor.dart';
 import '../../../common/app_settings.dart';
 
-class RecentActivityListView extends StatelessWidget {
+class RecentTransactionListView extends StatelessWidget {
   final List recentList;
   final String CurrencyCode;
-  const RecentActivityListView(this.recentList, this.CurrencyCode);
+  const RecentTransactionListView(this.recentList, this.CurrencyCode);
 
   @override
   Widget build(BuildContext context) {

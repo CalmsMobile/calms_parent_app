@@ -5,6 +5,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import '../common/crypto_enc.dart';
+import '../common/util/dialogs.dart';
 import '/common/alert_dialog.dart';
 import '/common/app_settings.dart';
 import '/common/my_shared_pref.dart';
@@ -367,7 +368,7 @@ class RestApiProvider {
   }
 
   Future<Map<String, dynamic>> authorizedPostRequest(
-      ParamData, endPoint, context, showProgress) async {
+      ParamData, endPoint,BuildContext context, showProgress) async {
     print(ParamData);
     String apiURL = await MySharedPref().getData(AppSettings.Sp_Api_Url);
     String secureKey = await MySharedPref().getData(AppSettings.Sp_SecureKey);
@@ -381,10 +382,13 @@ class RestApiProvider {
         .encryptMyData(json.encode(payload));
     var data = {"Data": encData};
     debugPrint(data.toString());
-    ProgressDialog _progressDialog = ProgressDialog(context: context);
-    if (showProgress) {
-      _progressDialog.show(max: 100, msg: 'Loading...please wait...');
-    }
+   // ProgressDialog _progressDialog = ProgressDialog(context: context);
+   final GlobalKey<State> _keyLoader = new GlobalKey<State>();
+   
+     if (showProgress) {
+      //_progressDialog.show(max: 100, msg: 'Loading...please wait...');
+       Dialogs.showLoadingDialog(context);
+    } 
     bool isConnected = false;
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.mobile) {
@@ -406,7 +410,8 @@ class RestApiProvider {
         // If the server did return a 201 CREATED response,
         // then parse the JSON.
         if (showProgress) {
-          _progressDialog.close();
+          //_progressDialog.close();
+          Navigator.of(context,rootNavigator: true).pop();
         }
 
         Map<String, dynamic> res = jsonDecode(response.body);
@@ -440,13 +445,15 @@ class RestApiProvider {
         // If the server did not return a 201 CREATED response,
         // then throw an exception.
         if (showProgress) {
-          _progressDialog.close();
+         // _progressDialog.close();
+         Navigator.of(context,rootNavigator: true).pop();
         }
         throw Exception('Something went wrong.');
       }
     } else {
       if (showProgress) {
-        _progressDialog.close();
+        //_progressDialog.close();
+        Navigator.of(context,rootNavigator: true).pop();
       }
       throw Exception('Failed to connect network.');
     }

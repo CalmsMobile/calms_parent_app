@@ -15,7 +15,7 @@ import '../../../common/util/common_funtions.dart';
 import '../../../common/widgets/common.dart';
 import '../../../model/_AppointmentDataSource.dart';
 import '../widgets/DashBordMenuList.dart';
-import '../widgets/PurchaseListView.dart';
+import '../widgets/TransactionSummery.dart';
 
 class CalendarTransactionsPage extends StatefulWidget {
   static const String routeName = '/calendarTransactions';
@@ -280,7 +280,7 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                                                   fontWeight: FontWeight.bold),
                                             )),
                                       ),
-                                      PurchaseListView(
+                                      TransactionSummery(
                                           data.calendarTransactionList,
                                           CurrencyCode),
                                     ],

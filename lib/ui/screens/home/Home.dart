@@ -5,7 +5,6 @@ import 'package:calms_parent_latest/common/app_settings.dart';
 import 'package:calms_parent_latest/common/common_api.dart';
 import 'package:calms_parent_latest/common/my_shared_pref.dart';
 import 'package:calms_parent_latest/ui/screens/notifications/notification-view/notification-view.dart';
-import 'package:calms_parent_latest/ui/screens/widgets/RecentActivityListView.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -13,6 +12,7 @@ import 'package:provider/provider.dart';
 import '../../../common/listener/settings_listener.dart';
 import '../../../common/util/common_funtions.dart';
 import '../widgets/DashBordMenuList.dart';
+import '../widgets/RecentTransactionListView.dart';
 import '/common/HexColor.dart';
 import '/common/json_responses.dart';
 import '/model/HolidayModel.dart';
@@ -23,7 +23,7 @@ import '/ui/screens/cart/cart.dart';
 import '/ui/screens/notifications/notifications.dart';
 import '/ui/screens/settings/app_settings.dart';
 import '/ui/screens/widgets/HolidayCalendar.dart';
-import '/ui/screens/widgets/PurchaseListView.dart';
+import '../widgets/TransactionSummery.dart';
 import '/ui/screens/widgets/StoreItemListView.dart';
 import '/ui/screens/widgets/TopupListView.dart';
 import '/ui/screens/widgets/UpcomingActivityListView.dart';
@@ -305,10 +305,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     }
   }
 
-  Future<void> getLocalData() async {
+  Future<void> getData(BuildContext context) async {
     imgBaseUrl = await MySharedPref().getData(AppSettings.Sp_Img_Base_Url);
     String profile = await MySharedPref().getData(AppSettings.Sp_ProfileData);
     profileData = jsonDecode(profile);
+    print("profileData");
+    print(profileData);
+    CommonUtil().getEntryToDashboard(context,profileData['RefUserSeqId']);
   }
 
   @override
@@ -325,7 +328,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     controller.repeat(reverse: true);
     super.initState();
 
-    initValues();
+   getData(context);
   }
 
   @override
@@ -334,10 +337,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     super.dispose();
   }
 
-  Future<void> initValues() async {
-    CommonUtil().getEntryToDashboard(context);
-    getLocalData();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -898,7 +897,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                           fontWeight: FontWeight.normal),
                                     ),
                                   ),
-                                  RecentActivityListView(
+                                  RecentTransactionListView(
                                       data.dashboardRecentActivityList,profileData['CurrencyCode'])
                                 ],
                               ),
@@ -948,7 +947,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                           fontWeight: FontWeight.normal),
                                     ),
                                   ),
-                                  PurchaseListView(data.dashboardSpendingList,
+                                  TransactionSummery(data.dashboardSpendingList,
                                       profileData['CurrencyCode']),
                                 ],
                               ),

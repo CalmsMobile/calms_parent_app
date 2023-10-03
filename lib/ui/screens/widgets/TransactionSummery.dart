@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import '../../../common/HexColor.dart';
 import '../../../common/app_settings.dart';
 
-class PurchaseListView extends StatelessWidget {
+class TransactionSummery extends StatelessWidget {
   final List purchaseList;
   final String CurrencyCode;
-  const PurchaseListView(this.purchaseList, this.CurrencyCode);
+  const TransactionSummery(this.purchaseList, this.CurrencyCode);
 
   @override
   Widget build(BuildContext context) {

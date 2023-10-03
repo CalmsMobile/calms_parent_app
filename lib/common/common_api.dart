@@ -31,7 +31,7 @@ class CommonUtil {
   }
 
 //ParentApp
-  Future<void> getEntryToDashboard(BuildContext context) async {
+  Future<void> getEntryToDashboard(BuildContext context,UserSeqId) async {
     var ParamData = {
       "MAppDevSeqId": await MySharedPref().getData(AppSettings.Sp_MAppDevSeqId)
     };
@@ -39,20 +39,20 @@ class CommonUtil {
       ParamData,
       AppSettings.EntryToDashboard,
       context,
-      false,
+      true,
     );
     res
-        .then((response) => {EntryToDashboardSuccess(context, response)})
+        .then((response) => {EntryToDashboardSuccess(context, response,UserSeqId)})
         .onError((error, stackTrace) => {authorizedPostRequestError(error)});
   }
 
-  EntryToDashboardSuccess(BuildContext context, Map<String, dynamic> response) {
+  EntryToDashboardSuccess(BuildContext context, Map<String, dynamic> response,UserSeqId) {
     if (response['Table'][0]['code'] == 10 && response['Table1'][0] != null) {
       print("getEntryToDashboard success");
 
       context
           .read<MySettingsListener>()
-          .updateEntryToDashboardFamilyList(response['Table1']);
+          .updateEntryToDashboardFamilyList(response['Table1'],UserSeqId);
 
       context
           .read<MySettingsListener>()
@@ -80,7 +80,7 @@ class CommonUtil {
       ParamData,
       AppSettings.GetDashboard,
       context,
-      false,
+      true,
     );
     res
         .then((response) => {getDashboardSuccess(context, response)})
@@ -106,7 +106,7 @@ class CommonUtil {
       ParamData,
       AppSettings.GetCalendarData,
       context,
-      false,
+      true,
     );
     res
         .then((response) => {successGetCalendarData(context, response)})
@@ -133,7 +133,7 @@ class CommonUtil {
       ParamData,
       AppSettings.GetFamilyMemberForTopup,
       context,
-      false,
+      true,
     );
     res
         .then((response) => {successGetFamilyMemberForTopup(context, response)})
@@ -167,7 +167,7 @@ class CommonUtil {
         ParamData,
         AppSettings.GetGatewayDetails,
         context,
-        false,
+        true,
       );
       res
           .then((response) => {
@@ -260,7 +260,7 @@ class CommonUtil {
       ParamData,
       AppSettings.MakeTransaction,
       context,
-      false,
+      true,
     );
     res
         .then((response) =>
@@ -335,7 +335,7 @@ class CommonUtil {
       ParamData,
       AppSettings.GetAfterTopupPaymentSummary,
       context,
-      false,
+      true,
     );
     res
         .then((response) =>
@@ -366,7 +366,7 @@ class CommonUtil {
       ParamData,
       AppSettings.GetPOConfigForUser,
       context,
-      false,
+      true,
     );
     res
         .then((response) =>
@@ -405,7 +405,7 @@ class CommonUtil {
       ParamData,
       AppSettings.GetMealItemsForUser,
       context,
-      false,
+      true,
     );
     res
         .then((response) => {
@@ -454,7 +454,7 @@ class CommonUtil {
       ParamData,
       AppSettings.GetMealItemDetail,
       context,
-      false,
+      true,
     );
     res
         .then((response) => {
@@ -516,7 +516,7 @@ class CommonUtil {
       ParamData,
       AppSettings.GetCartPageSettings,
       context,
-      false,
+      true,
     );
     res
         .then((response) =>

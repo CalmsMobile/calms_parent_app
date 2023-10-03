@@ -31,65 +31,17 @@ class HolidayListView extends StatelessWidget {
                             NetworkImage(holidayList[index]['image']),
                         radius: 20,
                       ), */
-                      title: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            holidayList[index]['title'],
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 14),
-                          ),
-                          new RichText(
-                            text: new TextSpan(
-                              // Note: Styles for TextSpans must be explicitly defined.
-                              // Child text spans will inherit styles from parent
-                              style: new TextStyle(
-                                fontSize: 14.0,
-                                color: Colors.black,
-                              ),
-                              children: <TextSpan>[
-                                new TextSpan(
-                                    text: '',
-                                    style: new TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.grey.shade500,
-                                        fontSize: 10)),
-                                new TextSpan(
-                                    //text: holidayList[index]['date'],
-                                    text: '',
-                                    style: new TextStyle(
-                                        color: Colors.grey.shade500,
-                                        fontSize: 10)),
-                              ],
-                            ),
-                          ),
-                        ],
+                      title: Text(
+                        holidayList[index]['title'],
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 14),
                       ),
-                      subtitle: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                               // "# " + holidayList[index]['orderID'],
-                                "",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.grey.shade500,
-                                    fontSize: 10),
-                              ),
-                              Text(
-                                "Description: " + holidayList[index]['description'],
-                                
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.grey.shade500,
-                                    fontSize: 10),
-                              ),
-                            ],
-                          ),
-                          ],
+                      subtitle: Text(
+                        "Description: " + holidayList[index]['description'],
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey.shade500,
+                            fontSize: 10),
                       ),
                       onTap: () {
                         Navigator.of(context).pushNamed('/PurchaseDetails',

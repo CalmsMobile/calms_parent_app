@@ -108,7 +108,7 @@ class _ProfileMainState extends State<ProfileMain> {
                           fontWeight: FontWeight.w300),
                     ),
                     Text(
-                      '${CurrencyCode} ${profileData["Balance"].toString()}',
+                      '${CurrencyCode} ${profileData["Balance"].toStringAsFixed(2)}',
                       style: TextStyle(
                           fontSize: 18.0,
                           color: HexColor(AppSettings.colorCurrencyCode),

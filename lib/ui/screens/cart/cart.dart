@@ -371,8 +371,12 @@ class _CartPageState extends State<CartPage> {
                                                               context
                                                                   .read<
                                                                       MySettingsListener>()
+                                                                  .removeFromCart();
+                                                              /* context
+                                                                  .read<
+                                                                      MySettingsListener>()
                                                                   .updateSelectedOrderCalculateTotal(
-                                                                      data.finalCartList);
+                                                                      data.finalCartList); */
                                                               // });
                                                             },
                                                           ),

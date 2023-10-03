@@ -55,7 +55,7 @@ class MySettingsListener with ChangeNotifier {
   UnmodifiableListView<dynamic> get familyListWithoutParent =>
       UnmodifiableListView(_familyListWithoutParent);
   get familyPos => _familyPos;
-  void pageSwiped(int pos) {
+  pageSwiped(int pos) {
     _familyPos = pos;
     print("*pos* ${pos.toString()} == ${familyList.length.toString()}");
   }
@@ -126,9 +126,11 @@ class MySettingsListener with ChangeNotifier {
   UnmodifiableMapView get mydriverDetails =>
       UnmodifiableMapView(_driverDetails == null ? {} : _driverDetails);
 
-  updateEntryToDashboardFamilyList(List familyList) {
+  updateEntryToDashboardFamilyList(List familyList, loginUserSeqId) {
     _familyList = familyList;
-
+    int parentIndex = familyList
+        .indexWhere((element) => element['UserSeqId'] == loginUserSeqId);
+    if (parentIndex > -1) _familyPos = parentIndex;
     _familyListWithoutParent =
         CommonFunctions.getChildListFromFamilyList(familyList);
     notifyListeners();
@@ -209,7 +211,7 @@ class MySettingsListener with ChangeNotifier {
     print(jsonEncode(topupDetails));
     Navigator.of(context).pop();
     CommonUtil().MakeTransaction(context, topupHeader, topupDetails,
-        gatewayDetail, profileData,0,0, paymentFor);
+        gatewayDetail, profileData, 0, 0, paymentFor);
   }
 
   updateTopupPaymentProvidersList(List paymentProvidersList) {
@@ -217,6 +219,7 @@ class MySettingsListener with ChangeNotifier {
     _paymentProvidersList = paymentProvidersList;
     print("_paymentProvidersList updated");
   }
+
   updateMealOrderPaymentProvidersList(List paymentProvidersList) {
     //paymentProvidersList.removeWhere((element) => element['IsWallet'] == 1);
     _paymentProvidersList = paymentProvidersList;
@@ -369,13 +372,17 @@ class MySettingsListener with ChangeNotifier {
     notifyListeners();
   }
 
- 
-
   clearFinalCartList() {
     _cartTotal = 0;
     _finalCartList = [];
     _finalCartListForBilling = [];
     notifyListeners();
+  }
+
+  removeFromCart() {
+    //List l = _finalCartList;
+    _finalCartList.removeWhere((element) => element['isSelected']);
+    updateSelectedOrderCalculateTotal(_finalCartList);
   }
 
   updateSelectedOrderCalculateTotal(List updatedCartList) {
@@ -396,8 +403,8 @@ class MySettingsListener with ChangeNotifier {
     notifyListeners();
   }
 
-  updateOrderHeaderAndDetails(
-      BuildContext context, gatewayDetail, profileData,IsWallet,Balance, paymentFor) {
+  updateOrderHeaderAndDetails(BuildContext context, gatewayDetail, profileData,
+      IsWallet, Balance, paymentFor) {
     List orderHeader = [];
     List orderDetails = [];
     String currenFiltertDate =
@@ -476,8 +483,7 @@ class MySettingsListener with ChangeNotifier {
           "RowId": 0,
           "Discount": 0,
           "PackageSeqId": 0,
-          "FilterDate":
-              item['FilterDate'],
+          "FilterDate": item['FilterDate'],
           "Remarks": "",
           "lsCheckout": 1
         };
@@ -569,7 +575,7 @@ class MySettingsListener with ChangeNotifier {
     print(jsonEncode(orderDetails));
     Navigator.of(context).pop();
     CommonUtil().MakeTransaction(context, orderHeader, orderDetails,
-        gatewayDetail, profileData,IsWallet,Balance, paymentFor);
+        gatewayDetail, profileData, IsWallet, Balance, paymentFor);
   }
 
   updateSettings(var settingDetails) {
