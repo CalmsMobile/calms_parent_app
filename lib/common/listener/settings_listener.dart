@@ -232,7 +232,7 @@ class MySettingsListener with ChangeNotifier {
     _poPackagesList = poPackagesList;
     for (int i = 0; poTypesList.length > i; i++) {
       if (_cartList.length > 0 &&
-          _cartList.contains(CommonFunctions.getPoCartData(
+          _cartList.contains(CommonFunctions.getPoTermCartData(
               UserSeqId,
               poTypesList[i]['POTypeConfigSeqId'],
               poTypesList[i]['PackageSeqId'])))
@@ -260,7 +260,7 @@ class MySettingsListener with ChangeNotifier {
     for (var ip = 0; ip < _poTypesList[i1].length; ip++) {
       _poTypesList[i1][ip]['addedToCart'] = false;
     }
-    String cartData = CommonFunctions.getPoCartData(
+    String cartData = CommonFunctions.getPoTermCartData(
         UserSeqId,
         poTypesList[i1][i2]['POTypeConfigSeqId'],
         poTypesList[i1][i2]['PackageSeqId']);
@@ -292,7 +292,7 @@ class MySettingsListener with ChangeNotifier {
       profileData) {
     if (mealsList.length > 0 && poTypesList['PreOrderType'] == "Daily") {
       for (var i = 0; i < mealsList.length; i++) {
-        if (_cartList.contains(CommonFunctions.getPoMealCartData(
+        if (_cartList.contains(CommonFunctions.getPoDailyMealCartData(
             UserSeqId,
             mealsList[i]['ItemSeqId'],
             mealsList[i]['ViewDate'],
@@ -321,7 +321,7 @@ class MySettingsListener with ChangeNotifier {
   }
 
   updatePoTypeMealsCartStatus(isDelete, UserSeqId, mealData, poTypesList) {
-    String cartData = CommonFunctions.getPoMealCartData(
+    String cartData = CommonFunctions.getPoDailyMealCartData(
         UserSeqId,
         mealData['ItemSeqId'],
         mealData['ViewDate'],
@@ -378,11 +378,36 @@ class MySettingsListener with ChangeNotifier {
     _finalCartListForBilling = [];
     notifyListeners();
   }
-
-  removeFromCart() {
+clearCartListAfterPayment() {
+    _cartList = [];
+   
+    notifyListeners();
+  }
+  removeFromCart(index) {
     //List l = _finalCartList;
-    _finalCartList.removeWhere((element) => element['isSelected']);
-    updateSelectedOrderCalculateTotal(_finalCartList);
+    //_finalCartList.removeWhere((element) => element['isSelected']);
+    //_cartList.removeWhere((element) => element.toString().contains("other"));
+    print(index);
+    print(_cartList);
+    print(_finalCartList[index]);
+    String cartData = "";
+    if (_finalCartList[index]['PreOrderType'] == "Daily")
+      cartData = CommonFunctions.getPoDailyMealCartData(
+          _finalCartList[index]['RefUserSeqId'],
+          _finalCartList[index]['ItemSeqId'],
+          _finalCartList[index]['PurchaseDate'].toString().substring(0, 10),
+          _finalCartList[index]['ItemFor'],
+          _finalCartList[index]['RefPOTypeConfigSeqId']);
+    if (_finalCartList[index]['PreOrderType'] == "Terms")
+      cartData = CommonFunctions.getPoTermCartData(
+          _finalCartList[index]['RefUserSeqId'],
+          _finalCartList[index]['RefPOTypeConfigSeqId'],
+          _finalCartList[index]['PackageSeqId']);
+          print(cartData);
+    _cartList.remove(cartData);
+    _finalCartList.removeAt(index);
+    //notifyListeners();
+    //updateSelectedOrderCalculateTotal(_finalCartList);
   }
 
   updateSelectedOrderCalculateTotal(List updatedCartList) {

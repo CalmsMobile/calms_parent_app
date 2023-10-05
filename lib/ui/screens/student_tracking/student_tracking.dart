@@ -71,7 +71,7 @@ class _StudentTrackingState extends State<StudentTracking> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: getMyAppbar(context,"Student Tracking", []),
+      appBar: getMyAppbar(false, context, "Student Tracking", []),
       body: SingleChildScrollView(
         child: Container(
           color: HexColor("#f5f8fd"),

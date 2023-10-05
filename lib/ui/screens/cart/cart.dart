@@ -39,8 +39,8 @@ class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: getMyAppbar(context, "My Cart", [
-          Consumer<MySettingsListener>(builder: (context, data, settingsDta) {
+        appBar: getMyAppbar(true, context, "My Cart", [
+          Consumer<MySettingsListener>(builder: (contextt, data, settingsDta) {
             return data.finalCartList
                         .where((element) => element['isSelected'] == true)
                         .length >
@@ -219,29 +219,30 @@ class _CartPageState extends State<CartPage> {
                                                     MainAxisAlignment
                                                         .spaceEvenly,
                                                 children: [
-                                                  Container(
-                                                    alignment:
-                                                        Alignment.centerLeft,
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceAround,
+                                                    children: [
+                                                      Flexible(
+                                                        child: Container(
+                                                          alignment: Alignment
+                                                              .centerLeft,
+                                                          padding:
+                                                              EdgeInsets.all(5),
+                                                          margin:
+                                                              EdgeInsets.only(
+                                                                  bottom: 3,
+                                                                  left: 10),
 
-                                                    /* decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                color: Color.fromARGB(
-                                                    91, 158, 158, 158),
-                                              ), */
-                                                    padding: EdgeInsets.all(5),
-                                                    margin: EdgeInsets.only(
-                                                        bottom: 3, left: 10),
-
-                                                    // color: Color.fromARGB(178, 158, 158, 158),
-                                                    child: RichText(
-                                                      maxLines: 2,
-                                                      text: TextSpan(
-                                                        children: [
-                                                          TextSpan(
-                                                            text: data
-                                                                    .finalCartList[
+                                                          // color: Color.fromARGB(178, 158, 158, 158),
+                                                          child: Text(
+                                                            data.finalCartList[
                                                                 index]['Name'],
+                                                            maxLines: 1,
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
                                                             style: TextStyle(
                                                                 fontFamily:
                                                                     appFontFmaily,
@@ -256,9 +257,50 @@ class _CartPageState extends State<CartPage> {
                                                                         .bold,
                                                                 fontSize: 15),
                                                           ),
-                                                        ],
+                                                        ),
                                                       ),
-                                                    ),
+                                                      InkWell(
+                                                        onTap: () {setState(() {
+                                                          context
+                                                            .read<
+                                                                MySettingsListener>()
+                                                            .removeFromCart(
+                                                                index);
+                                                        }); },
+                                                        child: Container(
+                                                          width: 25,
+                                                          height: 25,
+                                                          margin:
+                                                              EdgeInsets.only(
+                                                                  left: 10),
+                                                          child: ClipOval(
+                                                            child: Material(
+                                                              color: Colors
+                                                                  .red, // Button color
+                                                              child: Icon(
+                                                                Icons
+                                                                    .delete_outlined,
+                                                                color: Colors
+                                                                    .white,
+                                                                size: 15,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+
+                                                      /*  InkWell(
+                                                          onTap: () => context
+                                                              .read<
+                                                                  MySettingsListener>()
+                                                              .removeFromCart(
+                                                                  index),
+                                                          child: Icon(
+                                                            Icons.delete,
+                                                            size: 22,
+                                                            color: Colors.red,
+                                                          )) */
+                                                    ],
                                                   ),
                                                   Row(
                                                     mainAxisAlignment:
@@ -371,12 +413,8 @@ class _CartPageState extends State<CartPage> {
                                                               context
                                                                   .read<
                                                                       MySettingsListener>()
-                                                                  .removeFromCart();
-                                                              /* context
-                                                                  .read<
-                                                                      MySettingsListener>()
                                                                   .updateSelectedOrderCalculateTotal(
-                                                                      data.finalCartList); */
+                                                                      data.finalCartList);
                                                               // });
                                                             },
                                                           ),
@@ -645,20 +683,6 @@ class _CartPageState extends State<CartPage> {
      */
         );
   }
-
-  /* bool isAnySelected() {
-    bool result = false;
-    for (var item in cartList) {
-      List localList = item['items'];
-      int index =
-          localList.indexWhere((element) => element['isSelected'] == true);
-      if (index > -1) {
-        result = true;
-        break;
-      }
-    }
-    return result;
-  } */
 
   void selectOrDeselectAll(List list, bool value) {
     for (var item in list) {

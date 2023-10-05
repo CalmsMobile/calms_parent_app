@@ -269,6 +269,7 @@ class CommonUtil {
   }
 
   successMakeTransaction(BuildContext context, response, paymentFor) async {
+    context.read<MySettingsListener>().clearCartListAfterPayment();
     if (response['Table'][0]['code'] == "S") {
       print("MakeTransactionSuccess success");
       if (response['Table'][0]['PayMode'] == "WT") {

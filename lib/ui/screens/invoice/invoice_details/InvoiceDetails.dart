@@ -21,7 +21,7 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
         ModalRoute.of(context)?.settings.arguments as Map;
     print(activityInfo);
     return Scaffold(
-      appBar: getMyAppbar(context,"Invoice Details", [
+      appBar: getMyAppbar(false, context, "Invoice Details", [
         Container(
           height: 30,
           width: 140,

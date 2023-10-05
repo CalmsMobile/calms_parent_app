@@ -68,71 +68,73 @@ class _MealDetailsState extends State<MealDetails> {
     return WillPopScope(
       onWillPop: _willPopCallback,
       child: Scaffold(
-        appBar: getMyAppbar(context, "Meal details", [
+        appBar: getMyAppbar(false, context, "Meal details", [
           Container(
-              height: 30,
-              //width: 100,
-              margin: EdgeInsets.only(right: 10),
-              child: Row(children: [
-                Stack(
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => CartPage(widget.arguments['imgBaseUrl'],widget.arguments['CurrencyCode']),
-                          ),
-                        );
-                      },
-                      child: Container(
-                        width: 40,
-                        height: 40,
-                        margin: EdgeInsets.only(left: 10),
-                        child: ClipOval(
-                          child: Material(
-                            color: Colors.blue, // Button color
-                            child: SizedBox(
-                                width: 40,
-                                height: 40,
-                                child: Icon(
-                                  Icons.shopping_cart_rounded,
-                                  color: Colors.white,
-                                  size: 18,
-                                )),
-                          ),
+            height: 30,
+            //width: 100,
+            margin: EdgeInsets.only(right: 10),
+            child: Row(children: [
+              Stack(
+                children: [
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CartPage(
+                              widget.arguments['imgBaseUrl'],
+                              widget.arguments['CurrencyCode']),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      width: 40,
+                      height: 40,
+                      margin: EdgeInsets.only(left: 10),
+                      child: ClipOval(
+                        child: Material(
+                          color: Colors.blue, // Button color
+                          child: SizedBox(
+                              width: 40,
+                              height: 40,
+                              child: Icon(
+                                Icons.shopping_cart_rounded,
+                                color: Colors.white,
+                                size: 18,
+                              )),
                         ),
                       ),
                     ),
-                    Consumer<MySettingsListener>(
-                        builder: (context, data, settingsDta) {
-                      return Positioned(
-                        top: 0,
-                        right: 0,
-                        child: Container(
-                          height: 18,
-                          width: 18,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.red,
-                          ),
-                          child: Center(
-                              child: Text(
-                            data.cartList != []
-                                ? data.cartList.length.toString()
-                                : "0",
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          )),
+                  ),
+                  Consumer<MySettingsListener>(
+                      builder: (context, data, settingsDta) {
+                    return Positioned(
+                      top: 0,
+                      right: 0,
+                      child: Container(
+                        height: 18,
+                        width: 18,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.red,
                         ),
-                      );
-                    })
-                  ],
-                ),
-              ]),
-            ),
+                        child: Center(
+                            child: Text(
+                          data.cartList != []
+                              ? data.cartList.length.toString()
+                              : "0",
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        )),
+                      ),
+                    );
+                  })
+                ],
+              ),
+            ]),
+          ),
         ]),
         resizeToAvoidBottomInset: false,
         body: SizedBox(
@@ -176,7 +178,6 @@ class _MealDetailsState extends State<MealDetails> {
                           ),
                         ),
                       ),
-                      
                       Container(
                         height: 300,
                         width: double.infinity,
@@ -232,7 +233,7 @@ class _MealDetailsState extends State<MealDetails> {
                                   ),
                               ],
                             ), */
-                           
+
                             if (widget.arguments['ingredients'].length > 0)
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -330,21 +331,21 @@ class _MealDetailsState extends State<MealDetails> {
                       )
                     ]),
                     Container(
-                          height: 25,
-                          width: double.infinity,
-                          padding: EdgeInsets.only(top: 5),
-                          //padding:EdgeInsets.symmetric(vertical: 5, horizontal: 0),
-                          decoration: BoxDecoration(
-                            color:HexColor(mealInfo['Colour']),
-                          ),
-                          child: Text(
-                              "${mealInfo['ItemStyle'] != null ||mealInfo['ItemStyle'] != "" ? mealInfo['ItemStyle'] : ""}",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold)),
-                        ),
+                      height: 25,
+                      width: double.infinity,
+                      padding: EdgeInsets.only(top: 5),
+                      //padding:EdgeInsets.symmetric(vertical: 5, horizontal: 0),
+                      decoration: BoxDecoration(
+                        color: HexColor(mealInfo['Colour']),
+                      ),
+                      child: Text(
+                          "${mealInfo['ItemStyle'] != null || mealInfo['ItemStyle'] != "" ? mealInfo['ItemStyle'] : ""}",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold)),
+                    ),
                     Container(
                       decoration: BoxDecoration(
                           color: HexColor("#f0f6f4"),
@@ -386,7 +387,8 @@ class _MealDetailsState extends State<MealDetails> {
                                             '${widget.arguments['CurrencyCode']} ${mealInfo["SellingPrice"].toStringAsFixed(2)}  ',
                                         style: TextStyle(
                                             fontSize: 14,
-                                            color: HexColor(AppSettings.colorCurrencyCode),
+                                            color: HexColor(
+                                                AppSettings.colorCurrencyCode),
                                             fontWeight: FontWeight.bold),
                                       ),
                                     ),
@@ -541,7 +543,7 @@ class _MealDetailsState extends State<MealDetails> {
                         ),
                       ),
                     ),
-                   /*  Container(
+                    /*  Container(
                       margin: EdgeInsets.only(top: 0, left: 5, right: 5),
                       padding:
                           EdgeInsets.symmetric(horizontal: 10, vertical: 10),

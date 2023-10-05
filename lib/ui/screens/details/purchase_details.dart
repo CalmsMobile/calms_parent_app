@@ -14,7 +14,7 @@ class _PurchaseDetailsState extends State<PurchaseDetails> {
     final passData = ModalRoute.of(context)?.settings.arguments as Map;
     print(passData);
     return Scaffold(
-      appBar: getMyAppbar(context,"Purchase Details", []),
+      appBar: getMyAppbar(false, context, "Purchase Details", []),
       resizeToAvoidBottomInset: false,
       body: SizedBox(
         height: MediaQuery.of(context).size.height,

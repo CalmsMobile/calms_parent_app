@@ -19,7 +19,9 @@ class _CampusTrackingState extends State<CampusTracking> {
         rcvdData['student'] as Map<dynamic, dynamic>;
     print(rcvdData);
     return Scaffold(
-      appBar: getMyAppbar(context,
+      appBar: getMyAppbar(
+          false,
+          context,
           rcvdData['type'] == 'BusTracking'
               ? "Bus Tracking"
               : "Campus Tracking",

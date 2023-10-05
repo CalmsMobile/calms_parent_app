@@ -1,6 +1,7 @@
 import 'package:calms_parent_latest/common/common_api.dart';
 import 'package:provider/provider.dart';
 
+import '../../ui/screens/home/Home.dart';
 import '../listener/settings_listener.dart';
 import '../util/common_funtions.dart';
 import '/common/HexColor.dart';
@@ -10,7 +11,8 @@ import 'package:dropdown_button2/custom_dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 
-PreferredSizeWidget getMyAppbar(context, var titleText, List<Widget> actions1) {
+PreferredSizeWidget getMyAppbar(
+    backButtonToHome, context, var titleText, List<Widget> actions1) {
   return AppBar(
       toolbarHeight: 70,
       elevation: 0,
@@ -24,7 +26,13 @@ PreferredSizeWidget getMyAppbar(context, var titleText, List<Widget> actions1) {
         children: [
           InkWell(
             onTap: () {
-              Navigator.pop(context);
+              if (backButtonToHome)
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => HomePage()),
+                    (route) => false);
+              else
+                Navigator.pop(context);
             },
             child: Image(
               width: 50,
@@ -282,39 +290,38 @@ void showPaymentSelectOption(BuildContext buildContext, titleText, paymentList,
                               itemCount: paymentList.length,
                               itemBuilder: (BuildContext context, int index) {
                                 return Column(children: <Widget>[
-                                  
                                   Container(
                                     color: Colors.white,
                                     height: 45,
                                     child: ListTile(
                                       horizontalTitleGap: -8,
                                       title: paymentList[index]["IsWallet"] == 1
-                                            ? 
-                                      Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-
-                                        Text(
-                                          paymentList[index]["Name"],
-                                          style: TextStyle(fontSize: 22),
-                                        ),
-                                        Text(
-                                                "Wallet Balance = ${profileData['CurrencyCode']} " +
-                                                    paymentList[index]
-                                                            ["Balance"]
-                                                        .toStringAsFixed(2),
-                                                style: TextStyle(
-                                                    fontSize: 12,
-                                                    color: HexColor(AppSettings
-                                                        .colorCurrencyCode),
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              )
-                                            
-                                      ]): Text(
-                                          paymentList[index]["Name"],
-                                          style: TextStyle(fontSize: 22),
-                                        ),
+                                          ? Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                  Text(
+                                                    paymentList[index]["Name"],
+                                                    style:
+                                                        TextStyle(fontSize: 22),
+                                                  ),
+                                                  Text(
+                                                    "Wallet Balance = ${profileData['CurrencyCode']} " +
+                                                        paymentList[index]
+                                                                ["Balance"]
+                                                            .toStringAsFixed(2),
+                                                    style: TextStyle(
+                                                        fontSize: 12,
+                                                        color: HexColor(AppSettings
+                                                            .colorCurrencyCode),
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  )
+                                                ])
+                                          : Text(
+                                              paymentList[index]["Name"],
+                                              style: TextStyle(fontSize: 22),
+                                            ),
                                       leading: Icon(
                                         Icons.check_circle_rounded,
                                         size: 25,
@@ -322,7 +329,8 @@ void showPaymentSelectOption(BuildContext buildContext, titleText, paymentList,
                                                     'PayMode'] ==
                                                 paymentList[index]['PayMode']
                                             ? Color.fromARGB(255, 6, 150, 47)
-                                            : Color.fromARGB(102, 158, 158, 158),
+                                            : Color.fromARGB(
+                                                102, 158, 158, 158),
                                       ),
                                       trailing: Container(
                                         height: 45,
@@ -335,14 +343,16 @@ void showPaymentSelectOption(BuildContext buildContext, titleText, paymentList,
                                             : null,
                                       ),
                                       onTap: () {
-                                        selectedPaymentMethod =
-                                            paymentList[index];
-                                        setState(() {});
+                                        setState(() {
+                                          checkedValue = true;
+                                          selectedPaymentMethod =
+                                              paymentList[index];
+                                        });
                                       },
                                     ),
                                   ),
                                   Divider(
-                                    height:1,
+                                    height: 1,
                                   ),
                                 ]);
                               }),
@@ -471,7 +481,7 @@ void showPaymentSelectOption(BuildContext buildContext, titleText, paymentList,
                                         Icon(Icons.arrow_forward_ios)
                                       ],
                                     ),
-                                    onPressed: 
+                                    onPressed: checkedValue == true &&
                                             selectedPaymentMethod != {}
                                         ? () {
                                             Navigator.of(buildContext).pop();
@@ -653,7 +663,7 @@ void showCustomPaymentAlert(BuildContext buildContext, gatewayDetail,
     backgroundColor: Colors.pinkAccent,
     textStyle: TextStyle(color: Colors.white),
   );
-var checkedValue=false;
+  var checkedValue = false;
   showModalBottomSheet(
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(top: Radius.circular(60.0))),
@@ -665,7 +675,6 @@ var checkedValue=false;
             enableDrag: true,
             onClosing: () {},
             builder: (BuildContext context) {
-              
               return StatefulBuilder(
                 builder: (BuildContext context, setState) =>
                     SingleChildScrollView(
@@ -830,53 +839,66 @@ var checkedValue=false;
                             ],
                           ),
                         ),
-                        Container(
+                        if (gatewayDetail['EnableTnC'])
+                          Container(
                             margin: EdgeInsets.symmetric(
                                 horizontal: 10, vertical: 10),
-                            child: CheckboxListTile(
+                            child:Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children:[ 
+                              Text("Terms & Conditions",
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold)),
+                              CheckboxListTile(
                               checkColor: Colors.white,
                               activeColor: Colors.blue,
                               contentPadding: EdgeInsets.zero,
-                              title: RichText(
+                              title:Text(gatewayDetail['TnC_Desc'],
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.normal)),
+                              
+                              /*  RichText(
                                 maxLines: 2,
                                 textAlign: TextAlign.left,
                                 text: TextSpan(
-                                    text:
-                                        'Click here to indicate that you have read and agree to the terms presented in the ',
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold),
-                                    children: [
-                                      TextSpan(
-                                        text: 'Terms and Conditions',
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            color: Colors.blue,
-                                            decoration:
-                                                TextDecoration.underline,
-                                            decorationThickness: 3,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      TextSpan(
-                                        text: ' agreement',
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ]),
+                                  text: gatewayDetail['TnC_Desc'],
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold),
+                                  /* children: [
+                                    TextSpan(
+                                      text: 'Terms and Conditions',
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.blue,
+                                          decoration: TextDecoration.underline,
+                                          decorationThickness: 3,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    TextSpan(
+                                      text: ' agreement',
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ] */
+                                ),
                               ),
-                              value: checkedValue,
+                               */value: checkedValue,
                               onChanged: (newValue) {
                                 setState(() {
                                   checkedValue = newValue!;
                                 });
                               },
                               controlAffinity: ListTileControlAffinity.leading,
-                            ),
+                            ),])
                           ),
-                          
                         Container(
                           margin: EdgeInsets.only(top: 10),
                           //padding: EdgeInsets.symmetric(horizontal: 20),
@@ -903,28 +925,38 @@ var checkedValue=false;
                                             //Icon(Icons.payment)
                                           ],
                                         ),
-                                        onPressed: () {
-                                          if (paymentFor ==
-                                              AppSettings.paymentTypeTopup && checkedValue)
-                                            buildContext
-                                                .read<MySettingsListener>()
-                                                .updateTopupHeaderAndDetails(
-                                                    buildContext,
-                                                    gatewayDetail,
-                                                    profileData,
-                                                    paymentFor);
-                                          if (paymentFor ==
-                                              AppSettings.paymentTypeOrder && checkedValue)
-                                            buildContext
-                                                .read<MySettingsListener>()
-                                                .updateOrderHeaderAndDetails(
-                                                    buildContext,
-                                                    gatewayDetail,
-                                                    profileData,
-                                                    IsWallet,
-                                                    Balance,
-                                                    paymentFor);
-                                        },
+                                        onPressed: (gatewayDetail['EnableTnC']
+                                                ? checkedValue == true
+                                                : checkedValue == false)
+                                            ? () {
+                                                if (paymentFor ==
+                                                        AppSettings
+                                                            .paymentTypeTopup &&
+                                                    checkedValue)
+                                                  buildContext
+                                                      .read<
+                                                          MySettingsListener>()
+                                                      .updateTopupHeaderAndDetails(
+                                                          buildContext,
+                                                          gatewayDetail,
+                                                          profileData,
+                                                          paymentFor);
+                                                if (paymentFor ==
+                                                        AppSettings
+                                                            .paymentTypeOrder &&
+                                                    checkedValue)
+                                                  buildContext
+                                                      .read<
+                                                          MySettingsListener>()
+                                                      .updateOrderHeaderAndDetails(
+                                                          buildContext,
+                                                          gatewayDetail,
+                                                          profileData,
+                                                          IsWallet,
+                                                          Balance,
+                                                          paymentFor);
+                                              }
+                                            : null,
                                         style: ElevatedButton.styleFrom(
                                           backgroundColor:
                                               Color.fromARGB(255, 6, 105, 199),

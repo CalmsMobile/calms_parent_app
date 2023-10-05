@@ -198,7 +198,7 @@ class MealOrderListView extends StatelessWidget {
                                                     Text(
                                                      /*  "${CurrencyCode} " +
                                                           "${poTypesList[index][i]["Amount"].toStringAsFixed(2)}", */
-                                                      "${CurrencyCode} ${CommonFunctions.getProRatedAmount(poTypesList[index][i]['PackageSeqId'], poTypesList[index][i]['ConfigJSON'], poTypesList[index][i]['PerDayAmt'], poTypesList[index][i]['Amount'], poPackagesList)}",
+                                                      "${CurrencyCode} ${CommonFunctions.getProRatedAmount(poTypesList[index][i]['PackageSeqId'], poTypesList[index][i]['ConfigJSON'], poTypesList[index][i]['PerDayAmt'], poTypesList[index][i]['Amount'], poPackagesList).toStringAsFixed(2)}",
                                                       style: TextStyle(
                                                           fontSize: 16,
                                                           color: HexColor(AppSettings.colorCurrencyCode),

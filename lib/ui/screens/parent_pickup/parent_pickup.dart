@@ -113,7 +113,7 @@ class _ParentPickupState extends State<ParentPickup> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: getMyAppbar(context,"Student Pickup", []),
+      appBar: getMyAppbar(false, context, "Student Pickup", []),
       body: Container(
         color: HexColor("#f5f8fd"),
         width: double.infinity,
@@ -317,17 +317,19 @@ class _ParentPickupState extends State<ParentPickup> {
                                           Navigator.of(context,
                                                   rootNavigator: true)
                                               .pop();
-                                        },"Yes","No");
+                                        }, "Yes", "No");
                                       } else {
                                         MyCustomAlertDialog().showCustomAlert(
-                                          context,
-                                          "Notification",
-                                          "You are not authorized to pickup",
-                                          false,
-                                          null,
-                                          () => Navigator.of(context,
-                                                  rootNavigator: true)
-                                              .pop(),"","Ok");
+                                            context,
+                                            "Notification",
+                                            "You are not authorized to pickup",
+                                            false,
+                                            null,
+                                            () => Navigator.of(context,
+                                                    rootNavigator: true)
+                                                .pop(),
+                                            "",
+                                            "Ok");
                                       }
                                     },
                                     child: Row(
@@ -388,11 +390,13 @@ class _ParentPickupState extends State<ParentPickup> {
 
   void dismissAlert() {
     MyCustomAlertDialog().showCustomAlert(
-      context,
-      "Notification",
-      "Request successfully submitted",
-      false,
-      null,
-      () => Navigator.of(context, rootNavigator: true).pop(),"","Ok");
+        context,
+        "Notification",
+        "Request successfully submitted",
+        false,
+        null,
+        () => Navigator.of(context, rootNavigator: true).pop(),
+        "",
+        "Ok");
   }
 }

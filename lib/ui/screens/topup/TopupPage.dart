@@ -33,16 +33,17 @@ class _TopupPageState extends State<TopupPage> {
   }
 
   Future<void> getData() async {
-    
-      CommonUtil().getFamilyMemberForTopup(context,widget.arguments['profileData']['RefUserSeqId'],
-          widget.arguments['profileData']['RefBranchSeqId'], widget.arguments['profileData']['RefMemberTypeSeqId']);
-   
+    CommonUtil().getFamilyMemberForTopup(
+        context,
+        widget.arguments['profileData']['RefUserSeqId'],
+        widget.arguments['profileData']['RefBranchSeqId'],
+        widget.arguments['profileData']['RefMemberTypeSeqId']);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: getMyAppbar(context, "Topup", []),
+      appBar: getMyAppbar(false, context, "Topup", []),
       body: Container(
           constraints: BoxConstraints.expand(),
           decoration: BoxDecoration(
@@ -63,8 +64,10 @@ class _TopupPageState extends State<TopupPage> {
                     Consumer<MySettingsListener>(
                         builder: (context, data, settingsDta) {
                       if (data.topupMembersList.isNotEmpty) {
-                        return TopupMemberListView(widget.arguments['imgBaseUrl'],
-                            data.topupMembersList, widget.arguments['profileData']['CurrencyCode']);
+                        return TopupMemberListView(
+                            widget.arguments['imgBaseUrl'],
+                            data.topupMembersList,
+                            widget.arguments['profileData']['CurrencyCode']);
                       } else {
                         return SizedBox();
                       }
@@ -101,16 +104,21 @@ class _TopupPageState extends State<TopupPage> {
                           ),
                           children: <TextSpan>[
                             new TextSpan(
-                                text: widget.arguments['profileData']['CurrencyCode'] + " ",
+                                text: widget.arguments['profileData']
+                                        ['CurrencyCode'] +
+                                    " ",
                                 style: new TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    color: HexColor(AppSettings.colorCurrencyCode),
+                                    color:
+                                        HexColor(AppSettings.colorCurrencyCode),
                                     fontSize: 18)),
                             new TextSpan(
                                 text: data.topupTotal.toStringAsFixed(2),
                                 style: TextStyle(
-                                  color: HexColor(AppSettings.colorCurrencyCode),
-                                    fontSize: 24, fontWeight: FontWeight.bold)),
+                                    color:
+                                        HexColor(AppSettings.colorCurrencyCode),
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold)),
                           ],
                         ),
                       );
@@ -140,7 +148,7 @@ class _TopupPageState extends State<TopupPage> {
             ),
             Consumer<MySettingsListener>(builder: (context, data, settingsDta) {
               return Container(
-                alignment: Alignment.bottomRight,
+                  alignment: Alignment.bottomRight,
                   margin: EdgeInsets.all(10),
                   child: SizedBox(
                       height: 45,
@@ -166,7 +174,8 @@ class _TopupPageState extends State<TopupPage> {
                                     "Choose payment type",
                                     data.paymentProvidersList,
                                     data.topupTotal,
-                                    widget.arguments['profileData'],AppSettings.paymentTypeTopup);
+                                    widget.arguments['profileData'],
+                                    AppSettings.paymentTypeTopup);
                               }
                             : null,
                         style: ElevatedButton.styleFrom(
@@ -176,7 +185,6 @@ class _TopupPageState extends State<TopupPage> {
                               borderRadius: BorderRadius.circular(60.0)),
                         ),
                       )));
-              
             }),
           ],
         ),

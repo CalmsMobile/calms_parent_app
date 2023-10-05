@@ -106,7 +106,7 @@ class _DonationPageState extends State<DonationPage> {
     ];
     print(selectedUser);
     return Scaffold(
-      appBar: getMyAppbar(context,"Donation", []),
+      appBar: getMyAppbar(false, context, "Donation", []),
       body: Container(
         margin: EdgeInsets.only(left: 0),
         color: Colors.white,

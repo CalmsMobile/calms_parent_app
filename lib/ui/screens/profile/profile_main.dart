@@ -26,7 +26,7 @@ class _ProfileMainState extends State<ProfileMain> {
     final CurrencyCode = data['CurrencyCode'];
 
     return Scaffold(
-        appBar: getMyAppbar(context, "Profile", []),
+        appBar: getMyAppbar(false, context, "Profile", []),
         body: Container(
           constraints: BoxConstraints.expand(),
           decoration: BoxDecoration(

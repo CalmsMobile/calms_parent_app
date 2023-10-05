@@ -8,7 +8,8 @@ import '../../../common/widgets/common.dart';
 class AfterPaymentPage extends StatefulWidget {
   final txnDetail;
   final paymentFor;
-  const AfterPaymentPage(this.txnDetail,this.paymentFor, {Key? key}) : super(key: key);
+  const AfterPaymentPage(this.txnDetail, this.paymentFor, {Key? key})
+      : super(key: key);
 
   @override
   _AfterPaymentPageState createState() => _AfterPaymentPageState();
@@ -25,7 +26,7 @@ class _AfterPaymentPageState extends State<AfterPaymentPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: getMyAppbar(context, "Payment Status", []),
+        appBar: getMyAppbar(false, context, "Payment Status", []),
         body: SafeArea(
           child: Container(
             constraints: BoxConstraints.expand(),
@@ -105,9 +106,12 @@ class _AfterPaymentPageState extends State<AfterPaymentPage> {
                                         ],
                                       ),
                                       onPressed: () {
-                                        
-                                        Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context) => HomePage()), (route) => false);
-                                        
+                                        Navigator.pushAndRemoveUntil(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    HomePage()),
+                                            (route) => false);
                                       },
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor:

@@ -118,7 +118,7 @@ class _NotificationsState extends State<Notifications> {
       MyCustomAlertDialog().showCustomAlert(
           context, "Notification", response["Description"], true, () {
         Navigator.pop(context);
-      }, null,"Ok","");
+      }, null, "Ok", "");
     } else {
       MyCustomAlertDialog()
           .showToast(context, "Notification deleted successfully");
@@ -131,7 +131,7 @@ class _NotificationsState extends State<Notifications> {
     MyCustomAlertDialog()
         .showCustomAlert(context, "Notification", error.toString(), true, () {
       Navigator.pop(context);
-    }, null,"Ok","");
+    }, null, "Ok", "");
   }
 
   late DateTime _selectedDate;
@@ -163,7 +163,7 @@ class _NotificationsState extends State<Notifications> {
     return Scaffold(
         body: Scaffold(
             backgroundColor: Colors.transparent,
-            appBar: getMyAppbar(context, appBarTitle, [
+            appBar: getMyAppbar(false, context, appBarTitle, [
               // Navigate to the Search Screen
               Container(
                 height: 30,
@@ -424,7 +424,7 @@ class _NotificationsState extends State<Notifications> {
                   deleteNotification(notificationList[index1]);
                 }, () {
                   Navigator.pop(context);
-                },"Yes","No");
+                }, "Yes", "No");
 
                 return false;
               }
@@ -460,38 +460,38 @@ class _NotificationsState extends State<Notifications> {
                       child: Column(
                         children: [
                           Container(
-                            //height: 60,
-                            child: ListTile(
-                              leading: SizedBox(
-                                  width: 45,
-                                  height: 45,
-                                  child: CircleAvatar(
-                                    backgroundColor: Colors.white,
-                                    backgroundImage: NetworkImage(
-                                        notificationList[index1]
-                                                    ["ImgPathUrl"] !=
-                                                ""
-                                            ? imgBaseUrl +
-                                                notificationList[index1]
-                                                    ["ImgPathUrl"]
-                                            : AppSettings.avatarPlaceholder),
-                                    radius: 20,
-                                  )),
-                              title: Text(
-                                getCategoryById(notificationList[index1]
-                                    ["NotificationType"]),
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              subtitle:HtmlWidget(getContent(notificationList[
-                                      index1][
-                                  "HtmlContent"]))
-                              )
-                            ),
-                          
+                              //height: 60,
+                              child: ListTile(
+                                  leading: SizedBox(
+                                      width: 45,
+                                      height: 45,
+                                      child: CircleAvatar(
+                                        backgroundColor: Colors.white,
+                                        backgroundImage: NetworkImage(
+                                            notificationList[index1]
+                                                        ["ImgPathUrl"] !=
+                                                    ""
+                                                ? imgBaseUrl +
+                                                    notificationList[index1]
+                                                        ["ImgPathUrl"]
+                                                : AppSettings
+                                                    .avatarPlaceholder),
+                                        radius: 20,
+                                      )),
+                                  title: Text(
+                                    getCategoryById(notificationList[index1]
+                                        ["NotificationType"]),
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  subtitle: HtmlWidget(getContent(
+                                      notificationList[index1]
+                                          ["HtmlContent"])))),
                           Align(
                             alignment: Alignment.topRight,
                             child: Container(
-                              margin: EdgeInsets.only(top:10,bottom: 0, right: 10),
+                              margin: EdgeInsets.only(
+                                  top: 10, bottom: 0, right: 10),
                               child: Text.rich(
                                 TextSpan(
                                   style: TextStyle(color: Colors.black),

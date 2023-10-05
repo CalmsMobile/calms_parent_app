@@ -88,7 +88,7 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
     }
 
     return Scaffold(
-        appBar: getMyAppbar(context, "Calendar", [
+        appBar: getMyAppbar(false, context, "Calendar", [
           // Navigate to the Search Screen
           Container(
             height: 30,
