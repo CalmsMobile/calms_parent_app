@@ -931,8 +931,7 @@ void showCustomPaymentAlert(BuildContext buildContext, gatewayDetail,
                                             ? () {
                                                 if (paymentFor ==
                                                         AppSettings
-                                                            .paymentTypeTopup &&
-                                                    checkedValue)
+                                                            .paymentTypeTopup )
                                                   buildContext
                                                       .read<
                                                           MySettingsListener>()
@@ -943,8 +942,7 @@ void showCustomPaymentAlert(BuildContext buildContext, gatewayDetail,
                                                           paymentFor);
                                                 if (paymentFor ==
                                                         AppSettings
-                                                            .paymentTypeOrder &&
-                                                    checkedValue)
+                                                            .paymentTypeOrder )
                                                   buildContext
                                                       .read<
                                                           MySettingsListener>()

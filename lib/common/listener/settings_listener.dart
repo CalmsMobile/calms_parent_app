@@ -231,7 +231,7 @@ class MySettingsListener with ChangeNotifier {
     _poSettings = poSettings;
     _poPackagesList = poPackagesList;
     for (int i = 0; poTypesList.length > i; i++) {
-      if (_cartList.length > 0 &&
+      if (_cartList.length > 0 && poTypesList[i]['PreOrderType']=='Terms' &&
           _cartList.contains(CommonFunctions.getPoTermCartData(
               UserSeqId,
               poTypesList[i]['POTypeConfigSeqId'],
@@ -271,7 +271,7 @@ class MySettingsListener with ChangeNotifier {
       _poTypesList[i1][i2]['addedToCart'] = true;
       for (var i = 0; i < _cartList.length; i++) {
         if (_cartList[i].toString().contains(
-            "PO_${UserSeqId}_-0_1900-01-01_0_0_${_poTypesList[i1][i2]['POTypeConfigSeqId']}_")) {
+            "PO_${UserSeqId.toInt()}_-0_1900-01-01_0_0_${_poTypesList[i1][i2]['POTypeConfigSeqId'].toInt()}_")) {
           _cartList.removeAt(i);
         }
       }

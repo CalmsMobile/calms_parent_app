@@ -58,13 +58,13 @@ class CommonFunctions {
   }
 
   static String getPoTermCartData(UserSeqId, POTypeConfigSeqId, PackageSeqId) {
-    return "PO_${UserSeqId}_-0_1900-01-01_0_0_${POTypeConfigSeqId}_${PackageSeqId}_";
+    return "PO_${UserSeqId.toInt()}_-0_1900-01-01_0_0_${POTypeConfigSeqId.toInt()}_${PackageSeqId.toInt()}_";
   }
 
   static String getPoDailyMealCartData(
       UserSeqId, ItemSeqId, ViewDate, ItemType, POTypeConfigSeqId) {
     //PO_100108_1001_2023-09-10_101_0_10000__
-    return "PO_${UserSeqId}_${ItemSeqId}_${ViewDate}_${ItemType}_0_${POTypeConfigSeqId}__";
+    return "PO_${UserSeqId.toInt()}_${ItemSeqId.toInt()}_${ViewDate}_${ItemType}_0_${POTypeConfigSeqId.toInt()}__";
   }
 
   static String getMealImageUrl(baseUrl, imgPath) {
@@ -131,7 +131,7 @@ class CommonFunctions {
     return lnAmount;
   }
 
- /*  static getPOConfigDetails(poConfig, CurrentDateTime, TermDate, TermEndDate, CutoffStartTime, IsClickFrom) {
+  /*  static getPOConfigDetails(poConfig, CurrentDateTime, TermDate, TermEndDate, CutoffStartTime, IsClickFrom) {
             var lsFromDate = "", lsToDate = "", lsCurrentDateTime = "", lsCancelFromDate = "", lsChangeFromDate = "", lsgFromDate = "", lsProRatedDays=0;
             var loConfig = { "purchase": datesplittocomma(""), "cancel": datesplittocomma("") };
             var lbCancelAllowed = false;
@@ -320,5 +320,4 @@ class CommonFunctions {
 
     }
  */
-
 }
