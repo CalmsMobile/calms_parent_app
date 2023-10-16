@@ -250,6 +250,8 @@ class CommonUtil {
       "FPXToken": "",
       "Remarks": "",
       "DKPaymentMethod": "",
+      "Name":profileData['Name'],
+      "Email":profileData['Email'],
       "RefUserSeqId": profileData['RefUserSeqId'],
       "RefMemberTypeSeqId": profileData['RefMemberTypeSeqId'],
       "IsTopup": "1",

@@ -16,7 +16,8 @@ import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 class PaymentWebviewPage extends StatefulWidget {
   final arguments;
   final paymentFor;
-  const PaymentWebviewPage(this.arguments,this.paymentFor, {Key? key}) : super(key: key);
+  const PaymentWebviewPage(this.arguments, this.paymentFor, {Key? key})
+      : super(key: key);
 
   @override
   _PaymentWebviewPageState createState() => _PaymentWebviewPageState();
@@ -57,58 +58,118 @@ class _PaymentWebviewPageState extends State<PaymentWebviewPage> {
     final WebViewController controller =
         WebViewController.fromPlatformCreationParams(params);
     // #enddocregion platform_features
-
-    controller
-      ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setBackgroundColor(const Color(0x00000000))
-      ..setNavigationDelegate(
-        NavigationDelegate(
-          onProgress: (int progress) {
-            debugPrint('WebView is loading (progress : $progress%)');
-          },
-          onPageStarted: (String url) {
-            debugPrint('Page started loading: $url');
-          },
-          onPageFinished: (String url) {
-            if (url.contains("/common/PaymentStatus.aspx")) {
-              if(widget.paymentFor == AppSettings.paymentTypeOrder)
-              context.read<MySettingsListener>().clearFinalCartList();
-            debugPrint("payment success");
-              CommonUtil().getAfterTopupPaymentSummary(context, widget.arguments['PaymentOrderId'],widget.paymentFor);
-            }
-            debugPrint('Page finished loading: $url');
-          },
-          onWebResourceError: (WebResourceError error) {
-            /* debugPrint('''
+    var pageContent = '<html><head></head><body> ' +
+        widget.arguments['PostData'] +
+        '<script type="text/javascript">document.getElementById("PostForm").submit();</script></body></html>';
+    if (widget.arguments['PayMode'] == "RAZER") {
+      controller
+        ..setJavaScriptMode(JavaScriptMode.unrestricted)
+        ..setBackgroundColor(const Color(0x00000000))
+        ..setNavigationDelegate(
+          NavigationDelegate(
+            onProgress: (int progress) {
+              debugPrint('WebView is loading (progress : $progress%)');
+            },
+            onPageStarted: (String url) {
+              debugPrint('Page started loading: $url');
+            },
+            onPageFinished: (String url) {
+              if (url.contains("/common/PaymentStatus.aspx")) {
+                if (widget.paymentFor == AppSettings.paymentTypeOrder)
+                  context.read<MySettingsListener>().clearFinalCartList();
+                debugPrint("payment success");
+                CommonUtil().getAfterTopupPaymentSummary(context,
+                    widget.arguments['PaymentOrderId'], widget.paymentFor);
+              }
+              debugPrint('Page finished loading: $url');
+            },
+            onWebResourceError: (WebResourceError error) {
+              /* debugPrint('''
 Page resource error:
   code: ${error.errorCode}
   description: ${error.description}
   errorType: ${error.errorType}
   isForMainFrame: ${error.isForMainFrame}
           '''); */
-          },
-          onNavigationRequest: (NavigationRequest request) {
-            /* if (request.url.startsWith('https://www.youtube.com/')) {
+            },
+            onNavigationRequest: (NavigationRequest request) {
+              /* if (request.url.startsWith('https://www.youtube.com/')) {
               debugPrint('blocking navigation to ${request.url}');
               return NavigationDecision.prevent;
             } */
-            debugPrint('allowing navigation to ${request.url}');
-            return NavigationDecision.navigate;
+              debugPrint('allowing navigation to ${request.url}');
+              return NavigationDecision.navigate;
+            },
+            onUrlChange: (UrlChange change) {
+              debugPrint('url change to ${change.url}');
+            },
+          ),
+        )
+        ..addJavaScriptChannel(
+          'Toaster',
+          onMessageReceived: (JavaScriptMessage message) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(message.message)),
+            );
           },
-          onUrlChange: (UrlChange change) {
-            debugPrint('url change to ${change.url}');
+        )
+        ..loadHtmlString(pageContent);
+    } else {
+      controller
+        ..setJavaScriptMode(JavaScriptMode.unrestricted)
+        ..setBackgroundColor(const Color(0x00000000))
+        ..setNavigationDelegate(
+          NavigationDelegate(
+            onProgress: (int progress) {
+              debugPrint('WebView is loading (progress : $progress%)');
+            },
+            onPageStarted: (String url) {
+              debugPrint('Page started loading: $url');
+            },
+            onPageFinished: (String url) {
+              if (url.contains("/common/PaymentStatus.aspx")) {
+                if (widget.paymentFor == AppSettings.paymentTypeOrder)
+                  context.read<MySettingsListener>().clearFinalCartList();
+                debugPrint("payment success");
+                CommonUtil().getAfterTopupPaymentSummary(context,
+                    widget.arguments['PaymentOrderId'], widget.paymentFor);
+              }
+              debugPrint('Page finished loading: $url');
+            },
+            onWebResourceError: (WebResourceError error) {
+              /* debugPrint('''
+Page resource error:
+  code: ${error.errorCode}
+  description: ${error.description}
+  errorType: ${error.errorType}
+  isForMainFrame: ${error.isForMainFrame}
+          '''); */
+            },
+            onNavigationRequest: (NavigationRequest request) {
+              /* if (request.url.startsWith('https://www.youtube.com/')) {
+              debugPrint('blocking navigation to ${request.url}');
+              return NavigationDecision.prevent;
+            } */
+              debugPrint('allowing navigation to ${request.url}');
+              return NavigationDecision.navigate;
+            },
+            onUrlChange: (UrlChange change) {
+              debugPrint('url change to ${change.url}');
+            },
+          ),
+        )
+        ..addJavaScriptChannel(
+          'Toaster',
+          onMessageReceived: (JavaScriptMessage message) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(message.message)),
+            );
           },
-        ),
-      )
-      ..addJavaScriptChannel(
-        'Toaster',
-        onMessageReceived: (JavaScriptMessage message) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(message.message)),
-          );
-        },
-      )
-      ..loadRequest(Uri.parse(widget.arguments['RedirectUrl']));
+        )
+        ..loadRequest(Uri.parse(widget.arguments['RedirectUrl']));
+    }
+
+    //..loadRequest(Uri.parse(widget.arguments['RedirectUrl']),method: LoadRequestMethod.post,headers: widget.arguments['PostData']);
 
     // #docregion platform_features
     if (controller.platform is AndroidWebViewController) {
