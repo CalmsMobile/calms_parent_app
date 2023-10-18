@@ -113,6 +113,105 @@ class MyCustomAlertDialog {
     );
   }
 
+  void showRegisterNewDeviceAlert(BuildContext buildContext, String title,
+      String description, bool isError, _registerDevice, _cancel) {
+    showModalBottomSheet(
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(60.0))),
+      context: buildContext,
+      enableDrag: false,
+      isDismissible: false,
+      isScrollControlled: false,
+      builder: (context) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            getBottomSheetActionBar(context, title, false, Colors.white),
+            Container(
+              margin: EdgeInsets.only(top: 0),
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      description,
+                      style: TextStyle(
+                          fontSize: 18, color: Color.fromARGB(255, 0, 92, 3)),
+                      softWrap: true,
+                      textAlign: TextAlign.start,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+                alignment: Alignment.centerRight,
+                margin: EdgeInsets.all(10),
+                child: SizedBox(
+                    height: 45,
+                    child: ElevatedButton(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            "Register this device",
+                            style: TextStyle(
+                                fontSize: 18.0,
+                                fontFamily: "Montserrat",
+                                fontWeight: FontWeight.bold),
+                          ),
+                          //Icon(Icons.payment)
+                        ],
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                        _registerDevice();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color.fromARGB(255, 6, 105, 199),
+                        textStyle: TextStyle(color: Colors.white),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(60.0)),
+                      ),
+                    ))),
+            Container(
+                alignment: Alignment.centerRight,
+                margin: EdgeInsets.all(10),
+                child: SizedBox(
+                    height: 45,
+                    child: ElevatedButton(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            "Cancel",
+                            style: TextStyle(
+                                fontSize: 18.0,
+                                fontFamily: "Montserrat",
+                                fontWeight: FontWeight.bold),
+                          ),
+                          //Icon(Icons.payment)
+                        ],
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                        _cancel();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color.fromARGB(255, 6, 105, 199),
+                        textStyle: TextStyle(color: Colors.white),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(60.0)),
+                      ),
+                    ))),
+          ],
+        );
+      },
+    );
+  }
+
   void showVerificationAlert(BuildContext buildContext, String title,
       String description, bool isError, _verifyAgain, _reSend) {
     showModalBottomSheet(

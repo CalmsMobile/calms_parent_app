@@ -423,13 +423,14 @@ class _AccountMappingState extends State<AccountMapping> {
                           ),
                         ]),
                       )),
-                      button( "Register", isCheckBox1Selected, isCheckBox2Selected, () {
-                            _onButtonPressed(
-                                widget.dataResponseModel,
-                                widget.decryptdata,
-                                widget.DeviceId,
-                                widget.DevicePlatform);
-                          }),
+                  button("Register", isCheckBox1Selected, isCheckBox2Selected,
+                      () {
+                    _onButtonPressed(
+                        widget.dataResponseModel,
+                        widget.decryptdata,
+                        widget.DeviceId,
+                        widget.DevicePlatform);
+                  }),
                   /* ElevatedButton(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -473,7 +474,7 @@ class _AccountMappingState extends State<AccountMapping> {
     print(decryptdata);
     print("DeviceId " + DeviceId);
     if (kDebugMode) {
-      DeviceId = "Test12345";
+      DeviceId = "Test123456";
     }
     //String gg = await MySharedPref().getData(AppSettings.fcmId);
     String FCMToken = await MySharedPref().getData(AppSettings.fcmId);
@@ -506,8 +507,18 @@ class _AccountMappingState extends State<AccountMapping> {
       "FCMToken": FCMToken,
       "ForceToUpdate": 0
     };
+    var paramData1 = {
+      "MAppDevSeqId": qrJson['MAppSeqId'],
+      "DeviceUID": DeviceId,
+      "DevicePlatform": DevicePlatform,
+      "DeviceDetails": "1",
+      "FCMToken": FCMToken,
+      "ForceToUpdate": 1
+    };
     String encParamData = CryptoEncryption(dataResponseModel['SecureKey'])
         .encryptMyData(json.encode(paramData));
+    String encParamData1 = CryptoEncryption(dataResponseModel['SecureKey'])
+        .encryptMyData(json.encode(paramData1));
     var payload = {
       "Authorize": {
         "AuMAppDevSeqId": qrJson['MAppSeqId'],
@@ -517,10 +528,22 @@ class _AccountMappingState extends State<AccountMapping> {
       },
       "ParamData": encParamData
     };
+    var payload1 = {
+      "Authorize": {
+        "AuMAppDevSeqId": qrJson['MAppSeqId'],
+        "AuDeviceUID": "",
+        "Token": "",
+        "AuRefUserSeqId": ""
+      },
+      "ParamData": encParamData1
+    };
     print("Payload == > " + payload.toString());
     String encData = CryptoEncryption(AppSettings.commonCryptoKey)
         .encryptMyData(json.encode(payload));
+    String encData1 = CryptoEncryption(AppSettings.commonCryptoKey)
+        .encryptMyData(json.encode(payload1));
     var data = {"Data": encData};
+    var forceToUpdateData = {"Data": encData1};
     /* var data = {
       'MAppDevSeqId': qrJson['MAppSeqId'],
       'RefUserSeqId': dataResponseModel['RefUserSeqId'],
@@ -535,7 +558,7 @@ class _AccountMappingState extends State<AccountMapping> {
         qrJson["ApiUrl"], AppSettings.RegisterParentApp, context, false, false);
     res
         .then((value) => {
-              successResponse(value, decryptdata, data, qrJson["ApiUrl"],
+              successResponse(value, decryptdata, forceToUpdateData, qrJson["ApiUrl"],
                   dataResponseModel, DeviceId)
             })
         .onError((error, stackTrace) => {responseError(error)});
@@ -550,7 +573,7 @@ class _AccountMappingState extends State<AccountMapping> {
     }, null, "Ok", "");
   }
 
-  successResponse(Map<String, dynamic> res, decryptdata, inputData, ApiUrl,
+  successResponse(Map<String, dynamic> res, decryptdata, forceToUpdateData, ApiUrl,
       profileData, DeviceId) {
     print(res);
     if (res['Table'][0]['code'] == 10) {
@@ -568,29 +591,26 @@ class _AccountMappingState extends State<AccountMapping> {
       Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => SplashScreen()));
     } else if (res['Table'][0]['code'] == 40) {
-      showAlert(context, res['Table'][0]['description'], inputData, decryptdata,
+      showAlert(context, res['Table'][0]['description'], forceToUpdateData, decryptdata,
           ApiUrl, profileData, DeviceId);
     }
   }
 
-  showAlert(BuildContext buildContext, msg, inputData, decryptdata, ApiUrl,
+  showAlert(BuildContext buildContext, msg, forceToUpdateData, decryptdata, ApiUrl,
       profileData, DeviceId) {
-    MyCustomAlertDialog().showCustomAlert(context, "Confirmation", msg, false,
-        () {
-      Navigator.pop(context);
-      //MyCustomAlertDialog().showToast(context, "");
-      //Navigator.of(context).pop();
-      inputData['ForceToUpdate'] = 1;
-      Future<Map<String, dynamic>> res = RestApiProvider().postData(inputData,
-          ApiUrl, AppSettings.RegisterParentApp, context, true, false);
+    MyCustomAlertDialog()
+        .showRegisterNewDeviceAlert(buildContext, "Alert!!", msg, false, () {
+      print("reg==============");
+      Future<Map<String, dynamic>> res = RestApiProvider().postNewData(forceToUpdateData,
+          ApiUrl, AppSettings.RegisterParentApp, context, false, false);
       res
           .then((value) => {
-                successResponse(value, decryptdata, inputData, ApiUrl,
-                    profileData, DeviceId)
+                successResponse(value, decryptdata, forceToUpdateData, ApiUrl,
+                    profileData, DeviceId),
               })
           .onError((error, stackTrace) => {responseError(error)});
     }, () {
       Navigator.pop(context);
-    }, "Ok", "Cancel");
+    });
   }
 }

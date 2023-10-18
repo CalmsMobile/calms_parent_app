@@ -2,6 +2,7 @@ import 'package:calms_parent_latest/common/common_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../common/HexColor.dart';
@@ -99,6 +100,19 @@ class MealOrderListView extends StatelessWidget {
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
+                                  poTypesList[index][0]
+                                                ['PreOrderType'] ==
+                                            "Terms"
+                                        ?Text(
+                                  "(${DateFormat('dd-MMM-yyyy').format(DateTime.parse(poTypesList[index][0]['FromDate']))} - ${DateFormat('dd-MMM-yyyy').format(DateTime.parse(poTypesList[index][0]['ToDate']))})" ,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.black54,
+                                      fontWeight: FontWeight.w300,
+                                    ),
+                                  ):SizedBox()
                                 ],
                               ),),
                               Container(
