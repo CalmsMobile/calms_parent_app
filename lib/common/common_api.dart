@@ -31,7 +31,7 @@ class CommonUtil {
   }
 
 //ParentApp
-  Future<void> getEntryToDashboard(BuildContext context,UserSeqId) async {
+  Future<void> getEntryToDashboard(BuildContext context, UserSeqId) async {
     var ParamData = {
       "MAppDevSeqId": await MySharedPref().getData(AppSettings.Sp_MAppDevSeqId)
     };
@@ -42,17 +42,19 @@ class CommonUtil {
       true,
     );
     res
-        .then((response) => {EntryToDashboardSuccess(context, response,UserSeqId)})
+        .then((response) =>
+            {EntryToDashboardSuccess(context, response, UserSeqId)})
         .onError((error, stackTrace) => {authorizedPostRequestError(error)});
   }
 
-  EntryToDashboardSuccess(BuildContext context, Map<String, dynamic> response,UserSeqId) {
+  EntryToDashboardSuccess(
+      BuildContext context, Map<String, dynamic> response, UserSeqId) {
     if (response['Table'][0]['code'] == 10 && response['Table1'][0] != null) {
       print("getEntryToDashboard success");
 
       context
           .read<MySettingsListener>()
-          .updateEntryToDashboardFamilyList(response['Table1'],UserSeqId);
+          .updateEntryToDashboardFamilyList(response['Table1'], UserSeqId);
 
       context
           .read<MySettingsListener>()
@@ -250,8 +252,8 @@ class CommonUtil {
       "FPXToken": "",
       "Remarks": "",
       "DKPaymentMethod": "",
-      "Name":profileData['Name'],
-      "Email":profileData['Email'],
+      "Name": profileData['Name'],
+      "Email": profileData['Email'],
       "RefUserSeqId": profileData['RefUserSeqId'],
       "RefMemberTypeSeqId": profileData['RefMemberTypeSeqId'],
       "IsTopup": "1",
@@ -276,15 +278,15 @@ class CommonUtil {
       print("MakeTransactionSuccess success");
       if (response['Table'][0]['PayMode'] == "WT") {
         var res = {
-          "Message":"Your Order Id: ${response['Table'][0]['OrderId']} has been confirmed successfully!"
+          "Message":
+              "Your Order Id: ${response['Table'][0]['OrderId']} has been confirmed successfully!"
         };
         Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) =>
-              AfterPaymentPage(res, paymentFor),
-        ),
-      );
+          context,
+          MaterialPageRoute(
+            builder: (context) => AfterPaymentPage(res, paymentFor),
+          ),
+        );
       } else {
         if (kIsWeb) {
           _showMyDialog(
@@ -390,7 +392,7 @@ class CommonUtil {
   }
 
   Future<void> getMealItemsForUser(context, RefUserSeqId, RefBranchSeqId,
-      poTypesList, CurrencyCode, imgBaseUrl, profileData) async {
+      poTypesList, CurrencyCode, imgBaseUrl, profileData, AllowToChoose) async {
     var ParamData = {
       "RefBranchSeqId": RefBranchSeqId,
       "RefUserSeqId": RefUserSeqId,

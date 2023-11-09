@@ -474,7 +474,7 @@ class _AccountMappingState extends State<AccountMapping> {
     print(decryptdata);
     print("DeviceId " + DeviceId);
     if (kDebugMode) {
-      DeviceId = "Test123456";
+      DeviceId = "Test12345";
     }
     //String gg = await MySharedPref().getData(AppSettings.fcmId);
     String FCMToken = await MySharedPref().getData(AppSettings.fcmId);

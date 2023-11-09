@@ -231,7 +231,8 @@ class MySettingsListener with ChangeNotifier {
     _poSettings = poSettings;
     _poPackagesList = poPackagesList;
     for (int i = 0; poTypesList.length > i; i++) {
-      if (_cartList.length > 0 && poTypesList[i]['PreOrderType']=='Terms' &&
+      if (_cartList.length > 0 &&
+          poTypesList[i]['PreOrderType'] == 'Terms' &&
           _cartList.contains(CommonFunctions.getPoTermCartData(
               UserSeqId,
               poTypesList[i]['POTypeConfigSeqId'],
@@ -378,11 +379,13 @@ class MySettingsListener with ChangeNotifier {
     _finalCartListForBilling = [];
     notifyListeners();
   }
-clearCartListAfterPayment() {
+
+  clearCartListAfterPayment() {
     _cartList = [];
-   
+
     notifyListeners();
   }
+
   removeFromCart(index) {
     //List l = _finalCartList;
     //_finalCartList.removeWhere((element) => element['isSelected']);
@@ -403,7 +406,7 @@ clearCartListAfterPayment() {
           _finalCartList[index]['RefUserSeqId'],
           _finalCartList[index]['RefPOTypeConfigSeqId'],
           _finalCartList[index]['PackageSeqId']);
-          print(cartData);
+    print(cartData);
     _cartList.remove(cartData);
     _finalCartList.removeAt(index);
     //notifyListeners();

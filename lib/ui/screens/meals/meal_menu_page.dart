@@ -178,7 +178,7 @@ class _MealMenuPageState extends State<MealMenuPage> {
                           size: 30, color: Colors.grey.shade500),
                     ),
                   ), */
-               /*  InkWell(
+                /*  InkWell(
                   onTap: () {
                     _pickDateDialog();
                   },
@@ -201,14 +201,17 @@ class _MealMenuPageState extends State<MealMenuPage> {
                     ),
                   ),
                 ),
-                 */Stack(
+                 */
+                Stack(
                   children: [
                     InkWell(
                       onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => CartPage(widget.arguments['imgBaseUrl'],widget.arguments['profileData']),
+                            builder: (context) => CartPage(
+                                widget.arguments['imgBaseUrl'],
+                                widget.arguments['profileData']),
                           ),
                         );
                       },
@@ -263,182 +266,193 @@ class _MealMenuPageState extends State<MealMenuPage> {
         ],
       ),
       resizeToAvoidBottomInset: false,
-      body:dateList.length>0? Container(
-        constraints: BoxConstraints.expand(),
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-          begin: Alignment.topRight,
-          end: Alignment.bottomLeft,
-          colors: [
-            Color.fromARGB(255, 246, 249, 254),
-            Color.fromARGB(255, 230, 231, 239),
-          ],
-        )),
-        child:  SizedBox(
-          height: MediaQuery.of(context).size.height,
-          child: Container(
-            color: HexColor("#f5f8fd"),
-            margin: EdgeInsets.only(top: 0),
-            child:Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    height: 66,
-                    margin: EdgeInsets.symmetric(horizontal: 20),
-                    child: ListView.builder(
-                        padding: EdgeInsets.zero,
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        itemCount: dateList.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return InkWell(
-                            onTap: () {
-                              setState(() {
-                                _selectedDate = dateList[index];
-                                mealListByItemType = [];
-                                mealListBydate = getMealsListByDate(
-                                    _selectedDate,
-                                    widget.arguments['mealsList'],
-                                    widget.arguments['mealsCtgryList']);
-                                if (mealListBydate.isNotEmpty) {
-                                  selectedTab =
-                                      ItemTypeList[0]['ItemTypeSeqId'];
-                                  mealListByItemType = getMealsListByItemType(
-                                      selectedTab, mealListBydate);
-                                }
-                              });
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  color: _selectedDate == dateList[index]
-                                      ? Colors.amber.shade700
-                                      : Colors.white,
-                                  borderRadius: BorderRadius.circular(20),
-                                  border: _selectedDate == dateList[index]
-                                      ? Border.all(
-                                          color: Colors.amber.shade700,
-                                          width: 2,
-                                        )
-                                      : Border.all(color: Colors.white)),
-                              margin: EdgeInsets.symmetric(horizontal: 5),
-                              // color: Colors.grey,
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 0, vertical: 0),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Container(
-                                    padding: EdgeInsets.only(
-                                        top: 0, left: 0, right: 0),
-                                    child: Text(
-                                      //"${DateUtil().getDaysOfDate(dateListOld[index]["date"])["dayString"]}",
-                                      "${DateFormat('EE').format(dateList[index])}",
-                                      style: TextStyle(
-                                          fontSize:
-                                              _selectedDate == dateList[index]
-                                                  ? 12
-                                                  : 10,
+      body: dateList.length > 0
+          ? Container(
+              constraints: BoxConstraints.expand(),
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                begin: Alignment.topRight,
+                end: Alignment.bottomLeft,
+                colors: [
+                  Color.fromARGB(255, 246, 249, 254),
+                  Color.fromARGB(255, 230, 231, 239),
+                ],
+              )),
+              child: SizedBox(
+                height: MediaQuery.of(context).size.height,
+                child: Container(
+                    color: HexColor("#f5f8fd"),
+                    margin: EdgeInsets.only(top: 0),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            height: 66,
+                            margin: EdgeInsets.symmetric(horizontal: 20),
+                            child: ListView.builder(
+                                padding: EdgeInsets.zero,
+                                shrinkWrap: true,
+                                scrollDirection: Axis.horizontal,
+                                itemCount: dateList.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        _selectedDate = dateList[index];
+                                        mealListByItemType = [];
+                                        mealListBydate = getMealsListByDate(
+                                            _selectedDate,
+                                            widget.arguments['mealsList'],
+                                            widget.arguments['mealsCtgryList']);
+                                        if (mealListBydate.isNotEmpty) {
+                                          selectedTab =
+                                              ItemTypeList[0]['ItemTypeSeqId'];
+                                          mealListByItemType =
+                                              getMealsListByItemType(
+                                                  selectedTab, mealListBydate);
+                                        }
+                                      });
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
                                           color:
                                               _selectedDate == dateList[index]
-                                                  ? Colors.white
-                                                  : Colors.black,
-                                          fontWeight:
-                                              _selectedDate == dateList[index]
-                                                  ? FontWeight.bold
-                                                  : FontWeight.normal),
+                                                  ? Colors.amber.shade700
+                                                  : Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          border: _selectedDate ==
+                                                  dateList[index]
+                                              ? Border.all(
+                                                  color: Colors.amber.shade700,
+                                                  width: 2,
+                                                )
+                                              : Border.all(
+                                                  color: Colors.white)),
+                                      margin:
+                                          EdgeInsets.symmetric(horizontal: 5),
+                                      // color: Colors.grey,
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 0, vertical: 0),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          Container(
+                                            padding: EdgeInsets.only(
+                                                top: 0, left: 0, right: 0),
+                                            child: Text(
+                                              //"${DateUtil().getDaysOfDate(dateListOld[index]["date"])["dayString"]}",
+                                              "${DateFormat('EE').format(dateList[index])}",
+                                              style: TextStyle(
+                                                  fontSize: _selectedDate ==
+                                                          dateList[index]
+                                                      ? 12
+                                                      : 10,
+                                                  color: _selectedDate ==
+                                                          dateList[index]
+                                                      ? Colors.white
+                                                      : Colors.black,
+                                                  fontWeight: _selectedDate ==
+                                                          dateList[index]
+                                                      ? FontWeight.bold
+                                                      : FontWeight.normal),
+                                            ),
+                                          ),
+                                          Container(
+                                            padding: EdgeInsets.all(10),
+                                            margin: EdgeInsets.only(top: 3),
+                                            decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius:
+                                                    BorderRadius.circular(60),
+                                                border: Border.all(
+                                                  color: Colors.white,
+                                                  width: 2,
+                                                )),
+                                            child: Text(
+                                              "${dateList[index].day}",
+                                              style: TextStyle(
+                                                  fontSize: _selectedDate ==
+                                                          dateList[index]
+                                                      ? 12
+                                                      : 10,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  Container(
-                                    padding: EdgeInsets.all(10),
-                                    margin: EdgeInsets.only(top: 3),
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(60),
-                                        border: Border.all(
-                                          color: Colors.white,
-                                          width: 2,
-                                        )),
-                                    child: Text(
-                                      "${dateList[index].day}",
-                                      style: TextStyle(
-                                          fontSize:
-                                              _selectedDate == dateList[index]
-                                                  ? 12
-                                                  : 10,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        }),
-                  ),
-                  if(mealListBydate.length==0)
-                  NoDataCard(AppSettings.imgAssetNoMeal,
-                                AppSettings.titleNoMeal, AppSettings.msgNoMeal),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: List.generate(
-                          ItemTypeList.length,
-                          (index) => InkWell(
-                            onTap: () {
-                              setState(() {
-                                selectedTab =
-                                    ItemTypeList[index]['ItemTypeSeqId'];
-
-                                mealListByItemType = getMealsListByItemType(
-                                    selectedTab, mealListBydate);
-                              });
-                            },
-                            child: Container(
-                              padding: EdgeInsets.symmetric(horizontal: 5),
-                              margin: EdgeInsets.symmetric(horizontal: 10),
-                              decoration: BoxDecoration(
-                                border: Border(
-                                  bottom: BorderSide(
-                                      color: selectedTab ==
-                                              ItemTypeList[index]
-                                                  ['ItemTypeSeqId']
-                                          ? Colors.amber.shade700
-                                          : Colors.transparent,
-                                      width: 5.0),
-                                ),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(12.0),
-                                child: Text(
-                                  ItemTypeList[index]['Name'],
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                            ),
+                                  );
+                                }),
                           ),
-                        )),
-                  ),
-                  Expanded(
-                      child: MealPager(
-                          mealListByItemType,
-                          widget.arguments['CurrencyCode'],
-                          widget.arguments['imgBaseUrl'],
-                          // widget.arguments['poTypesList']['PreOrderType'],
-                          // widget.arguments['poTypesList']['POTypeConfigSeqId'],
-                          widget.arguments['UserSeqId'],
-                          widget.arguments['poTypesList'],
-                          onCartClick))
-                ])
-          ),
-        )
-      ):NoDataCard(AppSettings.imgAssetNoMeal,
+                          if (mealListBydate.length == 0)
+                            NoDataCard(AppSettings.imgAssetNoMeal,
                                 AppSettings.titleNoMeal, AppSettings.msgNoMeal),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: List.generate(
+                                  ItemTypeList.length,
+                                  (index) => InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        selectedTab = ItemTypeList[index]
+                                            ['ItemTypeSeqId'];
+
+                                        mealListByItemType =
+                                            getMealsListByItemType(
+                                                selectedTab, mealListBydate);
+                                      });
+                                    },
+                                    child: Container(
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 5),
+                                      margin:
+                                          EdgeInsets.symmetric(horizontal: 10),
+                                      decoration: BoxDecoration(
+                                        border: Border(
+                                          bottom: BorderSide(
+                                              color: selectedTab ==
+                                                      ItemTypeList[index]
+                                                          ['ItemTypeSeqId']
+                                                  ? Colors.amber.shade700
+                                                  : Colors.transparent,
+                                              width: 5.0),
+                                        ),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(12.0),
+                                        child: Text(
+                                          ItemTypeList[index]['Name'],
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                )),
+                          ),
+                          Expanded(
+                              child: MealPager(
+                                  mealListByItemType,
+                                  widget.arguments['CurrencyCode'],
+                                  widget.arguments['imgBaseUrl'],
+                                  // widget.arguments['poTypesList']['PreOrderType'],
+                                  // widget.arguments['poTypesList']['POTypeConfigSeqId'],
+                                  widget.arguments['UserSeqId'],
+                                  widget.arguments['poTypesList'],
+                                  onCartClick))
+                        ])),
+              ))
+          : NoDataCard(AppSettings.imgAssetNoMeal, AppSettings.titleNoMeal,
+              AppSettings.msgNoMeal),
       //floatingActionButtonLocation: ExpandableFab.location,
       // floatingActionButton: _getFilterFAB()
     );
@@ -499,6 +513,11 @@ class _MealMenuPageState extends State<MealMenuPage> {
     print("=======");
     mealListBydate = getMealsListByDate(_selectedDate,
         widget.arguments['mealsList'], widget.arguments['mealsCtgryList']);
+
+    if (mealListBydate.isNotEmpty) {
+      selectedTab = ItemTypeList[0]['ItemTypeSeqId'];
+      mealListByItemType = getMealsListByItemType(selectedTab, mealListBydate);
+    }
   }
 }
 

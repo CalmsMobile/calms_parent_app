@@ -116,9 +116,10 @@ class MealOrderListView extends StatelessWidget {
                                 ],
                               ),),
                               Container(
-                                  child: poTypesList[index][0]
+                                  child: (poTypesList[index][0]
                                               ['PreOrderType'] ==
-                                          "Daily"
+                                          "Daily" && poTypesList[index][0]
+                                              ['AllowToView'])
                                       ? InkWell(
                                           onTap: () {
                                             CommonUtil().getMealItemsForUser(
@@ -128,7 +129,7 @@ class MealOrderListView extends StatelessWidget {
                                                 poTypesList[index][0],
                                                 CurrencyCode,
                                                 imgBaseUrl,
-                                                profileData);
+                                                profileData,false);
                                           },
                                           child: Container(
                                             width: 30,
@@ -212,7 +213,12 @@ class MealOrderListView extends StatelessWidget {
                                                     Text(
                                                      /*  "${CurrencyCode} " +
                                                           "${poTypesList[index][i]["Amount"].toStringAsFixed(2)}", */
-                                                      "${CurrencyCode} ${CommonFunctions.getProRatedAmount(poTypesList[index][i]['PackageSeqId'], poTypesList[index][i]['ConfigJSON'], poTypesList[index][i]['PerDayAmt'], poTypesList[index][i]['Amount'], poPackagesList).toStringAsFixed(2)}",
+                                                      /* "${CurrencyCode} ${CommonFunctions.getProRatedAmount(poTypesList[index][i]['PackageSeqId'], poTypesList[index][i]['ConfigJSON'], poTypesList[index][i]['PerDayAmt'], poTypesList[index][i]['Amount'], poPackagesList).toStringAsFixed(2)}",
+                                                      style: TextStyle(
+                                                          fontSize: 16,
+                                                          color: HexColor(AppSettings.colorCurrencyCode),
+                                                          fontWeight:
+                                                              FontWeight.bold), */"${CurrencyCode} ${poTypesList[index][i]['Amount']}",
                                                       style: TextStyle(
                                                           fontSize: 16,
                                                           color: HexColor(AppSettings.colorCurrencyCode),
@@ -225,6 +231,7 @@ class MealOrderListView extends StatelessWidget {
                                                   //color: Colors.amber,
                                                   child: Row(
                                                     children: [
+                                                      if(poTypesList[index][i]['MobMainStatus'] != null && poTypesList[index][i]['MobMainStatus'] == 10)
                                                       InkWell(
                                                         onTap: () {
                                                           CommonUtil()
@@ -238,7 +245,7 @@ class MealOrderListView extends StatelessWidget {
                                                                       index][i],
                                                                   CurrencyCode,
                                                                   imgBaseUrl,
-                                                                  profileData);
+                                                                  profileData,false);
                                                         },
                                                         child: Container(
                                                           width: 30,
@@ -263,7 +270,100 @@ class MealOrderListView extends StatelessWidget {
                                                             ),
                                                           ),
                                                         ),
+                                                      ),                                                     
+                                                      if(poTypesList[index][i]['MobMainStatus'] != null && poTypesList[index][i]['MobMainStatus'] == 20)
+                                                      InkWell(
+                                                        onTap: () {
+                                                          CommonUtil()
+                                                              .getMealItemsForUser(
+                                                                  context,
+                                                                  memberDetails[
+                                                                      'UserSeqId'],
+                                                                  memberDetails[
+                                                                      'RefBranchSeqId'],
+                                                                  poTypesList[
+                                                                      index][i],
+                                                                  CurrencyCode,
+                                                                  imgBaseUrl,
+                                                                  profileData,false);
+                                                           },
+                                                        child: Container(
+                                                          width: 30,
+                                                          height: 30,
+                                                          margin:
+                                                              EdgeInsets.all(
+                                                                  10),
+                                                          child: ClipOval(
+                                                            child: Material(
+                                                              color: Colors
+                                                                  .orange, // Button color
+                                                              child: SizedBox(
+                                                                  width: 30,
+                                                                  height: 30,
+                                                                  child: Icon(
+                                                                    Icons
+                                                                        .paypal_outlined,
+                                                                    color: Colors
+                                                                        .white,
+                                                                    size: 20,
+                                                                  )),
+                                                            ),
+                                                          ),
+                                                        ),
                                                       ),
+                                                      if(poTypesList[index][i]['MobMainStatus'] != null && poTypesList[index][i]['MobMainStatus'] == 30)
+                                                      InkWell(
+                                                        onTap: () {
+                              
+                                                           CommonUtil()
+                                                              .getMealItemsForUser(
+                                                                  context,
+                                                                  memberDetails[
+                                                                      'UserSeqId'],
+                                                                  memberDetails[
+                                                                      'RefBranchSeqId'],
+                                                                  poTypesList[
+                                                                      index][i],
+                                                                  CurrencyCode,
+                                                                  imgBaseUrl,
+                                                                  profileData,poTypesList[index][i]['AllowToChoose']);
+
+                                                           },
+                                                        child: 
+                                                        Container(
+                                                          width: 30,
+                                                          height: 30,
+                                                          margin:
+                                                              EdgeInsets.all(
+                                                                  10),
+                                                          child: 
+                                                          ClipOval(
+                                                            child: Material(
+                                                              color:poTypesList[index][i]['AllowToChoose']? Colors
+                                                                  .green :  Colors
+                                                                  .orange, // Button color
+                                                              child: SizedBox(
+                                                                  width: 30,
+                                                                  height: 30,
+                                                                  child:poTypesList[index][i]['AllowToChoose']? Icon(
+                                                                    Icons
+                                                                        .podcasts_outlined,
+                                                                    color: Colors
+                                                                        .white,
+                                                                    size: 20,
+                                                                  ):Icon(
+                                                                    Icons
+                                                                        .remove_red_eye_outlined,
+                                                                    color: Colors
+                                                                        .white,
+                                                                    size: 20,
+                                                                  )),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      
+                                                      if(poTypesList[index][i]['MobMainStatus'] != null && poTypesList[index][i]['MobMainStatus'] == 10 && poTypesList[index][i]['AllowToBuy'])
                                                       InkWell(
                                                         onTap: () {},
                                                         child: Container(
@@ -337,6 +437,89 @@ class MealOrderListView extends StatelessWidget {
                                                           ),
                                                         ),
                                                       ),
+                                                   
+                                                      if(poTypesList[index][i]['MobMainStatus'] != null && poTypesList[index][i]['MobMainStatus'] == 20)
+                                                      InkWell(
+                                                        onTap: () {},
+                                                        child: Container(
+                                                          width: 30,
+                                                          height: 30,
+                                                          margin:
+                                                              EdgeInsets.only(
+                                                                  right: 10),
+                                                          child: ClipOval(
+                                                            child: Material(
+                                                              color:  Color.fromARGB(255, 89, 126, 156), // Button color
+                                                              child: InkWell(
+                                                                onTap:
+                                                                    () async {
+                                                                  
+                                                                },
+                                                                child: SizedBox(
+                                                                    width: 30,
+                                                                    height: 30,
+                                                                    child:  Icon(
+                                                                            Icons.paypal_outlined,
+                                                                            color:
+                                                                                Colors.white,
+                                                                            size:
+                                                                                20,
+                                                                          )),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                   
+                                                      if(poTypesList[index][i]['MobMainStatus'] != null && poTypesList[index][i]['MobMainStatus'] == 30)
+                                                      InkWell(
+                                                        onTap: () {},
+                                                        child: Container(
+                                                          width: 30,
+                                                          height: 30,
+                                                          margin:
+                                                              EdgeInsets.only(
+                                                                  right: 10),
+                                                          child: ClipOval(
+                                                            child: Material(
+                                                              color: poTypesList[
+                                                                          index][i]
+                                                                      [
+                                                                      'AllowToCancel']
+                                                                  ? Colors.red
+                                                                  : Color.fromARGB(255, 9, 88, 43), // Button color
+                                                              child: InkWell(
+                                                             
+                                                                onTap:
+                                                                    () async {
+                                                                  
+                                                                },
+                                                                child: SizedBox(
+                                                                    width: 30,
+                                                                    height: 30,
+                                                                    child: poTypesList[index][i]
+                                                                            [
+                                                                            'AllowToCancel']
+                                                                        ? Icon(
+                                                                            Icons.cancel_outlined,
+                                                                            color:
+                                                                                Colors.white,
+                                                                            size:
+                                                                                20,
+                                                                          )
+                                                                        : Icon(
+                                                                            Icons.shopping_bag_outlined,
+                                                                            color:
+                                                                                Colors.white,
+                                                                            size:
+                                                                                20,
+                                                                          )),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                   
                                                     ],
                                                   ),
                                                 ),
