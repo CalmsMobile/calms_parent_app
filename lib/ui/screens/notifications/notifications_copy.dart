@@ -7,7 +7,6 @@ import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:provider/provider.dart';
 
 import '../../../common/util/common_funtions.dart';
-import '../home/Home.dart';
 import '/common/alert_dialog.dart';
 import '/common/app_settings.dart';
 import '/common/common_api.dart';
@@ -161,234 +160,171 @@ class _NotificationsState extends State<Notifications> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        home: DefaultTabController(
-            length: 2,
-            child: Scaffold(
-              backgroundColor: Colors.transparent,
-              appBar: AppBar(
-                  bottom: TabBar(
-                    labelColor: Colors.blue,
-                    unselectedLabelColor: Colors.grey,
-                    tabs: [
-                      Tab(
-                        text: "General Notification",
-                      ),
-                      Tab(
-                        text: "Attendance Notification",
-                      )
-                    ],
-                  ),
-                  toolbarHeight: 70,
-                  elevation: 0,
-                  backgroundColor: Colors.transparent,
-                  //titleSpacing: -5,
-                  automaticallyImplyLeading: false,
-                  centerTitle: true,
-                  title: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          Navigator.pushAndRemoveUntil(
+    return Scaffold(
+        body: Scaffold(
+            backgroundColor: Colors.transparent,
+            appBar: getMyAppbar(false, context, appBarTitle, 
+            [
+              // Navigate to the Search Screen
+              Container(
+                height: 30,
+                width: 80,
+                //margin: EdgeInsets.only(right: 10),
+                child: Row(
+                  children: [
+                    Flexible(
+                      child: ListTile(
+                        horizontalTitleGap: 2,
+                        contentPadding: EdgeInsets.zero,
+                        onTap: () => {
+                          openMemberBottomSheet(
                               context,
-                              MaterialPageRoute(
-                                  builder: (context) => HomePage()),
-                              (route) => false);
-                        },
-                        child: Image(
-                          width: 50,
-                          height: 50,
-                          image: AssetImage("assets/images/ico_back.png"),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 10),
-                        child: Text(
-                          appBarTitle,
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      )
-                      // Your widgets here
-                    ],
-                  ),
-                  actions: [
-                    // Navigate to the Search Screen
-                    Container(
-                      height: 30,
-                      width: 80,
-                      //margin: EdgeInsets.only(right: 10),
-                      child: Row(
-                        children: [
-                          Flexible(
-                            child: ListTile(
-                              horizontalTitleGap: 2,
-                              contentPadding: EdgeInsets.zero,
-                              onTap: () => {
-                                openMemberBottomSheet(
-                                    context,
+                              context
+                                  .read<MySettingsListener>()
+                                  .notificationMembersList,
+                              imgBaseUrl, (index) {
+                            Navigator.pop(context);
+                            senderIndex = index;
+                            setState(() {
+                              filterMemberImagePath = null;
+                              if (context
+                                          .read<MySettingsListener>()
+                                          .notificationMembersList[senderIndex]
+                                      ['UserImgPath'] !=
+                                  null) {
+                                filterMemberImagePath = imgBaseUrl +
                                     context
-                                        .read<MySettingsListener>()
-                                        .notificationMembersList,
-                                    imgBaseUrl, (index) {
-                                  Navigator.pop(context);
-                                  senderIndex = index;
-                                  setState(() {
-                                    filterMemberImagePath = null;
-                                    if (context
-                                                .read<MySettingsListener>()
-                                                .notificationMembersList[
-                                            senderIndex]['UserImgPath'] !=
-                                        null) {
-                                      filterMemberImagePath = imgBaseUrl +
-                                          context
-                                                  .read<MySettingsListener>()
-                                                  .notificationMembersList[
-                                              senderIndex]['UserImgPath'];
-                                    }
-                                    String name = context
                                             .read<MySettingsListener>()
                                             .notificationMembersList[
-                                        senderIndex]["Name"];
-                                    appBarTitle = name;
-                                    CommonUtil().getMemberFilterNotification(
-                                        context,
-                                        apiURL,
-                                        startPosition,
-                                        profileData,
-                                        qrData,
-                                        context
-                                                .read<MySettingsListener>()
-                                                .notificationMembersList[
-                                            senderIndex]['UserSeqId']);
-                                  });
-                                })
-                              },
-                              trailing: filterMemberImagePath != null
-                                  ? CircleAvatar(
-                                      backgroundImage:
-                                          NetworkImage(filterMemberImagePath),
-                                    )
-                                  : CircleAvatar(
-                                      backgroundColor: Colors.blue[700],
-                                      child: Text(
-                                        CommonFunctions.getInitials(
-                                            appBarTitle),
-                                        style: TextStyle(
-                                            fontSize: 22.0,
-                                            color: Colors.white,
-                                            letterSpacing: 2.0,
-                                            fontWeight: FontWeight.w900),
-                                      ),
-                                    ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(right: 10),
-                      child: InkWell(
-                          child: Image(
-                              width: 50,
-                              height: 50,
-                              image:
-                                  AssetImage("assets/images/ico_filter.png")),
-                          onTap: () => openFilterCategoryBottomSheet(
+                                        senderIndex]['UserImgPath'];
+                              }
+                              String name = context
+                                  .read<MySettingsListener>()
+                                  .notificationMembersList[senderIndex]["Name"];
+                              appBarTitle = name;
+                              CommonUtil().getMemberFilterNotification(
                                   context,
+                                  apiURL,
+                                  startPosition,
+                                  profileData,
+                                  qrData,
                                   context
-                                      .read<MySettingsListener>()
-                                      .notificationCategoryList, (index) {
-                                Navigator.pop(context);
-                                //senderIndex = index;
-                                setState(() {
-                                  String categoryName = context
                                           .read<MySettingsListener>()
-                                          .notificationCategoryList[index]
-                                      ["category"];
-                                  int id = context
-                                          .read<MySettingsListener>()
-                                          .notificationCategoryList[index]
-                                      ["notificationtype"];
-                                  print("++++++++" + id.toString());
-                                  appBarTitle = categoryName;
-                                  CommonUtil().getCtegoryFilterNotification(
-                                      context,
-                                      apiURL,
-                                      startPosition,
-                                      profileData,
-                                      qrData,
-                                      id);
-                                });
-                              })),
-                    ),
-                  ]),
-              extendBodyBehindAppBar: false,
-              body: TabBarView(
-                children: [
-                  Container(
-                    constraints: BoxConstraints.expand(),
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                      begin: Alignment.topRight,
-                      end: Alignment.bottomLeft,
-                      colors: [
-                        Color.fromARGB(255, 246, 249, 254),
-                        Color.fromARGB(255, 230, 231, 239),
-                      ],
-                    )),
-                    child: SafeArea(
-                      child: ScrollEdgeListener(
-                        // 400 is the default size of the Placeholder widget.
-                        edgeOffset: 100,
-                        listener: () {
-                          debugPrint('listener called');
-                          startPosition = context
-                              .read<MySettingsListener>()
-                              .notificationList
-                              .length;
-                          // CommonUtil().getAllNotification(context, startPosition);
+                                          .notificationMembersList[senderIndex]
+                                      ['UserSeqId']);
+                            });
+                          })
                         },
-                        child: SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              Container(
-                                padding: EdgeInsets.symmetric(horizontal: 10),
-                                child: Column(
-                                  children: [
-                                    Consumer<MySettingsListener>(
-                                        builder: (context, data, settingsDta) {
-                                      return ListView.builder(
-                                          scrollDirection: Axis.vertical,
-                                          physics:
-                                              NeverScrollableScrollPhysics(),
-                                          shrinkWrap: true,
-                                          itemCount:
-                                              data.notificationList.length,
-                                          itemBuilder: (BuildContext context,
-                                              int index1) {
-                                            return _makeCard(
-                                                context,
-                                                index1,
-                                                data.notificationList,
-                                                context
-                                                    .read<MySettingsListener>()
-                                                    .notificationCategoryList);
-                                          });
-                                    }),
-                                  ],
+                        trailing: filterMemberImagePath != null
+                            ? CircleAvatar(
+                                backgroundImage:
+                                    NetworkImage(filterMemberImagePath),
+                              )
+                            : CircleAvatar(
+                                backgroundColor: Colors.blue[700],
+                                child: Text(
+                                  CommonFunctions.getInitials(appBarTitle),
+                                  style: TextStyle(
+                                      fontSize: 22.0,
+                                      color: Colors.white,
+                                      letterSpacing: 2.0,
+                                      fontWeight: FontWeight.w900),
                                 ),
                               ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(right: 10),
+                child: InkWell(
+                    child: Image(
+                        width: 50,
+                        height: 50,
+                        image: AssetImage("assets/images/ico_filter.png")),
+                    onTap: () => openFilterCategoryBottomSheet(
+                            context,
+                            context
+                                .read<MySettingsListener>()
+                                .notificationCategoryList, (index) {
+                          Navigator.pop(context);
+                          //senderIndex = index;
+                          setState(() {
+                            String categoryName = context
+                                .read<MySettingsListener>()
+                                .notificationCategoryList[index]["category"];
+                            int id = context
+                                    .read<MySettingsListener>()
+                                    .notificationCategoryList[index]
+                                ["notificationtype"];
+                            print("++++++++" + id.toString());
+                            appBarTitle = categoryName;
+                            CommonUtil().getCtegoryFilterNotification(context,
+                                apiURL, startPosition, profileData, qrData, id);
+                          });
+                        })),
+              ),
+            ]),
+            extendBodyBehindAppBar: false,
+            body: 
+            Container(
+              constraints: BoxConstraints.expand(),
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                begin: Alignment.topRight,
+                end: Alignment.bottomLeft,
+                colors: [
+                  Color.fromARGB(255, 246, 249, 254),
+                  Color.fromARGB(255, 230, 231, 239),
+                ],
+              )),
+              child: SafeArea(
+                child: ScrollEdgeListener(
+                  // 400 is the default size of the Placeholder widget.
+                  edgeOffset: 100,
+                  listener: () {
+                    debugPrint('listener called');
+                    startPosition = context
+                        .read<MySettingsListener>()
+                        .notificationList
+                        .length;
+                    // CommonUtil().getAllNotification(context, startPosition);
+                  },
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          child: Column(
+                            children: [
+                              Consumer<MySettingsListener>(
+                                  builder: (context, data, settingsDta) {
+                                return ListView.builder(
+                                    scrollDirection: Axis.vertical,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    shrinkWrap: true,
+                                    itemCount: data.notificationList.length,
+                                    itemBuilder:
+                                        (BuildContext context, int index1) {
+                                      return _makeCard(
+                                          context,
+                                          index1,
+                                          data.notificationList,
+                                          context
+                                              .read<MySettingsListener>()
+                                              .notificationCategoryList);
+                                    });
+                              }),
                             ],
                           ),
                         ),
-                      ),
+                      ],
                     ),
-                    /* floatingActionButton: FloatingActionButton(
+                  ),
+                ),
+              ),
+              /* floatingActionButton: FloatingActionButton(
           onPressed: () => openFilterCategoryBottomSheet(context,
               context.read<MySettingsListener>().notificationCategoryList,
               (index) {
@@ -412,11 +348,9 @@ class _NotificationsState extends State<Notifications> {
           child: const Icon(Icons.filter_alt),
         ),
        */
-                  ),
-                  Icon(Icons.directions_transit),
-                ],
-              ),
-            )));
+            )
+            )
+            );
   }
 
   void openFilterCategoryBottomSheet(
