@@ -9,6 +9,7 @@ import 'package:flutter/foundation.dart';
 
 import '../ui/screens/home/Home.dart';
 import '../ui/screens/meals/meal_menu_page.dart';
+import '../ui/screens/notifications/notifications.dart';
 import '../ui/screens/payment/payment_webview_page.dart';
 import '/common/alert_dialog.dart';
 import '/common/app_settings.dart';
@@ -52,23 +53,29 @@ class CommonUtil {
     if (response['Table'][0]['code'] == 10 && response['Table1'][0] != null) {
       print("getEntryToDashboard success");
 
-      context
-          .read<MySettingsListener>()
-          .updateEntryToDashboardFamilyList(response['Table1'], UserSeqId);
-
-      context
-          .read<MySettingsListener>()
-          .updateEntryToDashboardMenuList(response['Table2']);
       if (response['Table3'] != null) {
         MySharedPref().saveData(
             jsonEncode(response['Table3'][0]), AppSettings.Sp_ProfileData);
+            
+        if (response['Table3'][0]['NotifyOnly'])
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => Notifications(NotifyOnly:true,categoryList:response['Table4'])));
+        else {
+          context
+              .read<MySettingsListener>()
+              .updateEntryToDashboardFamilyList(response['Table1'], UserSeqId);
+
+          context
+              .read<MySettingsListener>()
+              .updateEntryToDashboardMenuList(response['Table2']);
+          getDashboard(
+              context,
+              response['Table1'][context.read<MySettingsListener>().familyPos]
+                  ['UserSeqId'],
+              response['Table1'][context.read<MySettingsListener>().familyPos]
+                  ['RefBranchSeqId']);
+        }
       }
-      getDashboard(
-          context,
-          response['Table1'][context.read<MySettingsListener>().familyPos]
-              ['UserSeqId'],
-          response['Table1'][context.read<MySettingsListener>().familyPos]
-              ['RefBranchSeqId']);
     }
   }
 
@@ -643,8 +650,9 @@ class CommonUtil {
       var payLoad = {
         "Authorize": {"AuMAppDevSeqId": qrJson['MAppSeqId'], "AuDeviceUID": ""},
         "FamilyId": profileData_['FamilyId'],
+        "RefUserSeqId": profileData_['RefUserSeqId'],
         "Offset": 0,
-        "Rows": 100
+        "Rows": 100,
       };
       //debugger();
       print(payLoad.toString());
@@ -696,7 +704,7 @@ class CommonUtil {
   }
 
   Future<void> getCtegoryFilterNotification(BuildContext context, String apiURL,
-      int startPosition, profileData, decryptdata, int categoryId) async {
+      int startPosition, profileData, decryptdata, int categoryId, String Date) async {
     if (profileData != "") {
       var profileData_ = jsonDecode(profileData);
       print(profileData_);
@@ -705,11 +713,12 @@ class CommonUtil {
 
       var payLoad = {
         "Authorize": {"AuMAppDevSeqId": qrJson['MAppSeqId'], "AuDeviceUID": ""},
-        "RefUserSeqId": 0,
+        "RefUserSeqId": profileData_['RefUserSeqId'],
         "FamilyId": familyId,
         "NotificationType": categoryId,
         "Offset": 0,
-        "Rows": 100
+        "Rows": 100,
+        "Date":Date
       };
       //debugger();
       print(payLoad.toString());

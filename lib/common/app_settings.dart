@@ -41,6 +41,7 @@ class AppSettings {
   static String GetNotificationListWithFilter =
       'ParentApp/GetNotificationListWithFilter';
   static String RemovePushNotification = 'ParentApp/RemovePushNotification';
+  static String UpdateReadNotificationStatus = 'ParentApp/UpdateReadNotificationStatus';
   static String AppSignIn = 'parentapp/AppSignIn';
   static String ReSendVerifyEmail = 'parentapp/ReSendVerifyEmail';
   static String EntryToDashboard = 'parentapp/EntryToDashboard';

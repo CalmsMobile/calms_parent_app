@@ -648,7 +648,7 @@ class MySettingsListener with ChangeNotifier {
     notifyListeners();
   }
 
-  void removeNotification(pnHistory) {
+   removeNotification(pnHistory) {
     _notificationList.removeWhere((item) => item["PNHistory"] == pnHistory);
     notifyListeners();
   }

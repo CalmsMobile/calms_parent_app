@@ -213,7 +213,7 @@ class RestApiProvider {
 
     ProgressDialog _progressDialog = ProgressDialog(context: context);
     if (showProgress) {
-      _progressDialog.show(max: 100, msg: 'Loading...please wait...');
+      _progressDialog.show(max: 100, msg: 'Loading...');
     }
     bool isConnected = false;
     var connectivityResult = await (Connectivity().checkConnectivity());

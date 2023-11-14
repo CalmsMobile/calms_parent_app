@@ -310,7 +310,7 @@ class MyCustomAlertDialog {
       },
     );
   }
-
+ 
   void showCustomInputAlert(BuildContext context, String title,
       TextEditingController searchController, _okPress, _cancelPress) {
     Alert(
@@ -367,7 +367,7 @@ class MyCustomAlertDialog {
         ]).show();
   }
 
-  void showToast(BuildContext context, String message) {
+  void showToast(context, String message) {
     final scaffold = ScaffoldMessenger.of(context);
     scaffold.showSnackBar(
       SnackBar(

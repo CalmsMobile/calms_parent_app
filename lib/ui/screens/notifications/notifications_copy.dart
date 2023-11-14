@@ -261,7 +261,7 @@ class _NotificationsState extends State<Notifications> {
                             print("++++++++" + id.toString());
                             appBarTitle = categoryName;
                             CommonUtil().getCtegoryFilterNotification(context,
-                                apiURL, startPosition, profileData, qrData, id);
+                                apiURL, startPosition, profileData, qrData, id,"");
                           });
                         })),
               ),
