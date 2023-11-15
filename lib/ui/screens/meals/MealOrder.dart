@@ -110,7 +110,7 @@ class _MealOrderState extends State<MealOrder> {
                               backgroundColor: Colors.blue[700],
                               child: Text(
                                 CommonFunctions.getInitials(
-                                    familyList[senderIndex]['Name']),
+                                    familyList[senderIndex]['Name']).toUpperCase(),
                                 style: TextStyle(
                                     fontSize: 22.0,
                                     color: Colors.white,

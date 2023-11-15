@@ -334,7 +334,7 @@ class _CartPageState extends State<CartPage> {
                                                                               [
                                                                               0]
                                                                           [
-                                                                          'Name']),
+                                                                          'Name']).toUpperCase(),
                                                                       style: TextStyle(
                                                                           fontSize:
                                                                               22.0,

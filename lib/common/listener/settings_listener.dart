@@ -629,10 +629,10 @@ class MySettingsListener with ChangeNotifier {
     /* } else {
       _notificationList.addAll(notiListClone);
     } */
-    if (Type != "filter") {
+    //if (Type != "filter") {
       if (familyList != null) _notificationMembersList = familyList;
-      if (categoryList != null) _notificationCategoryList = categoryList;
-    }
+      //if (categoryList != null) _notificationCategoryList = categoryList;
+    //}
 
     notifyListeners();
   }

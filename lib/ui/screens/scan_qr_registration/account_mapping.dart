@@ -129,7 +129,7 @@ class _AccountMappingState extends State<AccountMapping> {
                                     CommonFunctions.getInitials(widget
                                         .dataResponseModel['BranchName']
                                         .toString()
-                                        .toUpperCase()),
+                                        .toUpperCase()).toUpperCase(),
                                     style: TextStyle(
                                         fontSize: 22.0,
                                         color: Colors.white,
@@ -174,7 +174,7 @@ class _AccountMappingState extends State<AccountMapping> {
                                               CommonFunctions.getInitials(widget
                                                   .dataResponseModel['Name']
                                                   .toString()
-                                                  .toUpperCase()),
+                                                  .toUpperCase()).toUpperCase(),
                                               style: TextStyle(
                                                   fontSize: 22.0,
                                                   color: Colors.white,

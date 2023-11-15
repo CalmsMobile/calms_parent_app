@@ -211,7 +211,7 @@ class _NotificationsState extends State<Notifications> {
                                   context
                                           .read<MySettingsListener>()
                                           .notificationMembersList[senderIndex]
-                                      ['UserSeqId']);
+                                      ['UserSeqId'],"","Date");
                             });
                           })
                         },
@@ -223,7 +223,7 @@ class _NotificationsState extends State<Notifications> {
                             : CircleAvatar(
                                 backgroundColor: Colors.blue[700],
                                 child: Text(
-                                  CommonFunctions.getInitials(appBarTitle),
+                                  CommonFunctions.getInitials(appBarTitle).toUpperCase(),
                                   style: TextStyle(
                                       fontSize: 22.0,
                                       color: Colors.white,
@@ -261,7 +261,7 @@ class _NotificationsState extends State<Notifications> {
                             print("++++++++" + id.toString());
                             appBarTitle = categoryName;
                             CommonUtil().getCtegoryFilterNotification(context,
-                                apiURL, startPosition, profileData, qrData, id,"");
+                                apiURL, startPosition, profileData, qrData, id,"","StudentSeqId");
                           });
                         })),
               ),

@@ -60,7 +60,7 @@ class TopupMemberListView extends StatelessWidget {
                                             backgroundColor: Colors.blue[700],
                                             child: Text(
                                               CommonFunctions.getInitials(
-                                                  membersList[index]['Name']),
+                                                  membersList[index]['Name']).toUpperCase(),
                                               style: TextStyle(
                                                   fontSize: 22.0,
                                                   color: Colors.white,

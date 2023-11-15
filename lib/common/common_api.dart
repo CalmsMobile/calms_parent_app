@@ -56,10 +56,13 @@ class CommonUtil {
       if (response['Table3'] != null) {
         MySharedPref().saveData(
             jsonEncode(response['Table3'][0]), AppSettings.Sp_ProfileData);
-            
+
         if (response['Table3'][0]['NotifyOnly'])
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => Notifications(NotifyOnly:true,categoryList:response['Table4'])));
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => Notifications(
+                      NotifyOnly: true, categoryList: response['Table4'])));
         else {
           context
               .read<MySettingsListener>()
@@ -670,22 +673,34 @@ class CommonUtil {
     }
   }
 
-  Future<void> getMemberFilterNotification(BuildContext context, String apiURL,
-      int startPosition, profileData, decryptdata, userId) async {
+  Future<void> getMemberFilterNotification(
+      BuildContext context,
+      String apiURL,
+      int startPosition,
+      profileData,
+      decryptdata,
+      userId,
+      notificationtype,
+      Date) async {
     if (profileData != "") {
       var profileData_ = jsonDecode(profileData);
       print(profileData_);
+      var StudentSeqId = userId;
+      if (profileData_['RefUserSeqId'] == userId) StudentSeqId = "";
+
       Map<String, dynamic> qrJson = jsonDecode(decryptdata);
       String familyId = profileData_['FamilyId'];
       //if (userId == 0) {familyId = profileData_['FamilyId'];}
 
       var payLoad = {
         "Authorize": {"AuMAppDevSeqId": qrJson['MAppSeqId'], "AuDeviceUID": ""},
-        "RefUserSeqId": userId,
+        "RefUserSeqId": profileData_['RefUserSeqId'],
         "FamilyId": familyId,
-        "NotificationType": "",
+        "NotificationType": notificationtype,
         "Offset": 0,
-        "Rows": 100
+        "Rows": 100,
+        "StudentSeqId": StudentSeqId,
+        "Date": Date
       };
       //debugger();
       print(payLoad.toString());
@@ -694,7 +709,7 @@ class CommonUtil {
           qrJson["ApiUrl"],
           AppSettings.GetNotificationListWithFilter,
           context,
-          false,
+          true,
           false);
       res
           .then((value) =>
@@ -703,11 +718,20 @@ class CommonUtil {
     }
   }
 
-  Future<void> getCtegoryFilterNotification(BuildContext context, String apiURL,
-      int startPosition, profileData, decryptdata, int categoryId, String Date) async {
+  Future<void> getCtegoryFilterNotification(
+      BuildContext context,
+      String apiURL,
+      int startPosition,
+      profileData,
+      decryptdata,
+      int categoryId,
+      String Date,
+      StudentSeqId) async {
     if (profileData != "") {
       var profileData_ = jsonDecode(profileData);
       print(profileData_);
+      if (profileData_['RefUserSeqId'].toString() == StudentSeqId.toString())
+        StudentSeqId = "";
       Map<String, dynamic> qrJson = jsonDecode(decryptdata);
       String familyId = profileData_['FamilyId'];
 
@@ -718,7 +742,8 @@ class CommonUtil {
         "NotificationType": categoryId,
         "Offset": 0,
         "Rows": 100,
-        "Date":Date
+        "StudentSeqId": StudentSeqId,
+        "Date": Date
       };
       //debugger();
       print(payLoad.toString());
@@ -727,7 +752,7 @@ class CommonUtil {
           qrJson["ApiUrl"],
           AppSettings.GetNotificationListWithFilter,
           context,
-          false,
+          true,
           false);
       res
           .then((value) =>
@@ -745,16 +770,12 @@ class CommonUtil {
       }, null, "Ok", "");
     } else {
       print("response===" + response['Table2'].toString());
-      if (Type == "filter") {
+      /* if (Type == "filter") {
         response['Table3'] = [];
         response['Table4'] = [];
-      }
+      } */
       context.read<MySettingsListener>().updateNotifiactionList(
-          Type,
-          response['Table2'],
-          startPosition,
-          response['Table3'],
-          response['Table4']);
+          Type, response['Table2'], startPosition, response['Table3'], []);
     }
   }
 

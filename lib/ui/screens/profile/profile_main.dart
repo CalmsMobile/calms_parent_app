@@ -69,7 +69,7 @@ class _ProfileMainState extends State<ProfileMain> {
                                 radius: 72,
                                 child: Text(
                                   CommonFunctions.getInitials(
-                                      profileData['Name']),
+                                      profileData['Name']).toUpperCase(),
                                   style: TextStyle(
                                       fontSize: 32.0,
                                       color: Colors.white,

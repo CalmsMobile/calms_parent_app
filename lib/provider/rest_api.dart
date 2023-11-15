@@ -207,13 +207,13 @@ class RestApiProvider {
     }
   }
 
-  Future<Map<String, dynamic>> postData(
-      data, apiURL, endPoint, context, showProgress, allowAuth) async {
+  Future<Map<String, dynamic>> postData(data, apiURL, endPoint,
+      BuildContext context, showProgress, allowAuth) async {
     apiURL = apiURL + endPoint;
 
-    ProgressDialog _progressDialog = ProgressDialog(context: context);
     if (showProgress) {
-      _progressDialog.show(max: 100, msg: 'Loading...');
+      //_progressDialog.show(max: 100, msg: 'Loading...please wait...');
+      Dialogs.showLoadingDialog(context);
     }
     bool isConnected = false;
     var connectivityResult = await (Connectivity().checkConnectivity());
@@ -236,7 +236,8 @@ class RestApiProvider {
         // If the server did return a 201 CREATED response,
         // then parse the JSON.
         if (showProgress) {
-          _progressDialog.close();
+          //_progressDialog.close();
+          Navigator.of(context, rootNavigator: true).pop();
         }
         //var jsonData = json.decode(response.body);
         //Map<String, dynamic> map = jsonDecode(jsonData[0]['Data']);
@@ -267,20 +268,22 @@ class RestApiProvider {
         // If the server did not return a 201 CREATED response,
         // then throw an exception.
         if (showProgress) {
-          _progressDialog.close();
+          //_progressDialog.close();
+          Navigator.of(context, rootNavigator: true).pop();
         }
         throw Exception('Something went wrong.');
       }
     } else {
       if (showProgress) {
-        _progressDialog.close();
+        //_progressDialog.close();
+        Navigator.of(context, rootNavigator: true).pop();
       }
       throw Exception('Failed to connect network.');
     }
   }
 
-  Future<Map<String, dynamic>> postNewData(
-      data, apiURL, endPoint, context, showProgress, allowAuth) async {
+  Future<Map<String, dynamic>> postNewData(data, apiURL, endPoint,
+      BuildContext context, showProgress, allowAuth) async {
     apiURL = apiURL + endPoint;
     if (endPoint == AppSettings.GetQRInfo) {
       data = json.encode(data);
@@ -291,9 +294,9 @@ class RestApiProvider {
 
       data = {"Data": data};
     }
-    ProgressDialog _progressDialog = ProgressDialog(context: context);
     if (showProgress) {
-      _progressDialog.show(max: 100, msg: 'Loading...please wait...');
+      //_progressDialog.show(max: 100, msg: 'Loading...please wait...');
+      Dialogs.showLoadingDialog(context);
     }
     bool isConnected = false;
     var connectivityResult = await (Connectivity().checkConnectivity());
@@ -316,7 +319,8 @@ class RestApiProvider {
         // If the server did return a 201 CREATED response,
         // then parse the JSON.
         if (showProgress) {
-          _progressDialog.close();
+          //_progressDialog.close();
+          Navigator.of(context, rootNavigator: true).pop();
         }
         //var jsonData = json.decode(response.body);
         //Map<String, dynamic> map = jsonDecode(jsonData[0]['Data']);
@@ -355,20 +359,22 @@ class RestApiProvider {
         // If the server did not return a 201 CREATED response,
         // then throw an exception.
         if (showProgress) {
-          _progressDialog.close();
+          //_progressDialog.close();
+          Navigator.of(context, rootNavigator: true).pop();
         }
         throw Exception('Something went wrong.');
       }
     } else {
       if (showProgress) {
-        _progressDialog.close();
+        //_progressDialog.close();
+        Navigator.of(context, rootNavigator: true).pop();
       }
       throw Exception('Failed to connect network.');
     }
   }
 
   Future<Map<String, dynamic>> authorizedPostRequest(
-      ParamData, endPoint,BuildContext context, showProgress) async {
+      ParamData, endPoint, BuildContext context, showProgress) async {
     print(ParamData);
     String apiURL = await MySharedPref().getData(AppSettings.Sp_Api_Url);
     String secureKey = await MySharedPref().getData(AppSettings.Sp_SecureKey);
@@ -382,13 +388,13 @@ class RestApiProvider {
         .encryptMyData(json.encode(payload));
     var data = {"Data": encData};
     debugPrint(data.toString());
-   // ProgressDialog _progressDialog = ProgressDialog(context: context);
-   final GlobalKey<State> _keyLoader = new GlobalKey<State>();
-   
-     if (showProgress) {
+    // ProgressDialog _progressDialog = ProgressDialog(context: context);
+    final GlobalKey<State> _keyLoader = new GlobalKey<State>();
+
+    if (showProgress) {
       //_progressDialog.show(max: 100, msg: 'Loading...please wait...');
-       Dialogs.showLoadingDialog(context);
-    } 
+      Dialogs.showLoadingDialog(context);
+    }
     bool isConnected = false;
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.mobile) {
@@ -411,7 +417,7 @@ class RestApiProvider {
         // then parse the JSON.
         if (showProgress) {
           //_progressDialog.close();
-          Navigator.of(context,rootNavigator: true).pop();
+          Navigator.of(context, rootNavigator: true).pop();
         }
 
         Map<String, dynamic> res = jsonDecode(response.body);
@@ -424,8 +430,10 @@ class RestApiProvider {
                 tableObj['Code'] == 10 ||
                 tableObj['code'] == 50 ||
                 tableObj['code'] == 20 ||
-                endPoint==AppSettings.MakeTransaction && tableObj['code'] == "S" ||
-                endPoint==AppSettings.GetAfterTopupPaymentSummary && tableObj['OrderId'] != null) {
+                endPoint == AppSettings.MakeTransaction &&
+                    tableObj['code'] == "S" ||
+                endPoint == AppSettings.GetAfterTopupPaymentSummary &&
+                    tableObj['OrderId'] != null) {
               return Future<Map<String, dynamic>>.value(res['Data']);
             } else {
               print("failed ${tableObj['code'] || tableObj['Code']} ");
@@ -445,15 +453,15 @@ class RestApiProvider {
         // If the server did not return a 201 CREATED response,
         // then throw an exception.
         if (showProgress) {
-         // _progressDialog.close();
-         Navigator.of(context,rootNavigator: true).pop();
+          // _progressDialog.close();
+          Navigator.of(context, rootNavigator: true).pop();
         }
         throw Exception('Something went wrong.');
       }
     } else {
       if (showProgress) {
         //_progressDialog.close();
-        Navigator.of(context,rootNavigator: true).pop();
+        Navigator.of(context, rootNavigator: true).pop();
       }
       throw Exception('Failed to connect network.');
     }
@@ -463,7 +471,7 @@ class RestApiProvider {
     MyCustomAlertDialog()
         .showCustomAlert(context, "Notification", message, false, () {
       Navigator.pop(context);
-    }, null,"Ok","");
+    }, null, "Ok", "");
   }
 
   Future<void> initPlatformState() async {

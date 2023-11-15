@@ -197,7 +197,7 @@ void openMemberBottomSheet(
                                 backgroundColor: Colors.blue[700],
                                 child: Text(
                                   CommonFunctions.getInitials(
-                                      familyList[index]['Name']),
+                                      familyList[index]['Name']).toUpperCase(),
                                   style: TextStyle(
                                       fontSize: 22.0,
                                       color: Colors.white,

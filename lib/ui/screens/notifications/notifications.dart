@@ -52,12 +52,16 @@ class _NotificationsState extends State<Notifications>
   late Map<String, dynamic> qrJson;
   late String apiURL;
   late String imgBaseUrl;
-  var appBarTitle = "All Notifications";
+  var filterTitle = "All Notifications";
   int selectedtypeIndex = 0;
-  bool filtered = false;
+  bool filteredDate = false;
+  String filterSelectedDate = "";
+  bool filteredMember = false;
   var filterMemberImagePath = null;
   late TabController _tabController;
   late DateTime date;
+
+  String selectedUserId = "";
 
   @override
   void initState() {
@@ -65,6 +69,26 @@ class _NotificationsState extends State<Notifications>
     initValues();
     _tabController =
         new TabController(vsync: this, length: widget.categoryList.length);
+    _tabController.addListener(() {
+      print("_tabController " + _tabController.indexIsChanging.toString());
+      if (!_tabController.indexIsChanging)
+        setState(() {
+          filterTitle = "All Notifications";
+          filteredDate = false;
+          filterSelectedDate = "";
+          selectedUserId = "";
+          filterMemberImagePath = null;
+          String categoryName =
+              widget.categoryList[_tabController.index]["category"];
+          int id =
+              widget.categoryList[_tabController.index]["notificationtype"];
+          print("++++++++" + id.toString());
+          //appBarTitle = categoryName;
+          selectedtypeIndex = _tabController.index;
+          CommonUtil().getCtegoryFilterNotification(
+              context, apiURL, startPosition, profileData, qrData, id, "", "");
+        });
+    });
     //familyList = JsonResponses.familyList;
     //NotificationCategoryList = JsonResponses.notificationCategoryList;
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
@@ -94,7 +118,7 @@ class _NotificationsState extends State<Notifications>
       //var profileData = jsonDecode(profileData);
       //profileData_ = jsonDecode(profileData["Table1"][0]["SettingDetail"]);
       //print(profileData_);
-
+      profileData_ = jsonDecode(profileData);
       qrData = await MySharedPref().getData(AppSettings.Sp_QrCodeData);
       qrJson = jsonDecode(qrData);
       apiURL = qrJson['ApiUrl'];
@@ -107,8 +131,7 @@ class _NotificationsState extends State<Notifications>
         print(studentImageURL);
       });
 
-      CommonUtil().getAllNotification(
-          context, apiURL, startPosition, profileData, qrData);
+      //CommonUtil().getAllNotification(context, apiURL, startPosition, profileData, qrData);
 
       print("++++++++" + selectedtypeIndex.toString());
       //appBarTitle = categoryName;
@@ -120,6 +143,7 @@ class _NotificationsState extends State<Notifications>
           profileData,
           qrData,
           widget.categoryList[selectedtypeIndex]["notificationtype"],
+          "",
           "");
     }
   }
@@ -138,7 +162,7 @@ class _NotificationsState extends State<Notifications>
         .onError((error, stackTrace) => {handleApiError(error)});
   }
 
-  handleApiResponse(response, pnHistory,BuildContext context) {
+  handleApiResponse(response, pnHistory, BuildContext context) {
     if (response.containsKey("Code") && response['Code'] > 10) {
       print("Error in response");
       MyCustomAlertDialog().showCustomAlert(
@@ -147,7 +171,8 @@ class _NotificationsState extends State<Notifications>
       }, null, "Ok", "");
     } else {
       print("removeNotification");
-      MyCustomAlertDialog().showToast(context, "Notification deleted successfully");
+      MyCustomAlertDialog()
+          .showToast(context, "Notification deleted successfully");
       context.read<MySettingsListener>().removeNotification(pnHistory);
     }
   }
@@ -191,60 +216,92 @@ class _NotificationsState extends State<Notifications>
           length: widget.categoryList.length,
           child: Scaffold(
             floatingActionButton: FloatingActionButton(
-              onPressed: () => {
-                DatePicker.showDatePicker(context,
-                    showTitleActions: true,
-                    minTime: DateTime(2000, 1, 1),
-                    maxTime: DateTime.now(),
-                    theme: DatePickerTheme(
-                        headerColor: Theme.of(context).primaryColor,
-                        backgroundColor: Colors.white,
-                        itemStyle: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18),
-                        cancelStyle:
-                            TextStyle(color: Colors.white, fontSize: 16),
-                        doneStyle:
-                            TextStyle(color: Colors.white, fontSize: 16)),
-                    onChanged: (date) {}, onConfirm: (date) {
-                  print('confirm $date');
-                  setState(() {
-                    appBarTitle = DateFormat("dd-MM-yyyy").format(date);
-                    filtered = true;
-                  });
+              onPressed: () => filteredDate
+                  ? setState(() {
+                      CommonUtil().getCtegoryFilterNotification(
+                          context,
+                          apiURL,
+                          startPosition,
+                          profileData,
+                          qrData,
+                          widget.categoryList[selectedtypeIndex]
+                              ['notificationtype'],
+                          "",
+                          selectedUserId);
+                      //filterTitle = "All Notifications";
+                      filteredDate = false;
+                      filterSelectedDate = "";
+                    })
+                  : DatePicker.showDatePicker(context,
+                      showTitleActions: true,
+                      minTime: DateTime(2000, 1, 1),
+                      maxTime: DateTime.now(),
+                      theme: DatePickerTheme(
+                          headerColor: Theme.of(context).primaryColor,
+                          backgroundColor: Colors.white,
+                          itemStyle: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18),
+                          cancelStyle:
+                              TextStyle(color: Colors.white, fontSize: 16),
+                          doneStyle:
+                              TextStyle(color: Colors.white, fontSize: 16)),
+                      onChanged: (date) {}, onConfirm: (date) {
+                      print('confirm $date');
+                      setState(() {
+                        //filterTitle = DateFormat("dd-MM-yyyy").format(date);
+                        filteredDate = true;
+                        filterSelectedDate =
+                            DateFormat("yyyy-MM-dd").format(date);
+                      });
 
-                  CommonUtil().getCtegoryFilterNotification(
-                      context,
-                      apiURL,
-                      startPosition,
-                      profileData,
-                      qrData,
-                      widget.categoryList[selectedtypeIndex]
-                          ['notificationtype'],
-                      DateFormat("yyyy-MM-dd").format(date));
-                }, currentTime: DateTime.now(), locale: LocaleType.en)
-              },
-              child: const Icon(Icons.calendar_month),
+                      CommonUtil().getCtegoryFilterNotification(
+                          context,
+                          apiURL,
+                          startPosition,
+                          profileData,
+                          qrData,
+                          widget.categoryList[selectedtypeIndex]
+                              ['notificationtype'],
+                          DateFormat("yyyy-MM-dd").format(date),
+                          selectedUserId);
+                    }, currentTime: DateTime.now(), locale: LocaleType.en),
+              backgroundColor: filteredDate ? Colors.red : Colors.blue[900],
+              child: filteredDate
+                  ? Icon(Icons.close_sharp)
+                  : Icon(Icons.calendar_month),
             ),
             backgroundColor: Colors.white,
             appBar: AppBar(
-              
                 bottom: TabBar(
-
                     onTap: (value) {
-                      setState(() {
-                        appBarTitle = "All Notifications";
-                        filtered = false;
-                        String categoryName =
-                            widget.categoryList[value]["category"];
-                        int id = widget.categoryList[value]["notificationtype"];
-                        print("++++++++" + id.toString());
-                        //appBarTitle = categoryName;
-                        selectedtypeIndex = value;
-                        CommonUtil().getCtegoryFilterNotification(context,
-                            apiURL, startPosition, profileData, qrData, id, "");
-                      });
+                      print("_tabController ontap" +
+                          _tabController.indexIsChanging.toString());
+                      if (!_tabController.indexIsChanging)
+                        setState(() {
+                          filterTitle = "All Notifications";
+                          filteredDate = false;
+                          filterSelectedDate = "";
+                          selectedUserId = "";
+                          filterMemberImagePath = null;
+                          String categoryName = widget
+                              .categoryList[_tabController.index]["category"];
+                          int id = widget.categoryList[_tabController.index]
+                              ["notificationtype"];
+                          print("++++++++" + id.toString());
+                          //appBarTitle = categoryName;
+                          selectedtypeIndex = _tabController.index;
+                          CommonUtil().getCtegoryFilterNotification(
+                              context,
+                              apiURL,
+                              startPosition,
+                              profileData,
+                              qrData,
+                              id,
+                              "",
+                              "");
+                        });
                     },
                     labelColor: Colors.blue,
                     unselectedLabelColor: Colors.grey,
@@ -259,6 +316,30 @@ class _NotificationsState extends State<Notifications>
                 //titleSpacing: -5,
                 automaticallyImplyLeading: false,
                 centerTitle: true,
+                leading: widget.NotifyOnly
+                    ? Padding(
+                        padding: EdgeInsets.only(left: 15, top: 5, bottom: 5),
+                        child: profileData_['BranchImg'] != null
+                            ? CircleAvatar(
+                                backgroundImage: MemoryImage(
+                                    CommonFunctions.getUnit8bytesFromB64(
+                                        profileData_["BranchImg"])),
+                              )
+                            : CircleAvatar(
+                                backgroundColor: Colors.blue[700],
+                                child: Text(
+                                  CommonFunctions.getInitials(
+                                          profileData_['BranchName'])
+                                      .toUpperCase(),
+                                  style: TextStyle(
+                                      fontSize: 22.0,
+                                      color: Colors.white,
+                                      letterSpacing: 2.0,
+                                      fontWeight: FontWeight.w900),
+                                ),
+                              ),
+                      )
+                    : SizedBox(),
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -278,21 +359,47 @@ class _NotificationsState extends State<Notifications>
                           image: AssetImage("assets/images/ico_back.png"),
                         ),
                       ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 10),
-                      child: Text(
-                        appBarTitle,
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    )
+                    Flexible(
+                        child: Container(
+                            //margin: EdgeInsets.only(left: 10),
+                            child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          profileData_['BranchName'],
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              filterTitle,
+                              style: TextStyle(
+                                  color: Colors.blue[900],
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              "${filterSelectedDate != "" ? " | " + DateFormat("dd-MM-yyyy").format(DateTime.parse(filterSelectedDate)) : ""}",
+                              style: TextStyle(
+                                  color: Colors.blue[900],
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        )
+                      ],
+                    )))
                     // Your widgets here
                   ],
                 ),
                 actions: [
-                  if (filtered)
+                  /* if (filtered)
                     IconButton(
                       icon: Icon(Icons.close_sharp, color: Colors.black),
                       onPressed: () {
@@ -309,19 +416,20 @@ class _NotificationsState extends State<Notifications>
                             qrData,
                             widget.categoryList[selectedtypeIndex]
                                 ['notificationtype'],
+                            "",
                             "");
                       },
                     ),
-                  // Navigate to the Search Screen
-                  /* Container(
+                     */
+                  Container(
                     height: 30,
-                    width: 80,
-                    //margin: EdgeInsets.only(right: 10),
+                    width: 50,
+                    margin: EdgeInsets.only(right: 10),
                     child: Row(
                       children: [
                         Flexible(
                           child: ListTile(
-                            horizontalTitleGap: 2,
+                            horizontalTitleGap: 0,
                             contentPadding: EdgeInsets.zero,
                             onTap: () => {
                               openMemberBottomSheet(
@@ -349,7 +457,13 @@ class _NotificationsState extends State<Notifications>
                                           .read<MySettingsListener>()
                                           .notificationMembersList[senderIndex]
                                       ["Name"];
-                                  appBarTitle = name;
+                                  filterTitle = name;
+                                  filteredMember = true;
+                                  selectedUserId = context
+                                      .read<MySettingsListener>()
+                                      .notificationMembersList[senderIndex]
+                                          ["UserSeqId"]
+                                      .toString();
                                   CommonUtil().getMemberFilterNotification(
                                       context,
                                       apiURL,
@@ -359,7 +473,10 @@ class _NotificationsState extends State<Notifications>
                                       context
                                               .read<MySettingsListener>()
                                               .notificationMembersList[
-                                          senderIndex]['UserSeqId']);
+                                          senderIndex]['UserSeqId'],
+                                      widget.categoryList[selectedtypeIndex]
+                                          ['notificationtype'],
+                                      filterSelectedDate);
                                 });
                               })
                             },
@@ -371,7 +488,8 @@ class _NotificationsState extends State<Notifications>
                                 : CircleAvatar(
                                     backgroundColor: Colors.blue[700],
                                     child: Text(
-                                      CommonFunctions.getInitials(appBarTitle),
+                                      CommonFunctions.getInitials(filterTitle)
+                                          .toUpperCase(),
                                       style: TextStyle(
                                           fontSize: 22.0,
                                           color: Colors.white,
@@ -384,6 +502,8 @@ class _NotificationsState extends State<Notifications>
                       ],
                     ),
                   ),
+                  // Navigate to the Search Screen
+                  /* 
                   Container(
                     margin: EdgeInsets.only(right: 10),
                     child: InkWell(
@@ -423,7 +543,7 @@ class _NotificationsState extends State<Notifications>
                  */
                 ]),
             extendBodyBehindAppBar: false,
-            body: new TabBarView(
+            body: TabBarView(
               controller: _tabController,
               children: List.generate(
                 widget.categoryList.length,
@@ -541,16 +661,16 @@ class _NotificationsState extends State<Notifications>
         });
   }
 
+  String getCategoryById(NotificationType) {
+    List data = widget.categoryList
+        .where((element) => element['notificationtype'] == NotificationType)
+        .toList();
+    //print(data[0]['category']);
+    return data[0]['category'];
+  }
+
   Widget _makeCard(
       context, int index1, List notificationList, List categoryList) {
-    String getCategoryById(NotificationType) {
-      List data = categoryList
-          .where((element) => element['notificationtype'] == NotificationType)
-          .toList();
-      //print(data[0]['category']);
-      return data[0]['category'];
-    }
-
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -583,6 +703,7 @@ class _NotificationsState extends State<Notifications>
             direction: DismissDirection.endToStart,
             child: Container(
               // color: HexColor("#eaedf6"),
+              margin: EdgeInsets.only(top: 15),
               child: InkWell(
                 onTap: () {
                   print("object");
@@ -597,6 +718,11 @@ class _NotificationsState extends State<Notifications>
                       'imgBaseUrl': imgBaseUrl
                     },
                   ); */
+                  /* print(index1);
+                  print(notificationList[index1]);
+                  print(widget.categoryList);
+                  print(imgBaseUrl);
+                  print(apiURL); */
                   Navigator.push(
                     context,
                     MaterialPageRoute(
