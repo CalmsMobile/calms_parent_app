@@ -630,10 +630,15 @@ class MySettingsListener with ChangeNotifier {
       _notificationList.addAll(notiListClone);
     } */
     //if (Type != "filter") {
-      if (familyList != null) _notificationMembersList = familyList;
-      //if (categoryList != null) _notificationCategoryList = categoryList;
+    if (familyList != null) _notificationMembersList = familyList;
+    //if (categoryList != null) _notificationCategoryList = categoryList;
     //}
 
+    notifyListeners();
+  }
+
+  clearNotificationList() {
+    _notificationList.clear();
     notifyListeners();
   }
 
@@ -648,7 +653,7 @@ class MySettingsListener with ChangeNotifier {
     notifyListeners();
   }
 
-   removeNotification(pnHistory) {
+  removeNotification(pnHistory) {
     _notificationList.removeWhere((item) => item["PNHistory"] == pnHistory);
     notifyListeners();
   }

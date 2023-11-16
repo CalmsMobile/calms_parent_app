@@ -478,8 +478,14 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
-    //enterFullScreen(FullScreenMode.EMERSIVE);
+    
+    //enterFullScreen(FullScreenMode.EMERSIVE_STICKY);
+   SystemChrome.setEnabledSystemUIMode(
+  SystemUiMode.manual,
+  overlays: [
+    SystemUiOverlay.top, // Shows Status bar and hides Navigation bar
+  ],
+);
     super.initState();
     routingScreen();
   }

@@ -197,7 +197,107 @@ void openMemberBottomSheet(
                                 backgroundColor: Colors.blue[700],
                                 child: Text(
                                   CommonFunctions.getInitials(
-                                      familyList[index]['Name']).toUpperCase(),
+                                          familyList[index]['Name'])
+                                      .toUpperCase(),
+                                  style: TextStyle(
+                                      fontSize: 22.0,
+                                      color: Colors.white,
+                                      letterSpacing: 2.0,
+                                      fontWeight: FontWeight.w900),
+                                ),
+                              ),
+                        /* CircleAvatar(
+                          backgroundColor: Colors.white,
+                          backgroundImage: NetworkImage(
+                              familyList[index]['UserImgPath'] != null
+                                  ? imageBaseUrl +
+                                      familyList[index]['UserImgPath']
+                                  : "assets/images/user.png"),
+                          radius: 20,
+                        ), */
+                        title: new Text(familyList[index]["Name"]),
+                        subtitle: new Text(
+                          familyList[index]["MemberId"].toString(),
+                          style: TextStyle(fontSize: 12),
+                        ),
+                        onTap: () {
+                          callback(index);
+                        },
+                      ),
+                    ]);
+                  })
+            ],
+          ),
+        );
+      });
+}
+
+void openNotificationMemberBottomSheet(
+    BuildContext buildContext, familyList, imageBaseUrl, callback, enableAll) {
+  print(familyList.toString());
+  showModalBottomSheet(
+      context: buildContext,
+      builder: (context) {
+        return SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              AppBar(
+                title: Text(
+                  "Select Member",
+                  style: TextStyle(color: Colors.black, fontSize: 16),
+                ),
+                elevation: 1,
+                backgroundColor: Colors.white,
+                automaticallyImplyLeading: false,
+                actions: [
+                  IconButton(
+                    icon: Icon(Icons.close_sharp, color: Colors.black),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
+              ),
+              if (enableAll)
+                ListTile(
+                  leading: CircleAvatar(
+                    backgroundColor: Colors.blue[700],
+                    child: Text(
+                      "AN",
+                      style: TextStyle(
+                          fontSize: 22.0,
+                          color: Colors.white,
+                          letterSpacing: 2.0,
+                          fontWeight: FontWeight.w900),
+                    ),
+                  ),
+                  title: Text("All Notifications"),
+                  onTap: () {
+                    callback(9999);
+                  },
+                ),
+              ListView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: familyList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Column(children: <Widget>[
+                      new Divider(
+                        height: 0.1,
+                      ),
+                      ListTile(
+                        leading: familyList[index]['UserImgPath'] != null
+                            ? CircleAvatar(
+                                backgroundImage: NetworkImage(imageBaseUrl +
+                                    familyList[index]["UserImgPath"]),
+                              )
+                            : CircleAvatar(
+                                backgroundColor: Colors.blue[700],
+                                child: Text(
+                                  CommonFunctions.getInitials(
+                                          familyList[index]['Name'])
+                                      .toUpperCase(),
                                   style: TextStyle(
                                       fontSize: 22.0,
                                       color: Colors.white,
@@ -841,27 +941,27 @@ void showCustomPaymentAlert(BuildContext buildContext, gatewayDetail,
                         ),
                         if (gatewayDetail['EnableTnC'])
                           Container(
-                            margin: EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 10),
-                            child:Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children:[ 
-                              Text("Terms & Conditions",
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold)),
-                              CheckboxListTile(
-                              checkColor: Colors.white,
-                              activeColor: Colors.blue,
-                              contentPadding: EdgeInsets.zero,
-                              title:Text(gatewayDetail['TnC_Desc'],
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.normal)),
-                              
-                              /*  RichText(
+                              margin: EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 10),
+                              child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("Terms & Conditions",
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold)),
+                                    CheckboxListTile(
+                                      checkColor: Colors.white,
+                                      activeColor: Colors.blue,
+                                      contentPadding: EdgeInsets.zero,
+                                      title: Text(gatewayDetail['TnC_Desc'],
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.normal)),
+
+                                      /*  RichText(
                                 maxLines: 2,
                                 textAlign: TextAlign.left,
                                 text: TextSpan(
@@ -890,15 +990,17 @@ void showCustomPaymentAlert(BuildContext buildContext, gatewayDetail,
                                   ] */
                                 ),
                               ),
-                               */value: checkedValue,
-                              onChanged: (newValue) {
-                                setState(() {
-                                  checkedValue = newValue!;
-                                });
-                              },
-                              controlAffinity: ListTileControlAffinity.leading,
-                            ),])
-                          ),
+                               */
+                                      value: checkedValue,
+                                      onChanged: (newValue) {
+                                        setState(() {
+                                          checkedValue = newValue!;
+                                        });
+                                      },
+                                      controlAffinity:
+                                          ListTileControlAffinity.leading,
+                                    ),
+                                  ])),
                         Container(
                           margin: EdgeInsets.only(top: 10),
                           //padding: EdgeInsets.symmetric(horizontal: 20),
@@ -930,8 +1032,8 @@ void showCustomPaymentAlert(BuildContext buildContext, gatewayDetail,
                                                 : checkedValue == false)
                                             ? () {
                                                 if (paymentFor ==
-                                                        AppSettings
-                                                            .paymentTypeTopup )
+                                                    AppSettings
+                                                        .paymentTypeTopup)
                                                   buildContext
                                                       .read<
                                                           MySettingsListener>()
@@ -941,8 +1043,8 @@ void showCustomPaymentAlert(BuildContext buildContext, gatewayDetail,
                                                           profileData,
                                                           paymentFor);
                                                 if (paymentFor ==
-                                                        AppSettings
-                                                            .paymentTypeOrder )
+                                                    AppSettings
+                                                        .paymentTypeOrder)
                                                   buildContext
                                                       .read<
                                                           MySettingsListener>()

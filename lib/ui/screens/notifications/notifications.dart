@@ -1,8 +1,10 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:calms_parent_latest/ui/screens/notifications/notification-view/notification-view.dart';
 import 'package:expendable_fab/expendable_fab.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:intl/intl.dart';
@@ -63,6 +65,33 @@ class _NotificationsState extends State<Notifications>
 
   String selectedUserId = "";
 
+  var refreshKey = GlobalKey<RefreshIndicatorState>();
+
+  Future<Null> refreshList() async {
+    //refreshKey.currentState?.show(atTop: true);
+    //await Future.delayed(Duration(seconds: 2));
+
+    setState(() {
+      context.read<MySettingsListener>().clearNotificationList();
+      filterTitle = "All Notifications";
+      filteredDate = false;
+      filteredMember = false;
+      filterSelectedDate = "";
+      selectedUserId = "";
+      filterMemberImagePath = null;
+      String categoryName =
+          widget.categoryList[_tabController.index]["category"];
+      int id = widget.categoryList[_tabController.index]["notificationtype"];
+      print("++++++++" + id.toString());
+      //appBarTitle = categoryName;
+      selectedtypeIndex = _tabController.index;
+      CommonUtil().getCtegoryFilterNotification(
+          context, apiURL, startPosition, profileData, qrData, id, "", "");
+    });
+
+    return null;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -71,23 +100,7 @@ class _NotificationsState extends State<Notifications>
         new TabController(vsync: this, length: widget.categoryList.length);
     _tabController.addListener(() {
       print("_tabController " + _tabController.indexIsChanging.toString());
-      if (!_tabController.indexIsChanging)
-        setState(() {
-          filterTitle = "All Notifications";
-          filteredDate = false;
-          filterSelectedDate = "";
-          selectedUserId = "";
-          filterMemberImagePath = null;
-          String categoryName =
-              widget.categoryList[_tabController.index]["category"];
-          int id =
-              widget.categoryList[_tabController.index]["notificationtype"];
-          print("++++++++" + id.toString());
-          //appBarTitle = categoryName;
-          selectedtypeIndex = _tabController.index;
-          CommonUtil().getCtegoryFilterNotification(
-              context, apiURL, startPosition, profileData, qrData, id, "", "");
-        });
+      if (!_tabController.indexIsChanging) refreshList();
     });
     //familyList = JsonResponses.familyList;
     //NotificationCategoryList = JsonResponses.notificationCategoryList;
@@ -210,11 +223,13 @@ class _NotificationsState extends State<Notifications>
   }
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: DefaultTabController(
-          length: widget.categoryList.length,
-          child: Scaffold(
+  Widget build(BuildContext context) => 
+  WillPopScope(
+      onWillPop: () => showExitAlert(context),
+      child: MaterialApp(
+          home: DefaultTabController(
+        length: widget.categoryList.length,
+        child: Scaffold(
             floatingActionButton: FloatingActionButton(
               onPressed: () => filteredDate
                   ? setState(() {
@@ -278,30 +293,7 @@ class _NotificationsState extends State<Notifications>
                     onTap: (value) {
                       print("_tabController ontap" +
                           _tabController.indexIsChanging.toString());
-                      if (!_tabController.indexIsChanging)
-                        setState(() {
-                          filterTitle = "All Notifications";
-                          filteredDate = false;
-                          filterSelectedDate = "";
-                          selectedUserId = "";
-                          filterMemberImagePath = null;
-                          String categoryName = widget
-                              .categoryList[_tabController.index]["category"];
-                          int id = widget.categoryList[_tabController.index]
-                              ["notificationtype"];
-                          print("++++++++" + id.toString());
-                          //appBarTitle = categoryName;
-                          selectedtypeIndex = _tabController.index;
-                          CommonUtil().getCtegoryFilterNotification(
-                              context,
-                              apiURL,
-                              startPosition,
-                              profileData,
-                              qrData,
-                              id,
-                              "",
-                              "");
-                        });
+                      if (!_tabController.indexIsChanging) refreshList();
                     },
                     labelColor: Colors.blue,
                     unselectedLabelColor: Colors.grey,
@@ -311,7 +303,6 @@ class _NotificationsState extends State<Notifications>
                     ],
                     controller: _tabController),
                 toolbarHeight: 70,
-                elevation: 0,
                 backgroundColor: Colors.white,
                 //titleSpacing: -5,
                 automaticallyImplyLeading: false,
@@ -369,7 +360,7 @@ class _NotificationsState extends State<Notifications>
                           profileData_['BranchName'],
                           style: TextStyle(
                               color: Colors.black,
-                              fontSize: 20,
+                              fontSize: 16,
                               fontWeight: FontWeight.bold),
                         ),
                         SizedBox(
@@ -432,7 +423,7 @@ class _NotificationsState extends State<Notifications>
                             horizontalTitleGap: 0,
                             contentPadding: EdgeInsets.zero,
                             onTap: () => {
-                              openMemberBottomSheet(
+                              openNotificationMemberBottomSheet(
                                   context,
                                   context
                                       .read<MySettingsListener>()
@@ -440,45 +431,49 @@ class _NotificationsState extends State<Notifications>
                                   imgBaseUrl, (index) {
                                 Navigator.pop(context);
                                 senderIndex = index;
-                                setState(() {
-                                  filterMemberImagePath = null;
-                                  if (context
-                                              .read<MySettingsListener>()
-                                              .notificationMembersList[
-                                          senderIndex]['UserImgPath'] !=
-                                      null) {
-                                    filterMemberImagePath = imgBaseUrl +
+                                if (index == 9999) {
+                                  refreshList();
+                                } else {
+                                  setState(() {
+                                    filterMemberImagePath = null;
+                                    if (context
+                                                .read<MySettingsListener>()
+                                                .notificationMembersList[
+                                            senderIndex]['UserImgPath'] !=
+                                        null) {
+                                      filterMemberImagePath = imgBaseUrl +
+                                          context
+                                                  .read<MySettingsListener>()
+                                                  .notificationMembersList[
+                                              senderIndex]['UserImgPath'];
+                                    }
+                                    String name = context
+                                            .read<MySettingsListener>()
+                                            .notificationMembersList[
+                                        senderIndex]["Name"];
+                                    filterTitle = name;
+                                    filteredMember = true;
+                                    selectedUserId = context
+                                        .read<MySettingsListener>()
+                                        .notificationMembersList[senderIndex]
+                                            ["UserSeqId"]
+                                        .toString();
+                                    CommonUtil().getMemberFilterNotification(
+                                        context,
+                                        apiURL,
+                                        startPosition,
+                                        profileData,
+                                        qrData,
                                         context
                                                 .read<MySettingsListener>()
                                                 .notificationMembersList[
-                                            senderIndex]['UserImgPath'];
-                                  }
-                                  String name = context
-                                          .read<MySettingsListener>()
-                                          .notificationMembersList[senderIndex]
-                                      ["Name"];
-                                  filterTitle = name;
-                                  filteredMember = true;
-                                  selectedUserId = context
-                                      .read<MySettingsListener>()
-                                      .notificationMembersList[senderIndex]
-                                          ["UserSeqId"]
-                                      .toString();
-                                  CommonUtil().getMemberFilterNotification(
-                                      context,
-                                      apiURL,
-                                      startPosition,
-                                      profileData,
-                                      qrData,
-                                      context
-                                              .read<MySettingsListener>()
-                                              .notificationMembersList[
-                                          senderIndex]['UserSeqId'],
-                                      widget.categoryList[selectedtypeIndex]
-                                          ['notificationtype'],
-                                      filterSelectedDate);
-                                });
-                              })
+                                            senderIndex]['UserSeqId'],
+                                        widget.categoryList[selectedtypeIndex]
+                                            ['notificationtype'],
+                                        filterSelectedDate);
+                                  });
+                                }
+                              }, filteredMember)
                             },
                             trailing: filterMemberImagePath != null
                                 ? CircleAvatar(
@@ -547,67 +542,155 @@ class _NotificationsState extends State<Notifications>
               controller: _tabController,
               children: List.generate(
                 widget.categoryList.length,
-                (index) => Container(
-                  constraints: BoxConstraints.expand(),
-                  decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                    begin: Alignment.topRight,
-                    end: Alignment.bottomLeft,
-                    colors: [
-                      Color.fromARGB(255, 246, 249, 254),
-                      Color.fromARGB(255, 230, 231, 239),
-                    ],
-                  )),
-                  child: SafeArea(
-                    child: ScrollEdgeListener(
-                      // 400 is the default size of the Placeholder widget.
-                      edgeOffset: 100,
-                      listener: () {
-                        debugPrint('listener called');
-                        startPosition = context
-                            .read<MySettingsListener>()
-                            .notificationList
-                            .length;
-                        // CommonUtil().getAllNotification(context, startPosition);
-                      },
-                      child: SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            Container(
-                              padding: EdgeInsets.symmetric(horizontal: 10),
-                              child: Column(
-                                children: [
-                                  Consumer<MySettingsListener>(
-                                      builder: (context, data, settingsDta) {
-                                    return ListView.builder(
-                                        scrollDirection: Axis.vertical,
-                                        physics: NeverScrollableScrollPhysics(),
-                                        shrinkWrap: true,
-                                        itemCount: data.notificationList.length,
-                                        itemBuilder:
-                                            (BuildContext context, int index1) {
-                                          return _makeCard(
-                                              context,
-                                              index1,
-                                              data.notificationList,
-                                              context
-                                                  .read<MySettingsListener>()
-                                                  .notificationCategoryList);
-                                        });
-                                  }),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
+                (index) => Tab(
+                  child: RefreshIndicator(
+                    onRefresh: refreshList,
+                    //key: refreshKey,
+                    child: Container(
+                      constraints: BoxConstraints.expand(),
+                      decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                        begin: Alignment.topRight,
+                        end: Alignment.bottomLeft,
+                        colors: [
+                          Color.fromARGB(255, 246, 249, 254),
+                          Color.fromARGB(255, 230, 231, 239),
+                        ],
+                      )),
+                      child: Container(
+                        margin: EdgeInsets.only(top: 10, left: 10, right: 10),
+                        child: Consumer<MySettingsListener>(
+                            builder: (context, data, settingsDta) {
+                          return ListView.builder(
+                              scrollDirection: Axis.vertical,
+                              physics: AlwaysScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: data.notificationList.length,
+                              itemBuilder: (BuildContext context, int index1) {
+                                return _makeCard(
+                                    context,
+                                    index1,
+                                    data.notificationList,
+                                    context
+                                        .read<MySettingsListener>()
+                                        .notificationCategoryList);
+                              });
+                        }),
                       ),
                     ),
                   ),
                 ),
               ),
+            )),
+      )));
+
+  Future<bool> showExitAlert(BuildContext buildContext) {
+    showModalBottomSheet(
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(60.0))),
+      context: buildContext,
+      enableDrag: false,
+      isDismissible: false,
+      isScrollControlled: false,
+      builder: (context) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            getBottomSheetActionBar(context, "Alert!", false, Colors.white),
+            Container(
+              margin: EdgeInsets.only(top: 0),
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      "Are you sure you want to exit from the app?",
+                      style: TextStyle(
+                          fontSize: 18, color: Color.fromARGB(255, 0, 0, 0)),
+                      softWrap: true,
+                      textAlign: TextAlign.start,
+                    ),
+                  ),
+                ],
+              ),
             ),
-          )),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Container(
+                    //alignment: Alignment.centerRight,
+                    margin: EdgeInsets.only(top: 20, bottom: 20),
+                    child: SizedBox(
+                        height: 40,
+                        width: 80,
+                        child: ElevatedButton(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                "Yes",
+                                style: TextStyle(
+                                    fontSize: 18.0,
+                                    fontFamily: "Montserrat",
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              //Icon(Icons.payment)
+                            ],
+                          ),
+                          onPressed: () {
+                            if (Platform.isAndroid) {
+                              SystemNavigator.pop();
+                            } else if (Platform.isIOS) {
+                              exit(0);
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.red,
+                            textStyle: TextStyle(color: Colors.white),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(60.0)),
+                          ),
+                        ))),
+                Container(
+                    //alignment: Alignment.centerRight,
+                    margin: EdgeInsets.only(
+                        top: 20, left: 10, bottom: 20, right: 10),
+                    child: SizedBox(
+                        height: 40,
+                        width: 80,
+                        child: ElevatedButton(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                "No",
+                                style: TextStyle(
+                                    fontSize: 18.0,
+                                    fontFamily: "Montserrat",
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              //Icon(Icons.payment)
+                            ],
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color.fromARGB(255, 6, 105, 199),
+                            textStyle: TextStyle(color: Colors.white),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(60.0)),
+                          ),
+                        ))),
+              ],
+            )
+          ],
+        );
+      },
     );
+    return Future.value(true);
   }
 
   void openFilterCategoryBottomSheet(
@@ -703,7 +786,7 @@ class _NotificationsState extends State<Notifications>
             direction: DismissDirection.endToStart,
             child: Container(
               // color: HexColor("#eaedf6"),
-              margin: EdgeInsets.only(top: 15),
+              //margin: EdgeInsets.only(top: 5),
               child: InkWell(
                 onTap: () {
                   print("object");
@@ -766,12 +849,15 @@ class _NotificationsState extends State<Notifications>
                                 )),
                             title: Text(
                               notificationList[index1]["HtmlContent"],
+                              maxLines: 3,
+                              overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                   fontWeight: notificationList[index1]["IsRead"]
                                       ? FontWeight.normal
                                       : FontWeight.bold),
                             ),
-                            /* subtitle:Text(
+                          )
+                              /* subtitle:Text(
                                     getCategoryById(notificationList[index1]
                                         ["HtmlContent"]),
                                     style: TextStyle(
@@ -780,7 +866,7 @@ class _NotificationsState extends State<Notifications>
                                             ? FontWeight.normal
                                             : FontWeight.bold),
                                   ) */
-                          )),
+                              ),
                           Align(
                             alignment: Alignment.topRight,
                             child: Container(
@@ -895,7 +981,7 @@ class _NotificationsState extends State<Notifications>
                     child: Text(
                       description,
                       style: TextStyle(
-                          fontSize: 18, color: Color.fromARGB(255, 0, 92, 3)),
+                          fontSize: 18, color: Color.fromARGB(255, 0, 0, 0)),
                       softWrap: true,
                       textAlign: TextAlign.start,
                     ),
@@ -903,67 +989,75 @@ class _NotificationsState extends State<Notifications>
                 ],
               ),
             ),
-            Container(
-                alignment: Alignment.centerRight,
-                margin: EdgeInsets.all(10),
-                child: SizedBox(
-                    height: 45,
-                    child: ElevatedButton(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            "Yes",
-                            style: TextStyle(
-                                fontSize: 18.0,
-                                fontFamily: "Montserrat",
-                                fontWeight: FontWeight.bold),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Container(
+                    //alignment: Alignment.centerRight,
+                    margin: EdgeInsets.only(top: 20, bottom: 20),
+                    child: SizedBox(
+                        height: 40,
+                        width: 80,
+                        child: ElevatedButton(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                "Yes",
+                                style: TextStyle(
+                                    fontSize: 18.0,
+                                    fontFamily: "Montserrat",
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              //Icon(Icons.payment)
+                            ],
                           ),
-                          //Icon(Icons.payment)
-                        ],
-                      ),
-                      onPressed: () {
-                        Navigator.pop(context);
-                        this.deleteNotification(notification, buildContext);
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color.fromARGB(255, 6, 105, 199),
-                        textStyle: TextStyle(color: Colors.white),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(60.0)),
-                      ),
-                    ))),
-            Container(
-                alignment: Alignment.centerRight,
-                margin: EdgeInsets.all(10),
-                child: SizedBox(
-                    height: 45,
-                    child: ElevatedButton(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            "No",
-                            style: TextStyle(
-                                fontSize: 18.0,
-                                fontFamily: "Montserrat",
-                                fontWeight: FontWeight.bold),
+                          onPressed: () {
+                            Navigator.pop(context);
+                            this.deleteNotification(notification, buildContext);
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.red,
+                            textStyle: TextStyle(color: Colors.white),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(60.0)),
                           ),
-                          //Icon(Icons.payment)
-                        ],
-                      ),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color.fromARGB(255, 6, 105, 199),
-                        textStyle: TextStyle(color: Colors.white),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(60.0)),
-                      ),
-                    ))),
+                        ))),
+                Container(
+                    //alignment: Alignment.centerRight,
+                    margin: EdgeInsets.only(
+                        top: 20, left: 10, bottom: 20, right: 10),
+                    child: SizedBox(
+                        height: 40,
+                        width: 80,
+                        child: ElevatedButton(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                "No",
+                                style: TextStyle(
+                                    fontSize: 18.0,
+                                    fontFamily: "Montserrat",
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              //Icon(Icons.payment)
+                            ],
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color.fromARGB(255, 6, 105, 199),
+                            textStyle: TextStyle(color: Colors.white),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(60.0)),
+                          ),
+                        ))),
+              ],
+            )
           ],
         );
       },

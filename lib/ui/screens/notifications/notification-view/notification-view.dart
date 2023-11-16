@@ -50,7 +50,7 @@ class _NotificationViewState extends State<NotificationView> {
         appBar: AppBar(
           toolbarHeight: 70,
           elevation: 0,
-          backgroundColor: Colors.transparent,
+          backgroundColor: Colors.white,
           //titleSpacing: -5,
           automaticallyImplyLeading: false,
           centerTitle: true,

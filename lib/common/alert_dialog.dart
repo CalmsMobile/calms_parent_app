@@ -136,7 +136,7 @@ class MyCustomAlertDialog {
                     child: Text(
                       description,
                       style: TextStyle(
-                          fontSize: 18, color: Color.fromARGB(255, 0, 92, 3)),
+                          fontSize: 18, color: Color.fromARGB(255, 0, 0, 0)),
                       softWrap: true,
                       textAlign: TextAlign.start,
                     ),
@@ -235,7 +235,7 @@ class MyCustomAlertDialog {
                     child: Text(
                       description,
                       style: TextStyle(
-                          fontSize: 18, color: Color.fromARGB(255, 0, 92, 3)),
+                          fontSize: 18, color: Color.fromARGB(255, 0, 0, 0)),
                       softWrap: true,
                       textAlign: TextAlign.start,
                     ),
@@ -377,4 +377,6 @@ class MyCustomAlertDialog {
       ),
     );
   }
+
+
 }
