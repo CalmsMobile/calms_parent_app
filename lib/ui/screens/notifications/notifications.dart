@@ -12,6 +12,7 @@ import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:provider/provider.dart';
 
 import '../../../common/util/common_funtions.dart';
+import '../../../main.dart';
 import '../home/Home.dart';
 import '/common/alert_dialog.dart';
 import '/common/app_settings.dart';
@@ -113,7 +114,8 @@ class _NotificationsState extends State<Notifications>
         print('Message notification: ${message.notification?.title}');
         print('Message notification: ${message.notification?.body}');
       }
-      initValues();
+      // initValues();
+      refreshList();
       //_messageStreamController.sink.add(message);
     });
   }
@@ -223,8 +225,7 @@ class _NotificationsState extends State<Notifications>
   }
 
   @override
-  Widget build(BuildContext context) => 
-  WillPopScope(
+  Widget build(BuildContext context) => WillPopScope(
       onWillPop: () => showExitAlert(context),
       child: MaterialApp(
           home: DefaultTabController(
@@ -282,54 +283,65 @@ class _NotificationsState extends State<Notifications>
                           DateFormat("yyyy-MM-dd").format(date),
                           selectedUserId);
                     }, currentTime: DateTime.now(), locale: LocaleType.en),
-              backgroundColor: filteredDate ? Colors.red : Colors.blue[900],
+              backgroundColor: filteredDate ? Colors.red : HexColor("#023047"),
               child: filteredDate
                   ? Icon(Icons.close_sharp)
                   : Icon(Icons.calendar_month),
             ),
-            backgroundColor: Colors.white,
+            backgroundColor: Color.fromRGBO(255, 255, 255, 1),
             appBar: AppBar(
                 bottom: TabBar(
+                    isScrollable: true,
+                    indicatorColor: HexColor("#ffb703"),
+                    //indicator: CircleTabIndicator(color: Colors.green, radius: 4),
                     onTap: (value) {
                       print("_tabController ontap" +
                           _tabController.indexIsChanging.toString());
                       if (!_tabController.indexIsChanging) refreshList();
                     },
-                    labelColor: Colors.blue,
-                    unselectedLabelColor: Colors.grey,
+                    labelColor: Colors.white,
+                    unselectedLabelColor: Color.fromARGB(152, 158, 158, 158),
                     tabs: [
                       for (int i = 0; i < widget.categoryList.length; i++)
-                        Tab(text: widget.categoryList[i]['category'])
+                      Row(children: [
+                        //Icon(Icons.trip_origin, color: Color.fromARGB(255, 255, 184, 3), size: 10,),
+                        //SizedBox(width: 5,),
+                        Tab(text: widget.categoryList[i]['category']),
+                        
+                      ],)
+                        
                     ],
                     controller: _tabController),
                 toolbarHeight: 70,
-                backgroundColor: Colors.white,
+                backgroundColor: HexColor("#023047"),
                 //titleSpacing: -5,
                 automaticallyImplyLeading: false,
                 centerTitle: true,
                 leading: widget.NotifyOnly
-                    ? Padding(
-                        padding: EdgeInsets.only(left: 15, top: 5, bottom: 5),
-                        child: profileData_['BranchImg'] != null
-                            ? CircleAvatar(
-                                backgroundImage: MemoryImage(
-                                    CommonFunctions.getUnit8bytesFromB64(
-                                        profileData_["BranchImg"])),
-                              )
-                            : CircleAvatar(
-                                backgroundColor: Colors.blue[700],
-                                child: Text(
-                                  CommonFunctions.getInitials(
-                                          profileData_['BranchName'])
-                                      .toUpperCase(),
-                                  style: TextStyle(
-                                      fontSize: 22.0,
-                                      color: Colors.white,
-                                      letterSpacing: 2.0,
-                                      fontWeight: FontWeight.w900),
+                    ? InkWell(
+                        onTap: () => logoutDevice(),
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 15, top: 5, bottom: 5),
+                          child: profileData_['BranchImg'] != null
+                              ? CircleAvatar(
+                                  backgroundImage: MemoryImage(
+                                      CommonFunctions.getUnit8bytesFromB64(
+                                          profileData_["BranchImg"])),
+                                )
+                              : CircleAvatar(
+                                  backgroundColor: HexColor("#ffb703"),
+                                  child: Text(
+                                    CommonFunctions.getInitials(
+                                            profileData_['BranchName'])
+                                        .toUpperCase(),
+                                    style: TextStyle(
+                                        fontSize: 22.0,
+                                        color: Colors.white,
+                                        letterSpacing: 2.0,
+                                        fontWeight: FontWeight.w900),
+                                  ),
                                 ),
-                              ),
-                      )
+                        ))
                     : SizedBox(),
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -359,7 +371,7 @@ class _NotificationsState extends State<Notifications>
                         Text(
                           profileData_['BranchName'],
                           style: TextStyle(
-                              color: Colors.black,
+                              color: Colors.white,
                               fontSize: 16,
                               fontWeight: FontWeight.bold),
                         ),
@@ -371,14 +383,14 @@ class _NotificationsState extends State<Notifications>
                             Text(
                               filterTitle,
                               style: TextStyle(
-                                  color: Colors.blue[900],
+                                  color: Colors.white,
                                   fontSize: 13,
                                   fontWeight: FontWeight.bold),
                             ),
                             Text(
                               "${filterSelectedDate != "" ? " | " + DateFormat("dd-MM-yyyy").format(DateTime.parse(filterSelectedDate)) : ""}",
                               style: TextStyle(
-                                  color: Colors.blue[900],
+                                  color: Colors.white,
                                   fontSize: 13,
                                   fontWeight: FontWeight.bold),
                             ),
@@ -481,7 +493,7 @@ class _NotificationsState extends State<Notifications>
                                         NetworkImage(filterMemberImagePath),
                                   )
                                 : CircleAvatar(
-                                    backgroundColor: Colors.blue[700],
+                                    backgroundColor: HexColor("#ffb703"),
                                     child: Text(
                                       CommonFunctions.getInitials(filterTitle)
                                           .toUpperCase(),
@@ -583,6 +595,19 @@ class _NotificationsState extends State<Notifications>
               ),
             )),
       )));
+  logoutDevice() {
+    MyCustomAlertDialog().showCustomAlert(
+        context, "Notification", "Do you want to logout?", false, () {
+      print("logout proceed");
+      MySharedPref().clearAllData();
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => SplashScreen()));
+      //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => QRRegistration()));
+    }, () {
+      print("Close alert");
+      //Navigator.of(context, rootNavigator: true).pop();
+    }, "Logout", "Cancel");
+  }
 
   Future<bool> showExitAlert(BuildContext buildContext) {
     showModalBottomSheet(
@@ -752,8 +777,8 @@ class _NotificationsState extends State<Notifications>
     return data[0]['category'];
   }
 
-  Widget _makeCard(
-      context, int index1, List notificationList, List categoryList) {
+  Widget _makeCard(BuildContext context, int index1, List notificationList,
+      List categoryList) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -762,16 +787,6 @@ class _NotificationsState extends State<Notifications>
           child: Dismissible(
             confirmDismiss: (direction) async {
               if (direction == DismissDirection.endToStart) {
-                /*  MyCustomAlertDialog().showCustomAlert(context, "Notification",
-                    "Do you want to delete this notification?", false, () {
-                  
-                  deleteNotification(notificationList[index1],context);
-                }, () {
-                  debugPrint("deleteNotification");
-                  Navigator.pop(context);
-                 
-                }, "Yes", "No");
- */
                 showDeleteAlert(
                     context,
                     "Alert!",
@@ -833,10 +848,51 @@ class _NotificationsState extends State<Notifications>
                           Container(
                               //height: 60,
                               child: ListTile(
-                            leading: SizedBox(
-                                width: 45,
-                                height: 45,
-                                child: CircleAvatar(
+                            leading: Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(100),
+                                  border: Border.all(
+                                      width: 2,
+                                      color: notificationList[index1]["IsRead"]
+                                          ? Color.fromARGB(0, 168, 70, 70)
+                                          : Color.fromARGB(255, 255, 184, 3))),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(100),
+                                    border: Border.all(
+                                        width: 3,
+                                        color: Color.fromARGB(0, 168, 70, 70))),
+                                child: SizedBox(
+                                  width: 45,
+                                  height: 45,
+                                  child: notificationList[index1]
+                                              ["ImgPathUrl"] !=
+                                          ""
+                                      ? CircleAvatar(
+                                          backgroundImage: NetworkImage(
+                                              imgBaseUrl +
+                                                  notificationList[index1]
+                                                      ["ImgPathUrl"]),
+                                        )
+                                      : CircleAvatar(
+                                          backgroundColor: HexColor("#023047"),
+                                          child: Text(
+                                            CommonFunctions.getInitialFromUserId(
+                                                    notificationList[index1]
+                                                        ["RefUserSeqId"],
+                                                    context
+                                                        .read<
+                                                            MySettingsListener>()
+                                                        .notificationMembersList)
+                                                .toUpperCase(),
+                                            style: TextStyle(
+                                                fontSize: 22.0,
+                                                color: Colors.white,
+                                                letterSpacing: 2.0,
+                                                fontWeight: FontWeight.w900),
+                                          ),
+                                        ),
+                                  /* CircleAvatar(
                                   backgroundColor: Colors.white,
                                   backgroundImage: NetworkImage(
                                       notificationList[index1]["ImgPathUrl"] !=
@@ -846,15 +902,17 @@ class _NotificationsState extends State<Notifications>
                                                   ["ImgPathUrl"]
                                           : AppSettings.avatarPlaceholder),
                                   radius: 20,
-                                )),
+                                ) */
+                                ),
+                              ),
+                            ),
                             title: Text(
                               notificationList[index1]["HtmlContent"],
                               maxLines: 3,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
-                                  fontWeight: notificationList[index1]["IsRead"]
-                                      ? FontWeight.normal
-                                      : FontWeight.bold),
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.normal),
                             ),
                           )
                               /* subtitle:Text(
@@ -888,20 +946,15 @@ class _NotificationsState extends State<Notifications>
                                           : "",
                                       style: TextStyle(
                                           fontSize: 12,
-                                          fontWeight: notificationList[index1]
-                                                  ["IsRead"]
-                                              ? FontWeight.normal
-                                              : FontWeight.bold,
-                                          color: Color.fromARGB(
-                                              255, 45, 112, 237)),
+                                          fontWeight: FontWeight.normal,
+                                          color: Colors.black),
                                     ),
                                     TextSpan(
                                       text: "  ",
                                       style: TextStyle(
                                           fontSize: 12,
-                                          fontWeight: FontWeight.bold,
-                                          color: Color.fromARGB(
-                                              255, 45, 112, 237)),
+                                          fontWeight: FontWeight.normal,
+                                          color: Colors.black),
                                     ),
                                     TextSpan(
                                       text: notificationList[index1]
@@ -915,12 +968,8 @@ class _NotificationsState extends State<Notifications>
                                           : "",
                                       style: TextStyle(
                                           fontSize: 12,
-                                          fontWeight: notificationList[index1]
-                                                  ["IsRead"]
-                                              ? FontWeight.normal
-                                              : FontWeight.bold,
-                                          color: Color.fromARGB(
-                                              255, 45, 112, 237)),
+                                          fontWeight: FontWeight.normal,
+                                          color: Colors.black),
                                     ),
                                   ],
                                 ),

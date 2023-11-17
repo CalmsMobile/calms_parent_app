@@ -262,7 +262,7 @@ void openNotificationMemberBottomSheet(
               if (enableAll)
                 ListTile(
                   leading: CircleAvatar(
-                    backgroundColor: Colors.blue[700],
+                    backgroundColor: HexColor("#ffb703"),
                     child: Text(
                       "AN",
                       style: TextStyle(
@@ -293,7 +293,7 @@ void openNotificationMemberBottomSheet(
                                     familyList[index]["UserImgPath"]),
                               )
                             : CircleAvatar(
-                                backgroundColor: Colors.blue[700],
+                                backgroundColor: HexColor("#ffb703"),
                                 child: Text(
                                   CommonFunctions.getInitials(
                                           familyList[index]['Name'])

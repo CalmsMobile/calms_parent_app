@@ -6,6 +6,7 @@ import 'dart:io';
 
 import '../common/crypto_enc.dart';
 import '../common/util/dialogs.dart';
+import '../main.dart';
 import '/common/alert_dialog.dart';
 import '/common/app_settings.dart';
 import '/common/my_shared_pref.dart';
@@ -249,9 +250,9 @@ class RestApiProvider {
             Map<String, dynamic> tableObj = tableList[0];
             if (tableObj['code'] == 10 || tableObj['Code'] == 10) {
               return Future<Map<String, dynamic>>.value(dataObj);
-            } else if (endPoint == AppSettings.RegisterParentApp &&
-                    tableObj['code'] == 40 ||
-                tableObj['Code'] == 40) {
+            } else if (tableObj['code'] == 60 || tableObj['code'] == 40) {
+              showlogedOutAlert(context, tableObj['description']);
+
               return Future<Map<String, dynamic>>.value(dataObj);
             } else {
               print("failed ${tableObj['code'] || tableObj['Code']} ");
@@ -435,6 +436,11 @@ class RestApiProvider {
                 endPoint == AppSettings.GetAfterTopupPaymentSummary &&
                     tableObj['OrderId'] != null) {
               return Future<Map<String, dynamic>>.value(res['Data']);
+            } else if (tableObj['code'] == 60 || tableObj['code'] == 40) {
+              showlogedOutAlert(context, tableObj['description']);
+
+              print(tableObj['description']);
+              return throw Exception(tableObj['description']);
             } else {
               print("failed ${tableObj['code'] || tableObj['Code']} ");
 
@@ -468,9 +474,10 @@ class RestApiProvider {
   }
 
   showlogedOutAlert(BuildContext context, String message) {
-    MyCustomAlertDialog()
-        .showCustomAlert(context, "Notification", message, false, () {
-      Navigator.pop(context);
+    MySharedPref().clearAllData();
+    MyCustomAlertDialog().showCustomAlert(context, "Alert!", message, true, () {
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => SplashScreen()));
     }, null, "Ok", "");
   }
 

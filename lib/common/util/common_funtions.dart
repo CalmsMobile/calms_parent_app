@@ -131,6 +131,14 @@ class CommonFunctions {
     return lnAmount;
   }
 
+  static String getInitialFromUserId(userId, List memberList) {
+    int index =
+        memberList.indexWhere((element) => element['UserSeqId'] == userId);
+    if (index != -1)
+      return getInitials(memberList[index]['Name']);
+    else
+      return "NA";
+  }
   /*  static getPOConfigDetails(poConfig, CurrentDateTime, TermDate, TermEndDate, CutoffStartTime, IsClickFrom) {
             var lsFromDate = "", lsToDate = "", lsCurrentDateTime = "", lsCancelFromDate = "", lsChangeFromDate = "", lsgFromDate = "", lsProRatedDays=0;
             var loConfig = { "purchase": datesplittocomma(""), "cancel": datesplittocomma("") };

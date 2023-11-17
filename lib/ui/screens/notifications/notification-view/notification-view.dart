@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 
+import '../../../../common/HexColor.dart';
 import '/common/alert_dialog.dart';
 import '/common/app_settings.dart';
 import '/common/date_util.dart';
@@ -13,7 +14,12 @@ import 'package:provider/provider.dart';
 
 class NotificationView extends StatefulWidget {
   const NotificationView(
-      {super.key, this.pos, this.passData, this.category, this.imgBaseUrl,this.apiURL});
+      {super.key,
+      this.pos,
+      this.passData,
+      this.category,
+      this.imgBaseUrl,
+      this.apiURL});
   final pos;
   final passData;
   final category;
@@ -33,7 +39,7 @@ class _NotificationViewState extends State<NotificationView> {
     print(widget.imgBaseUrl);
     print(widget.apiURL);
     super.initState();
-    updateReadStatus(widget.passData, context,widget.pos,widget.apiURL);
+    updateReadStatus(widget.passData, context, widget.pos, widget.apiURL);
   }
 
   @override
@@ -44,13 +50,13 @@ class _NotificationViewState extends State<NotificationView> {
     int pos = arguments['pos'];
     String category = arguments['category'];
     String imgBaseUrl = arguments['imgBaseUrl']; */
-    
+
     return Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
           toolbarHeight: 70,
           elevation: 0,
-          backgroundColor: Colors.white,
+          backgroundColor: HexColor("#023047"),
           //titleSpacing: -5,
           automaticallyImplyLeading: false,
           centerTitle: true,
@@ -71,9 +77,9 @@ class _NotificationViewState extends State<NotificationView> {
               Padding(
                 padding: EdgeInsets.only(left: 10),
                 child: Text(
-                  "Details",
+                  "Message",
                   style: TextStyle(
-                      color: Colors.black,
+                      color: Colors.white,
                       fontSize: 20,
                       fontWeight: FontWeight.bold),
                 ),
@@ -96,112 +102,83 @@ class _NotificationViewState extends State<NotificationView> {
           )),
           child: SingleChildScrollView(
               child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 10),
+            margin: EdgeInsets.all(10),
+            //padding: EdgeInsets.symmetric(horizontal: 10),
             child: Column(children: [
               Container(
                 // color: HexColor("#eaedf6"),
                 width: double.infinity,
-                margin: EdgeInsets.only(top: 20),
-                child: Card(
-                  elevation: 10,
-                  shadowColor: Colors.black,
-                  child: ClipPath(
-                    child: Container(
-                      padding: EdgeInsets.symmetric(vertical: 8),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          /* ListTile(
-                            leading: SizedBox(
-                              width: 45,
-                              height: 45,
-                              child: ClipPath(
-                                clipper: ShapeBorderClipper(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(60))),
-                                child: Image.network(
-                                    widget.passData["ImgPathUrl"] != null &&  widget.passData["ImgPathUrl"] != ""
-                                        ? widget.imgBaseUrl +
-                                            widget.passData["ImgPathUrl"]
-                                        : AppSettings.avatarPlaceholder),
-                              ),
-                            ),
-                            title: Text(
-                              widget.category,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 18),
-                            ),
-                          ),
-                           */Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                     widget.passData
-                                        ["HtmlContent"],
+                //margin: EdgeInsets.only(top: 20),
+                child: ClipPath(
+                  child: Container(
+                    //padding: EdgeInsets.symmetric(vertical: 8),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              widget.passData["HtmlContent"],
+                              style: TextStyle(fontWeight: FontWeight.normal,fontSize: 16),
+                            )),
+                        Align(
+                          alignment: Alignment.topRight,
+                          child: Container(
+                            margin: EdgeInsets.only(bottom: 5, right: 10),
+                            child: Text.rich(
+                              TextSpan(
+                                style: TextStyle(color: Colors.black),
+                                children: [
+                                  TextSpan(
+                                    text: widget.passData["CreatedOn"] != null
+                                        ? DateUtil()
+                                            .convertStringFromDateformat(
+                                                widget.passData['CreatedOn'],
+                                                "dd-MM-yyyy")
+                                        : "",
                                     style: TextStyle(
-                                        fontWeight: FontWeight.normal
-                                            ),
-                                  )),
-                            Align(
-                            alignment: Alignment.topRight,
-                            child: Container(
-                              margin: EdgeInsets.only(bottom: 5, right: 10),
-                              child: Text.rich(
-                                TextSpan(
-                                  style: TextStyle(color: Colors.black),
-                                  children: [
-                                    TextSpan(
-                                      text: widget.passData["CreatedOn"] != null
-                                          ? DateUtil()
-                                              .convertStringFromDateformat(
-                                                  widget.passData['CreatedOn'],
-                                                  "dd-MM-yyyy")
-                                          : "",
-                                      style: TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.normal,
-                                          color: Colors.grey),
-                                    ),
-                                    TextSpan(
-                                      text: "  ",
-                                      style: TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.grey),
-                                    ),
-                                    TextSpan(
-                                      text: widget.passData["CreatedOn"] != null
-                                          ? DateUtil()
-                                              .convertStringFromDateformat(
-                                                  widget.passData['CreatedOn'],
-                                                  "hh:mm a")
-                                          : "",
-                                      style: TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.grey),
-                                    ),
-                                  ],
-                                ),
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.normal,
+                                        color: HexColor("#023047")),
+                                  ),
+                                  TextSpan(
+                                    text: "  ",
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.normal,
+                                        color: HexColor("#023047")),
+                                  ),
+                                  TextSpan(
+                                    text: widget.passData["CreatedOn"] != null
+                                        ? DateUtil()
+                                            .convertStringFromDateformat(
+                                                widget.passData['CreatedOn'],
+                                                "hh:mm a")
+                                        : "",
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.normal,
+                                        color: HexColor("#023047")),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
-                         
-                        ],
-                      ),
-                      /*  decoration: BoxDecoration(
+                        ),
+                      ],
+                    ),
+                    /*  decoration: BoxDecoration(
                           border: Border(
                               left: BorderSide(
                                   color: widget.passData["IsRead"]
                                       ? Colors.white
                                       : Colors.white,
                                   width: 5))), */
-                    ),
-                    clipper: ShapeBorderClipper(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(3))),
                   ),
+                  clipper: ShapeBorderClipper(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(3))),
                 ),
               ),
             ]),
@@ -211,14 +188,14 @@ class _NotificationViewState extends State<NotificationView> {
 }
 
 Future<void> updateReadStatus(
-     passData, BuildContext context, int pos,apiURL) async {
-print("updateReadStatus");
+    passData, BuildContext context, int pos, apiURL) async {
+  print("updateReadStatus");
   if (!passData["IsRead"]) {
     var data = {
       "PNHistory": passData["PNHistory"],
     };
 
-    Future<Map<String, dynamic>> res = RestApiProvider().postData(data,apiURL,
+    Future<Map<String, dynamic>> res = RestApiProvider().postData(data, apiURL,
         AppSettings.UpdateReadNotificationStatus, context, false, false);
     res
         .then((value) => {handleApiResponse(value, context, pos)})
