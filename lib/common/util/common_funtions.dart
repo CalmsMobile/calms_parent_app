@@ -13,14 +13,16 @@ class CommonFunctions {
     if (names.length == 1)
       return names[0].toString()[0] + names[0].toString()[names[0].length - 1];
     String initials = "";
-    int numWords = 2;
+   /*  int numWords = 2;
 
     if (numWords < names.length) {
       numWords = names.length;
-    }
-    for (var i = 0; i < numWords; i++) {
+    } */
+    initials = '${names[0][0]+names[names.length-1][0]}';
+    /* for (var i = 0; i < names.length; i++) {
+      debugPrint('name ' + names[i][0]);
       initials += '${names[i][0]}';
-    }
+    } */
     return initials;
   }
 
@@ -132,12 +134,14 @@ class CommonFunctions {
   }
 
   static String getInitialFromUserId(userId, List memberList) {
+    //print("+++userid "+userId.toString());
+    //print("+++userlist "+memberList.toString());
     int index =
         memberList.indexWhere((element) => element['UserSeqId'] == userId);
     if (index != -1)
       return getInitials(memberList[index]['Name']);
     else
-      return "NA";
+      return "";
   }
   /*  static getPOConfigDetails(poConfig, CurrentDateTime, TermDate, TermEndDate, CutoffStartTime, IsClickFrom) {
             var lsFromDate = "", lsToDate = "", lsCurrentDateTime = "", lsCancelFromDate = "", lsChangeFromDate = "", lsgFromDate = "", lsProRatedDays=0;

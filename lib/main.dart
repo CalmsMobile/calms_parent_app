@@ -534,21 +534,6 @@ class _SplashScreenState extends State<SplashScreen> {
                   SizedBox(
                     height: 20,
                   ),
-                  /* InkWell(
-                            onTap: () {
-                              print("tapped");
-                              //barcode scanner
-                              setState(() {
-                                
-                              });
-                            },
-                            child: Image(
-                                width: 150,
-                                height: 150,
-                                image: AssetImage('assets/images/qrcode.png')),
-                          ),SizedBox(
-                            height: 40,
-                          ), */
                   Image(
                       width: 200,
                       height: 200,

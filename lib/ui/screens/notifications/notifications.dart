@@ -303,13 +303,13 @@ class _NotificationsState extends State<Notifications>
                     unselectedLabelColor: Color.fromARGB(152, 158, 158, 158),
                     tabs: [
                       for (int i = 0; i < widget.categoryList.length; i++)
-                      Row(children: [
-                        //Icon(Icons.trip_origin, color: Color.fromARGB(255, 255, 184, 3), size: 10,),
-                        //SizedBox(width: 5,),
-                        Tab(text: widget.categoryList[i]['category']),
-                        
-                      ],)
-                        
+                        Row(
+                          children: [
+                            //Icon(Icons.trip_origin, color: Color.fromARGB(255, 255, 184, 3), size: 10,),
+                            //SizedBox(width: 5,),
+                            Tab(text: widget.categoryList[i]['category']),
+                          ],
+                        )
                     ],
                     controller: _tabController),
                 toolbarHeight: 70,
@@ -879,7 +879,15 @@ class _NotificationsState extends State<Notifications>
                                           child: Text(
                                             CommonFunctions.getInitialFromUserId(
                                                     notificationList[index1]
-                                                        ["RefUserSeqId"],
+                                                                ["StudentId"] ==
+                                                            null
+                                                        ? notificationList[
+                                                                index1]
+                                                            ["RefUserSeqId"]
+                                                        : int.parse(
+                                                            notificationList[
+                                                                    index1]
+                                                                ["StudentId"]),
                                                     context
                                                         .read<
                                                             MySettingsListener>()
