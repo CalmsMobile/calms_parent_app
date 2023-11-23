@@ -681,7 +681,8 @@ class CommonUtil {
       decryptdata,
       userId,
       notificationtype,
-      Date) async {
+      Date,
+      ShowAll) async {
     if (profileData != "") {
       var profileData_ = jsonDecode(profileData);
       print(profileData_);
@@ -700,7 +701,8 @@ class CommonUtil {
         "Offset": 0,
         "Rows": 100,
         "StudentSeqId": StudentSeqId,
-        "Date": Date
+        "Date": Date,
+        "ShowAll": ShowAll
       };
       //debugger();
       print(payLoad.toString());
@@ -726,7 +728,8 @@ class CommonUtil {
       decryptdata,
       int categoryId,
       String Date,
-      StudentSeqId) async {
+      StudentSeqId,
+      ShowAll) async {
     if (profileData != "") {
       var profileData_ = jsonDecode(profileData);
       print(profileData_);
@@ -743,7 +746,8 @@ class CommonUtil {
         "Offset": 0,
         "Rows": 100,
         "StudentSeqId": StudentSeqId,
-        "Date": Date
+        "Date": Date,
+        "ShowAll": ShowAll
       };
       //debugger();
       print(payLoad.toString());

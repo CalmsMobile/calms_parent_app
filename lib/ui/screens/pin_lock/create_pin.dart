@@ -51,14 +51,14 @@ class _CreatePinState extends State<CreatePin> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              InkWell(
+              /* InkWell(
                 onTap: () {},
                 child: Image(
                   width: 50,
                   height: 50,
                   image: AssetImage("assets/images/ico_back.png"),
                 ),
-              ),
+              ), */
               Padding(
                 padding: EdgeInsets.only(left: 10),
                 child: Text(
@@ -73,13 +73,13 @@ class _CreatePinState extends State<CreatePin> {
             ],
           ),
           actions: [
-            Padding(
+            /* Padding(
               padding: EdgeInsets.only(right: 20),
               child: Image(
                   width: 50,
                   height: 50,
                   image: AssetImage("assets/images/ico_option.png")),
-            )
+            ) */
           ],
         ),
         extendBodyBehindAppBar: false,

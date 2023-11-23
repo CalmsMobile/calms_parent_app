@@ -53,7 +53,7 @@ class _AccountMappingState extends State<AccountMapping> {
         body: Stack(children: [
       Scaffold(
           backgroundColor: Colors.transparent,
-          appBar: AppBar(
+          /* appBar: AppBar(
             toolbarHeight: 70,
             elevation: 0,
             backgroundColor: Colors.transparent,
@@ -87,7 +87,7 @@ class _AccountMappingState extends State<AccountMapping> {
             ),
           ),
           extendBodyBehindAppBar: false,
-          body: Container(
+           */body: Container(
               constraints: BoxConstraints.expand(),
               decoration: BoxDecoration(
                   gradient: LinearGradient(
@@ -407,7 +407,7 @@ class _AccountMappingState extends State<AccountMapping> {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 30.0, vertical: 0),
                             value: isCheckBox2Selected,
-                            isDisableTextClick: false,
+                            isDisableTextClick: true,
                             onChanged: (bool newValue) {
                               print(newValue);
                               setState(() {

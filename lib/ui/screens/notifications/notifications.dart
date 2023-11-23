@@ -61,6 +61,7 @@ class _NotificationsState extends State<Notifications>
   String filterSelectedDate = "";
   bool filteredMember = false;
   var filterMemberImagePath = null;
+  bool allNotification = false;
   late TabController _tabController;
   late DateTime date;
 
@@ -80,14 +81,41 @@ class _NotificationsState extends State<Notifications>
       filterSelectedDate = "";
       selectedUserId = "";
       filterMemberImagePath = null;
+      allNotification = true;
       String categoryName =
           widget.categoryList[_tabController.index]["category"];
       int id = widget.categoryList[_tabController.index]["notificationtype"];
       print("++++++++" + id.toString());
       //appBarTitle = categoryName;
       selectedtypeIndex = _tabController.index;
-      CommonUtil().getCtegoryFilterNotification(
-          context, apiURL, startPosition, profileData, qrData, id, "", "");
+      CommonUtil().getCtegoryFilterNotification(context, apiURL, startPosition,
+          profileData, qrData, id, "", "", allNotification);
+    });
+
+    return null;
+  }
+
+  Future<Null> refreshListWithFilter() async {
+    //refreshKey.currentState?.show(atTop: true);
+    //await Future.delayed(Duration(seconds: 2));
+
+    setState(() {
+      context.read<MySettingsListener>().clearNotificationList();
+      //filterTitle = "All Notifications";
+      //filteredDate = false;
+      //filteredMember = false;
+      //filterSelectedDate = "";
+      //selectedUserId = "";
+      //filterMemberImagePath = null;
+      // allNotification = true;
+      String categoryName =
+          widget.categoryList[_tabController.index]["category"];
+      int id = widget.categoryList[_tabController.index]["notificationtype"];
+      print("++++++++" + id.toString());
+      //appBarTitle = categoryName;
+      selectedtypeIndex = _tabController.index;
+      CommonUtil().getCtegoryFilterNotification(context, apiURL, startPosition,
+          profileData, qrData, id, filterSelectedDate, selectedUserId, allNotification);
     });
 
     return null;
@@ -145,7 +173,7 @@ class _NotificationsState extends State<Notifications>
             apiURL.split("/api")[0] + AppSettings.studentImageHandler;
         print(studentImageURL);
       });
-
+      allNotification = true;
       //CommonUtil().getAllNotification(context, apiURL, startPosition, profileData, qrData);
 
       print("++++++++" + selectedtypeIndex.toString());
@@ -159,7 +187,8 @@ class _NotificationsState extends State<Notifications>
           qrData,
           widget.categoryList[selectedtypeIndex]["notificationtype"],
           "",
-          "");
+          "",
+          allNotification);
     }
   }
 
@@ -244,7 +273,8 @@ class _NotificationsState extends State<Notifications>
                               widget.categoryList[selectedtypeIndex]
                                   ['notificationtype'],
                               "",
-                              selectedUserId);
+                              selectedUserId,
+                              allNotification);
                           //filterTitle = "All Notifications";
                           filteredDate = false;
                           filterSelectedDate = "";
@@ -271,6 +301,7 @@ class _NotificationsState extends State<Notifications>
                             filteredDate = true;
                             filterSelectedDate =
                                 DateFormat("yyyy-MM-dd").format(date);
+                            // allNotification = false;
                           });
 
                           CommonUtil().getCtegoryFilterNotification(
@@ -282,7 +313,8 @@ class _NotificationsState extends State<Notifications>
                               widget.categoryList[selectedtypeIndex]
                                   ['notificationtype'],
                               DateFormat("yyyy-MM-dd").format(date),
-                              selectedUserId);
+                              selectedUserId,
+                              allNotification);
                         }, currentTime: DateTime.now(), locale: LocaleType.en),
                   backgroundColor:
                       filteredDate ? Colors.red : HexColor("#023047"),
@@ -469,6 +501,7 @@ class _NotificationsState extends State<Notifications>
                                             senderIndex]["Name"];
                                         filterTitle = name;
                                         filteredMember = true;
+                                        allNotification = false;
                                         selectedUserId = context
                                             .read<MySettingsListener>()
                                             .notificationMembersList[
@@ -487,7 +520,8 @@ class _NotificationsState extends State<Notifications>
                                             widget.categoryList[
                                                     selectedtypeIndex]
                                                 ['notificationtype'],
-                                            filterSelectedDate);
+                                            filterSelectedDate,
+                                            allNotification);
                                       });
                                     }
                                   }, filteredMember)
@@ -562,7 +596,7 @@ class _NotificationsState extends State<Notifications>
                     widget.categoryList.length,
                     (index) => Tab(
                       child: RefreshIndicator(
-                        onRefresh: refreshList,
+                        onRefresh: refreshListWithFilter,
                         //key: refreshKey,
                         child: Container(
                           constraints: BoxConstraints.expand(),
