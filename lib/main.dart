@@ -332,6 +332,8 @@ class _SplashScreenState extends State<SplashScreen> {
   String appType = "";
   var verificationPayload = {};
   var AuthorizePayload = {};
+  bool showVerificationAlert = false;
+  Timer? timer;
   Future<void> routingScreen() async {
     profileData = await MySharedPref().getData(AppSettings.Sp_ProfileData);
     token = await MySharedPref().getData(AppSettings.Sp_Token);
@@ -370,8 +372,8 @@ class _SplashScreenState extends State<SplashScreen> {
                     }
                   else
                     {
-                      verifySignIn(
-                          context, qrCodeData, profileData, token, DeviceId)
+                      verifySignIn(context, qrCodeData, profileData, token,
+                          DeviceId, true)
                     }
                 }
               else if (token != "" && profileData != "" && appPIN == "")
@@ -381,12 +383,13 @@ class _SplashScreenState extends State<SplashScreen> {
                         MaterialPageRoute(builder: (context) => CreatePin()))
                   else
                     verifySignIn(
-                        context, qrCodeData, profileData, token, DeviceId)
+                        context, qrCodeData, profileData, token, DeviceId, true)
                 }
             });
   }
 
-  verifySignIn(context, qrCodeData, profileData, token, DeviceId) {
+  verifySignIn(
+      context, qrCodeData, profileData, token, DeviceId, showProgress) {
     Map<String, dynamic> qrJson = jsonDecode(qrCodeData);
     Map<String, dynamic> profileDataJson = jsonDecode(profileData);
     print("qrJson test " + qrJson['MAppSeqId']);
@@ -409,7 +412,7 @@ class _SplashScreenState extends State<SplashScreen> {
         qrJson["ApiUrl"],
         AppSettings.AppSignIn,
         context,
-        false,
+        showProgress,
         false);
     res
         .then((value) => {
@@ -422,6 +425,8 @@ class _SplashScreenState extends State<SplashScreen> {
   verificationResponse(
       Map<String, dynamic> res, context, apiUrl, secureKey, MAppSeqId) {
     if (res['Table'][0]['code'] == 10) {
+      timer?.cancel();
+      super.dispose();
       MySharedPref().saveBooleanData(true, AppSettings.Sp_App_Verified);
       MySharedPref().saveData(apiUrl, AppSettings.Sp_Api_Url);
       MySharedPref().saveData(
@@ -434,23 +439,35 @@ class _SplashScreenState extends State<SplashScreen> {
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => CreatePin()));
     } else if (res['Table'][0]['code'] == 50) {
-      MySharedPref().saveBooleanData(false, AppSettings.Sp_App_Verified);
-      MyCustomAlertDialog().showVerificationAlert(
-          context,
-          "Account verification alert!",
-          res['Table'][0]['description'],
-          false,
-          verifyAgain,
-          resend);
+      if (!showVerificationAlert) {
+        MySharedPref().saveBooleanData(false, AppSettings.Sp_App_Verified);
+        MyCustomAlertDialog().showVerificationAlert(
+            context,
+            "Account verification alert!",
+            res['Table'][0]['description'],
+            false,
+            verifyAgain,
+            resend);
+        //if (timer!.isActive) {
+        timer = Timer.periodic(
+            Duration(seconds: 5),
+            (Timer t) => verifySignIn(
+                context, qrCodeData, profileData, token, DeviceId, false));
+        // }
+        showVerificationAlert = true;
+      }
     }
   }
 
   verifyAgain() {
     print("verifyAgain");
-    verifySignIn(context, qrCodeData, profileData, token, DeviceId);
+    verifySignIn(context, qrCodeData, profileData, token, DeviceId, true);
   }
 
   resend() {
+    //timer?.cancel();
+    //super.dispose();
+    //showVerificationAlert = false;
     Map<String, dynamic> qrJson = jsonDecode(qrCodeData);
     Future<Map<String, dynamic>> res = RestApiProvider().postNewData(
         verificationPayload,
@@ -465,11 +482,16 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   resendSuccess(Map<String, dynamic> res) {
-    MyCustomAlertDialog().showCustomAlert(
+    
+    timer?.cancel();
+    showVerificationAlert = false;
+    verifySignIn(context, qrCodeData, profileData, token, DeviceId, true);
+
+    /*  MyCustomAlertDialog().showCustomAlert(
         context, "Notification", res['Table'][0]['description'], true, () {
       Navigator.pop(context);
-      verifyAgain();
-    }, null,"Ok","");
+      
+    }, null, "Ok", ""); */
   }
 
   void enterFullScreen(FullScreenMode fullScreenMode) async {
@@ -478,14 +500,13 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
-    
     //enterFullScreen(FullScreenMode.EMERSIVE_STICKY);
-   SystemChrome.setEnabledSystemUIMode(
-  SystemUiMode.manual,
-  overlays: [
-    SystemUiOverlay.top, // Shows Status bar and hides Navigation bar
-  ],
-);
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: [
+        SystemUiOverlay.top, // Shows Status bar and hides Navigation bar
+      ],
+    );
     super.initState();
     routingScreen();
   }
@@ -547,5 +568,11 @@ class _SplashScreenState extends State<SplashScreen> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
   }
 }

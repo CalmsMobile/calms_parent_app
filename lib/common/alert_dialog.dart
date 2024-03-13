@@ -65,7 +65,7 @@ class MyCustomAlertDialog {
                           ],
                         ),
                         onPressed: () {
-                          Navigator.pop(context);
+                          //Navigator.pop(context);
                           _okPress();
                         },
                         style: ElevatedButton.styleFrom(
@@ -243,7 +243,7 @@ class MyCustomAlertDialog {
                 ],
               ),
             ),
-            Container(
+            /* Container(
                 alignment: Alignment.centerRight,
                 margin: EdgeInsets.all(10),
                 child: SizedBox(
@@ -274,7 +274,7 @@ class MyCustomAlertDialog {
                             borderRadius: BorderRadius.circular(60.0)),
                       ),
                     ))),
-            Container(
+             */Container(
                 alignment: Alignment.centerRight,
                 margin: EdgeInsets.all(10),
                 child: SizedBox(
@@ -285,7 +285,7 @@ class MyCustomAlertDialog {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
-                            "Resend verification email",
+                            "Resend Verification Email",
                             style: TextStyle(
                                 fontSize: 18.0,
                                 fontFamily: "Montserrat",

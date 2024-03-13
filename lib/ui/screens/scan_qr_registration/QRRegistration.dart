@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import '../../../common/widgets/common.dart';
 import '/common/alert_dialog.dart';
 import '/common/app_settings.dart';
 import '/common/crypto_enc.dart';
@@ -27,6 +28,7 @@ class _QRRegistrationState extends State<QRRegistration> {
   String qrCodeResult = '';
   Barcode? result;
   QRViewController? controller;
+  TextEditingController codeController = TextEditingController();
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   @override
   void initState() {
@@ -49,18 +51,21 @@ class _QRRegistrationState extends State<QRRegistration> {
   void stopListening() {}
 
   Future<bool> _onBackPressed() {
+    qrCodeResult = "";
     if (isQrView) {
       setState(() {
         isQrView = false;
       });
       if (kDebugMode) {
         print("QR: start");
-       //rnd
-        var qrdata = "D5qpk1C3xkIxgAIPyzivIXAY1+BrXWHUlQKXDwvQA+YDCq3ZKz2ctrqZBVSRFc5dbHg+7ZKbpZlMkh8NNQatNf83hsXcToACqmlZ+8Tlabb0D0cC211BmzymayoQ3yB9E2U0E7NfkX/TdTmQJdBhG5DFY0LKgT1iYiGytP6PWP4EQbAa+rn7FQx+kyNHA82z";
+        //rnd
+        var qrdata =
+            "D5qpk1C3xkIxgAIPyzivIXAY1+BrXWHUlQKXDwvQA+YDCq3ZKz2ctrqZBVSRFc5dbHg+7ZKbpZlMkh8NNQatNf83hsXcToACqmlZ+8Tlabb0D0cC211BmzymayoQ3yB9E2U0E7NfkX/TdTmQJdBhG5DFY0LKgT1iYiGytP6PWP4EQbAa+rn7FQx+kyNHA82z";
         //demosgl nizam
-         qrdata = "D5qpk1C3xkIxgAIPyzivIXAY1+BrXWHUlQKXDwvQA+bGMdB1tYpmlqbOdBjobyEQK/CCq8T0Wykezki2gLf2+a2slNXa94kS3RqHmwCHUpTzJce9n5KDdpveoXcXM5PCCYQYa/XDmG/Mk3ukf9IPT0K9GXyYA2cc28Sb1a01aHpilFXfzE2tGMS9V5LnvF5p";
+        qrdata =
+            "D5qpk1C3xkIxgAIPyzivIXAY1+BrXWHUlQKXDwvQA+bGMdB1tYpmlqbOdBjobyEQK/CCq8T0Wykezki2gLf2+a2slNXa94kS3RqHmwCHUpTzJce9n5KDdpveoXcXM5PCCYQYa/XDmG/Mk3ukf9IPT0K9GXyYA2cc28Sb1a01aHpilFXfzE2tGMS9V5LnvF5p";
         //demosgl mizan
-         //qrdata = "D5qpk1C3xkIxgAIPyzivIXAY1+BrXWHUlQKXDwvQA+Yc5/Y7f2TUSFOo7VPq1jRIHrC9FBaoetsbb8LnEb1/BRboz2De+zpCQSzgnHFD/YZlnox+4YAWdQlpvFHbx3LQjWfjt/favVdmcTu4Wu0tBRRUMuH4bMq45rZTyrukgFhC0Cy9iS8JtBgAfBUrZesP";
+        //qrdata = "D5qpk1C3xkIxgAIPyzivIXAY1+BrXWHUlQKXDwvQA+Yc5/Y7f2TUSFOo7VPq1jRIHrC9FBaoetsbb8LnEb1/BRboz2De+zpCQSzgnHFD/YZlnox+4YAWdQlpvFHbx3LQjWfjt/favVdmcTu4Wu0tBRRUMuH4bMq45rZTyrukgFhC0Cy9iS8JtBgAfBUrZesP";
         // qrdata = "D5qpk1C3xkIxgAIPyzivIXAY1+BrXWHUlQKXDwvQA+ZkxQn8k67lSfDI8eaIj980DFCHnNdkOTJXCC4r/aQqRJ1f1Z6zvUdVo20kGKeRieyyphhuWC2RyVjkh9beB0C52Hswjv9iEbi/1yapUEtWEh0NM3FVbioW4IzFqvMnmC6uaryaBj969iYvXg9jxJGu";
         processQRCode(qrdata);
       }
@@ -117,15 +122,15 @@ class _QRRegistrationState extends State<QRRegistration> {
           MyCustomAlertDialog().showCustomAlert(
               context, "Notification", "Invalid QR code", true, () {
             Navigator.pop(context);
-            resetQRData();
-          }, null,"Ok","");
+            //resetQRData();
+          }, null, "Ok", "");
         }
       } else {
         MyCustomAlertDialog().showCustomAlert(
             context, "Notification", "Invalid QR code", true, () {
           Navigator.pop(context);
-          resetQRData();
-        }, null,"Ok","");
+          //resetQRData();
+        }, null, "Ok", "");
       }
     }
   }
@@ -136,7 +141,7 @@ class _QRRegistrationState extends State<QRRegistration> {
         .showCustomAlert(context, "Notification", error.toString(), true, () {
       Navigator.pop(context);
       //resetQRData();
-    }, null,"Ok","");
+    }, null, "Ok", "");
   }
 
   void handleApiResponse(
@@ -147,8 +152,8 @@ class _QRRegistrationState extends State<QRRegistration> {
       MyCustomAlertDialog().showCustomAlert(
           context, "Notification", response["Description"], true, () {
         Navigator.pop(context);
-        resetQRData();
-      }, null,"Ok","");
+        //resetQRData();
+      }, null, "Ok", "");
     } else {
       //MySharedPref().saveData(jsonEncode(response), AppSettings.deviceDetails);
       //print(response['Table1'][0]);
@@ -199,7 +204,7 @@ class _QRRegistrationState extends State<QRRegistration> {
               children: [
                 if (isQrView)
                   Expanded(
-                    flex: 4,
+                    flex: 1,
                     child: _buildQrView(context),
                   )
                 else
@@ -227,7 +232,7 @@ class _QRRegistrationState extends State<QRRegistration> {
                             height: 20,
                           ),
                           Text(
-                            "Scan QR Code from \n the button below",
+                            "How you like to register the app?",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.normal),
@@ -235,23 +240,232 @@ class _QRRegistrationState extends State<QRRegistration> {
                           SizedBox(
                             height: 20,
                           ),
-                          InkWell(
-                            onTap: () {
-                              print("tapped");
-                              //barcode scanner
-                              setState(() {
-                                isQrView = !isQrView;
-                                //   Navigator.pushReplacement(
-                                //       context,
-                                //       MaterialPageRoute(
-                                //           builder: (context) =>
-                                //               new LoginScreen()));
-                              });
-                            },
-                            child: Image(
-                                width: 130,
-                                height: 130,
-                                image: AssetImage('assets/images/qrcode.png')),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  print("tapped");
+                                  //barcode scanner
+                                  setState(() {
+                                    isQrView = !isQrView;
+                                    //   Navigator.pushReplacement(
+                                    //       context,
+                                    //       MaterialPageRoute(
+                                    //           builder: (context) =>
+                                    //               new LoginScreen()));
+                                  });
+                                },
+                                child: Image(
+                                    width: 130,
+                                    height: 130,
+                                    image:
+                                        AssetImage('assets/images/qrcode.png')),
+                              ),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  showModalBottomSheet(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.vertical(
+                                            top: Radius.circular(60.0))),
+                                    context: context,
+                                    enableDrag: false,
+                                    isDismissible: false,
+                                    isScrollControlled: false,
+                                    builder: (context) {
+                                      return Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          getBottomSheetActionBar(
+                                              context,
+                                              'Manual Registration',
+                                              false,
+                                              Colors.white),
+                                          Container(
+                                            width: double.maxFinite,
+                                            margin: EdgeInsets.only(
+                                                left: 12, bottom: 5),
+                                            child: Text(
+                                              "  Registration Code",
+                                              textAlign: TextAlign.start,
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight:
+                                                      FontWeight.normal),
+                                            ),
+                                          ),
+                                          Container(
+                                            margin: EdgeInsets.only(top: 0),
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 20),
+                                            child: TextField(
+                                              maxLines: 3,
+                                              decoration: new InputDecoration(
+                                                  border:
+                                                      new OutlineInputBorder(
+                                                    borderSide: new BorderSide(
+                                                      color: Colors.grey,
+                                                    ),
+                                                  ),
+                                                  enabledBorder:
+                                                      const OutlineInputBorder(
+                                                    borderSide:
+                                                        const BorderSide(
+                                                            color: Colors.grey,
+                                                            width: 2.0),
+                                                  ),
+                                                  focusedBorder:
+                                                      const OutlineInputBorder(
+                                                    borderSide:
+                                                        const BorderSide(
+                                                            color: Colors.black,
+                                                            width: 2.0),
+                                                  ),
+                                                  labelStyle: TextStyle(
+                                                      color: Colors.black),
+                                                  hintText:
+                                                      'Paste your registration code here',
+                                                  labelText: '',
+                                                  focusColor: Colors.black,
+                                                  prefixText: ' ',
+                                                  suffixText: '',
+                                                  suffixStyle: const TextStyle(
+                                                      color: Colors.green)),
+                                              onChanged: (text) {
+                                                print(text);
+                                              },
+                                              controller: codeController,
+                                            ),
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Container(
+                                                  alignment:
+                                                      Alignment.centerRight,
+                                                  margin: EdgeInsets.all(10),
+                                                  child: SizedBox(
+                                                      height: 45,
+                                                      child: ElevatedButton(
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          mainAxisSize:
+                                                              MainAxisSize.min,
+                                                          children: [
+                                                            Text(
+                                                              "Proceed",
+                                                              style: TextStyle(
+                                                                  fontSize:
+                                                                      18.0,
+                                                                  fontFamily:
+                                                                      "Montserrat",
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
+                                                            ),
+                                                            //Icon(Icons.payment)
+                                                          ],
+                                                        ),
+                                                        onPressed: () {
+                                                          Navigator.pop(
+                                                              context);
+                                                          qrCodeResult = "";
+                                                          processQRCode(
+                                                              codeController
+                                                                  .text);
+                                                        },
+                                                        style: ElevatedButton
+                                                            .styleFrom(
+                                                          backgroundColor:
+                                                              Color.fromARGB(
+                                                                  255,
+                                                                  6,
+                                                                  105,
+                                                                  199),
+                                                          textStyle: TextStyle(
+                                                              color:
+                                                                  Colors.white),
+                                                          shape: RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          60.0)),
+                                                        ),
+                                                      ))),
+                                              Container(
+                                                  alignment:
+                                                      Alignment.centerRight,
+                                                  margin: EdgeInsets.all(10),
+                                                  child: SizedBox(
+                                                      height: 45,
+                                                      child: ElevatedButton(
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          mainAxisSize:
+                                                              MainAxisSize.min,
+                                                          children: [
+                                                            Text(
+                                                              "Cancel",
+                                                              style: TextStyle(
+                                                                  fontSize:
+                                                                      18.0,
+                                                                  fontFamily:
+                                                                      "Montserrat",
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
+                                                            ),
+                                                            //Icon(Icons.payment)
+                                                          ],
+                                                        ),
+                                                        onPressed: () {
+                                                          Navigator.pop(
+                                                              context);
+                                                          // _reSend();
+                                                        },
+                                                        style: ElevatedButton
+                                                            .styleFrom(
+                                                          backgroundColor:
+                                                              Color.fromARGB(
+                                                                  255,
+                                                                  6,
+                                                                  105,
+                                                                  199),
+                                                          textStyle: TextStyle(
+                                                              color:
+                                                                  Colors.white),
+                                                          shape: RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          60.0)),
+                                                        ),
+                                                      ))),
+                                            ],
+                                          )
+                                        ],
+                                      );
+                                    },
+                                  );
+                                },
+                                child: Image(
+                                    width: 120,
+                                    height: 120,
+                                    image: AssetImage(
+                                        'assets/images/keyboard.png')),
+                              ),
+                            ],
                           ),
                           SizedBox(
                             height: 40,
@@ -276,7 +490,7 @@ class _QRRegistrationState extends State<QRRegistration> {
     // For this example we check how width or tall the device is and change the scanArea and overlay accordingly.
     var scanArea = (MediaQuery.of(context).size.width < 400 ||
             MediaQuery.of(context).size.height < 400)
-        ? 150.0
+        ? 250.0
         : 300.0;
     // To ensure the Scanner view is properly sizes after rotation
     // we need to listen for Flutter SizeChanged notification and update controller
