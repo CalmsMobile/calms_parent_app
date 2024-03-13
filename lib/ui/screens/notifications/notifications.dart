@@ -371,7 +371,7 @@ class _NotificationsState extends State<Notifications>
                                                 profileData_['BranchName'])
                                             .toUpperCase(),
                                         style: TextStyle(
-                                            fontSize: 22.0,
+                                            fontSize: 20.0,
                                             color: Colors.white,
                                             letterSpacing: 2.0,
                                             fontWeight: FontWeight.w900),
@@ -538,7 +538,7 @@ class _NotificationsState extends State<Notifications>
                                                   filterTitle)
                                               .toUpperCase(),
                                           style: TextStyle(
-                                              fontSize: 22.0,
+                                              fontSize: 20.0,
                                               color: Colors.white,
                                               letterSpacing: 2.0,
                                               fontWeight: FontWeight.w900),
