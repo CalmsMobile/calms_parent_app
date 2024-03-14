@@ -62,8 +62,7 @@ class _QRRegistrationState extends State<QRRegistration> {
         var qrdata =
             "D5qpk1C3xkIxgAIPyzivIXAY1+BrXWHUlQKXDwvQA+YDCq3ZKz2ctrqZBVSRFc5dbHg+7ZKbpZlMkh8NNQatNf83hsXcToACqmlZ+8Tlabb0D0cC211BmzymayoQ3yB9E2U0E7NfkX/TdTmQJdBhG5DFY0LKgT1iYiGytP6PWP4EQbAa+rn7FQx+kyNHA82z";
         //demosgl nizam
-        qrdata =
-            "D5qpk1C3xkIxgAIPyzivIXAY1+BrXWHUlQKXDwvQA+bGMdB1tYpmlqbOdBjobyEQK/CCq8T0Wykezki2gLf2+a2slNXa94kS3RqHmwCHUpTzJce9n5KDdpveoXcXM5PCCYQYa/XDmG/Mk3ukf9IPT0K9GXyYA2cc28Sb1a01aHpilFXfzE2tGMS9V5LnvF5p";
+        qrdata = "D5qpk1C3xkIxgAIPyzivIXAY1+BrXWHUlQKXDwvQA+bGMdB1tYpmlqbOdBjobyEQK/CCq8T0Wykezki2gLf2+a2slNXa94kS3RqHmwCHUpTzJce9n5KDdpveoXcXM5PCCYQYa/XDmG/Mk3ukf9IPT0K9GXyYA2cc28Sb1a01aHpilFXfzE2tGMS9V5LnvF5p";
         //demosgl mizan
         //qrdata = "D5qpk1C3xkIxgAIPyzivIXAY1+BrXWHUlQKXDwvQA+Yc5/Y7f2TUSFOo7VPq1jRIHrC9FBaoetsbb8LnEb1/BRboz2De+zpCQSzgnHFD/YZlnox+4YAWdQlpvFHbx3LQjWfjt/favVdmcTu4Wu0tBRRUMuH4bMq45rZTyrukgFhC0Cy9iS8JtBgAfBUrZesP";
         // qrdata = "D5qpk1C3xkIxgAIPyzivIXAY1+BrXWHUlQKXDwvQA+ZkxQn8k67lSfDI8eaIj980DFCHnNdkOTJXCC4r/aQqRJ1f1Z6zvUdVo20kGKeRieyyphhuWC2RyVjkh9beB0C52Hswjv9iEbi/1yapUEtWEh0NM3FVbioW4IzFqvMnmC6uaryaBj969iYvXg9jxJGu";

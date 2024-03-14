@@ -299,7 +299,7 @@ class MyCustomAlertDialog {
                         _reSend();
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color.fromARGB(255, 6, 105, 199),
+                        backgroundColor: Colors.grey,
                         textStyle: TextStyle(color: Colors.white),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(60.0)),

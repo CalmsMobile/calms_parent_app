@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:html/parser.dart';
 
 import '../listener/settings_listener.dart';
 
@@ -13,12 +14,12 @@ class CommonFunctions {
     if (names.length == 1)
       return names[0].toString()[0] + names[0].toString()[names[0].length - 1];
     String initials = "";
-   /*  int numWords = 2;
+    /*  int numWords = 2;
 
     if (numWords < names.length) {
       numWords = names.length;
     } */
-    initials = '${names[0][0]+names[names.length-1][0]}';
+    initials = '${names[0][0] + names[names.length - 1][0]}';
     /* for (var i = 0; i < names.length; i++) {
       debugPrint('name ' + names[i][0]);
       initials += '${names[i][0]}';
@@ -47,7 +48,12 @@ class CommonFunctions {
   static String getImageUrlUsingUsingSeqId(userId, userList) {
     return "";
   }
+  static String parseHtmlString(String htmlString) {
+    final document = parse(htmlString);
+    final String parsedString = parse(document.body?.text).documentElement!.text;
 
+    return parsedString;
+  }
   static List getChildListFromFamilyList(List familyList) {
     List studentList = [];
     for (var member in familyList) {
@@ -132,6 +138,7 @@ class CommonFunctions {
     }
     return lnAmount;
   }
+
 
   static String getInitialFromUserId(userId, List memberList) {
     //print("+++userid "+userId.toString());

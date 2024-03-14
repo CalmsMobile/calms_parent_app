@@ -284,7 +284,7 @@ class _CreatePinState extends State<CreatePin> {
         await MySharedPref().getBooleanData(AppSettings.Sp_App_Verified);
     if (appVerified) {
      
-        Navigator.pushReplacement(
+        Navigator.push(
             context, MaterialPageRoute(builder: (context) => MyApp()));
       
     } else {

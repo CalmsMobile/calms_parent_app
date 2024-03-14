@@ -114,8 +114,16 @@ class _NotificationsState extends State<Notifications>
       print("++++++++" + id.toString());
       //appBarTitle = categoryName;
       selectedtypeIndex = _tabController.index;
-      CommonUtil().getCtegoryFilterNotification(context, apiURL, startPosition,
-          profileData, qrData, id, filterSelectedDate, selectedUserId, allNotification);
+      CommonUtil().getCtegoryFilterNotification(
+          context,
+          apiURL,
+          startPosition,
+          profileData,
+          qrData,
+          id,
+          filterSelectedDate,
+          selectedUserId,
+          allNotification);
     });
 
     return null;
@@ -639,9 +647,12 @@ class _NotificationsState extends State<Notifications>
           )));
   logoutDevice() {
     MyCustomAlertDialog().showCustomAlert(
-        context, "Notification", "Do you want to logout?", false, () {
+        context, "Notification", "Do you want to logout?", false, () async {
       print("logout proceed");
+      String FCMToken = await MySharedPref().getData(AppSettings.fcmId);
       MySharedPref().clearAllData();
+      MySharedPref().saveData(FCMToken, AppSettings.fcmId);
+
       Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => SplashScreen()));
       //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => QRRegistration()));
@@ -957,7 +968,8 @@ class _NotificationsState extends State<Notifications>
                               ),
                             ),
                             title: Text(
-                              notificationList[index1]["HtmlContent"],
+                              CommonFunctions.parseHtmlString(
+                                  notificationList[index1]["HtmlContent"]),
                               maxLines: 3,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(

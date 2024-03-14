@@ -1,3 +1,4 @@
+import '../../../common/app_settings.dart';
 import '../../../main.dart';
 import '/common/alert_dialog.dart';
 import '/common/my_shared_pref.dart';
@@ -251,15 +252,18 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
 
   logoutDevice() {
     MyCustomAlertDialog().showCustomAlert(
-        context, "Notification", "Do you want to logout?", false, () {
+        context, "Notification", "Do you want to logout?", false, () async {
       print("logout proceed");
+      String FCMToken = await MySharedPref().getData(AppSettings.fcmId);
       MySharedPref().clearAllData();
+      MySharedPref().saveData(FCMToken, AppSettings.fcmId);
+
       Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => SplashScreen()));
       //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => QRRegistration()));
     }, () {
       print("Close alert");
       Navigator.of(context, rootNavigator: true).pop();
-    },"Logout","Cancel");
+    }, "Logout", "Cancel");
   }
 }

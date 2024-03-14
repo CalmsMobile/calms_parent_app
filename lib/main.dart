@@ -379,7 +379,7 @@ class _SplashScreenState extends State<SplashScreen> {
               else if (token != "" && profileData != "" && appPIN == "")
                 {
                   if (appVerified)
-                    Navigator.pushReplacement(context,
+                    Navigator.push(context,
                         MaterialPageRoute(builder: (context) => CreatePin()))
                   else
                     verifySignIn(

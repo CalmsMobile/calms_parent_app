@@ -340,7 +340,8 @@ class RestApiProvider {
               return Future<Map<String, dynamic>>.value(res['Data']);
             } else if (endPoint == AppSettings.RegisterParentApp &&
                     tableObj['code'] == 40 ||
-                tableObj['Code'] == 40) {
+                tableObj['Code'] == 40 ||
+                tableObj['code'] == 21) {
               return Future<Map<String, dynamic>>.value(res['Data']);
             } else {
               print("failed ${tableObj['code'] || tableObj['Code']} ");

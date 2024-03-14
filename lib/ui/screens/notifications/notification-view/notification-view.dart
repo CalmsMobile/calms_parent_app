@@ -118,10 +118,18 @@ class _NotificationViewState extends State<NotificationView> {
                       children: [
                         Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Text(
+                            child: /* Text(
                               widget.passData["HtmlContent"],
                               style: TextStyle(fontWeight: FontWeight.normal,fontSize: 16),
-                            )),
+                            ) */
+                            HtmlWidget(
+                                    widget.passData["HtmlContent"],
+                                    enableCaching: false,
+                                    textStyle: TextStyle(
+                                        fontSize: 16
+                                        ),
+                                  )
+                            ),
                         Align(
                           alignment: Alignment.topRight,
                           child: Container(

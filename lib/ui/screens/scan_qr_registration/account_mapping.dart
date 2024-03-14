@@ -87,7 +87,8 @@ class _AccountMappingState extends State<AccountMapping> {
             ),
           ),
           extendBodyBehindAppBar: false,
-           */body: Container(
+           */
+          body: Container(
               constraints: BoxConstraints.expand(),
               decoration: BoxDecoration(
                   gradient: LinearGradient(
@@ -127,9 +128,10 @@ class _AccountMappingState extends State<AccountMapping> {
                                   backgroundColor: Colors.blue[700],
                                   child: Text(
                                     CommonFunctions.getInitials(widget
-                                        .dataResponseModel['BranchName']
-                                        .toString()
-                                        .toUpperCase()).toUpperCase(),
+                                            .dataResponseModel['BranchName']
+                                            .toString()
+                                            .toUpperCase())
+                                        .toUpperCase(),
                                     style: TextStyle(
                                         fontSize: 22.0,
                                         color: Colors.white,
@@ -172,9 +174,10 @@ class _AccountMappingState extends State<AccountMapping> {
                                             backgroundColor: Colors.blue[700],
                                             child: Text(
                                               CommonFunctions.getInitials(widget
-                                                  .dataResponseModel['Name']
-                                                  .toString()
-                                                  .toUpperCase()).toUpperCase(),
+                                                      .dataResponseModel['Name']
+                                                      .toString()
+                                                      .toUpperCase())
+                                                  .toUpperCase(),
                                               style: TextStyle(
                                                   fontSize: 22.0,
                                                   color: Colors.white,
@@ -558,8 +561,8 @@ class _AccountMappingState extends State<AccountMapping> {
         qrJson["ApiUrl"], AppSettings.RegisterParentApp, context, false, false);
     res
         .then((value) => {
-              successResponse(value, decryptdata, forceToUpdateData, qrJson["ApiUrl"],
-                  dataResponseModel, DeviceId)
+              successResponse(value, decryptdata, forceToUpdateData,
+                  qrJson["ApiUrl"], dataResponseModel, DeviceId)
             })
         .onError((error, stackTrace) => {responseError(error)});
   }
@@ -573,8 +576,8 @@ class _AccountMappingState extends State<AccountMapping> {
     }, null, "Ok", "");
   }
 
-  successResponse(Map<String, dynamic> res, decryptdata, forceToUpdateData, ApiUrl,
-      profileData, DeviceId) {
+  successResponse(Map<String, dynamic> res, decryptdata, forceToUpdateData,
+      ApiUrl, profileData, DeviceId) {
     print(res);
     if (res['Table'][0]['code'] == 10) {
       MyCustomAlertDialog().showToast(context, res['Table'][0]['description']);
@@ -591,18 +594,32 @@ class _AccountMappingState extends State<AccountMapping> {
       Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => SplashScreen()));
     } else if (res['Table'][0]['code'] == 40) {
-      showAlert(context, res['Table'][0]['description'], forceToUpdateData, decryptdata,
-          ApiUrl, profileData, DeviceId);
+      showAlert(context, res['Table'][0]['description'], forceToUpdateData,
+          decryptdata, ApiUrl, profileData, DeviceId);
+    } else if (res['Table'][0]['code'] == 21) {
+      MyCustomAlertDialog().showCustomAlert(
+          context,
+          "Notification",
+          'It appears that the app does not have full permission for notifications. Please close the app, relaunch it, and try again. If the issue persists, please uninstall and reinstall the app, then try once more',
+          true, () {
+        Navigator.pop(context);
+        //resetQRData();
+      }, null, "Ok", "");
     }
   }
 
-  showAlert(BuildContext buildContext, msg, forceToUpdateData, decryptdata, ApiUrl,
-      profileData, DeviceId) {
+  showAlert(BuildContext buildContext, msg, forceToUpdateData, decryptdata,
+      ApiUrl, profileData, DeviceId) {
     MyCustomAlertDialog()
         .showRegisterNewDeviceAlert(buildContext, "Alert!!", msg, false, () {
       print("reg==============");
-      Future<Map<String, dynamic>> res = RestApiProvider().postNewData(forceToUpdateData,
-          ApiUrl, AppSettings.RegisterParentApp, context, false, false);
+      Future<Map<String, dynamic>> res = RestApiProvider().postNewData(
+          forceToUpdateData,
+          ApiUrl,
+          AppSettings.RegisterParentApp,
+          context,
+          false,
+          false);
       res
           .then((value) => {
                 successResponse(value, decryptdata, forceToUpdateData, ApiUrl,
