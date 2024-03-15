@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:flutter/foundation.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../common/HexColor.dart';
 import '/common/alert_dialog.dart';
@@ -39,7 +41,20 @@ class _NotificationViewState extends State<NotificationView> {
     print(widget.imgBaseUrl);
     print(widget.apiURL);
     super.initState();
+    BackButtonInterceptor.add(myInterceptor);
     updateReadStatus(widget.passData, context, widget.pos, widget.apiURL);
+  }
+
+  @override
+  void dispose() {
+    BackButtonInterceptor.remove(myInterceptor);
+    super.dispose();
+  }
+
+  bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
+    print("BUTTON!" + info.currentRoute(context).toString());
+    Navigator.pop(context); // Do some stuff.
+    return true;
   }
 
   @override
@@ -122,14 +137,12 @@ class _NotificationViewState extends State<NotificationView> {
                               widget.passData["HtmlContent"],
                               style: TextStyle(fontWeight: FontWeight.normal,fontSize: 16),
                             ) */
-                            HtmlWidget(
-                                    widget.passData["HtmlContent"],
-                                    enableCaching: false,
-                                    textStyle: TextStyle(
-                                        fontSize: 16
-                                        ),
-                                  )
-                            ),
+                                HtmlWidget(
+                              widget.passData["HtmlContent"],
+                              onTapUrl: (url) => launchUrl(Uri.parse(url)),
+                              enableCaching: false,
+                              textStyle: TextStyle(fontSize: 16),
+                            )),
                         Align(
                           alignment: Alignment.topRight,
                           child: Container(

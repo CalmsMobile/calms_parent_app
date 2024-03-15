@@ -62,7 +62,10 @@ class CommonUtil {
               context,
               MaterialPageRoute(
                   builder: (context) => Notifications(
-                      NotifyOnly: true, categoryList: response['Table4'])));
+                        NotifyOnly: true,
+                        categoryList: response['Table4'],
+                        name: 'NotificationDashboard',
+                      )));
         else {
           context
               .read<MySettingsListener>()

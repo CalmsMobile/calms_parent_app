@@ -51,7 +51,11 @@ class _QRRegistrationState extends State<QRRegistration> {
   void stopListening() {}
 
   Future<bool> _onBackPressed() {
-    qrCodeResult = "";
+    setState(() {
+      isQrView = false;
+    });
+    return Future.value(true);
+    /* qrCodeResult = "";
     if (isQrView) {
       setState(() {
         isQrView = false;
@@ -86,7 +90,7 @@ class _QRRegistrationState extends State<QRRegistration> {
       return Future.value(false);
     } else {
       return Future.value(true);
-    }
+    } */
   }
 
   void processQRCode(String qrData) {

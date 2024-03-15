@@ -1,7 +1,7 @@
 name: calms_parent_latest
 description: A new Flutter project.
 publish_to: "none"
-version: 0.2.3+5
+version: 0.2.4+6
 
 environment:
   sdk: ">=2.19.6 <3.0.0"
@@ -71,6 +71,8 @@ dependencies:
   webview_flutter: ^4.2.4
   collection: ^1.17.0
   html: ^0.15.4
+  url_launcher: ^6.1.11
+  back_button_interceptor: ^6.0.2
 
 #dependency_overrides:
 dev_dependencies:

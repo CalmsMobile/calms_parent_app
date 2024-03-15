@@ -482,7 +482,6 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   resendSuccess(Map<String, dynamic> res) {
-    
     timer?.cancel();
     showVerificationAlert = false;
     verifySignIn(context, qrCodeData, profileData, token, DeviceId, true);

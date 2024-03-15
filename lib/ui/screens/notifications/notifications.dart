@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:calms_parent_latest/ui/screens/notifications/notification-view/notification-view.dart';
 import 'package:expendable_fab/expendable_fab.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -31,9 +32,12 @@ import '../../../common/widgets/common.dart';
 import '../settings/app_settings.dart';
 
 class Notifications extends StatefulWidget {
-  const Notifications({super.key, this.NotifyOnly, this.categoryList});
+  const Notifications(
+      {super.key, this.NotifyOnly, this.categoryList, this.name});
   final NotifyOnly;
   final categoryList;
+
+  final name;
 
   @override
   State<Notifications> createState() => _NotificationsState();
@@ -132,6 +136,8 @@ class _NotificationsState extends State<Notifications>
   @override
   void initState() {
     super.initState();
+    BackButtonInterceptor.add(myInterceptor,
+        name: widget.name, context: context);
     initValues();
     _tabController =
         new TabController(vsync: this, length: widget.categoryList.length);
@@ -159,7 +165,18 @@ class _NotificationsState extends State<Notifications>
   @override
   void dispose() {
     _tabController.dispose();
+    BackButtonInterceptor.remove(myInterceptor);
     super.dispose();
+  }
+
+  bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
+    if (stopDefaultButtonEvent) return false;
+
+    // If a dialog (or any other route) is open, don't run the interceptor.
+    if (info.ifRouteChanged(context)) return false;
+
+    showExitAlert(context);
+    return true;
   }
 
   Future<void> initValues() async {
@@ -262,191 +279,186 @@ class _NotificationsState extends State<Notifications>
   }
 
   @override
-  Widget build(BuildContext context) => WillPopScope(
-      onWillPop: () => showExitAlert(context),
-      child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          home: DefaultTabController(
-            length: widget.categoryList.length,
-            child: Scaffold(
-                floatingActionButton: FloatingActionButton(
-                  onPressed: () => filteredDate
-                      ? setState(() {
-                          CommonUtil().getCtegoryFilterNotification(
-                              context,
-                              apiURL,
-                              startPosition,
-                              profileData,
-                              qrData,
-                              widget.categoryList[selectedtypeIndex]
-                                  ['notificationtype'],
-                              "",
-                              selectedUserId,
-                              allNotification);
-                          //filterTitle = "All Notifications";
-                          filteredDate = false;
-                          filterSelectedDate = "";
-                        })
-                      : DatePicker.showDatePicker(context,
-                          showTitleActions: true,
-                          minTime: DateTime(2000, 1, 1),
-                          maxTime: DateTime.now(),
-                          theme: DatePickerTheme(
-                              headerColor: Theme.of(context).primaryColor,
-                              backgroundColor: Colors.white,
-                              itemStyle: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18),
-                              cancelStyle:
-                                  TextStyle(color: Colors.white, fontSize: 16),
-                              doneStyle:
-                                  TextStyle(color: Colors.white, fontSize: 16)),
-                          onChanged: (date) {}, onConfirm: (date) {
-                          print('confirm $date');
-                          setState(() {
-                            //filterTitle = DateFormat("dd-MM-yyyy").format(date);
-                            filteredDate = true;
-                            filterSelectedDate =
-                                DateFormat("yyyy-MM-dd").format(date);
-                            // allNotification = false;
-                          });
+  Widget build(BuildContext context) => MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: DefaultTabController(
+        length: widget.categoryList.length,
+        child: Scaffold(
+            floatingActionButton: FloatingActionButton(
+              onPressed: () => filteredDate
+                  ? setState(() {
+                      CommonUtil().getCtegoryFilterNotification(
+                          context,
+                          apiURL,
+                          startPosition,
+                          profileData,
+                          qrData,
+                          widget.categoryList[selectedtypeIndex]
+                              ['notificationtype'],
+                          "",
+                          selectedUserId,
+                          allNotification);
+                      //filterTitle = "All Notifications";
+                      filteredDate = false;
+                      filterSelectedDate = "";
+                    })
+                  : DatePicker.showDatePicker(context,
+                      showTitleActions: true,
+                      minTime: DateTime(2000, 1, 1),
+                      maxTime: DateTime.now(),
+                      theme: DatePickerTheme(
+                          headerColor: Theme.of(context).primaryColor,
+                          backgroundColor: Colors.white,
+                          itemStyle: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18),
+                          cancelStyle:
+                              TextStyle(color: Colors.white, fontSize: 16),
+                          doneStyle:
+                              TextStyle(color: Colors.white, fontSize: 16)),
+                      onChanged: (date) {}, onConfirm: (date) {
+                      print('confirm $date');
+                      setState(() {
+                        //filterTitle = DateFormat("dd-MM-yyyy").format(date);
+                        filteredDate = true;
+                        filterSelectedDate =
+                            DateFormat("yyyy-MM-dd").format(date);
+                        // allNotification = false;
+                      });
 
-                          CommonUtil().getCtegoryFilterNotification(
+                      CommonUtil().getCtegoryFilterNotification(
+                          context,
+                          apiURL,
+                          startPosition,
+                          profileData,
+                          qrData,
+                          widget.categoryList[selectedtypeIndex]
+                              ['notificationtype'],
+                          DateFormat("yyyy-MM-dd").format(date),
+                          selectedUserId,
+                          allNotification);
+                    }, currentTime: DateTime.now(), locale: LocaleType.en),
+              backgroundColor: filteredDate ? Colors.red : HexColor("#023047"),
+              child: filteredDate
+                  ? Icon(Icons.close_sharp)
+                  : Icon(Icons.calendar_month),
+            ),
+            backgroundColor: Color.fromRGBO(255, 255, 255, 1),
+            appBar: AppBar(
+                bottom: TabBar(
+                    isScrollable: true,
+                    indicatorColor: HexColor("#ffb703"),
+                    //indicator: CircleTabIndicator(color: Colors.green, radius: 4),
+                    onTap: (value) {
+                      print("_tabController ontap" +
+                          _tabController.indexIsChanging.toString());
+                      if (!_tabController.indexIsChanging) refreshList();
+                    },
+                    labelColor: Colors.white,
+                    unselectedLabelColor: Color.fromARGB(152, 158, 158, 158),
+                    tabs: [
+                      for (int i = 0; i < widget.categoryList.length; i++)
+                        Row(
+                          children: [
+                            //Icon(Icons.trip_origin, color: Color.fromARGB(255, 255, 184, 3), size: 10,),
+                            //SizedBox(width: 5,),
+                            Tab(text: widget.categoryList[i]['category']),
+                          ],
+                        )
+                    ],
+                    controller: _tabController),
+                toolbarHeight: 70,
+                backgroundColor: HexColor("#023047"),
+                //titleSpacing: -5,
+                automaticallyImplyLeading: false,
+                centerTitle: true,
+                leading: widget.NotifyOnly
+                    ? InkWell(
+                        onTap: () => logoutDevice(),
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 15, top: 5, bottom: 5),
+                          child: profileData_['BranchImg'] != null
+                              ? CircleAvatar(
+                                  backgroundImage: MemoryImage(
+                                      CommonFunctions.getUnit8bytesFromB64(
+                                          profileData_["BranchImg"])),
+                                )
+                              : CircleAvatar(
+                                  backgroundColor: HexColor("#ffb703"),
+                                  child: Text(
+                                    CommonFunctions.getInitials(
+                                            profileData_['BranchName'])
+                                        .toUpperCase(),
+                                    style: TextStyle(
+                                        fontSize: 20.0,
+                                        color: Colors.white,
+                                        letterSpacing: 2.0,
+                                        fontWeight: FontWeight.w900),
+                                  ),
+                                ),
+                        ))
+                    : SizedBox(),
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    if (!widget.NotifyOnly)
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushAndRemoveUntil(
                               context,
-                              apiURL,
-                              startPosition,
-                              profileData,
-                              qrData,
-                              widget.categoryList[selectedtypeIndex]
-                                  ['notificationtype'],
-                              DateFormat("yyyy-MM-dd").format(date),
-                              selectedUserId,
-                              allNotification);
-                        }, currentTime: DateTime.now(), locale: LocaleType.en),
-                  backgroundColor:
-                      filteredDate ? Colors.red : HexColor("#023047"),
-                  child: filteredDate
-                      ? Icon(Icons.close_sharp)
-                      : Icon(Icons.calendar_month),
-                ),
-                backgroundColor: Color.fromRGBO(255, 255, 255, 1),
-                appBar: AppBar(
-                    bottom: TabBar(
-                        isScrollable: true,
-                        indicatorColor: HexColor("#ffb703"),
-                        //indicator: CircleTabIndicator(color: Colors.green, radius: 4),
-                        onTap: (value) {
-                          print("_tabController ontap" +
-                              _tabController.indexIsChanging.toString());
-                          if (!_tabController.indexIsChanging) refreshList();
+                              MaterialPageRoute(
+                                  builder: (context) => HomePage()),
+                              (route) => false);
                         },
-                        labelColor: Colors.white,
-                        unselectedLabelColor:
-                            Color.fromARGB(152, 158, 158, 158),
-                        tabs: [
-                          for (int i = 0; i < widget.categoryList.length; i++)
-                            Row(
-                              children: [
-                                //Icon(Icons.trip_origin, color: Color.fromARGB(255, 255, 184, 3), size: 10,),
-                                //SizedBox(width: 5,),
-                                Tab(text: widget.categoryList[i]['category']),
-                              ],
-                            )
-                        ],
-                        controller: _tabController),
-                    toolbarHeight: 70,
-                    backgroundColor: HexColor("#023047"),
-                    //titleSpacing: -5,
-                    automaticallyImplyLeading: false,
-                    centerTitle: true,
-                    leading: widget.NotifyOnly
-                        ? InkWell(
-                            onTap: () => logoutDevice(),
-                            child: Padding(
-                              padding:
-                                  EdgeInsets.only(left: 15, top: 5, bottom: 5),
-                              child: profileData_['BranchImg'] != null
-                                  ? CircleAvatar(
-                                      backgroundImage: MemoryImage(
-                                          CommonFunctions.getUnit8bytesFromB64(
-                                              profileData_["BranchImg"])),
-                                    )
-                                  : CircleAvatar(
-                                      backgroundColor: HexColor("#ffb703"),
-                                      child: Text(
-                                        CommonFunctions.getInitials(
-                                                profileData_['BranchName'])
-                                            .toUpperCase(),
-                                        style: TextStyle(
-                                            fontSize: 20.0,
-                                            color: Colors.white,
-                                            letterSpacing: 2.0,
-                                            fontWeight: FontWeight.w900),
-                                      ),
-                                    ),
-                            ))
-                        : SizedBox(),
-                    title: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                        child: Image(
+                          width: 50,
+                          height: 50,
+                          image: AssetImage("assets/images/ico_back.png"),
+                        ),
+                      ),
+                    Flexible(
+                        child: Container(
+                            //margin: EdgeInsets.only(left: 10),
+                            child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        if (!widget.NotifyOnly)
-                          InkWell(
-                            onTap: () {
-                              Navigator.pushAndRemoveUntil(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => HomePage()),
-                                  (route) => false);
-                            },
-                            child: Image(
-                              width: 50,
-                              height: 50,
-                              image: AssetImage("assets/images/ico_back.png"),
-                            ),
-                          ),
-                        Flexible(
-                            child: Container(
-                                //margin: EdgeInsets.only(left: 10),
-                                child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        Text(
+                          profileData_['BranchName'],
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Row(
                           children: [
                             Text(
-                              profileData_['BranchName'],
+                              filterTitle,
                               style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 16,
+                                  fontSize: 13,
                                   fontWeight: FontWeight.bold),
                             ),
-                            SizedBox(
-                              height: 5,
+                            Text(
+                              "${filterSelectedDate != "" ? " | " + DateFormat("dd-MM-yyyy").format(DateTime.parse(filterSelectedDate)) : ""}",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.bold),
                             ),
-                            Row(
-                              children: [
-                                Text(
-                                  filterTitle,
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Text(
-                                  "${filterSelectedDate != "" ? " | " + DateFormat("dd-MM-yyyy").format(DateTime.parse(filterSelectedDate)) : ""}",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            )
                           ],
-                        )))
-                        // Your widgets here
+                        )
                       ],
-                    ),
-                    actions: [
-                      /* if (filtered)
+                    )))
+                    // Your widgets here
+                  ],
+                ),
+                actions: [
+                  /* if (filtered)
                     IconButton(
                       icon: Icon(Icons.close_sharp, color: Colors.black),
                       onPressed: () {
@@ -468,97 +480,95 @@ class _NotificationsState extends State<Notifications>
                       },
                     ),
                      */
-                      Container(
-                        height: 30,
-                        width: 50,
-                        margin: EdgeInsets.only(right: 10),
-                        child: Row(
-                          children: [
-                            Flexible(
-                              child: ListTile(
-                                horizontalTitleGap: 0,
-                                contentPadding: EdgeInsets.zero,
-                                onTap: () => {
-                                  openNotificationMemberBottomSheet(
-                                      context,
-                                      context
-                                          .read<MySettingsListener>()
-                                          .notificationMembersList,
-                                      imgBaseUrl, (index) {
-                                    Navigator.pop(context);
-                                    senderIndex = index;
-                                    if (index == 9999) {
-                                      refreshList();
-                                    } else {
-                                      setState(() {
-                                        filterMemberImagePath = null;
-                                        if (context
-                                                    .read<MySettingsListener>()
-                                                    .notificationMembersList[
-                                                senderIndex]['UserImgPath'] !=
-                                            null) {
-                                          filterMemberImagePath = imgBaseUrl +
-                                              context
-                                                      .read<MySettingsListener>()
-                                                      .notificationMembersList[
-                                                  senderIndex]['UserImgPath'];
-                                        }
-                                        String name = context
+                  Container(
+                    height: 30,
+                    width: 50,
+                    margin: EdgeInsets.only(right: 10),
+                    child: Row(
+                      children: [
+                        Flexible(
+                          child: ListTile(
+                            horizontalTitleGap: 0,
+                            contentPadding: EdgeInsets.zero,
+                            onTap: () => {
+                              openNotificationMemberBottomSheet(
+                                  context,
+                                  context
+                                      .read<MySettingsListener>()
+                                      .notificationMembersList,
+                                  imgBaseUrl, (index) {
+                                Navigator.pop(context);
+                                senderIndex = index;
+                                if (index == 9999) {
+                                  refreshList();
+                                } else {
+                                  setState(() {
+                                    filterMemberImagePath = null;
+                                    if (context
                                                 .read<MySettingsListener>()
                                                 .notificationMembersList[
-                                            senderIndex]["Name"];
-                                        filterTitle = name;
-                                        filteredMember = true;
-                                        allNotification = false;
-                                        selectedUserId = context
+                                            senderIndex]['UserImgPath'] !=
+                                        null) {
+                                      filterMemberImagePath = imgBaseUrl +
+                                          context
+                                                  .read<MySettingsListener>()
+                                                  .notificationMembersList[
+                                              senderIndex]['UserImgPath'];
+                                    }
+                                    String name = context
                                             .read<MySettingsListener>()
                                             .notificationMembersList[
-                                                senderIndex]["UserSeqId"]
-                                            .toString();
-                                        CommonUtil().getMemberFilterNotification(
-                                            context,
-                                            apiURL,
-                                            startPosition,
-                                            profileData,
-                                            qrData,
-                                            context
-                                                    .read<MySettingsListener>()
-                                                    .notificationMembersList[
-                                                senderIndex]['UserSeqId'],
-                                            widget.categoryList[
-                                                    selectedtypeIndex]
-                                                ['notificationtype'],
-                                            filterSelectedDate,
-                                            allNotification);
-                                      });
-                                    }
-                                  }, filteredMember)
-                                },
-                                trailing: filterMemberImagePath != null
-                                    ? CircleAvatar(
-                                        backgroundImage:
-                                            NetworkImage(filterMemberImagePath),
-                                      )
-                                    : CircleAvatar(
-                                        backgroundColor: HexColor("#ffb703"),
-                                        child: Text(
-                                          CommonFunctions.getInitials(
-                                                  filterTitle)
-                                              .toUpperCase(),
-                                          style: TextStyle(
-                                              fontSize: 20.0,
-                                              color: Colors.white,
-                                              letterSpacing: 2.0,
-                                              fontWeight: FontWeight.w900),
-                                        ),
-                                      ),
-                              ),
-                            ),
-                          ],
+                                        senderIndex]["Name"];
+                                    filterTitle = name;
+                                    filteredMember = true;
+                                    allNotification = false;
+                                    selectedUserId = context
+                                        .read<MySettingsListener>()
+                                        .notificationMembersList[senderIndex]
+                                            ["UserSeqId"]
+                                        .toString();
+                                    CommonUtil().getMemberFilterNotification(
+                                        context,
+                                        apiURL,
+                                        startPosition,
+                                        profileData,
+                                        qrData,
+                                        context
+                                                .read<MySettingsListener>()
+                                                .notificationMembersList[
+                                            senderIndex]['UserSeqId'],
+                                        widget.categoryList[selectedtypeIndex]
+                                            ['notificationtype'],
+                                        filterSelectedDate,
+                                        allNotification);
+                                  });
+                                }
+                              }, filteredMember)
+                            },
+                            trailing: filterMemberImagePath != null
+                                ? CircleAvatar(
+                                    backgroundImage:
+                                        NetworkImage(filterMemberImagePath),
+                                  )
+                                : CircleAvatar(
+                                    backgroundColor: HexColor("#ffb703"),
+                                    child: Text(
+                                      CommonFunctions.getInitials(filterTitle)
+                                          .toUpperCase(),
+                                      style: TextStyle(
+                                          fontSize: 20.0,
+                                          color: Colors.white,
+                                          letterSpacing: 2.0,
+                                          fontWeight: FontWeight.w900),
+                                    ),
+                                  ),
+                          ),
                         ),
-                      ),
-                      // Navigate to the Search Screen
-                      /* 
+                      ],
+                    ),
+                  ),
+                  // Navigate to the Search Screen
+                  /* 
                   Container(
                     margin: EdgeInsets.only(right: 10),
                     child: InkWell(
@@ -596,55 +606,53 @@ class _NotificationsState extends State<Notifications>
                             })),
                   ),
                  */
-                    ]),
-                extendBodyBehindAppBar: false,
-                body: TabBarView(
-                  controller: _tabController,
-                  children: List.generate(
-                    widget.categoryList.length,
-                    (index) => Tab(
-                      child: RefreshIndicator(
-                        onRefresh: refreshListWithFilter,
-                        //key: refreshKey,
-                        child: Container(
-                          constraints: BoxConstraints.expand(),
-                          decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                            begin: Alignment.topRight,
-                            end: Alignment.bottomLeft,
-                            colors: [
-                              Color.fromARGB(255, 246, 249, 254),
-                              Color.fromARGB(255, 230, 231, 239),
-                            ],
-                          )),
-                          child: Container(
-                            margin:
-                                EdgeInsets.only(top: 10, left: 10, right: 10),
-                            child: Consumer<MySettingsListener>(
-                                builder: (context, data, settingsDta) {
-                              return ListView.builder(
-                                  scrollDirection: Axis.vertical,
-                                  physics: AlwaysScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  itemCount: data.notificationList.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index1) {
-                                    return _makeCard(
-                                        context,
-                                        index1,
-                                        data.notificationList,
-                                        context
-                                            .read<MySettingsListener>()
-                                            .notificationCategoryList);
-                                  });
-                            }),
-                          ),
-                        ),
+                ]),
+            extendBodyBehindAppBar: false,
+            body: TabBarView(
+              controller: _tabController,
+              children: List.generate(
+                widget.categoryList.length,
+                (index) => Tab(
+                  child: RefreshIndicator(
+                    onRefresh: refreshListWithFilter,
+                    //key: refreshKey,
+                    child: Container(
+                      constraints: BoxConstraints.expand(),
+                      decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                        begin: Alignment.topRight,
+                        end: Alignment.bottomLeft,
+                        colors: [
+                          Color.fromARGB(255, 246, 249, 254),
+                          Color.fromARGB(255, 230, 231, 239),
+                        ],
+                      )),
+                      child: Container(
+                        margin: EdgeInsets.only(top: 10, left: 10, right: 10),
+                        child: Consumer<MySettingsListener>(
+                            builder: (context, data, settingsDta) {
+                          return ListView.builder(
+                              scrollDirection: Axis.vertical,
+                              physics: AlwaysScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: data.notificationList.length,
+                              itemBuilder: (BuildContext context, int index1) {
+                                return _makeCard(
+                                    context,
+                                    index1,
+                                    data.notificationList,
+                                    context
+                                        .read<MySettingsListener>()
+                                        .notificationCategoryList);
+                              });
+                        }),
                       ),
                     ),
                   ),
-                )),
-          )));
+                ),
+              ),
+            )),
+      ));
   logoutDevice() {
     MyCustomAlertDialog().showCustomAlert(
         context, "Notification", "Do you want to logout?", false, () async {
@@ -768,7 +776,7 @@ class _NotificationsState extends State<Notifications>
         );
       },
     );
-    return Future.value(true);
+    return Future.value(false);
   }
 
   void openFilterCategoryBottomSheet(
