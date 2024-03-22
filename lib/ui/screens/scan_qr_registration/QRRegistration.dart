@@ -278,187 +278,209 @@ class _QRRegistrationState extends State<QRRegistration> {
                                     context: context,
                                     enableDrag: false,
                                     isDismissible: false,
-                                    isScrollControlled: false,
+                                    isScrollControlled: true,
                                     builder: (context) {
-                                      return Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          getBottomSheetActionBar(
-                                              context,
-                                              'Manual Registration',
-                                              false,
-                                              Colors.white),
-                                          Container(
-                                            width: double.maxFinite,
-                                            margin: EdgeInsets.only(
-                                                left: 12, bottom: 5),
-                                            child: Text(
-                                              "  Registration Code",
-                                              textAlign: TextAlign.start,
-                                              style: TextStyle(
-                                                  fontSize: 14,
-                                                  fontWeight:
-                                                      FontWeight.normal),
-                                            ),
-                                          ),
-                                          Container(
-                                            margin: EdgeInsets.only(top: 0),
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 20),
-                                            child: TextField(
-                                              maxLines: 3,
-                                              decoration: new InputDecoration(
-                                                  border:
-                                                      new OutlineInputBorder(
-                                                    borderSide: new BorderSide(
-                                                      color: Colors.grey,
-                                                    ),
-                                                  ),
-                                                  enabledBorder:
-                                                      const OutlineInputBorder(
-                                                    borderSide:
-                                                        const BorderSide(
-                                                            color: Colors.grey,
-                                                            width: 2.0),
-                                                  ),
-                                                  focusedBorder:
-                                                      const OutlineInputBorder(
-                                                    borderSide:
-                                                        const BorderSide(
-                                                            color: Colors.black,
-                                                            width: 2.0),
-                                                  ),
-                                                  labelStyle: TextStyle(
-                                                      color: Colors.black),
-                                                  hintText:
-                                                      'Paste your registration code here',
-                                                  labelText: '',
-                                                  focusColor: Colors.black,
-                                                  prefixText: ' ',
-                                                  suffixText: '',
-                                                  suffixStyle: const TextStyle(
-                                                      color: Colors.green)),
-                                              onChanged: (text) {
-                                                print(text);
-                                              },
-                                              controller: codeController,
-                                            ),
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
+                                      return Padding(
+                                          padding: EdgeInsets.only(
+                                              bottom: MediaQuery.of(context)
+                                                  .viewInsets
+                                                  .bottom),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
                                             children: [
+                                              getBottomSheetActionBar(
+                                                  context,
+                                                  'Manual Registration',
+                                                  false,
+                                                  Colors.white),
                                               Container(
-                                                  alignment:
-                                                      Alignment.centerRight,
-                                                  margin: EdgeInsets.all(10),
-                                                  child: SizedBox(
-                                                      height: 45,
-                                                      child: ElevatedButton(
-                                                        child: Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          mainAxisSize:
-                                                              MainAxisSize.min,
-                                                          children: [
-                                                            Text(
-                                                              "Proceed",
-                                                              style: TextStyle(
-                                                                  fontSize:
-                                                                      18.0,
-                                                                  fontFamily:
-                                                                      "Montserrat",
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold),
-                                                            ),
-                                                            //Icon(Icons.payment)
-                                                          ],
-                                                        ),
-                                                        onPressed: () {
-                                                          Navigator.pop(
-                                                              context);
-                                                          qrCodeResult = "";
-                                                          processQRCode(
-                                                              codeController
-                                                                  .text);
-                                                        },
-                                                        style: ElevatedButton
-                                                            .styleFrom(
-                                                          backgroundColor:
-                                                              Color.fromARGB(
-                                                                  255,
-                                                                  6,
-                                                                  105,
-                                                                  199),
-                                                          textStyle: TextStyle(
-                                                              color:
-                                                                  Colors.white),
-                                                          shape: RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          60.0)),
-                                                        ),
-                                                      ))),
+                                                width: double.maxFinite,
+                                                margin: EdgeInsets.only(
+                                                    left: 12, bottom: 5),
+                                                child: Text(
+                                                  "  Registration Code",
+                                                  textAlign: TextAlign.start,
+                                                  style: TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.normal),
+                                                ),
+                                              ),
                                               Container(
-                                                  alignment:
-                                                      Alignment.centerRight,
-                                                  margin: EdgeInsets.all(10),
-                                                  child: SizedBox(
-                                                      height: 45,
-                                                      child: ElevatedButton(
-                                                        child: Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          mainAxisSize:
-                                                              MainAxisSize.min,
-                                                          children: [
-                                                            Text(
-                                                              "Cancel",
-                                                              style: TextStyle(
-                                                                  fontSize:
-                                                                      18.0,
-                                                                  fontFamily:
-                                                                      "Montserrat",
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold),
-                                                            ),
-                                                            //Icon(Icons.payment)
-                                                          ],
-                                                        ),
-                                                        onPressed: () {
-                                                          Navigator.pop(
-                                                              context);
-                                                          // _reSend();
-                                                        },
-                                                        style: ElevatedButton
-                                                            .styleFrom(
-                                                          backgroundColor:
-                                                              Color.fromARGB(
-                                                                  255,
-                                                                  6,
-                                                                  105,
-                                                                  199),
-                                                          textStyle: TextStyle(
+                                                margin: EdgeInsets.only(top: 0),
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 20),
+                                                child: TextField(
+                                                  maxLines: 3,
+                                                  decoration:
+                                                      new InputDecoration(
+                                                          border:
+                                                              new OutlineInputBorder(
+                                                            borderSide:
+                                                                new BorderSide(
                                                               color:
-                                                                  Colors.white),
-                                                          shape: RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          60.0)),
-                                                        ),
-                                                      ))),
+                                                                  Colors.grey,
+                                                            ),
+                                                          ),
+                                                          enabledBorder:
+                                                              const OutlineInputBorder(
+                                                            borderSide:
+                                                                const BorderSide(
+                                                                    color: Colors
+                                                                        .grey,
+                                                                    width: 2.0),
+                                                          ),
+                                                          focusedBorder:
+                                                              const OutlineInputBorder(
+                                                            borderSide:
+                                                                const BorderSide(
+                                                                    color: Colors
+                                                                        .black,
+                                                                    width: 2.0),
+                                                          ),
+                                                          labelStyle: TextStyle(
+                                                              color:
+                                                                  Colors.black),
+                                                          hintText:
+                                                              'Paste your registration code here',
+                                                          labelText: '',
+                                                          focusColor:
+                                                              Colors.black,
+                                                          prefixText: ' ',
+                                                          suffixText: '',
+                                                          suffixStyle:
+                                                              const TextStyle(
+                                                                  color: Colors
+                                                                      .green)),
+                                                  onChanged: (text) {
+                                                    print(text);
+                                                  },
+                                                  controller: codeController,
+                                                ),
+                                              ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.end,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  Container(
+                                                      alignment:
+                                                          Alignment.centerRight,
+                                                      margin:
+                                                          EdgeInsets.all(10),
+                                                      child: SizedBox(
+                                                          height: 45,
+                                                          child: ElevatedButton(
+                                                            child: Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .center,
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .min,
+                                                              children: [
+                                                                Text(
+                                                                  "Proceed",
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          18.0,
+                                                                      fontFamily:
+                                                                          "Montserrat",
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold),
+                                                                ),
+                                                                //Icon(Icons.payment)
+                                                              ],
+                                                            ),
+                                                            onPressed: () {
+                                                              Navigator.pop(
+                                                                  context);
+                                                              qrCodeResult = "";
+                                                              processQRCode(
+                                                                  codeController
+                                                                      .text);
+                                                            },
+                                                            style:
+                                                                ElevatedButton
+                                                                    .styleFrom(
+                                                              backgroundColor:
+                                                                  Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          6,
+                                                                          105,
+                                                                          199),
+                                                              textStyle: TextStyle(
+                                                                  color: Colors
+                                                                      .white),
+                                                              shape: RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              60.0)),
+                                                            ),
+                                                          ))),
+                                                  Container(
+                                                      alignment:
+                                                          Alignment.centerRight,
+                                                      margin:
+                                                          EdgeInsets.all(10),
+                                                      child: SizedBox(
+                                                          height: 45,
+                                                          child: ElevatedButton(
+                                                            child: Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .center,
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .min,
+                                                              children: [
+                                                                Text(
+                                                                  "Cancel",
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          18.0,
+                                                                      fontFamily:
+                                                                          "Montserrat",
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold),
+                                                                ),
+                                                                //Icon(Icons.payment)
+                                                              ],
+                                                            ),
+                                                            onPressed: () {
+                                                              Navigator.pop(
+                                                                  context);
+                                                              // _reSend();
+                                                            },
+                                                            style:
+                                                                ElevatedButton
+                                                                    .styleFrom(
+                                                              backgroundColor:
+                                                                  Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          6,
+                                                                          105,
+                                                                          199),
+                                                              textStyle: TextStyle(
+                                                                  color: Colors
+                                                                      .white),
+                                                              shape: RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              60.0)),
+                                                            ),
+                                                          ))),
+                                                ],
+                                              )
                                             ],
-                                          )
-                                        ],
-                                      );
+                                          ));
                                     },
                                   );
                                 },

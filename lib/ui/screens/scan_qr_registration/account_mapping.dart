@@ -432,7 +432,7 @@ class _AccountMappingState extends State<AccountMapping> {
                         widget.dataResponseModel,
                         widget.decryptdata,
                         widget.DeviceId,
-                        widget.DevicePlatform);
+                        widget.DevicePlatform,context);
                   }),
                   /* ElevatedButton(
                     child: Row(
@@ -472,7 +472,7 @@ class _AccountMappingState extends State<AccountMapping> {
   }
 
   _onButtonPressed(
-      dataResponseModel, decryptdata, DeviceId, DevicePlatform) async {
+      dataResponseModel, decryptdata, DeviceId, DevicePlatform,context) async {
     print(dataResponseModel);
     print(decryptdata);
     print("DeviceId " + DeviceId);
@@ -558,7 +558,7 @@ class _AccountMappingState extends State<AccountMapping> {
     };
     print(data); */
     Future<Map<String, dynamic>> res = RestApiProvider().postNewData(data,
-        qrJson["ApiUrl"], AppSettings.RegisterParentApp, context, false, false);
+        qrJson["ApiUrl"], AppSettings.RegisterParentApp, context, true, false);
     res
         .then((value) => {
               successResponse(value, decryptdata, forceToUpdateData,
