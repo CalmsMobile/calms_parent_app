@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 Widget button(
-    String text, isCheckBox1Selected, isCheckBox2Selected, _onButtonPressed) {
+    String text, isCheckBox1Selected, isCheckBox2Selected,isPressed, _onButtonPressed) {
   return ElevatedButton(
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -18,7 +18,7 @@ Widget button(
       ],
     ),
     onPressed:
-        isCheckBox1Selected && isCheckBox2Selected ? _onButtonPressed : null,
+        isCheckBox1Selected && isCheckBox2Selected && !isPressed ? _onButtonPressed : null,
     style: ElevatedButton.styleFrom(
       fixedSize: Size(150, 40),
       backgroundColor: Color.fromARGB(255, 6, 105, 199),

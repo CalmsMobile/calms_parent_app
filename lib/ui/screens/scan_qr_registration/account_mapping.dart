@@ -37,6 +37,7 @@ class AccountMapping extends StatefulWidget {
 class _AccountMappingState extends State<AccountMapping> {
   bool isCheckBox1Selected = false;
   bool isCheckBox2Selected = false;
+  bool isPressed = false;
   bool isDisableButton = false;
   @override
   void initState() {
@@ -427,12 +428,13 @@ class _AccountMappingState extends State<AccountMapping> {
                         ]),
                       )),
                   button("Register", isCheckBox1Selected, isCheckBox2Selected,
-                      () {
+                      isPressed, () {
                     _onButtonPressed(
                         widget.dataResponseModel,
                         widget.decryptdata,
                         widget.DeviceId,
-                        widget.DevicePlatform,context);
+                        widget.DevicePlatform,
+                        context);
                   }),
                   /* ElevatedButton(
                     child: Row(
@@ -472,12 +474,15 @@ class _AccountMappingState extends State<AccountMapping> {
   }
 
   _onButtonPressed(
-      dataResponseModel, decryptdata, DeviceId, DevicePlatform,context) async {
+      dataResponseModel, decryptdata, DeviceId, DevicePlatform, context) async {
+    setState(() {
+      isPressed = true;
+    });
     print(dataResponseModel);
     print(decryptdata);
     print("DeviceId " + DeviceId);
     if (kDebugMode) {
-      DeviceId = "Test12345";
+      DeviceId = "Test333";
     }
     //String gg = await MySharedPref().getData(AppSettings.fcmId);
     String FCMToken = await MySharedPref().getData(AppSettings.fcmId);
