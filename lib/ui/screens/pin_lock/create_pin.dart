@@ -31,7 +31,7 @@ class _CreatePinState extends State<CreatePin> {
         await MySharedPref().getData(AppSettings.Sp_Payload_Authorize);
     String apiUrl = await MySharedPref().getData(AppSettings.Sp_Api_Url);
     
-   kDebugMode? _onButtonPressed():(){};
+   //kDebugMode? _onButtonPressed():(){};
   }
 
   @override
@@ -276,9 +276,9 @@ class _CreatePinState extends State<CreatePin> {
   }
 
   _onButtonPressed() async {
-    if(kDebugMode)
+   /*  if(kDebugMode)
     MySharedPref().saveData("123456", AppSettings.Sp_AppPIN);
-    else
+    else */
     MySharedPref().saveData(pinController.text, AppSettings.Sp_AppPIN);
     bool appVerified =
         await MySharedPref().getBooleanData(AppSettings.Sp_App_Verified);

@@ -349,43 +349,43 @@ class _SplashScreenState extends State<SplashScreen> {
     print("appVerified >> $appVerified");
     print("token >> $token");
     print("DeviceId >> $DeviceId");
-    Timer(
-        Duration(seconds: 3),
-        () => {
+    /* Timer(
+        Duration(seconds: 1),
+        () => { */
               if (token == "" && profileData == "" && qrCodeData == "")
                 {
                   Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => QRRegistration()))
+                      MaterialPageRoute(builder: (context) => QRRegistration()));
                 }
               else if (token != "" && profileData != "" && appPIN != "")
                 {
                   if (appVerified)
                     {
-                      if (kDebugMode)
+                      /* if (kDebugMode)
                         {
                           Navigator.pushReplacement(context,
                               MaterialPageRoute(builder: (context) => MyApp()))
                         }
-                      else
+                      else */
                         Navigator.pushReplacement(context,
-                            MaterialPageRoute(builder: (context) => PINEnter()))
+                            MaterialPageRoute(builder: (context) => PINEnter()));
                     }
                   else
                     {
                       verifySignIn(context, qrCodeData, profileData, token,
-                          DeviceId, true)
+                          DeviceId, true);
                     }
                 }
               else if (token != "" && profileData != "" && appPIN == "")
                 {
                   if (appVerified)
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => CreatePin()))
+                        MaterialPageRoute(builder: (context) => CreatePin()));
                   else
                     verifySignIn(
-                        context, qrCodeData, profileData, token, DeviceId, true)
+                        context, qrCodeData, profileData, token, DeviceId, true);
                 }
-            });
+         //   });
   }
 
   verifySignIn(
