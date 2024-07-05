@@ -451,12 +451,18 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               //width: 100,
               margin: EdgeInsets.only(right: 10),
               child: Row(children: [
-                InkWell(
+              Consumer<MySettingsListener>(
+                        builder: (context, data, settingsDta) {
+                      return  InkWell(
                   onTap: () {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => Notifications()));
+                            builder: (context) => Notifications(
+                        NotifyOnly: true,
+                        categoryList: data.NotificationCategoryList,
+                        name: 'NotificationDashboard',
+                      )));
                   },
                   child: Container(
                     width: 40,
@@ -476,7 +482,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       ),
                     ),
                   ),
-                ),
+                );}),
                 Stack(
                   children: [
                     InkWell(
@@ -849,7 +855,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                             context,
                                             data.familyList[index]['UserSeqId'],
                                             data.familyList[index]
-                                                ['RefBranchSeqId']);
+                                                ['RefBranchSeqId'],data.NotificationCategoryList);
                                       },
                                       initialPage: data.familyPos),
                                 ),
@@ -858,6 +864,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                 ),
                                 Text(
                                   data.familyList[data.familyPos]['Name'],
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                       fontSize: 22.0,
                                       color: Colors.black87,

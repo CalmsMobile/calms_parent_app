@@ -56,7 +56,7 @@ class CommonUtil {
       if (response['Table3'] != null) {
         MySharedPref().saveData(
             jsonEncode(response['Table3'][0]), AppSettings.Sp_ProfileData);
-
+//response['Table3'][0]['NotifyOnly'] = true;
         if (response['Table3'][0]['NotifyOnly'])
           Navigator.pushReplacement(
               context,
@@ -79,14 +79,14 @@ class CommonUtil {
               response['Table1'][context.read<MySettingsListener>().familyPos]
                   ['UserSeqId'],
               response['Table1'][context.read<MySettingsListener>().familyPos]
-                  ['RefBranchSeqId']);
+                  ['RefBranchSeqId'],response['Table4']);
         }
       }
     }
   }
 
   Future<void> getDashboard(
-      BuildContext context, RefUserSeqId, RefBranchSeqId) async {
+      BuildContext context, RefUserSeqId, RefBranchSeqId,NotificationCategoryList) async {
     var ParamData = {
       "RefUserSeqId": RefUserSeqId,
       "RefBranchSeqId": RefBranchSeqId
@@ -98,15 +98,15 @@ class CommonUtil {
       true,
     );
     res
-        .then((response) => {getDashboardSuccess(context, response)})
+        .then((response) => {getDashboardSuccess(context, response,NotificationCategoryList)})
         .onError((error, stackTrace) => {authorizedPostRequestError(error)});
   }
 
-  getDashboardSuccess(BuildContext context, Map<String, dynamic> response) {
+  getDashboardSuccess(BuildContext context, Map<String, dynamic> response,NotificationCategoryList) {
     if (response['Table'][0]['code'] == 10) {
       print("getDashboard success");
       context.read<MySettingsListener>().updateDashBoardList(
-          response['Table1'], response['Table2'], response['Table3']);
+          response['Table1'], response['Table2'], response['Table3'],NotificationCategoryList);
     }
   }
 

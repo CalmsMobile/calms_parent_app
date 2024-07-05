@@ -42,51 +42,49 @@ class TopupMemberListView extends StatelessWidget {
                       padding: const EdgeInsets.all(20.0),
                       child: Column(
                         children: [
-                          
-                              Row(
-                                children: [
-                                  Container(
-                                    child: membersList[index]['ImgPathUrl'] !=
-                                            null
-                                        ? CircleAvatar(
-                                            radius: 25,
-                                            backgroundImage: NetworkImage(
-                                                imgBaseUrl +
-                                                    membersList[index]
-                                                        ["ImgPathUrl"]),
-                                          )
-                                        : CircleAvatar(
-                                            radius: 25,
-                                            backgroundColor: Colors.blue[700],
-                                            child: Text(
-                                              CommonFunctions.getInitials(
-                                                  membersList[index]['Name']).toUpperCase(),
-                                              style: TextStyle(
-                                                  fontSize: 22.0,
-                                                  color: Colors.white,
-                                                  letterSpacing: 2.0,
-                                                  fontWeight: FontWeight.w900),
-                                            ),
-                                          ),
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(left: 10),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                       
-                                        Text(
-                                          membersList[index]['Name'],
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 1,
+                          Row(
+                            children: [
+                              Container(
+                                child: membersList[index]['ImgPathUrl'] != null
+                                    ? CircleAvatar(
+                                        radius: 25,
+                                        backgroundImage: NetworkImage(
+                                            imgBaseUrl +
+                                                membersList[index]
+                                                    ["ImgPathUrl"]),
+                                      )
+                                    : CircleAvatar(
+                                        radius: 25,
+                                        backgroundColor: Colors.blue[700],
+                                        child: Text(
+                                          CommonFunctions.getInitials(
+                                                  membersList[index]['Name'])
+                                              .toUpperCase(),
                                           style: TextStyle(
-                                            fontSize: 20,
-                                            color: Colors.green[900],
-                                            fontWeight: FontWeight.w500,
-                                          ),
+                                              fontSize: 22.0,
+                                              color: Colors.white,
+                                              letterSpacing: 2.0,
+                                              fontWeight: FontWeight.w900),
                                         ),
-                                        /* membersList[index]['RelationShip'] != ""
+                                      ),
+                              ),
+                              Expanded(
+                                  child: Container(
+                                margin: EdgeInsets.only(left: 10),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      membersList[index]['Name'],
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 1,
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        color: Colors.green[900],
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                    /* membersList[index]['RelationShip'] != ""
                                       ? Text(
                                           '(${membersList[index]['RelationShip']})',
                                           style: TextStyle(
@@ -97,21 +95,20 @@ class TopupMemberListView extends StatelessWidget {
                                           ),
                                         )
                                       : SizedBox(), */
-                                        Text(
-                                          'Current Balance : ${CurrencyCode} ${membersList[index]['Balance'].toStringAsFixed(2)}',
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            color:
-                                                Color.fromARGB(255, 83, 83, 83),
-                                            fontWeight: FontWeight.w700,
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
-                             
+                                    Text(
+                                      'Current Balance : ${CurrencyCode} ${membersList[index]['Balance'].toStringAsFixed(2)}',
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        color: Color.fromARGB(255, 83, 83, 83),
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ))
+                            ],
+                          ),
+
                           SizedBox(
                             height: 10,
                           ),
@@ -145,7 +142,8 @@ class TopupMemberListView extends StatelessWidget {
                                 fontSize: 20)), */
                               prefixIconConstraints: const BoxConstraints(),
                               prefixIcon: Container(
-                                margin: EdgeInsets.symmetric(horizontal: 8,vertical: 0),
+                                margin: EdgeInsets.symmetric(
+                                    horizontal: 8, vertical: 0),
                                 child: Text(CurrencyCode,
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
@@ -180,7 +178,6 @@ class TopupMemberListView extends StatelessWidget {
                     ), //Padding
                     //SizedBox
                   );
-                  
                 }),
           ),
         ],

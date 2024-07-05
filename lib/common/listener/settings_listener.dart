@@ -22,6 +22,7 @@ class MySettingsListener with ChangeNotifier {
   List _dashboardSpendingList = [];
   List _dashboardRecentActivityList = [];
   List _dashboardOutStandingList = [];
+  List _NotificationCategoryList = [];
 
   List _calendarHolidaysList = [];
   List _calendarAttendanceList = [];
@@ -72,6 +73,9 @@ class MySettingsListener with ChangeNotifier {
 
   UnmodifiableListView<dynamic> get dashboardOutStandingList =>
       UnmodifiableListView(_dashboardOutStandingList);
+      
+  UnmodifiableListView<dynamic> get NotificationCategoryList =>
+      UnmodifiableListView(_NotificationCategoryList);
 
   UnmodifiableListView<dynamic> get notificationList =>
       UnmodifiableListView(_notificationList);
@@ -142,10 +146,11 @@ class MySettingsListener with ChangeNotifier {
   }
 
   updateDashBoardList(List dashboardSpendingList,
-      List dashboardRecentActivityList, List dashboardOutStandingList) {
+      List dashboardRecentActivityList, List dashboardOutStandingList,List NotificationCategoryList) {
     this._dashboardSpendingList = dashboardSpendingList;
     this._dashboardRecentActivityList = dashboardRecentActivityList;
     this._dashboardOutStandingList = dashboardOutStandingList;
+    this._NotificationCategoryList = NotificationCategoryList;
     notifyListeners();
   }
 

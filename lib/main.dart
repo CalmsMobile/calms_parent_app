@@ -361,12 +361,12 @@ class _SplashScreenState extends State<SplashScreen> {
                 {
                   if (appVerified)
                     {
-                      /* if (kDebugMode)
-                        {
+                      if (kDebugMode)
+                       
                           Navigator.pushReplacement(context,
-                              MaterialPageRoute(builder: (context) => MyApp()))
-                        }
-                      else */
+                              MaterialPageRoute(builder: (context) => MyApp()));
+                       
+                      else
                         Navigator.pushReplacement(context,
                             MaterialPageRoute(builder: (context) => PINEnter()));
                     }
