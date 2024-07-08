@@ -62,6 +62,10 @@ class AppSettings {
   static String GetCartTermMealItems = 'parentapp/GetCartTermMealItems';
   static String GetGatewayListForCart = 'parentapp/GetGatewayListForCart';
 
+  static String WholeTermCancel = 'parentapp/WholeTermCancel';
+  static String CancelTermMealItem = 'parentapp/CancelTermMealItem';
+  static String ChangeMealItem = 'parentapp/ChangeMealItem';
+
   static String avatarPlaceholder =
       "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png";
   static String vapidKey =

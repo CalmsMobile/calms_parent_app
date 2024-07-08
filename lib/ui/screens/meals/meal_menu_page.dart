@@ -470,6 +470,15 @@ class _MealMenuPageState extends State<MealMenuPage> {
     });
   }
 
+  void onCancelMeal(meal, index) {
+    print("call back index ${meal.toString()}");
+   /*  context.read<MySettingsListener>().updatePoTypeMealsCartStatus(isDelete,
+        widget.arguments['UserSeqId'], meal, widget.arguments['poTypesList']); */
+    setState(() {
+      
+    });
+  }
+
   Widget _getFilterFAB() {
     return ExpandableFab(
       children: [

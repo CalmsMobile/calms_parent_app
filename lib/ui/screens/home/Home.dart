@@ -464,24 +464,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         name: 'NotificationDashboard',
                       )));
                   },
-                  child: Container(
-                    width: 40,
-                    height: 40,
-                    //margin: EdgeInsets.only(left: 10),
-                    child: ClipOval(
-                      child: Material(
-                        color: Colors.blue[900], // Button color
-                        child: SizedBox(
-                            width: 40,
-                            height: 40,
-                            child: Icon(
-                              Icons.notifications_rounded,
-                              color: Colors.white,
-                              size: 25,
-                            )),
-                      ),
-                    ),
-                  ),
+                  child: Icon(
+                              Icons.notifications_outlined,
+                              color: Colors.blue,
+                              size: 35,
+                            )
                 );}),
                 Stack(
                   children: [
@@ -495,24 +482,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           ),
                         );
                       },
-                      child: Container(
-                        width: 40,
-                        height: 40,
-                        margin: EdgeInsets.only(left: 10),
-                        child: ClipOval(
-                          child: Material(
-                            color: Colors.blue, // Button color
-                            child: SizedBox(
-                                width: 40,
-                                height: 40,
-                                child: Icon(
-                                  Icons.shopping_cart_rounded,
-                                  color: Colors.white,
-                                  size: 25,
-                                )),
-                          ),
-                        ),
-                      ),
+                      child: Icon(
+                                  Icons.shopping_cart_outlined,
+                                  color: Colors.blue,
+                                  size: 35,
+                                )
                     ),
                     Consumer<MySettingsListener>(
                         builder: (context, data, settingsDta) {
@@ -550,24 +524,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       ),
                     );
                   },
-                  child: Container(
-                    width: 40,
-                    height: 40,
-                    margin: EdgeInsets.only(left: 10),
-                    child: ClipOval(
-                      child: Material(
-                        color: Colors.blue[900], // Button color
-                        child: SizedBox(
-                            width: 40,
-                            height: 40,
-                            child: Icon(
-                              Icons.settings_rounded,
-                              color: Colors.white,
-                              size: 25,
-                            )),
-                      ),
-                    ),
-                  ),
+                  child: Icon(
+                              Icons.settings_outlined,
+                              color: Colors.blue,
+                              size: 35,
+                            )
                 ),
               ]),
             ),

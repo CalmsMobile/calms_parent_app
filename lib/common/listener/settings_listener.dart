@@ -341,6 +341,10 @@ class MySettingsListener with ChangeNotifier {
     print(_cartList);
     notifyListeners();
   }
+  updatePoTypeMeals(UserSeqId, mealData, poTypesList) {
+   
+    notifyListeners();
+  }
 
   updateMealsInFinalCartList(List mealsList) {
     for (var i = 0; i < mealsList.length; i++) {

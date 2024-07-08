@@ -35,7 +35,124 @@ class MyCustomAlertDialog {
                     child: Text(
                       description,
                       style: TextStyle(
-                          fontSize: 18, color:isError?Colors.red: Color.fromARGB(255, 0, 0, 0)),
+                          fontSize: 18,
+                          color: isError
+                              ? Colors.red
+                              : Color.fromARGB(255, 0, 0, 0)),
+                      softWrap: true,
+                      textAlign: TextAlign.start,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            if (_okPress != null)
+              Container(
+                  alignment: Alignment.centerRight,
+                  margin: EdgeInsets.all(10),
+                  child: SizedBox(
+                      height: 45,
+                      child: ElevatedButton(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              okBtnText,
+                              style: TextStyle(
+                                  fontSize: 18.0,
+                                  fontFamily: "Montserrat",
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            //Icon(Icons.payment)
+                          ],
+                        ),
+                        onPressed: () {
+                          //Navigator.pop(context);
+                          _okPress();
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color.fromARGB(255, 6, 105, 199),
+                          textStyle: TextStyle(color: Colors.white),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(60.0)),
+                        ),
+                      ))),
+            if (_cancelPress != null)
+              Container(
+                  alignment: Alignment.centerRight,
+                  margin: EdgeInsets.all(10),
+                  child: SizedBox(
+                      height: 45,
+                      child: ElevatedButton(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              cancelBtnText,
+                              style: TextStyle(
+                                  fontSize: 18.0,
+                                  fontFamily: "Montserrat",
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            //Icon(Icons.payment)
+                          ],
+                        ),
+                        onPressed: () {
+                          Navigator.pop(context);
+                          _cancelPress();
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color.fromARGB(255, 6, 105, 199),
+                          textStyle: TextStyle(color: Colors.white),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(60.0)),
+                        ),
+                      ))),
+          ],
+        );
+      },
+    );
+  }
+
+  void mealCustomAlert(
+      BuildContext buildContext,
+      String title,
+      String description,
+      bool isError,
+      bool enableDrag,
+      bool isDismissible,
+      bool isScrollControlled,
+      _okPress,
+      _cancelPress,
+      okBtnText,
+      cancelBtnText) {
+    showModalBottomSheet(
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(60.0))),
+      context: buildContext,
+      enableDrag: enableDrag,
+      isDismissible: isDismissible,
+      isScrollControlled: isScrollControlled,
+      builder: (context) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            getBottomSheetActionBar(context, title, false, Colors.white),
+            Container(
+              margin: EdgeInsets.only(top: 0),
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      description,
+                      style: TextStyle(
+                          fontSize: 18,
+                          color: isError
+                              ? Colors.red
+                              : Color.fromARGB(255, 0, 0, 0)),
                       softWrap: true,
                       textAlign: TextAlign.start,
                     ),
@@ -274,7 +391,8 @@ class MyCustomAlertDialog {
                             borderRadius: BorderRadius.circular(60.0)),
                       ),
                     ))),
-             */Container(
+             */
+            Container(
                 alignment: Alignment.centerRight,
                 margin: EdgeInsets.all(10),
                 child: SizedBox(
@@ -310,7 +428,7 @@ class MyCustomAlertDialog {
       },
     );
   }
- 
+
   void showCustomInputAlert(BuildContext context, String title,
       TextEditingController searchController, _okPress, _cancelPress) {
     Alert(
@@ -377,6 +495,4 @@ class MyCustomAlertDialog {
       ),
     );
   }
-
-
 }

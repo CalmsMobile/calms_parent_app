@@ -216,7 +216,7 @@ class _MealOrderState extends State<MealOrder> {
                                 data.poList,
                                 familyList[senderIndex],
                                 imgBaseUrl,
-                                widget.arguments["profileData"])
+                                widget.arguments["profileData"],getData)
                             : NoDataCard(AppSettings.imgAssetNoMeal,
                                 AppSettings.titleNoMeal, AppSettings.msgNoMeal);
                       } else {

@@ -2,6 +2,7 @@ import 'package:calms_parent_latest/common/HexColor.dart';
 import 'package:calms_parent_latest/common/common_api.dart';
 import 'package:calms_parent_latest/common/util/common_funtions.dart';
 
+import '../../../common/alert_dialog.dart';
 import '../../../common/app_settings.dart';
 import '../../../common/listener/settings_listener.dart';
 import '/common/constants.dart';
@@ -268,6 +269,105 @@ class MealPager extends StatelessWidget {
                                     ),
                                   ),
                                 ),
+                            if (poTypesList['PreOrderType'] == 'Terms')
+                                 InkWell(
+                                  onTap: () {},
+                                  child: Container(
+                                    //margin: EdgeInsets.only(bottom: 10),
+                                    child: ClipOval(
+                                      child: Material(
+                                        color: mealList_[index]['AllowToCancel']
+                                            ? Colors.red
+                                            : Colors.blue, // Button color
+                                        child: InkWell(
+                                          onTap: () async {
+                                            mealList_[index]['AllowToCancel']
+                                                ? MyCustomAlertDialog().mealCustomAlert(
+                                                                        context,
+                                                                        "Alert!",
+                                                                        'Do you want to cancel meal?',
+                                                                        true,
+                                                                        true,
+                                                                        true,
+                                                                        true,
+                                                                        () {
+                                                                      Navigator.pop(
+                                                                          context);
+                                                                          print(mealList_[index]);
+                                                                          print(poTypesList);
+                                                                      CommonUtil().cancelTermMealItem(
+                                                                          context,
+                                                                          poTypesList['RefBranchSeqId'],
+                                                                          poTypesList['RefMemberTypeSeqId'],
+                                                                          mealList_[index]['ItemSeqId'],
+                                                                          UserSeqId,
+                                                                          mealList_[index]['ItemSeqId'],
+                                                                          mealList_[index]['RefTransSeqId'],
+                                                                          poTypesList['CurrentDateTime'],
+                                                                          mealList_[index]['RefPackageSeqId'],
+                                                                          poTypesList['RefMemberTypeSeqId'],
+                                                                          '',
+                                                                          (){}
+                                                                          );
+                                                                    }, () {
+                                                                      Navigator.pop(
+                                                                          context);
+                                                                    }, "Yes",
+                                                                        "No")
+                                                                  
+                                                : MyCustomAlertDialog().mealCustomAlert(
+                                                                        context,
+                                                                        "Alert!",
+                                                                        'Do you want to change meal?',
+                                                                        true,
+                                                                        true,
+                                                                        true,
+                                                                        true,
+                                                                        () {
+                                                                      Navigator.pop(
+                                                                          context);
+                                                                          print(mealList_[index]);
+                                                                          print(poTypesList);
+                                                                      CommonUtil().changeMealItem(
+                                                                          context,
+                                                                          poTypesList['RefBranchSeqId'],
+                                                                          poTypesList['RefMemberTypeSeqId'],
+                                                                          mealList_[index]['ItemSeqId'],
+                                                                          mealList_[index]['ItemSeqId'],
+                                                                          poTypesList['RefTransSeqId'],
+                                                                           poTypesList['CurrentDateTime'],
+                                                                          mealList_[index]['RefPackageSeqId'],
+                                                                          poTypesList['RefMemberTypeSeqId'],
+                                                                          '',
+                                                                         UserSeqId,
+                                                                          (){}
+                                                                          );
+                                                                    }, () {
+                                                                      Navigator.pop(
+                                                                          context);
+                                                                    }, "Yes",
+                                                                        "No");
+                                          },
+                                          child: SizedBox(
+                                              width: 25,
+                                              height: 25,
+                                              child:mealList_[index]['AllowToCancel'] 
+                                                  ? Icon(
+                                                      Icons.cancel_outlined,
+                                                      color: Colors.white,
+                                                      size: 15,
+                                                    )
+                                                  : Icon(
+                                                      Icons.podcasts_outlined,
+                                                      color: Colors.white,
+                                                      size: 15,
+                                                    )),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                            
                             ],
                           ),
                         ),

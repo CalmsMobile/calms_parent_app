@@ -79,14 +79,15 @@ class CommonUtil {
               response['Table1'][context.read<MySettingsListener>().familyPos]
                   ['UserSeqId'],
               response['Table1'][context.read<MySettingsListener>().familyPos]
-                  ['RefBranchSeqId'],response['Table4']);
+                  ['RefBranchSeqId'],
+              response['Table4']);
         }
       }
     }
   }
 
-  Future<void> getDashboard(
-      BuildContext context, RefUserSeqId, RefBranchSeqId,NotificationCategoryList) async {
+  Future<void> getDashboard(BuildContext context, RefUserSeqId, RefBranchSeqId,
+      NotificationCategoryList) async {
     var ParamData = {
       "RefUserSeqId": RefUserSeqId,
       "RefBranchSeqId": RefBranchSeqId
@@ -98,15 +99,17 @@ class CommonUtil {
       true,
     );
     res
-        .then((response) => {getDashboardSuccess(context, response,NotificationCategoryList)})
+        .then((response) =>
+            {getDashboardSuccess(context, response, NotificationCategoryList)})
         .onError((error, stackTrace) => {authorizedPostRequestError(error)});
   }
 
-  getDashboardSuccess(BuildContext context, Map<String, dynamic> response,NotificationCategoryList) {
+  getDashboardSuccess(BuildContext context, Map<String, dynamic> response,
+      NotificationCategoryList) {
     if (response['Table'][0]['code'] == 10) {
       print("getDashboard success");
-      context.read<MySettingsListener>().updateDashBoardList(
-          response['Table1'], response['Table2'], response['Table3'],NotificationCategoryList);
+      context.read<MySettingsListener>().updateDashBoardList(response['Table1'],
+          response['Table2'], response['Table3'], NotificationCategoryList);
     }
   }
 
@@ -641,6 +644,205 @@ class CommonUtil {
       context
           .read<MySettingsListener>()
           .updateMealOrderPaymentProvidersList(response['Table1']);
+    }
+  }
+
+  Future<void> cancelWholeTerm(
+      context,
+      RefBranchSeqId,
+      RefStudentSeqId,
+      RefUserSeqId,
+      RefTransSeqId,
+      CancelFrom,
+      RefPackageSeqId,
+      RefMemberTypeSeqId,
+      POTypeConfigSeqId,
+      Function callbackFun) async {
+    var ParamData = {
+      'RefBranchSeqId': RefBranchSeqId,
+      'RefStudentSeqId': RefStudentSeqId,
+      'RefUserSeqId': RefUserSeqId,
+      'RefTransSeqId': RefTransSeqId,
+      'CancelFrom': CancelFrom,
+      'RefPackageSeqId': RefPackageSeqId,
+      'RefMemberTypeSeqId': RefMemberTypeSeqId,
+      'POTypeConfigSeqId': POTypeConfigSeqId,
+      'CreatedBy': RefUserSeqId
+    };
+    print(ParamData);
+    Future<Map<String, dynamic>> res = RestApiProvider().authorizedPostRequest(
+      ParamData,
+      AppSettings.WholeTermCancel,
+      context,
+      true,
+    );
+    res
+        .then((response) =>
+            {successCancelWholeTerm(context, response, callbackFun)})
+        .onError((error, stackTrace) => {authorizedPostRequestError(error)});
+  }
+
+  successCancelWholeTerm(BuildContext context, response, Function callbackFun) {
+    if (response['Table'][0]['code'] == 10) {
+      MyCustomAlertDialog().mealCustomAlert(
+          context,
+          "Notification!",
+          response['Table'][0]['description'],
+          false,
+          true,
+          true,
+          true,
+          null, () {
+        Navigator.pop(context);
+      }, "", "Ok");
+      callbackFun();
+    } else {
+      MyCustomAlertDialog().mealCustomAlert(
+          context,
+          "Alert!",
+          response['Table'][0]['description'],
+          true,
+          true,
+          true,
+          true,
+          null, () {
+        Navigator.pop(context);
+      }, "", "Ok");
+    }
+  }
+
+  Future<void> cancelTermMealItem(
+      context,
+      RefBranchSeqId,
+      RefStudentSeqId,
+      RefItemSeqId,
+      RefUserSeqId,
+      RefItemFor,
+      RefTransSeqId,
+      OrderDate,
+      RefPackageSeqId,
+      RefMemberTypeSeqId,
+      IncludeAddon,
+      Function callbackFun) async {
+    var ParamData = {
+      'RefBranchSeqId': RefBranchSeqId,
+      'RefStudentSeqId': RefStudentSeqId,
+      'RefItemSeqId': RefItemSeqId,
+      'RefUserSeqId': RefUserSeqId,
+      'RefItemFor': RefItemFor,
+      'RefTransSeqId': RefTransSeqId,
+      'OrderDate': OrderDate,
+      'RefPackageSeqId': RefPackageSeqId,
+      'RefMemberTypeSeqId': RefMemberTypeSeqId,
+      'IncludeAddon': IncludeAddon
+    };
+    print(ParamData);
+    Future<Map<String, dynamic>> res = RestApiProvider().authorizedPostRequest(
+      ParamData,
+      AppSettings.CancelTermMealItem,
+      context,
+      true,
+    );
+    res
+        .then((response) =>
+            {successCancelTermMealItem(context, response, callbackFun)})
+        .onError((error, stackTrace) => {authorizedPostRequestError(error)});
+  }
+
+  successCancelTermMealItem(
+      BuildContext context, response, Function callbackFun) {
+    if (response['Table'][0]['code'] == 10) {
+      MyCustomAlertDialog().mealCustomAlert(
+          context,
+          "Notification!",
+          response['Table'][0]['description'],
+          false,
+          true,
+          true,
+          true,
+          null, () {
+        Navigator.pop(context);
+      }, "", "Ok");
+      callbackFun();
+    } else {
+      MyCustomAlertDialog().mealCustomAlert(
+          context,
+          "Alert!",
+          response['Table'][0]['description'],
+          true,
+          true,
+          true,
+          true,
+          null, () {
+        Navigator.pop(context);
+      }, "", "Ok");
+    }
+  }
+
+  Future<void> changeMealItem(
+      context,
+      RefBranchSeqId,
+      RefStudentSeqId,
+      RefItemSeqId,
+      RefItemFor,
+      RefTransSeqId,
+      OrderDate,
+      RefPackageSeqId,
+      RefMemberTypeSeqId,
+      Remarks,
+      CreatedBy,
+      Function callbackFun) async {
+    var ParamData = {
+      'RefBranchSeqId': RefBranchSeqId,
+      'RefStudentSeqId': RefStudentSeqId,
+      'RefItemSeqId': RefItemSeqId,
+      'RefItemFor': RefItemFor,
+      'RefTransSeqId': RefTransSeqId,
+      'OrderDate': OrderDate,
+      'RefPackageSeqId': RefPackageSeqId,
+      'RefMemberTypeSeqId': RefMemberTypeSeqId,
+      'Remarks': Remarks,
+      'CreatedBy': CreatedBy
+    };
+    print(ParamData);
+    Future<Map<String, dynamic>> res = RestApiProvider().authorizedPostRequest(
+      ParamData,
+      AppSettings.ChangeMealItem,
+      context,
+      true,
+    );
+    res
+        .then((response) =>
+            {successChangeMealItem(context, response, callbackFun)})
+        .onError((error, stackTrace) => {authorizedPostRequestError(error)});
+  }
+
+  successChangeMealItem(BuildContext context, response, Function callbackFun) {
+    if (response['Table'][0]['code'] == 10) {
+      MyCustomAlertDialog().mealCustomAlert(
+          context,
+          "Notification!",
+          response['Table'][0]['description'],
+          false,
+          true,
+          true,
+          true,
+          null, () {
+        Navigator.pop(context);
+      }, "", "Ok");
+      callbackFun();
+    } else {
+      MyCustomAlertDialog().mealCustomAlert(
+          context,
+          "Alert!",
+          response['Table'][0]['description'],
+          true,
+          true,
+          true,
+          true,
+          null, () {
+        Navigator.pop(context);
+      }, "", "Ok");
     }
   }
 
