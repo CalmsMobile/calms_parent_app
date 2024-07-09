@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 
 class MealPager extends StatelessWidget {
   const MealPager(this.mealList_, this.CurrencyCode, this.imgBaseUrl,
-      this.UserSeqId, this.poTypesList, this.callbackFun)
+      this.UserSeqId, this.poTypesList,this.profileData, this.onCartClick,this.onCancelMeal,this.onChangeMeal,this.onCancelDailyMeal)
       : super();
 
   final mealList_;
@@ -19,7 +19,11 @@ class MealPager extends StatelessWidget {
   final imgBaseUrl;
   final UserSeqId;
   final poTypesList;
-  final Function callbackFun;
+  final profileData;
+  final Function onCartClick;
+  final Function onCancelMeal;
+  final Function onChangeMeal;
+  final Function onCancelDailyMeal;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +55,7 @@ class MealPager extends StatelessWidget {
                       imgBaseUrl,
                       poTypesList['PreOrderType'] == 'Daily' ? true : false,
                       UserSeqId,
-                      callbackFun,
+                      onCartClick,
                       index);
                   // moveToDetails(_foundStoreList, index, context);
                   /* Navigator.of(context)
@@ -231,34 +235,48 @@ class MealPager extends StatelessWidget {
                                     ),
                                   ])),
                               if (poTypesList['PreOrderType'] == 'Daily')
+                              if(mealList_[index]['addedToCart'] && mealList_[index]['AllowToBuy'])
                                 InkWell(
                                   onTap: () {},
                                   child: Container(
                                     //margin: EdgeInsets.only(bottom: 10),
                                     child: ClipOval(
                                       child: Material(
-                                        color: mealList_[index]['addedToCart']
-                                            ? Colors.red
-                                            : Colors.blue, // Button color
+                                        color: Colors.red, // Button color
                                         child: InkWell(
                                           onTap: () async {
-                                            mealList_[index]['addedToCart']
-                                                ? callbackFun(mealList_[index],
-                                                    index, true)
-                                                : callbackFun(mealList_[index],
+                                            onCartClick(mealList_[index],index, true);
+                                          },
+                                          child: SizedBox(
+                                              width: 25,
+                                              height: 25,
+                                              child:Icon(
+                                                      Icons.delete_outlined,
+                                                      color: Colors.white,
+                                                      size: 15,
+                                                    )),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                           if(!mealList_[index]['addedToCart'] && mealList_[index]['AllowToBuy'])
+                           InkWell(
+                                  onTap: () {},
+                                  child: Container(
+                                    //margin: EdgeInsets.only(bottom: 10),
+                                    child: ClipOval(
+                                      child: Material(
+                                        color: Colors.blue, // Button color
+                                        child: InkWell(
+                                          onTap: () async {
+                                            onCartClick(mealList_[index],
                                                     index, false);
                                           },
                                           child: SizedBox(
                                               width: 25,
                                               height: 25,
-                                              child: mealList_[index]
-                                                      ['addedToCart']
-                                                  ? Icon(
-                                                      Icons.delete_outlined,
-                                                      color: Colors.white,
-                                                      size: 15,
-                                                    )
-                                                  : Icon(
+                                              child:Icon(
                                                       Icons
                                                           .add_shopping_cart_outlined,
                                                       color: Colors.white,
@@ -269,6 +287,91 @@ class MealPager extends StatelessWidget {
                                     ),
                                   ),
                                 ),
+                           
+                           if(mealList_[index]['AllowToCancel'])
+                           InkWell(
+                                  onTap: () {},
+                                  child: Container(
+                                    //margin: EdgeInsets.only(bottom: 10),
+                                    child: ClipOval(
+                                      child: Material(
+                                        color: Colors.red, // Button color
+                                        child: InkWell(
+                                          onTap: () async {
+                                            MyCustomAlertDialog().mealCustomAlert(
+                                                                        context,
+                                                                        "Alert!",
+                                                                        'Do you want to cancel meal?',
+                                                                        true,
+                                                                        true,
+                                                                        true,
+                                                                        true,
+                                                                        () {
+                                                                      Navigator.pop(
+                                                                          context);
+                                                                          print(mealList_[index]);
+                                                                          print(poTypesList);
+                                                                      CommonUtil().cancelDailyMealItem(
+                                                                          context,
+                                                                          poTypesList['RefBranchSeqId'],
+                                                                          UserSeqId,
+                                                                          mealList_[index]['ItemSeqId'],
+                                                                          profileData['RefUserSeqId'],
+                                                                          mealList_[index]['ItemType'],
+                                                                          mealList_[index]['RefTransSeqId'],
+                                                                          mealList_[index]['ViewDate'],
+                                                                          mealList_[index]['RefPackageSeqId'],
+                                                                          poTypesList['RefMemberTypeSeqId'],
+                                                                          profileData['RefUserSeqId'],
+                                                                          onCancelDailyMeal,index
+                                                                          );
+                                                                    }, () {
+                                                                      Navigator.pop(
+                                                                          context);
+                                                                    }, "Yes",
+                                                                        "No");
+                                          },
+                                          child: SizedBox(
+                                              width: 25,
+                                              height: 25,
+                                              child:Icon(
+                                                      Icons
+                                                          .cancel_outlined,
+                                                      color: Colors.white,
+                                                      size: 15,
+                                                    )),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                            if(mealList_[index]['AlreadyBuy'])
+                           InkWell(
+                                  onTap: () {},
+                                  child: Container(
+                                    //margin: EdgeInsets.only(bottom: 10),
+                                    child: ClipOval(
+                                      child: Material(
+                                        color: Colors.green, // Button color
+                                        child: InkWell(
+                                          onTap: () async {
+                                            
+                                          },
+                                          child: SizedBox(
+                                              width: 25,
+                                              height: 25,
+                                              child:Icon(
+                                                      Icons
+                                                          .shopping_bag_rounded,
+                                                      color: Colors.white,
+                                                      size: 15,
+                                                    )),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                           
                             if (poTypesList['PreOrderType'] == 'Terms')
                                  InkWell(
                                   onTap: () {},
@@ -298,16 +401,16 @@ class MealPager extends StatelessWidget {
                                                                       CommonUtil().cancelTermMealItem(
                                                                           context,
                                                                           poTypesList['RefBranchSeqId'],
-                                                                          poTypesList['RefMemberTypeSeqId'],
-                                                                          mealList_[index]['ItemSeqId'],
                                                                           UserSeqId,
                                                                           mealList_[index]['ItemSeqId'],
+                                                                          profileData['RefUserSeqId'],
+                                                                          mealList_[index]['ItemType'],
                                                                           mealList_[index]['RefTransSeqId'],
-                                                                          poTypesList['CurrentDateTime'],
+                                                                          mealList_[index]['ViewDate'],
                                                                           mealList_[index]['RefPackageSeqId'],
                                                                           poTypesList['RefMemberTypeSeqId'],
-                                                                          '',
-                                                                          (){}
+                                                                          '',profileData['RefUserSeqId'],
+                                                                          onCancelMeal,index
                                                                           );
                                                                     }, () {
                                                                       Navigator.pop(
@@ -331,16 +434,16 @@ class MealPager extends StatelessWidget {
                                                                       CommonUtil().changeMealItem(
                                                                           context,
                                                                           poTypesList['RefBranchSeqId'],
-                                                                          poTypesList['RefMemberTypeSeqId'],
+                                                                          UserSeqId,
                                                                           mealList_[index]['ItemSeqId'],
-                                                                          mealList_[index]['ItemSeqId'],
+                                                                          mealList_[index]['ItemType'],
                                                                           poTypesList['RefTransSeqId'],
-                                                                           poTypesList['CurrentDateTime'],
+                                                                           mealList_[index]['ViewDate'],
                                                                           mealList_[index]['RefPackageSeqId'],
                                                                           poTypesList['RefMemberTypeSeqId'],
                                                                           '',
-                                                                         UserSeqId,
-                                                                          (){}
+                                                                         profileData['RefUserSeqId'],
+                                                                          onChangeMeal,index
                                                                           );
                                                                     }, () {
                                                                       Navigator.pop(

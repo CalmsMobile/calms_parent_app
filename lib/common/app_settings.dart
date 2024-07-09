@@ -64,6 +64,7 @@ class AppSettings {
 
   static String WholeTermCancel = 'parentapp/WholeTermCancel';
   static String CancelTermMealItem = 'parentapp/CancelTermMealItem';
+  static String CancelMealItem = 'parentapp/CancelMealItem';
   static String ChangeMealItem = 'parentapp/ChangeMealItem';
 
   static String avatarPlaceholder =

@@ -448,7 +448,10 @@ class _MealMenuPageState extends State<MealMenuPage> {
                                   // widget.arguments['poTypesList']['POTypeConfigSeqId'],
                                   widget.arguments['UserSeqId'],
                                   widget.arguments['poTypesList'],
-                                  onCartClick))
+                                  widget.arguments['profileData'],
+                                  onCartClick,
+                                  onCancelMeal,
+                                  onChangeMeal,onCancelDailyMeal))
                         ])),
               ))
           : NoDataCard(AppSettings.imgAssetNoMeal, AppSettings.titleNoMeal,
@@ -470,12 +473,31 @@ class _MealMenuPageState extends State<MealMenuPage> {
     });
   }
 
-  void onCancelMeal(meal, index) {
-    print("call back index ${meal.toString()}");
-   /*  context.read<MySettingsListener>().updatePoTypeMealsCartStatus(isDelete,
-        widget.arguments['UserSeqId'], meal, widget.arguments['poTypesList']); */
+  void onCancelMeal(index) {
     setState(() {
-      
+      mealListByItemType[index]['AllowToCancel'] = false;
+      mealListByItemType[index]['AllowToChoose'] = true;
+    });
+  }
+
+   void onCancelDailyMeal(index) {
+    setState(() {
+      mealListByItemType[index]['AllowToCancel'] = false;
+      mealListByItemType[index]['AllowToBuy'] = true;
+    });
+  }
+
+  void onChangeMeal(index) {
+    setState(() {
+      for (var i = 0; i < mealListByItemType.length; i++) {
+        if (i == index) {
+          mealListByItemType[i]['AllowToCancel'] = true;
+          mealListByItemType[i]['AllowToChoose'] = false;
+        } else {
+          mealListByItemType[i]['AllowToCancel'] = false;
+          mealListByItemType[i]['AllowToChoose'] = true;
+        }
+      }
     });
   }
 

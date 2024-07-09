@@ -723,7 +723,8 @@ class CommonUtil {
       RefPackageSeqId,
       RefMemberTypeSeqId,
       IncludeAddon,
-      Function callbackFun) async {
+      CreatedBy,
+      Function callbackFun,index) async {
     var ParamData = {
       'RefBranchSeqId': RefBranchSeqId,
       'RefStudentSeqId': RefStudentSeqId,
@@ -734,7 +735,8 @@ class CommonUtil {
       'OrderDate': OrderDate,
       'RefPackageSeqId': RefPackageSeqId,
       'RefMemberTypeSeqId': RefMemberTypeSeqId,
-      'IncludeAddon': IncludeAddon
+      'IncludeAddon': IncludeAddon,
+      'CreatedBy': CreatedBy
     };
     print(ParamData);
     Future<Map<String, dynamic>> res = RestApiProvider().authorizedPostRequest(
@@ -745,12 +747,12 @@ class CommonUtil {
     );
     res
         .then((response) =>
-            {successCancelTermMealItem(context, response, callbackFun)})
+            {successCancelTermMealItem(context, response, callbackFun,index)})
         .onError((error, stackTrace) => {authorizedPostRequestError(error)});
   }
 
   successCancelTermMealItem(
-      BuildContext context, response, Function callbackFun) {
+      BuildContext context, response, Function callbackFun,index) {
     if (response['Table'][0]['code'] == 10) {
       MyCustomAlertDialog().mealCustomAlert(
           context,
@@ -763,7 +765,74 @@ class CommonUtil {
           null, () {
         Navigator.pop(context);
       }, "", "Ok");
-      callbackFun();
+      callbackFun(index);
+    } else {
+      MyCustomAlertDialog().mealCustomAlert(
+          context,
+          "Alert!",
+          response['Table'][0]['description'],
+          true,
+          true,
+          true,
+          true,
+          null, () {
+        Navigator.pop(context);
+      }, "", "Ok");
+    }
+  }
+Future<void> cancelDailyMealItem(
+      context,
+      RefBranchSeqId,
+      RefStudentSeqId,
+      RefItemSeqId,
+      RefUserSeqId,
+      RefItemFor,
+      RefTransSeqId,
+      OrderDate,
+      RefPackageSeqId,
+      RefMemberTypeSeqId,
+      CreatedBy,
+      Function callbackFun,index) async {
+    var ParamData = {
+      'RefBranchSeqId': RefBranchSeqId,
+      'RefStudentSeqId': RefStudentSeqId,
+      'RefItemSeqId': RefItemSeqId,
+      'RefUserSeqId': RefUserSeqId,
+      'RefItemFor': RefItemFor,
+      'RefTransSeqId': RefTransSeqId,
+      'OrderDate': OrderDate,
+      'RefPackageSeqId': RefPackageSeqId,
+      'RefMemberTypeSeqId': RefMemberTypeSeqId,
+      'CreatedBy': CreatedBy
+    };
+    print(ParamData);
+    Future<Map<String, dynamic>> res = RestApiProvider().authorizedPostRequest(
+      ParamData,
+      AppSettings.CancelMealItem,
+      context,
+      true,
+    );
+    res
+        .then((response) =>
+            {successCancelDailyMealItem(context, response, callbackFun,index)})
+        .onError((error, stackTrace) => {authorizedPostRequestError(error)});
+  }
+
+  successCancelDailyMealItem(
+      BuildContext context, response, Function callbackFun,index) {
+    if (response['Table'][0]['code'] == 10) {
+      MyCustomAlertDialog().mealCustomAlert(
+          context,
+          "Notification!",
+          response['Table'][0]['description'],
+          false,
+          true,
+          true,
+          true,
+          null, () {
+        Navigator.pop(context);
+      }, "", "Ok");
+      callbackFun(index);
     } else {
       MyCustomAlertDialog().mealCustomAlert(
           context,
@@ -791,7 +860,7 @@ class CommonUtil {
       RefMemberTypeSeqId,
       Remarks,
       CreatedBy,
-      Function callbackFun) async {
+      Function callbackFun,index) async {
     var ParamData = {
       'RefBranchSeqId': RefBranchSeqId,
       'RefStudentSeqId': RefStudentSeqId,
@@ -813,11 +882,11 @@ class CommonUtil {
     );
     res
         .then((response) =>
-            {successChangeMealItem(context, response, callbackFun)})
+            {successChangeMealItem(context, response, callbackFun,index)})
         .onError((error, stackTrace) => {authorizedPostRequestError(error)});
   }
 
-  successChangeMealItem(BuildContext context, response, Function callbackFun) {
+  successChangeMealItem(BuildContext context, response, Function callbackFun,index) {
     if (response['Table'][0]['code'] == 10) {
       MyCustomAlertDialog().mealCustomAlert(
           context,
@@ -830,7 +899,7 @@ class CommonUtil {
           null, () {
         Navigator.pop(context);
       }, "", "Ok");
-      callbackFun();
+      callbackFun(index);
     } else {
       MyCustomAlertDialog().mealCustomAlert(
           context,
