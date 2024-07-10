@@ -26,6 +26,7 @@ class AppSettings {
   static String Sp_SecureKey = 'CPA_SECUREKEY';
   static String Sp_Payload_Authorize = 'CPA_AUTHORIZE';
   static String Sp_MAppDevSeqId = 'CPA_APP_SEQ_ID';
+  static String Sp_AppTheme = 'CPA_APP_THEME';
   static String tripDropOffStudentStatusList =
       'CPA_DROPOFF_STUDENT_STATUS_LIST';
   static String apiURL = 'http://124.217.235.107:1001/api/';
@@ -66,6 +67,7 @@ class AppSettings {
   static String CancelTermMealItem = 'parentapp/CancelTermMealItem';
   static String CancelMealItem = 'parentapp/CancelMealItem';
   static String ChangeMealItem = 'parentapp/ChangeMealItem';
+  static String GetAppTheme = 'parentapp/GetAppTheme';
 
   static String avatarPlaceholder =
       "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png";

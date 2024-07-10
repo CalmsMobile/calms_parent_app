@@ -59,10 +59,6 @@ class RecentTransactionListView extends StatelessWidget {
                           ),
                           Container(
                             width: 70,
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                    color: HexColor(recentList[index]['color']),
-                                    width: 0.5)),
                             child: RichText(
                               text: TextSpan(
                                 // Note: Styles for TextSpans must be explicitly defined.

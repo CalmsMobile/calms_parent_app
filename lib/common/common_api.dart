@@ -52,7 +52,7 @@ class CommonUtil {
       BuildContext context, Map<String, dynamic> response, UserSeqId) {
     if (response['Table'][0]['code'] == 10 && response['Table1'][0] != null) {
       print("getEntryToDashboard success");
-
+      CommonUtil().getAppTheme(context);
       if (response['Table3'] != null) {
         MySharedPref().saveData(
             jsonEncode(response['Table3'][0]), AppSettings.Sp_ProfileData);
@@ -110,6 +110,28 @@ class CommonUtil {
       print("getDashboard success");
       context.read<MySettingsListener>().updateDashBoardList(response['Table1'],
           response['Table2'], response['Table3'], NotificationCategoryList);
+    }
+  }
+
+  Future<void> getAppTheme(BuildContext context) async {
+    var ParamData = {};
+    Future<Map<String, dynamic>> res = RestApiProvider().authorizedPostRequest(
+      ParamData,
+      AppSettings.GetAppTheme,
+      context,
+      true,
+    );
+    res
+        .then((response) => {getAppThemeSuccess(context, response)})
+        .onError((error, stackTrace) => {authorizedPostRequestError(error)});
+  }
+
+  getAppThemeSuccess(BuildContext context, Map<String, dynamic> response) {
+    if (response['Table'][0]['code'] == 10) {
+      print("getAppTheme Success");
+      context
+          .read<MySettingsListener>()
+          .updateAppThemeData(response['Table1'][0]);
     }
   }
 
@@ -724,7 +746,8 @@ class CommonUtil {
       RefMemberTypeSeqId,
       IncludeAddon,
       CreatedBy,
-      Function callbackFun,index) async {
+      Function callbackFun,
+      index) async {
     var ParamData = {
       'RefBranchSeqId': RefBranchSeqId,
       'RefStudentSeqId': RefStudentSeqId,
@@ -747,12 +770,12 @@ class CommonUtil {
     );
     res
         .then((response) =>
-            {successCancelTermMealItem(context, response, callbackFun,index)})
+            {successCancelTermMealItem(context, response, callbackFun, index)})
         .onError((error, stackTrace) => {authorizedPostRequestError(error)});
   }
 
   successCancelTermMealItem(
-      BuildContext context, response, Function callbackFun,index) {
+      BuildContext context, response, Function callbackFun, index) {
     if (response['Table'][0]['code'] == 10) {
       MyCustomAlertDialog().mealCustomAlert(
           context,
@@ -780,7 +803,8 @@ class CommonUtil {
       }, "", "Ok");
     }
   }
-Future<void> cancelDailyMealItem(
+
+  Future<void> cancelDailyMealItem(
       context,
       RefBranchSeqId,
       RefStudentSeqId,
@@ -792,7 +816,8 @@ Future<void> cancelDailyMealItem(
       RefPackageSeqId,
       RefMemberTypeSeqId,
       CreatedBy,
-      Function callbackFun,index) async {
+      Function callbackFun,
+      index) async {
     var ParamData = {
       'RefBranchSeqId': RefBranchSeqId,
       'RefStudentSeqId': RefStudentSeqId,
@@ -814,12 +839,12 @@ Future<void> cancelDailyMealItem(
     );
     res
         .then((response) =>
-            {successCancelDailyMealItem(context, response, callbackFun,index)})
+            {successCancelDailyMealItem(context, response, callbackFun, index)})
         .onError((error, stackTrace) => {authorizedPostRequestError(error)});
   }
 
   successCancelDailyMealItem(
-      BuildContext context, response, Function callbackFun,index) {
+      BuildContext context, response, Function callbackFun, index) {
     if (response['Table'][0]['code'] == 10) {
       MyCustomAlertDialog().mealCustomAlert(
           context,
@@ -860,7 +885,8 @@ Future<void> cancelDailyMealItem(
       RefMemberTypeSeqId,
       Remarks,
       CreatedBy,
-      Function callbackFun,index) async {
+      Function callbackFun,
+      index) async {
     var ParamData = {
       'RefBranchSeqId': RefBranchSeqId,
       'RefStudentSeqId': RefStudentSeqId,
@@ -882,11 +908,12 @@ Future<void> cancelDailyMealItem(
     );
     res
         .then((response) =>
-            {successChangeMealItem(context, response, callbackFun,index)})
+            {successChangeMealItem(context, response, callbackFun, index)})
         .onError((error, stackTrace) => {authorizedPostRequestError(error)});
   }
 
-  successChangeMealItem(BuildContext context, response, Function callbackFun,index) {
+  successChangeMealItem(
+      BuildContext context, response, Function callbackFun, index) {
     if (response['Table'][0]['code'] == 10) {
       MyCustomAlertDialog().mealCustomAlert(
           context,

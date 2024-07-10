@@ -2,7 +2,9 @@ import 'dart:collection';
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:calms_parent_latest/common/app_settings.dart';
 import 'package:calms_parent_latest/common/common_api.dart';
+import 'package:calms_parent_latest/common/my_shared_pref.dart';
 import 'package:calms_parent_latest/common/util/common_funtions.dart';
 import 'package:calms_parent_latest/common/widgets/common.dart';
 import 'package:calms_parent_latest/ui/screens/meals/meal_menu_page.dart';
@@ -51,6 +53,8 @@ class MySettingsListener with ChangeNotifier {
   List _notificationCategoryList = [];
   List _notificationMembersList = [];
 
+  var _appTheme;
+
   UnmodifiableListView<dynamic> get familyList =>
       UnmodifiableListView(_familyList);
   UnmodifiableListView<dynamic> get familyListWithoutParent =>
@@ -73,7 +77,7 @@ class MySettingsListener with ChangeNotifier {
 
   UnmodifiableListView<dynamic> get dashboardOutStandingList =>
       UnmodifiableListView(_dashboardOutStandingList);
-      
+
   UnmodifiableListView<dynamic> get NotificationCategoryList =>
       UnmodifiableListView(_NotificationCategoryList);
 
@@ -130,6 +134,8 @@ class MySettingsListener with ChangeNotifier {
   UnmodifiableMapView get mydriverDetails =>
       UnmodifiableMapView(_driverDetails == null ? {} : _driverDetails);
 
+  UnmodifiableMapView get appTheme => UnmodifiableMapView(_appTheme);
+
   updateEntryToDashboardFamilyList(List familyList, loginUserSeqId) {
     _familyList = familyList;
     int parentIndex = familyList
@@ -145,12 +151,25 @@ class MySettingsListener with ChangeNotifier {
     notifyListeners();
   }
 
-  updateDashBoardList(List dashboardSpendingList,
-      List dashboardRecentActivityList, List dashboardOutStandingList,List NotificationCategoryList) {
+  updateDashBoardList(
+      List dashboardSpendingList,
+      List dashboardRecentActivityList,
+      List dashboardOutStandingList,
+      List NotificationCategoryList) {
     this._dashboardSpendingList = dashboardSpendingList;
     this._dashboardRecentActivityList = dashboardRecentActivityList;
     this._dashboardOutStandingList = dashboardOutStandingList;
     this._NotificationCategoryList = NotificationCategoryList;
+    notifyListeners();
+  }
+
+  updateAppThemeData(themeData) async {
+    this._appTheme = themeData;
+    MySharedPref()
+        .saveData(jsonEncode(this._appTheme), AppSettings.Sp_AppTheme);
+    String AppTheme = await MySharedPref().getData(AppSettings.Sp_AppTheme);
+    var AppTheme_ = jsonDecode(AppTheme);
+    print(AppTheme_);
     notifyListeners();
   }
 
@@ -341,8 +360,8 @@ class MySettingsListener with ChangeNotifier {
     print(_cartList);
     notifyListeners();
   }
+
   updatePoTypeMeals(UserSeqId, mealData, poTypesList) {
-   
     notifyListeners();
   }
 

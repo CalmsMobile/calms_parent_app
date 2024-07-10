@@ -392,7 +392,7 @@ class _MealMenuPageState extends State<MealMenuPage> {
                           ),
                           if (mealListBydate.length == 0)
                             NoDataCard(AppSettings.imgAssetNoMeal,
-                                AppSettings.titleNoMeal, AppSettings.msgNoMeal),
+                                AppSettings.titleNoMeal, AppSettings.msgNoMeal,20),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Row(
@@ -455,7 +455,7 @@ class _MealMenuPageState extends State<MealMenuPage> {
                         ])),
               ))
           : NoDataCard(AppSettings.imgAssetNoMeal, AppSettings.titleNoMeal,
-              AppSettings.msgNoMeal),
+              AppSettings.msgNoMeal,20),
       //floatingActionButtonLocation: ExpandableFab.location,
       // floatingActionButton: _getFilterFAB()
     );

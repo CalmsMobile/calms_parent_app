@@ -234,8 +234,8 @@ class MealPager extends StatelessWidget {
                                           fontWeight: FontWeight.bold),
                                     ),
                                   ])),
-                              if (poTypesList['PreOrderType'] == 'Daily')
-                              if(mealList_[index]['addedToCart'] && mealList_[index]['AllowToBuy'])
+                            
+                              if(poTypesList['PreOrderType'] == 'Daily' && mealList_[index]['addedToCart'] && mealList_[index]['AllowToBuy'])
                                 InkWell(
                                   onTap: () {},
                                   child: Container(
@@ -260,7 +260,7 @@ class MealPager extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                           if(!mealList_[index]['addedToCart'] && mealList_[index]['AllowToBuy'])
+                           if(poTypesList['PreOrderType'] == 'Daily' && !mealList_[index]['addedToCart'] && mealList_[index]['AllowToBuy'])
                            InkWell(
                                   onTap: () {},
                                   child: Container(
@@ -288,7 +288,7 @@ class MealPager extends StatelessWidget {
                                   ),
                                 ),
                            
-                           if(mealList_[index]['AllowToCancel'])
+                           if(poTypesList['PreOrderType'] == 'Daily' && mealList_[index]['AllowToCancel'])
                            InkWell(
                                   onTap: () {},
                                   child: Container(
@@ -345,7 +345,7 @@ class MealPager extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                            if(mealList_[index]['AlreadyBuy'])
+                            if(poTypesList['PreOrderType'] == 'Daily' && mealList_[index]['AlreadyBuy'])
                            InkWell(
                                   onTap: () {},
                                   child: Container(

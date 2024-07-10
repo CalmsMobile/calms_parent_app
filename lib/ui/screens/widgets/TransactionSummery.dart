@@ -47,7 +47,7 @@ class TransactionSummery extends StatelessWidget {
                           ),
                           Container(
                             width: 70,
-                            decoration: BoxDecoration(border: Border.all(color: HexColor(purchaseList[index]['color']),width: 0.5)),
+                           // decoration: BoxDecoration(border: Border.all(color: HexColor(purchaseList[index]['color']),width: 0.5)),
                             child:
                           RichText(
                             text: TextSpan(

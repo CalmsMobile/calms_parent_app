@@ -218,7 +218,7 @@ class _MealOrderState extends State<MealOrder> {
                                 imgBaseUrl,
                                 widget.arguments["profileData"],getData)
                             : NoDataCard(AppSettings.imgAssetNoMeal,
-                                AppSettings.titleNoMeal, AppSettings.msgNoMeal);
+                                AppSettings.titleNoMeal, AppSettings.msgNoMeal,20);
                       } else {
                         return SizedBox();
                       }

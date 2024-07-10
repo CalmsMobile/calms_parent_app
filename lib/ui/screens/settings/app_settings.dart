@@ -1,3 +1,5 @@
+import 'package:calms_parent_latest/common/common_api.dart';
+
 import '../../../common/app_settings.dart';
 import '../../../main.dart';
 import '/common/alert_dialog.dart';
@@ -248,7 +250,9 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
         ));
   }
 
-  getAppSettings() {}
+  getAppSettings() {
+    CommonUtil().getAppTheme(context);
+  }
 
   logoutDevice() {
     MyCustomAlertDialog().showCustomAlert(

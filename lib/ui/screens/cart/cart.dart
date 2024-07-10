@@ -505,7 +505,7 @@ class _CartPageState extends State<CartPage> {
           } else
             return data.cartList.isEmpty
                 ? NoDataCard(AppSettings.imgAssetNoItemInCart,
-                    AppSettings.titleNoItemInCart, AppSettings.msgNoItemInCart)
+                    AppSettings.titleNoItemInCart, AppSettings.msgNoItemInCart,20)
                 : SizedBox();
         })),
         bottomNavigationBar:

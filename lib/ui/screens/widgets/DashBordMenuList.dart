@@ -5,13 +5,13 @@ import 'package:calms_parent_latest/ui/screens/topup/TopupPage.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
+import '../../../common/HexColor.dart';
 import '../../../model/_AppointmentDataSource.dart';
 import '../calendar/calendar_page.dart';
 import '../home/Home.dart';
 
 Widget menuList(BuildContext context, int index, List menu, List familyList,
-    imgBaseUrl, profileData,List familyListWithoutParent) {
-  
+    imgBaseUrl, profileData, List familyListWithoutParent,AppTheme_) {
   return Container(
     width: 90.0,
     child: InkWell(
@@ -47,30 +47,35 @@ Widget menuList(BuildContext context, int index, List menu, List familyList,
         child: Column(
           children: [
             if (menu[index]['MenuId'] == 2017.0)
-              Image(
-                  width: 50,
-                  height: 50,
-                  image: AssetImage("assets/images/ico_order.png")),
+              Icon(
+                Icons.restaurant_menu_outlined,
+                color: HexColor(AppTheme_['SecondaryBgColor']),
+                size: 50,
+              ),
             if (menu[index]['MenuId'] == 2012.0)
-              Image(
-                  width: 50,
-                  height: 50,
-                  image: AssetImage("assets/images/ico_attendance.png")),
+              Icon(
+                Icons.transfer_within_a_station_outlined,
+                color: HexColor(AppTheme_['SecondaryBgColor']),
+                size: 50,
+              ),
             if (menu[index]['MenuId'] == 2019.0)
-              Image(
-                  width: 50,
-                  height: 50,
-                  image: AssetImage("assets/images/ico_top_up.png")),
+              Icon(
+                Icons.wallet_outlined,
+                color: HexColor(AppTheme_['SecondaryBgColor']),
+                size: 50,
+              ),
             if (menu[index]['MenuId'] == 1.0)
-              Image(
-                  width: 50,
-                  height: 50,
-                  image: AssetImage("assets/images/ico_schoolattendance.png")),
-            if (menu[index]['MenuId'] == 2022.0)
-              Image(
-                  width: 50,
-                  height: 50,
-                  image: AssetImage("assets/images/ico_schoolattendance.png")),
+              Icon(
+                Icons.calendar_month_outlined,
+                color: HexColor(AppTheme_['SecondaryBgColor']),
+                size: 50,
+              ),
+            if (menu[index]['MenuId'] == 2.0)
+             Icon(
+                Icons.notifications_outlined,
+                color: HexColor(AppTheme_['SecondaryBgColor']),
+                size: 50,
+              ),
             SizedBox(
               height: 10,
             ),

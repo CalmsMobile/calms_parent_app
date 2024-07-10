@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 
 import '../../../common/listener/settings_listener.dart';
 import '../../../common/util/common_funtions.dart';
+import '../../../common/widgets/no_data_card.dart';
 import '../widgets/DashBordMenuList.dart';
 import '../widgets/RecentTransactionListView.dart';
 import '/common/HexColor.dart';
@@ -296,6 +297,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   var profileData = {};
   List<Appointment> _appointmentDetails = <Appointment>[];
 
+  var AppTheme_;
+
   void calendarTapped(CalendarTapDetails calendarTapDetails) {
     if (calendarTapDetails.targetElement == CalendarElement.calendarCell) {
       setState(() {
@@ -327,7 +330,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       });
     controller.repeat(reverse: true);
     super.initState();
-
+    getTheme();
     getData(context);
   }
 
@@ -403,7 +406,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         appBar: AppBar(
           toolbarHeight: 70,
           elevation: 0,
-          backgroundColor: Colors.transparent,
+          backgroundColor: HexColor(AppTheme_['SecondaryBgColor']),
           //titleSpacing: -5,
           automaticallyImplyLeading: false,
           centerTitle: true,
@@ -416,13 +419,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                             profileData["BranchImg"])),
                   )
                 : CircleAvatar(
-                    backgroundColor: Colors.blue[700],
+                    backgroundColor: Colors.white,
                     child: Text(
                       CommonFunctions.getInitials(profileData['BranchName'])
                           .toUpperCase(),
                       style: TextStyle(
                           fontSize: 22.0,
-                          color: Colors.white,
+                          color: HexColor(AppTheme_['SecondaryFrColor']),
                           letterSpacing: 2.0,
                           fontWeight: FontWeight.w900),
                     ),
@@ -451,43 +454,66 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               //width: 100,
               margin: EdgeInsets.only(right: 10),
               child: Row(children: [
-              Consumer<MySettingsListener>(
-                        builder: (context, data, settingsDta) {
-                      return  InkWell(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => Notifications(
-                        NotifyOnly: true,
-                        categoryList: data.NotificationCategoryList,
-                        name: 'NotificationDashboard',
-                      )));
-                  },
-                  child: Icon(
-                              Icons.notifications_outlined,
-                              color: Colors.blue,
-                              size: 35,
-                            )
-                );}),
+                Consumer<MySettingsListener>(
+                    builder: (context, data, settingsDta) {
+                  return InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Notifications(
+                                      NotifyOnly: true,
+                                      categoryList:
+                                          data.NotificationCategoryList,
+                                      name: 'NotificationDashboard',
+                                    )));
+                      },
+                      child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                                color: HexColor(AppTheme_['SecondaryFrColor']),
+                                width: 2),
+                            color: Colors.white,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Padding(
+                              padding: EdgeInsets.all(3),
+                              child: Icon(
+                                Icons.notifications_outlined,
+                                color: HexColor(AppTheme_['SecondaryFrColor']),
+                                size: 30,
+                              ))));
+                }),
                 Stack(
                   children: [
                     InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                CartPage(imgBaseUrl, profileData),
-                          ),
-                        );
-                      },
-                      child: Icon(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  CartPage(imgBaseUrl, profileData),
+                            ),
+                          );
+                        },
+                        child: Container(
+                            margin: EdgeInsets.only(left: 10),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                  color:
+                                      HexColor(AppTheme_['SecondaryFrColor']),
+                                  width: 2),
+                              color: Colors.white,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Padding(
+                                padding: EdgeInsets.all(3),
+                                child: Icon(
                                   Icons.shopping_cart_outlined,
-                                  color: Colors.blue,
-                                  size: 35,
-                                )
-                    ),
+                                  color:
+                                      HexColor(AppTheme_['SecondaryFrColor']),
+                                  size: 30,
+                                )))),
                     Consumer<MySettingsListener>(
                         builder: (context, data, settingsDta) {
                       return Positioned(
@@ -516,20 +542,30 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   ],
                 ),
                 InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => AppSettingsPage(),
-                      ),
-                    );
-                  },
-                  child: Icon(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AppSettingsPage(),
+                        ),
+                      );
+                    },
+                    child: Container(
+                        margin: EdgeInsets.only(left: 10),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                              color: HexColor(AppTheme_['SecondaryFrColor']),
+                              width: 2),
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Padding(
+                            padding: EdgeInsets.all(3),
+                            child: Icon(
                               Icons.settings_outlined,
-                              color: Colors.blue,
-                              size: 35,
-                            )
-                ),
+                              color: HexColor(AppTheme_['SecondaryFrColor']),
+                              size: 30,
+                            )))),
               ]),
             ),
           ],
@@ -637,8 +673,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               begin: Alignment.topRight,
               end: Alignment.bottomLeft,
               colors: [
-                Color.fromARGB(255, 246, 249, 254),
-                Color.fromARGB(255, 230, 231, 239),
+                HexColor(AppTheme_['PrimaryBgColor']),
+                HexColor(AppTheme_['PrimaryBgColor']),
               ],
             )),
             child: SizedBox(
@@ -684,7 +720,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                                         ? Icon(
                                                             Icons
                                                                 .keyboard_double_arrow_left,
-                                                            color: Colors.grey)
+                                                            color: HexColor(
+                                                                AppTheme_[
+                                                                    'SecondaryBgColor']))
                                                         : SizedBox(
                                                             width: 24,
                                                           ),
@@ -693,14 +731,14 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                                                     .familyPos]
                                                                 ['Name'] ==
                                                             item["Name"])
-                                                        ? 81
-                                                        : 51,
+                                                        ? 90
+                                                        : 60,
                                                     height: (data.familyList[data
                                                                     .familyPos]
                                                                 ['Name'] ==
                                                             item["Name"])
-                                                        ? 81
-                                                        : 51,
+                                                        ? 90
+                                                        : 60,
                                                     child:
                                                         item['UserImgPath'] !=
                                                                 null
@@ -712,8 +750,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                                               )
                                                             : CircleAvatar(
                                                                 backgroundColor:
-                                                                    Colors.blue[
-                                                                        700],
+                                                                    HexColor(
+                                                                        AppTheme_[
+                                                                            'PrimaryBgColor']),
                                                                 child: Text(
                                                                   CommonFunctions
                                                                       .getInitials(
@@ -721,9 +760,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                                                               'Name']),
                                                                   style: TextStyle(
                                                                       fontSize:
-                                                                          22.0,
-                                                                      color: Colors
-                                                                          .white,
+                                                                          28.0,
+                                                                      color: HexColor(
+                                                                          AppTheme_[
+                                                                              'SecondaryBgColor']),
                                                                       letterSpacing:
                                                                           2.0,
                                                                       fontWeight:
@@ -734,9 +774,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                                     decoration: BoxDecoration(
                                                       //DecprationImage
                                                       border: Border.all(
-                                                          color:
-                                                              Theme.of(context)
-                                                                  .primaryColor,
+                                                          color: HexColor(AppTheme_[
+                                                              'SecondaryBgColor']),
                                                           width: 4.0,
                                                           style: BorderStyle
                                                               .solid), //Border.all
@@ -777,7 +816,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                                             Icons
                                                                 .keyboard_double_arrow_right,
                                                             size: 25,
-                                                            color: Colors.grey)
+                                                            color: HexColor(
+                                                                AppTheme_[
+                                                                    'SecondaryBgColor']))
                                                         : SizedBox(
                                                             width: 24,
                                                           ),
@@ -816,7 +857,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                             context,
                                             data.familyList[index]['UserSeqId'],
                                             data.familyList[index]
-                                                ['RefBranchSeqId'],data.NotificationCategoryList);
+                                                ['RefBranchSeqId'],
+                                            data.NotificationCategoryList);
                                       },
                                       initialPage: data.familyPos),
                                 ),
@@ -829,15 +871,17 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                       fontSize: 22.0,
-                                      color: Colors.black87,
+                                      color:
+                                          HexColor(AppTheme_['PrimaryFrColor']),
                                       letterSpacing: 2.0,
-                                      fontWeight: FontWeight.w400),
+                                      fontWeight: FontWeight.bold),
                                 ),
                                 Text(
                                   "Wallet Ballance",
                                   style: TextStyle(
                                       fontSize: 14.0,
-                                      color: Colors.grey[600],
+                                      color:
+                                          HexColor(AppTheme_['PrimaryFrColor']),
                                       letterSpacing: 2.0,
                                       fontWeight: FontWeight.w300),
                                 ),
@@ -846,7 +890,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                   style: TextStyle(
                                       fontSize: 18.0,
                                       color: HexColor(
-                                          AppSettings.colorCurrencyCode),
+                                          AppTheme_['SecondaryBgColor']),
                                       letterSpacing: 2.0,
                                       fontWeight: FontWeight.bold),
                                 ),
@@ -887,7 +931,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                           data.familyList,
                                           imgBaseUrl,
                                           profileData,
-                                          data.familyListWithoutParent);
+                                          data.familyListWithoutParent,
+                                          AppTheme_);
                                     });
                               } else {
                                 return SizedBox();
@@ -895,53 +940,60 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                             }),
                           ),
                         ),
+                        /* //NO HISTORY
+                        Consumer<MySettingsListener>(
+                            builder: (context, data, settingsDta) {
+                          if (data.dashboardRecentActivityList.isEmpty &&
+                              data.dashboardSpendingList.isEmpty &&
+                              data.dashboardOutStandingList.isEmpty) {
+                            return NoDataCard(
+                                AppSettings.imgAssetNoCalender,
+                                AppSettings.titleNoCalender,
+                                AppSettings.msgNoCalender,
+                                0);
+                          } else {
+                            return SizedBox();
+                          }
+                        }),
+ */
                         //RECENT TRANSACTION
                         Consumer<MySettingsListener>(
                             builder: (context, data, settingsDta) {
                           if (data.dashboardRecentActivityList.isNotEmpty) {
                             return Card(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15.0),
-                              ),
-                              elevation: 10,
-                              shadowColor: Colors.black,
-                              borderOnForeground: true,
-                              margin: EdgeInsets.only(
-                                  left: 20, right: 20, bottom: 20),
-                              child: Container(
-                                margin: EdgeInsets.all(10),
+                                /*  shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                ), */
+                                elevation: 10,
+                                shadowColor: Colors.black,
+                                borderOnForeground: true,
+                                margin: EdgeInsets.only(
+                                    left: 20, right: 20, bottom: 20),
                                 child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
+                                    ListTile(
+                                      title: Text("Recent Transaction"),
+                                      trailing: Text("(Last 30 days)"),
+                                      tileColor: HexColor(
+                                          AppTheme_['SecondaryBgColor']),
+                                      textColor: HexColor(
+                                          AppTheme_['SecondaryFrColor']),
+                                          
+                                    ),
                                     Container(
-                                        padding: EdgeInsets.only(
-                                            left: 10.0, top: 10.0),
-                                        margin: EdgeInsets.zero,
-                                        width: double.infinity,
-                                        color: Colors.transparent,
-                                        child: Text(
-                                          "RECENT TRANSACTION",
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold),
-                                        )),
-                                    Container(
-                                      margin:
-                                          EdgeInsets.only(left: 10.0, top: 5.0),
-                                      child: Text(
-                                        "(Last 30 days)",
-                                        style: TextStyle(
-                                            fontSize: 10,
-                                            fontWeight: FontWeight.normal),
+                                      margin: EdgeInsets.all(10),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          RecentTransactionListView(
+                                              data.dashboardRecentActivityList,
+                                              profileData['CurrencyCode'])
+                                        ],
                                       ),
                                     ),
-                                    RecentTransactionListView(
-                                        data.dashboardRecentActivityList,
-                                        profileData['CurrencyCode'])
                                   ],
-                                ),
-                              ),
-                            );
+                                ));
                           } else {
                             return SizedBox();
                           }
@@ -951,6 +1003,41 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                             builder: (context, data, settingsDta) {
                           if (data.dashboardSpendingList.isNotEmpty) {
                             return Card(
+                                /*  shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                ), */
+                                elevation: 10,
+                                shadowColor: Colors.black,
+                                borderOnForeground: true,
+                                margin: EdgeInsets.only(
+                                    left: 20, right: 20, bottom: 20),
+                                child: Column(
+                                  children: [
+                                    ListTile(
+                                      title: Text("Transaction Summery"),
+                                      trailing: Text("(Last 30 days)"),
+                                      tileColor: HexColor(
+                                          AppTheme_['SecondaryBgColor']),
+                                      textColor: HexColor(
+                                          AppTheme_['SecondaryFrColor']),
+                                          
+                                    ),
+                                    Container(
+                                      margin: EdgeInsets.all(10),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          TransactionSummery(
+                                        data.dashboardSpendingList,
+                                        profileData['CurrencyCode']),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ));
+                          
+                            /* return Card(
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(15.0),
                               ),
@@ -971,9 +1058,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                         width: double.infinity,
                                         color: Colors.transparent,
                                         child: Text(
-                                          "TRANSACTION SUMMERY",
+                                          "Transaction Summery",
                                           style: TextStyle(
                                               fontSize: 16,
+                                              color: HexColor(AppTheme_[
+                                                  'SecondaryBgColor']),
                                               fontWeight: FontWeight.bold),
                                         )),
                                     Container(
@@ -992,7 +1081,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                   ],
                                 ),
                               ),
-                            );
+                            ); */
                           } else {
                             return SizedBox();
                           }
@@ -1024,9 +1113,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                           width: double.infinity,
                                           color: Colors.transparent,
                                           child: Text(
-                                            "OUTSTANDING",
+                                            "Outstanding",
                                             style: TextStyle(
                                                 fontSize: 16,
+                                                color: HexColor(AppTheme_[
+                                                    'SecondaryBgColor']),
                                                 fontWeight: FontWeight.bold),
                                           )),
                                     ),
@@ -1320,6 +1411,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   ],
                 )))),
       );
+  }
+
+  Future<void> getTheme() async {
+    String AppTheme = await MySharedPref().getData(AppSettings.Sp_AppTheme);
+    this.AppTheme_ = jsonDecode(AppTheme);
+    print(AppTheme_);
   }
 }
 

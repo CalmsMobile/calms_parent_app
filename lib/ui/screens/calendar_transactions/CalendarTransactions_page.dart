@@ -298,7 +298,7 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                                   ? NoDataCard(
                                       AppSettings.imgAssetNoCalender,
                                       AppSettings.titleNoCalender,
-                                      AppSettings.msgNoCalender)
+                                      AppSettings.msgNoCalender,20)
                                   : SizedBox())
 
                       /*  Card(
