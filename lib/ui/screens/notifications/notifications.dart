@@ -73,6 +73,8 @@ class _NotificationsState extends State<Notifications>
 
   var refreshKey = GlobalKey<RefreshIndicatorState>();
 
+  var AppTheme_;
+
   Future<Null> refreshList() async {
     //refreshKey.currentState?.show(atTop: true);
     //await Future.delayed(Duration(seconds: 2));
@@ -136,6 +138,7 @@ class _NotificationsState extends State<Notifications>
   @override
   void initState() {
     super.initState();
+    if (!widget.NotifyOnly) getTheme();
     BackButtonInterceptor.add(myInterceptor,
         name: widget.name, context: context);
     initValues();
@@ -339,12 +342,18 @@ class _NotificationsState extends State<Notifications>
                           selectedUserId,
                           allNotification);
                     }, currentTime: DateTime.now(), locale: LocaleType.en),
-              backgroundColor: filteredDate ? Colors.red : HexColor("#023047"),
+              backgroundColor: filteredDate
+                  ? Colors.red
+                  : widget.NotifyOnly
+                      ? HexColor("#023047")
+                      : HexColor(AppTheme_['SecondaryBgColor']),
               child: filteredDate
                   ? Icon(Icons.close_sharp)
                   : Icon(Icons.calendar_month),
             ),
-            backgroundColor: Color.fromRGBO(255, 255, 255, 1),
+            backgroundColor: widget.NotifyOnly
+                ? Color.fromRGBO(255, 255, 255, 1)
+                : HexColor(AppTheme_['PrimaryBgColor']),
             appBar: AppBar(
                 bottom: TabBar(
                     isScrollable: true,
@@ -355,8 +364,10 @@ class _NotificationsState extends State<Notifications>
                           _tabController.indexIsChanging.toString());
                       if (!_tabController.indexIsChanging) refreshList();
                     },
-                    labelColor: Colors.white,
-                    unselectedLabelColor: Color.fromARGB(152, 158, 158, 158),
+                    labelColor: widget.NotifyOnly
+                        ? Colors.white
+                        : HexColor(AppTheme_['SecondaryFrColor']),
+                    unselectedLabelColor: Color.fromARGB(151, 246, 243, 243),
                     tabs: [
                       for (int i = 0; i < widget.categoryList.length; i++)
                         Row(
@@ -369,7 +380,9 @@ class _NotificationsState extends State<Notifications>
                     ],
                     controller: _tabController),
                 toolbarHeight: 70,
-                backgroundColor: HexColor("#023047"),
+                backgroundColor: widget.NotifyOnly
+                    ? HexColor("#023047")
+                    : HexColor(AppTheme_['SecondaryBgColor']),
                 //titleSpacing: -5,
                 automaticallyImplyLeading: false,
                 centerTitle: true,
@@ -398,56 +411,71 @@ class _NotificationsState extends State<Notifications>
                                   ),
                                 ),
                         ))
-                    : SizedBox(),
+                    : InkWell(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                            //margin: EdgeInsets.only(left: 10),
+                            height: 30,
+                            width: 50,
+                            margin: EdgeInsets.only(left: 10),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                  color:
+                                      HexColor(AppTheme_['SecondaryFrColor']),
+                                  width: 2),
+                              color: Colors.white,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Padding(
+                                padding: EdgeInsets.all(3),
+                                child: Icon(
+                                  Icons.arrow_back_ios_new,
+                                  color:
+                                      HexColor(AppTheme_['SecondaryFrColor']),
+                                  size: 30,
+                                )))),
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    if (!widget.NotifyOnly)
-                      InkWell(
-                        onTap: () {
-                          Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => HomePage()),
-                              (route) => false);
-                        },
-                        child: Image(
-                          width: 50,
-                          height: 50,
-                          image: AssetImage("assets/images/ico_back.png"),
-                        ),
-                      ),
                     Flexible(
                         child: Container(
                             //margin: EdgeInsets.only(left: 10),
                             child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          profileData_['BranchName'],
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
+                        if (widget.NotifyOnly)
+                          Text(
+                            profileData_['BranchName'],
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        if (widget.NotifyOnly)
+                          SizedBox(
+                            height: 5,
+                          ),
                         Row(
                           children: [
                             Text(
                               filterTitle,
                               style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 13,
+                                  color: widget.NotifyOnly
+                                      ? Colors.white
+                                      : HexColor(AppTheme_['SecondaryFrColor']),
+                                  fontSize: widget.NotifyOnly ? 13 : 16,
                                   fontWeight: FontWeight.bold),
                             ),
                             Text(
                               "${filterSelectedDate != "" ? " | " + DateFormat("dd-MM-yyyy").format(DateTime.parse(filterSelectedDate)) : ""}",
                               style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 13,
+                                  color: widget.NotifyOnly
+                                      ? Colors.white
+                                      : HexColor(AppTheme_['SecondaryFrColor']),
+                                  fontSize: widget.NotifyOnly ? 13 : 16,
                                   fontWeight: FontWeight.bold),
                             ),
                           ],
@@ -1181,5 +1209,12 @@ class _NotificationsState extends State<Notifications>
         );
       },
     );
+  }
+
+  Future<void> getTheme() async {
+    String AppTheme = await MySharedPref().getData(AppSettings.Sp_AppTheme);
+    this.AppTheme_ = jsonDecode(AppTheme);
+    print("test + " + AppTheme);
+    AppSettings.colorCurrencyCode = this.AppTheme_['SecondaryBgColor'];
   }
 }

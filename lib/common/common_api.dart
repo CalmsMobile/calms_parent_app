@@ -52,7 +52,7 @@ class CommonUtil {
       BuildContext context, Map<String, dynamic> response, UserSeqId) {
     if (response['Table'][0]['code'] == 10 && response['Table1'][0] != null) {
       print("getEntryToDashboard success");
-      CommonUtil().getAppTheme(context);
+      //CommonUtil().getAppTheme(context);
       if (response['Table3'] != null) {
         MySharedPref().saveData(
             jsonEncode(response['Table3'][0]), AppSettings.Sp_ProfileData);
@@ -67,6 +67,9 @@ class CommonUtil {
                         name: 'NotificationDashboard',
                       )));
         else {
+          context
+              .read<MySettingsListener>()
+              .updateAppThemeData(response['Table5'][0]);
           context
               .read<MySettingsListener>()
               .updateEntryToDashboardFamilyList(response['Table1'], UserSeqId);
@@ -196,7 +199,7 @@ class CommonUtil {
   }
 
   Future<void> getGatewayDetails(context, RefBranchSeqId, RefSettingSeqId,
-      topupTotal, profileData, Balance, IsWallet, paymentFor) async {
+      topupTotal, profileData, Balance, IsWallet, paymentFor,AppTheme_) async {
     var ParamData = {
       "RefBranchSeqId": RefBranchSeqId,
       "RefSettingSeqId": RefSettingSeqId
@@ -212,7 +215,7 @@ class CommonUtil {
       res
           .then((response) => {
                 successGetGatewayDetails(context, response, topupTotal,
-                    profileData, IsWallet, Balance, paymentFor)
+                    profileData, IsWallet, Balance, paymentFor,AppTheme_)
               })
           .onError((error, stackTrace) => {authorizedPostRequestError(error)});
     } else {
@@ -242,22 +245,22 @@ class CommonUtil {
       };
 
       successGetGatewayDetails(
-          context, WT, topupTotal, profileData, IsWallet, Balance, paymentFor);
+          context, WT, topupTotal, profileData, IsWallet, Balance, paymentFor,AppTheme_);
     }
   }
 
   successGetGatewayDetails(BuildContext context, response, topupTotal,
-      profileData, IsWallet, Balance, paymentFor) async {
+      profileData, IsWallet, Balance, paymentFor,AppTheme_) async {
     if (IsWallet == 0) {
       if (response['Table'][0]['code'] == 10) {
         print("getGatewayDetailsSuccess success");
         if (response['Table1'] != null || response['Table1'] != [])
           showCustomPaymentAlert(context, response['Table1'][0], topupTotal,
-              profileData, IsWallet, Balance, paymentFor);
+              profileData, IsWallet, Balance, paymentFor,AppTheme_);
       }
     } else {
       showCustomPaymentAlert(context, response, topupTotal, profileData,
-          IsWallet, Balance, paymentFor);
+          IsWallet, Balance, paymentFor,AppTheme_);
     }
   }
 
@@ -430,7 +433,7 @@ class CommonUtil {
   }
 
   Future<void> getMealItemsForUser(context, RefUserSeqId, RefBranchSeqId,
-      poTypesList, CurrencyCode, imgBaseUrl, profileData, AllowToChoose) async {
+      poTypesList, CurrencyCode, imgBaseUrl, profileData,AppTheme_, AllowToChoose) async {
     var ParamData = {
       "RefBranchSeqId": RefBranchSeqId,
       "RefUserSeqId": RefUserSeqId,
@@ -453,13 +456,13 @@ class CommonUtil {
     res
         .then((response) => {
               successGetMealItemsForUser(context, response, RefUserSeqId,
-                  poTypesList, CurrencyCode, imgBaseUrl, profileData)
+                  poTypesList, CurrencyCode, imgBaseUrl, profileData,AppTheme_)
             })
         .onError((error, stackTrace) => {authorizedPostRequestError(error)});
   }
 
   successGetMealItemsForUser(BuildContext context, response, RefUserSeqId,
-      poTypesList, CurrencyCode, imgBaseUrl, profileData) {
+      poTypesList, CurrencyCode, imgBaseUrl, profileData,AppTheme_) {
     if (response['Table'][0]['code'] == 10) {
       print("getMealItemsForUser success");
 
@@ -471,7 +474,7 @@ class CommonUtil {
           poTypesList,
           CurrencyCode,
           imgBaseUrl,
-          profileData);
+          profileData,AppTheme_);
     }
   }
 
@@ -486,7 +489,7 @@ class CommonUtil {
       showCart,
       UserSeqId,
       callbackFun,
-      mealIndex) async {
+      mealIndex,AppTheme_) async {
     var ParamData = {
       "RefItemSeqId": RefItemSeqId,
       "ViewDate": ViewDate,
@@ -512,7 +515,7 @@ class CommonUtil {
                   showCart,
                   UserSeqId,
                   callbackFun,
-                  mealIndex)
+                  mealIndex,AppTheme_)
             })
         .onError((error, stackTrace) => {authorizedPostRequestError(error)});
   }
@@ -528,7 +531,7 @@ class CommonUtil {
       showCart,
       UserSeqId,
       Function callbackFun,
-      mealIndex) {
+      mealIndex,AppTheme_) {
     if (response['Table'][0]['code'] == 10) {
       print("successGetMealItemDetail");
       response['Table1'][0]['addedToCart'] = addedToCart;
@@ -548,7 +551,7 @@ class CommonUtil {
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => MealDetails(arguments, callbackFun)));
+              builder: (context) => MealDetails(arguments, callbackFun,AppTheme_)));
     }
   }
 

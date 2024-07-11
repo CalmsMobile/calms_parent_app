@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
 
+import '../../../common/HexColor.dart';
 import '../../../common/app_settings.dart';
 import '../../../common/listener/settings_listener.dart';
 import '../../../common/util/common_funtions.dart';
@@ -12,8 +13,9 @@ class TopupMemberListView extends StatelessWidget {
   final String imgBaseUrl;
   final String CurrencyCode;
   final List membersList;
+  final AppTheme_;
   const TopupMemberListView(
-      this.imgBaseUrl, this.membersList, this.CurrencyCode);
+      this.imgBaseUrl, this.membersList, this.CurrencyCode,this.AppTheme_);
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +57,7 @@ class TopupMemberListView extends StatelessWidget {
                                       )
                                     : CircleAvatar(
                                         radius: 25,
-                                        backgroundColor: Colors.blue[700],
+                                        backgroundColor: HexColor(AppTheme_['SecondaryBgColor']),
                                         child: Text(
                                           CommonFunctions.getInitials(
                                                   membersList[index]['Name'])
@@ -80,8 +82,8 @@ class TopupMemberListView extends StatelessWidget {
                                       maxLines: 1,
                                       style: TextStyle(
                                         fontSize: 20,
-                                        color: Colors.green[900],
-                                        fontWeight: FontWeight.w500,
+                                        color: HexColor(AppTheme_['SecondaryBgColor']),
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                     /* membersList[index]['RelationShip'] != ""

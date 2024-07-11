@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 
 class MealPager extends StatelessWidget {
   const MealPager(this.mealList_, this.CurrencyCode, this.imgBaseUrl,
-      this.UserSeqId, this.poTypesList,this.profileData, this.onCartClick,this.onCancelMeal,this.onChangeMeal,this.onCancelDailyMeal)
+      this.UserSeqId, this.poTypesList,this.profileData, this.onCartClick,this.onCancelMeal,this.onChangeMeal,this.onCancelDailyMeal,this.AppTheme_)
       : super();
 
   final mealList_;
@@ -20,6 +20,7 @@ class MealPager extends StatelessWidget {
   final UserSeqId;
   final poTypesList;
   final profileData;
+  final AppTheme_;
   final Function onCartClick;
   final Function onCancelMeal;
   final Function onChangeMeal;
@@ -56,7 +57,7 @@ class MealPager extends StatelessWidget {
                       poTypesList['PreOrderType'] == 'Daily' ? true : false,
                       UserSeqId,
                       onCartClick,
-                      index);
+                      index,AppTheme_);
                   // moveToDetails(_foundStoreList, index, context);
                   /* Navigator.of(context)
                     .pushNamed('/MealDetails', arguments: mealList_[index]); */

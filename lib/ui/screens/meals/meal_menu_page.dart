@@ -18,7 +18,9 @@ import 'package:flutter/services.dart';
 
 class MealMenuPage extends StatefulWidget {
   final arguments;
-  const MealMenuPage(this.arguments, {Key? key}) : super(key: key);
+  final AppTheme_;
+  const MealMenuPage(this.arguments, this.AppTheme_, {Key? key})
+      : super(key: key);
 
   @override
   _MealMenuPageState createState() => _MealMenuPageState();
@@ -105,7 +107,7 @@ class _MealMenuPageState extends State<MealMenuPage> {
       appBar: AppBar(
         toolbarHeight: 70,
         elevation: 0,
-        backgroundColor: Colors.transparent,
+        backgroundColor: HexColor(widget.AppTheme_['SecondaryBgColor']),
         //titleSpacing: -5,
         automaticallyImplyLeading: false,
         centerTitle: true,
@@ -139,21 +141,33 @@ class _MealMenuPageState extends State<MealMenuPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   InkWell(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Image(
-                      width: 50,
-                      height: 50,
-                      image: AssetImage("assets/images/ico_back.png"),
-                    ),
-                  ),
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                          //margin: EdgeInsets.only(left: 10),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                                color: HexColor(
+                                    widget.AppTheme_['SecondaryFrColor']),
+                                width: 2),
+                            color: Colors.white,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Padding(
+                              padding: EdgeInsets.all(3),
+                              child: Icon(
+                                Icons.arrow_back_ios_new,
+                                color: HexColor(
+                                    widget.AppTheme_['SecondaryFrColor']),
+                                size: 30,
+                              )))),
                   Padding(
                     padding: EdgeInsets.only(left: 10),
                     child: Text(
                       "Meal Order",
                       style: TextStyle(
-                          color: Colors.black,
+                          color: HexColor(widget.AppTheme_['SecondaryFrColor']),
                           fontSize: 20,
                           fontWeight: FontWeight.bold),
                     ),
@@ -205,35 +219,34 @@ class _MealMenuPageState extends State<MealMenuPage> {
                 Stack(
                   children: [
                     InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => CartPage(
-                                widget.arguments['imgBaseUrl'],
-                                widget.arguments['profileData']),
-                          ),
-                        );
-                      },
-                      child: Container(
-                        width: 40,
-                        height: 40,
-                        margin: EdgeInsets.only(left: 10),
-                        child: ClipOval(
-                          child: Material(
-                            color: Colors.blue, // Button color
-                            child: SizedBox(
-                                width: 40,
-                                height: 40,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CartPage(
+                                  widget.arguments['imgBaseUrl'],
+                                  widget.arguments['profileData'],widget.AppTheme_),
+                            ),
+                          );
+                        },
+                        child: Container(
+                            margin: EdgeInsets.only(left: 10),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: HexColor(
+                                      widget.AppTheme_['SecondaryFrColor']),
+                                  width: 2),
+                              color: Colors.white,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Padding(
+                                padding: EdgeInsets.all(3),
                                 child: Icon(
-                                  Icons.shopping_cart_rounded,
-                                  color: Colors.white,
-                                  size: 18,
-                                )),
-                          ),
-                        ),
-                      ),
-                    ),
+                                  Icons.shopping_cart_outlined,
+                                  color: HexColor(
+                                      widget.AppTheme_['SecondaryFrColor']),
+                                  size: 30,
+                                )))),
                     Consumer<MySettingsListener>(
                         builder: (context, data, settingsDta) {
                       return Positioned(
@@ -274,15 +287,15 @@ class _MealMenuPageState extends State<MealMenuPage> {
                 begin: Alignment.topRight,
                 end: Alignment.bottomLeft,
                 colors: [
-                  Color.fromARGB(255, 246, 249, 254),
-                  Color.fromARGB(255, 230, 231, 239),
+                  HexColor(widget.AppTheme_['PrimaryBgColor']),
+                  HexColor(widget.AppTheme_['PrimaryBgColor']),
                 ],
               )),
               child: SizedBox(
                 height: MediaQuery.of(context).size.height,
                 child: Container(
-                    color: HexColor("#f5f8fd"),
-                    margin: EdgeInsets.only(top: 0),
+                    color: HexColor(widget.AppTheme_['PrimaryBgColor']),
+                    margin: EdgeInsets.only(top: 10),
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
@@ -317,14 +330,14 @@ class _MealMenuPageState extends State<MealMenuPage> {
                                       decoration: BoxDecoration(
                                           color:
                                               _selectedDate == dateList[index]
-                                                  ? Colors.amber.shade700
+                                                  ? HexColor(widget.AppTheme_['SecondaryFrColor'])
                                                   : Colors.white,
                                           borderRadius:
                                               BorderRadius.circular(20),
                                           border: _selectedDate ==
                                                   dateList[index]
                                               ? Border.all(
-                                                  color: Colors.amber.shade700,
+                                                  color: HexColor(widget.AppTheme_['SecondaryFrColor']),
                                                   width: 2,
                                                 )
                                               : Border.all(
@@ -391,8 +404,11 @@ class _MealMenuPageState extends State<MealMenuPage> {
                                 }),
                           ),
                           if (mealListBydate.length == 0)
-                            NoDataCard(AppSettings.imgAssetNoMeal,
-                                AppSettings.titleNoMeal, AppSettings.msgNoMeal,20),
+                            NoDataCard(
+                                AppSettings.imgAssetNoMeal,
+                                AppSettings.titleNoMeal,
+                                AppSettings.msgNoMeal,
+                                20),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Row(
@@ -421,7 +437,7 @@ class _MealMenuPageState extends State<MealMenuPage> {
                                               color: selectedTab ==
                                                       ItemTypeList[index]
                                                           ['ItemTypeSeqId']
-                                                  ? Colors.amber.shade700
+                                                  ? HexColor(widget.AppTheme_['SecondaryFrColor'])
                                                   : Colors.transparent,
                                               width: 5.0),
                                         ),
@@ -432,6 +448,7 @@ class _MealMenuPageState extends State<MealMenuPage> {
                                           ItemTypeList[index]['Name'],
                                           style: TextStyle(
                                               fontSize: 16,
+                                              color: HexColor(widget.AppTheme_['PrimaryFrColor']),
                                               fontWeight: FontWeight.bold),
                                         ),
                                       ),
@@ -451,11 +468,12 @@ class _MealMenuPageState extends State<MealMenuPage> {
                                   widget.arguments['profileData'],
                                   onCartClick,
                                   onCancelMeal,
-                                  onChangeMeal,onCancelDailyMeal))
+                                  onChangeMeal,
+                                  onCancelDailyMeal,widget.AppTheme_))
                         ])),
               ))
           : NoDataCard(AppSettings.imgAssetNoMeal, AppSettings.titleNoMeal,
-              AppSettings.msgNoMeal,20),
+              AppSettings.msgNoMeal, 20),
       //floatingActionButtonLocation: ExpandableFab.location,
       // floatingActionButton: _getFilterFAB()
     );
@@ -480,7 +498,7 @@ class _MealMenuPageState extends State<MealMenuPage> {
     });
   }
 
-   void onCancelDailyMeal(index) {
+  void onCancelDailyMeal(index) {
     setState(() {
       mealListByItemType[index]['AllowToCancel'] = false;
       mealListByItemType[index]['AllowToBuy'] = true;

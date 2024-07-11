@@ -314,7 +314,7 @@ class MySettingsListener with ChangeNotifier {
       poTypesList,
       CurrencyCode,
       imgBaseUrl,
-      profileData) {
+      profileData,AppTheme_) {
     if (mealsList.length > 0 && poTypesList['PreOrderType'] == "Daily") {
       for (var i = 0; i < mealsList.length; i++) {
         if (_cartList.contains(CommonFunctions.getPoDailyMealCartData(
@@ -341,7 +341,7 @@ class MySettingsListener with ChangeNotifier {
     };
     if (mealsList.isNotEmpty)
       Navigator.push(context,
-          MaterialPageRoute(builder: (context) => MealMenuPage(arguments)));
+          MaterialPageRoute(builder: (context) => MealMenuPage(arguments,AppTheme_)));
     //notifyListeners();
   }
 

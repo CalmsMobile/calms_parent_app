@@ -17,7 +17,8 @@ import 'package:flutter/material.dart';
 
 class TopupPage extends StatefulWidget {
   final arguments;
-  const TopupPage(this.arguments, {Key? key}) : super(key: key);
+  final AppTheme_;
+  const TopupPage(this.arguments, this.AppTheme_, {Key? key}) : super(key: key);
   @override
   _TopupPageState createState() => _TopupPageState();
 }
@@ -43,7 +44,60 @@ class _TopupPageState extends State<TopupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: getMyAppbar(false, context, "Topup", []),
+      appBar: AppBar(
+        toolbarHeight: 70,
+        elevation: 0,
+        backgroundColor: HexColor(widget.AppTheme_['SecondaryBgColor']),
+        //titleSpacing: -5,
+        automaticallyImplyLeading: false,
+        centerTitle: true,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            InkWell(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Container(
+                    //margin: EdgeInsets.only(left: 10),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                          color: HexColor(widget.AppTheme_['SecondaryFrColor']),
+                          width: 2),
+                      color: Colors.white,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Padding(
+                        padding: EdgeInsets.all(3),
+                        child: Icon(
+                          Icons.arrow_back_ios_new,
+                          color: HexColor(widget.AppTheme_['SecondaryFrColor']),
+                          size: 30,
+                        )))),
+            Padding(
+              padding: EdgeInsets.only(left: 10),
+              child: Text(
+                "Topup",
+                style: TextStyle(
+                    color: HexColor(widget.AppTheme_['SecondaryFrColor']),
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold),
+              ),
+            )
+            // Your widgets here
+          ],
+        ),
+        actions: [
+          // Navigate to the Search Screen
+          Container(
+            height: 30,
+            width: 60,
+            margin: EdgeInsets.only(right: 10),
+            child: Row(children: []),
+          ),
+        ],
+      ),
       body: Container(
           constraints: BoxConstraints.expand(),
           decoration: BoxDecoration(
@@ -51,8 +105,8 @@ class _TopupPageState extends State<TopupPage> {
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
             colors: [
-              Color.fromARGB(255, 246, 249, 254),
-              Color.fromARGB(255, 230, 231, 239),
+              HexColor(widget.AppTheme_['PrimaryBgColor']),
+              HexColor(widget.AppTheme_['PrimaryBgColor']),
             ],
           )),
           child: SizedBox(
@@ -67,7 +121,7 @@ class _TopupPageState extends State<TopupPage> {
                         return TopupMemberListView(
                             widget.arguments['imgBaseUrl'],
                             data.topupMembersList,
-                            widget.arguments['profileData']['CurrencyCode']);
+                            widget.arguments['profileData']['CurrencyCode'],widget.AppTheme_);
                       } else {
                         return SizedBox();
                       }
@@ -175,12 +229,12 @@ class _TopupPageState extends State<TopupPage> {
                                     data.paymentProvidersList,
                                     data.topupTotal,
                                     widget.arguments['profileData'],
-                                    AppSettings.paymentTypeTopup);
+                                    AppSettings.paymentTypeTopup,widget.AppTheme_);
                               }
                             : null,
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Color.fromARGB(255, 6, 105, 199),
-                          textStyle: TextStyle(color: Colors.white),
+                          backgroundColor: HexColor(widget.AppTheme_['SecondaryBgColor']),
+                          textStyle: TextStyle(color: HexColor(widget.AppTheme_['SecondaryFrColor'])),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(60.0)),
                         ),

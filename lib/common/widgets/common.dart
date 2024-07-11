@@ -332,7 +332,7 @@ void openNotificationMemberBottomSheet(
 }
 
 void showPaymentSelectOption(BuildContext buildContext, titleText, paymentList,
-    topupAmount, profileData, paymentFor) {
+    topupAmount, profileData, paymentFor,AppTheme_) {
   var selectedPaymentMethod = {};
   var checkedValue = false;
   final List<String> modalList = [
@@ -428,7 +428,7 @@ void showPaymentSelectOption(BuildContext buildContext, titleText, paymentList,
                                         color: selectedPaymentMethod[
                                                     'PayMode'] ==
                                                 paymentList[index]['PayMode']
-                                            ? Color.fromARGB(255, 6, 150, 47)
+                                            ? HexColor(AppTheme_['SecondaryBgColor'])
                                             : Color.fromARGB(
                                                 102, 158, 158, 158),
                                       ),
@@ -601,13 +601,13 @@ void showPaymentSelectOption(BuildContext buildContext, titleText, paymentList,
                                                     ? selectedPaymentMethod[
                                                         'Balance']
                                                     : 0,
-                                                paymentFor);
+                                                paymentFor,AppTheme_);
                                           }
                                         : null,
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor:
-                                          Color.fromARGB(255, 6, 105, 199),
-                                      textStyle: TextStyle(color: Colors.white),
+                                          HexColor(AppTheme_['SecondaryBgColor']),
+                                      textStyle: TextStyle(color: HexColor(AppTheme_['SecondaryFrColor'])),
                                       shape: RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(60.0)),
@@ -758,11 +758,8 @@ double grandTotal(amountwithAdminFee, gatewayDetail, topupAmount) {
 }
 
 void showCustomPaymentAlert(BuildContext buildContext, gatewayDetail,
-    topupAmount, profileData, IsWallet, Balance, paymentFor) {
-  final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
-    backgroundColor: Colors.pinkAccent,
-    textStyle: TextStyle(color: Colors.white),
-  );
+    topupAmount, profileData, IsWallet, Balance, paymentFor,AppTheme_) {
+  
   var checkedValue = false;
   showModalBottomSheet(
       shape: RoundedRectangleBorder(
@@ -953,7 +950,7 @@ void showCustomPaymentAlert(BuildContext buildContext, gatewayDetail,
                                             fontWeight: FontWeight.bold)),
                                     CheckboxListTile(
                                       checkColor: Colors.white,
-                                      activeColor: Colors.blue,
+                                      activeColor: HexColor(AppTheme_['SecondaryBgColor']),
                                       contentPadding: EdgeInsets.zero,
                                       title: Text(gatewayDetail['TnC_Desc'],
                                           style: TextStyle(
@@ -1059,7 +1056,7 @@ void showCustomPaymentAlert(BuildContext buildContext, gatewayDetail,
                                             : null,
                                         style: ElevatedButton.styleFrom(
                                           backgroundColor:
-                                              Color.fromARGB(255, 6, 105, 199),
+                                              HexColor(AppTheme_['SecondaryBgColor']),
                                           textStyle:
                                               TextStyle(color: Colors.white),
                                           shape: RoundedRectangleBorder(

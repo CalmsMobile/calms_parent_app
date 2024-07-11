@@ -179,7 +179,7 @@ void main() async {
 }
 
 var myroutes = {
-  "/TopupPage": (context) => new TopupPage({}),
+  "/TopupPage": (context) => new TopupPage({},{}),
   "/DonationPage": (context) => new DonationPage(),
   "/ProfilePage": (context) => new ProfilePage(),
   "/MerchantTransaction": (context) => new MerchantTransaction(),
@@ -193,11 +193,11 @@ var myroutes = {
   "/Activities": (context) => Activities(),
   "/ActivityDetails": (context) => ActivityDetails(),
   "/InvoiceDetails": (context) => InvoiceDetails(),
-  "/MealOrder": (context) => MealOrder({}),
+  "/MealOrder": (context) => MealOrder({},{}),
   "/Notifications": (context) => Notifications(),
   "/NotificationView": (context) => NotificationView(),
   "/AppSettingsPage": (context) => AppSettingsPage(),
-  "/CartPage": (context) => CartPage("", ""),
+  "/CartPage": (context) => CartPage("", "",{}),
   "/ParentPickup": (context) => ParentPickup(),
   "/StudentTracking": (context) => StudentTracking(),
   "/BusTracking": (context) => BusTracking(),
@@ -213,7 +213,7 @@ var myroutes = {
   "/FilterPage": (context) => FilterPage(),
   "/FilterActivities": (context) => FilterActivities(),
   "/ViewImage": (context) => ViewImage(),
-  "/MealDetails": (context) => MealDetails({}, () {}),
+  "/MealDetails": (context) => MealDetails({}, () {},{}),
   "/calendarTransactions": (context) => CalendarTransactionsPage(),
   "/topupPayment": (context) => PaymentWebviewPage({}, ""),
   "/topupAfterPayment": (context) => AfterPaymentPage({}, ""),
@@ -352,40 +352,28 @@ class _SplashScreenState extends State<SplashScreen> {
     /* Timer(
         Duration(seconds: 1),
         () => { */
-              if (token == "" && profileData == "" && qrCodeData == "")
-                {
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => QRRegistration()));
-                }
-              else if (token != "" && profileData != "" && appPIN != "")
-                {
-                  if (appVerified)
-                    {
-                      if (kDebugMode)
-                       
-                          Navigator.pushReplacement(context,
-                              MaterialPageRoute(builder: (context) => MyApp()));
-                       
-                      else
-                        Navigator.pushReplacement(context,
-                            MaterialPageRoute(builder: (context) => PINEnter()));
-                    }
-                  else
-                    {
-                      verifySignIn(context, qrCodeData, profileData, token,
-                          DeviceId, true);
-                    }
-                }
-              else if (token != "" && profileData != "" && appPIN == "")
-                {
-                  if (appVerified)
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => CreatePin()));
-                  else
-                    verifySignIn(
-                        context, qrCodeData, profileData, token, DeviceId, true);
-                }
-         //   });
+    if (token == "" && profileData == "" && qrCodeData == "") {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => QRRegistration()));
+    } else if (token != "" && profileData != "" && appPIN != "") {
+      if (appVerified) {
+        if (kDebugMode)
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => MyApp()));
+        else
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => PINEnter()));
+      } else {
+        verifySignIn(context, qrCodeData, profileData, token, DeviceId, true);
+      }
+    } else if (token != "" && profileData != "" && appPIN == "") {
+      if (appVerified)
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => CreatePin()));
+      else
+        verifySignIn(context, qrCodeData, profileData, token, DeviceId, true);
+    }
+    //   });
   }
 
   verifySignIn(
@@ -435,7 +423,8 @@ class _SplashScreenState extends State<SplashScreen> {
       MySharedPref().saveData(MAppSeqId, AppSettings.Sp_MAppDevSeqId);
       MySharedPref().saveData(
           json.encode(AuthorizePayload), AppSettings.Sp_Payload_Authorize);
-      //if (appPIN == "")
+      //if(res['Table1'])
+        MySharedPref().saveData(jsonEncode(res['Table1'][0]), AppSettings.Sp_AppTheme);
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => CreatePin()));
     } else if (res['Table'][0]['code'] == 50) {

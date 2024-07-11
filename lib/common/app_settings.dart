@@ -93,6 +93,7 @@ static String colorCurrencyCode = "#0D47A1";
   static String msgNoMeal =
       "No meal item found for selected date, we'll update here when there is any new meal been uploaded.";
       static String imgAssetNoCalender = "assets/images/no_calendar.png";
+      static String imgAssetNoTxn = "assets/images/no_recent_transaction.jpg";
   static String titleNoCalender = "NO HISTORY";
   static String msgNoCalender = "";
 }

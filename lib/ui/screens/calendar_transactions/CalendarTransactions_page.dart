@@ -9,6 +9,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
+import '../../../common/HexColor.dart';
 import '../../../common/common_api.dart';
 import '../../../common/listener/settings_listener.dart';
 import '../../../common/util/common_funtions.dart';
@@ -78,6 +79,7 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
     final familyList = data['familyList'];
     final imgBaseUrl = data['imgBaseUrl'];
     final CurrencyCode = data['CurrencyCode'];
+    final AppTheme_ = data['AppTheme_'];
     if (familyList != [] || familyList != null) {
       print("initValues");
       selectedUserSeqId = familyList[senderIndex]['UserSeqId'];
@@ -88,7 +90,7 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
     }
 
     return Scaffold(
-        appBar: getMyAppbar(false, context, "Calendar", [
+        /* appBar: getMyAppbar(false, context, "Calendar", [
           // Navigate to the Search Screen
           Container(
             height: 30,
@@ -137,6 +139,113 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
             ),
           ),
         ]),
+         */
+        appBar: AppBar(
+          toolbarHeight: 70,
+          elevation: 0,
+          backgroundColor: HexColor(AppTheme_['SecondaryBgColor']),
+          //titleSpacing: -5,
+          automaticallyImplyLeading: false,
+          centerTitle: true,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              /* InkWell(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Image(
+                width: 50,
+                height: 50,
+                image: AssetImage("assets/images/ico_back.png"),
+              ),
+            ), */
+              InkWell(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                      //margin: EdgeInsets.only(left: 10),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                            color: HexColor(AppTheme_['SecondaryFrColor']),
+                            width: 2),
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Padding(
+                          padding: EdgeInsets.all(3),
+                          child: Icon(
+                            Icons.arrow_back_ios_new,
+                            color: HexColor(AppTheme_['SecondaryFrColor']),
+                            size: 30,
+                          )))),
+              Padding(
+                padding: EdgeInsets.only(left: 10),
+                child: Text(
+                  "Calendar",
+                  style: TextStyle(
+                      color: HexColor(AppTheme_['SecondaryFrColor']),
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
+                ),
+              )
+              // Your widgets here
+            ],
+          ),
+          actions: [
+            // Navigate to the Search Screen
+            if (familyList.length > 0 && senderIndex > -1)
+              Container(
+                height: 30,
+                width: 100,
+                margin: EdgeInsets.only(right: 10),
+                child: Row(
+                  children: [
+                    Flexible(
+                      child: ListTile(
+                        horizontalTitleGap: 2,
+                        contentPadding: EdgeInsets.zero,
+                        onTap: () => {
+                          openMemberBottomSheet(context, familyList, imgBaseUrl,
+                              (index) {
+                            Navigator.pop(context);
+                            senderIndex = index;
+                            setState(() {
+                              getData(
+                                  selectedUserSeqId,
+                                  selectedRefBranchSeqId,
+                                  DateFormat("yyyy-MM-dd")
+                                      .format(selectedDateTime!));
+                            });
+                          })
+                        },
+                        trailing: familyList[senderIndex]['UserImgPath'] != null
+                            ? CircleAvatar(
+                                backgroundImage: NetworkImage(imgBaseUrl +
+                                    familyList[senderIndex]["UserImgPath"]),
+                              )
+                            : CircleAvatar(
+                                backgroundColor: Colors.blue[700],
+                                child: Text(
+                                  CommonFunctions.getInitials(
+                                          familyList[senderIndex]['Name'])
+                                      .toUpperCase(),
+                                  style: TextStyle(
+                                      fontSize: 22.0,
+                                      color: Colors.white,
+                                      letterSpacing: 2.0,
+                                      fontWeight: FontWeight.w900),
+                                ),
+                              ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+          ],
+        ),
         body: Container(
             constraints: BoxConstraints.expand(),
             decoration: BoxDecoration(
@@ -144,8 +253,8 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
               begin: Alignment.topRight,
               end: Alignment.bottomLeft,
               colors: [
-                Color.fromARGB(255, 246, 249, 254),
-                Color.fromARGB(255, 230, 231, 239),
+                HexColor(AppTheme_['PrimaryBgColor']),
+                HexColor(AppTheme_['PrimaryBgColor']),
               ],
             )),
             child: SizedBox(
@@ -298,7 +407,8 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                                   ? NoDataCard(
                                       AppSettings.imgAssetNoCalender,
                                       AppSettings.titleNoCalender,
-                                      AppSettings.msgNoCalender,20)
+                                      AppSettings.msgNoCalender,
+                                      20)
                                   : SizedBox())
 
                       /*  Card(

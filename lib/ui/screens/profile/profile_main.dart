@@ -24,9 +24,64 @@ class _ProfileMainState extends State<ProfileMain> {
     final profileData = data['profileData'];
     final imgBaseUrl = data['imgBaseUrl'];
     final CurrencyCode = data['CurrencyCode'];
+    final AppTheme_ = data['AppTheme_'];
 
     return Scaffold(
-        appBar: getMyAppbar(false, context, "Profile", []),
+        appBar: AppBar(
+          toolbarHeight: 70,
+          elevation: 0,
+          backgroundColor: HexColor(AppTheme_['SecondaryBgColor']),
+          //titleSpacing: -5,
+          automaticallyImplyLeading: false,
+          centerTitle: true,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              /* InkWell(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Image(
+                width: 50,
+                height: 50,
+                image: AssetImage("assets/images/ico_back.png"),
+              ),
+            ), */
+              InkWell(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                      //margin: EdgeInsets.only(left: 10),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                            color: HexColor(AppTheme_['SecondaryFrColor']),
+                            width: 2),
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Padding(
+                          padding: EdgeInsets.all(3),
+                          child: Icon(
+                            Icons.arrow_back_ios_new,
+                            color: HexColor(AppTheme_['SecondaryFrColor']),
+                            size: 30,
+                          )))),
+              Padding(
+                padding: EdgeInsets.only(left: 10),
+                child: Text(
+                  "Profile",
+                  style: TextStyle(
+                      color: HexColor(AppTheme_['SecondaryFrColor']),
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
+                ),
+              )
+              // Your widgets here
+            ],
+          ),
+        ),
         body: Container(
           constraints: BoxConstraints.expand(),
           decoration: BoxDecoration(
@@ -34,8 +89,8 @@ class _ProfileMainState extends State<ProfileMain> {
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
             colors: [
-              Color.fromARGB(255, 246, 249, 254),
-              Color.fromARGB(255, 230, 231, 239),
+              HexColor(AppTheme_['PrimaryBgColor']),
+              HexColor(AppTheme_['PrimaryBgColor']),
             ],
           )),
           child: SizedBox(
@@ -65,11 +120,12 @@ class _ProfileMainState extends State<ProfileMain> {
                               )
                             else
                               CircleAvatar(
-                                backgroundColor: Colors.blue[700],
+                                backgroundColor: HexColor(AppTheme_['SecondaryBgColor']),
                                 radius: 72,
                                 child: Text(
                                   CommonFunctions.getInitials(
-                                      profileData['Name']).toUpperCase(),
+                                          profileData['Name'])
+                                      .toUpperCase(),
                                   style: TextStyle(
                                       fontSize: 32.0,
                                       color: Colors.white,
@@ -97,13 +153,13 @@ class _ProfileMainState extends State<ProfileMain> {
                     Text(
                       profileData["Name"],
                       style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                          TextStyle(fontSize: 20,color:HexColor(AppTheme_['PrimaryFrColor']), fontWeight: FontWeight.bold),
                     ),
                     Text(
                       "Wallet Ballance",
                       style: TextStyle(
                           fontSize: 14.0,
-                          color: Colors.grey[600],
+                          color: HexColor(AppTheme_['PrimaryFrColor']),
                           letterSpacing: 2.0,
                           fontWeight: FontWeight.w300),
                     ),

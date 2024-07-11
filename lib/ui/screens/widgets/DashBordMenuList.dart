@@ -9,9 +9,10 @@ import '../../../common/HexColor.dart';
 import '../../../model/_AppointmentDataSource.dart';
 import '../calendar/calendar_page.dart';
 import '../home/Home.dart';
+import '../notifications/notifications.dart';
 
 Widget menuList(BuildContext context, int index, List menu, List familyList,
-    imgBaseUrl, profileData, List familyListWithoutParent,AppTheme_) {
+    imgBaseUrl, profileData, List familyListWithoutParent,AppTheme_,List NotificationCategoryList) {
   return Container(
     width: 90.0,
     child: InkWell(
@@ -25,7 +26,7 @@ Widget menuList(BuildContext context, int index, List menu, List familyList,
                               "profileData": profileData,
                               "imgBaseUrl": imgBaseUrl,
                               "selectedMemberIndex": 1
-                            }))),
+                            },AppTheme_))),
               if (menu[index]['MenuId'] == 2019.0)
                 Navigator.push(
                     context,
@@ -33,7 +34,7 @@ Widget menuList(BuildContext context, int index, List menu, List familyList,
                         builder: (context) => TopupPage({
                               "profileData": profileData,
                               "imgBaseUrl": imgBaseUrl,
-                            }))),
+                            },AppTheme_))),
               if (menu[index]['MenuId'] == 2022.0)
                 Navigator.of(context).pushNamed('/InvoicePayment'),
               if (menu[index]['MenuId'] == 1.0)
@@ -41,8 +42,19 @@ Widget menuList(BuildContext context, int index, List menu, List familyList,
                     .pushNamed('/calendarTransactions', arguments: {
                   "familyList": familyList,
                   "imgBaseUrl": imgBaseUrl,
-                  "CurrencyCode": profileData['CurrencyCode']
+                  "CurrencyCode": profileData['CurrencyCode'],
+                  "AppTheme_": AppTheme_
                 }),
+                if(menu[index]['MenuId'] == 2.0)
+                Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Notifications(
+                                      NotifyOnly: profileData['NotifyOnly'],
+                                      categoryList:
+                                          NotificationCategoryList,
+                                      name: 'NotificationDashboard',
+                                    )))
             },
         child: Column(
           children: [

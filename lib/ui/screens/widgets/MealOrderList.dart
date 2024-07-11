@@ -16,6 +16,7 @@ class MealOrderListView extends StatelessWidget {
   //final String imgBaseUrl;
   final String CurrencyCode;
   final profileData;
+  final AppTheme_;
   List poSettings;
   List poTypesList;
   Map<dynamic, List<dynamic>> poList;
@@ -32,6 +33,7 @@ class MealOrderListView extends StatelessWidget {
       this.memberDetails,
       this.imgBaseUrl,
       this.profileData,
+      this.AppTheme_,
       this.getData);
 
   @override
@@ -97,9 +99,9 @@ class MealOrderListView extends StatelessWidget {
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
-                                        fontSize: 22,
-                                        color: Colors.green[900],
-                                        fontWeight: FontWeight.w500,
+                                        fontSize:16,
+                                        color:  HexColor(AppTheme_['SecondaryBgColor']),
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                     poTypesList[index][0]['PreOrderType'] ==
@@ -132,13 +134,13 @@ class MealOrderListView extends StatelessWidget {
                                                 poTypesList[index][0],
                                                 CurrencyCode,
                                                 imgBaseUrl,
-                                                profileData,
+                                                profileData,AppTheme_,
                                                 false);
                                           },
                                           child: Container(
                                             width: 30,
                                             height: 30,
-                                            margin: EdgeInsets.all(10),
+                                            margin: EdgeInsets.only(left:10,right: 10,top: 25),
                                             child: ClipOval(
                                               child: Material(
                                                 color: Colors
@@ -262,7 +264,7 @@ class MealOrderListView extends StatelessWidget {
                                                                     index][i],
                                                                 CurrencyCode,
                                                                 imgBaseUrl,
-                                                                profileData,
+                                                                profileData,AppTheme_,
                                                                 false);
                                                           },
                                                           child: Container(
@@ -310,7 +312,7 @@ class MealOrderListView extends StatelessWidget {
                                                                     index][i],
                                                                 CurrencyCode,
                                                                 imgBaseUrl,
-                                                                profileData,
+                                                                profileData,AppTheme_,
                                                                 false);
                                                           },
                                                           child: Container(
@@ -355,7 +357,7 @@ class MealOrderListView extends StatelessWidget {
                                                                     index][i],
                                                                 CurrencyCode,
                                                                 imgBaseUrl,
-                                                                profileData,
+                                                                profileData,AppTheme_,
                                                                 poTypesList[
                                                                         index][i]
                                                                     [
