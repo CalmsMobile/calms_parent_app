@@ -27,6 +27,7 @@ class AppSettings {
   static String Sp_Payload_Authorize = 'CPA_AUTHORIZE';
   static String Sp_MAppDevSeqId = 'CPA_APP_SEQ_ID';
   static String Sp_AppTheme = 'CPA_APP_THEME';
+  static String Sp_cartAddedDate = 'CPA_cartAddedDate';
   static String tripDropOffStudentStatusList =
       'CPA_DROPOFF_STUDENT_STATUS_LIST';
   static String apiURL = 'http://124.217.235.107:1001/api/';
@@ -93,7 +94,7 @@ static String colorCurrencyCode = "#0D47A1";
   static String msgNoMeal =
       "No meal item found for selected date, we'll update here when there is any new meal been uploaded.";
       static String imgAssetNoCalender = "assets/images/no_calendar.png";
-      static String imgAssetNoTxn = "assets/images/no_recent_transaction.jpg";
+      static String imgAssetNoTxn = "assets/images/no_recent_transaction.png";
   static String titleNoCalender = "NO HISTORY";
   static String msgNoCalender = "";
 }

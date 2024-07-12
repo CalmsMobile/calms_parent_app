@@ -216,9 +216,10 @@ class _TopupPageState extends State<TopupPage> {
                               style: TextStyle(
                                   fontSize: 18.0,
                                   fontFamily: "Montserrat",
+                                  color: HexColor(widget.AppTheme_['SecondaryFrColor']),
                                   fontWeight: FontWeight.bold),
                             ),
-                            Icon(Icons.arrow_forward_ios)
+                            Icon(Icons.arrow_forward_ios,color: HexColor(widget.AppTheme_['SecondaryFrColor']),)
                           ],
                         ),
                         onPressed: data.topupTotal > 0

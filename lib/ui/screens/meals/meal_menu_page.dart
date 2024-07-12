@@ -19,7 +19,7 @@ import 'package:flutter/services.dart';
 class MealMenuPage extends StatefulWidget {
   final arguments;
   final AppTheme_;
-  const MealMenuPage(this.arguments, this.AppTheme_, {Key? key})
+  MealMenuPage(this.arguments, this.AppTheme_, {Key? key})
       : super(key: key);
 
   @override

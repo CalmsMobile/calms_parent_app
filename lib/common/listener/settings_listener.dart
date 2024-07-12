@@ -14,6 +14,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../date_util.dart';
+
 class MySettingsListener with ChangeNotifier {
   var _settingDetails;
   var _driverDetails;
@@ -282,6 +284,12 @@ class MySettingsListener with ChangeNotifier {
   }
 
   updatePoTypePackageCartStatus(int i1, int i2, isDelete, UserSeqId) {
+     if (_cartList.isEmpty) {
+      var cartAddedDate =
+          DateUtil().convertDateNow(DateTime.now(), "yyyy/MM/dd");
+      MySharedPref().saveData(cartAddedDate, AppSettings.Sp_cartAddedDate);
+      print(cartAddedDate);
+    }
     for (var ip = 0; ip < _poTypesList[i1].length; ip++) {
       _poTypesList[i1][ip]['addedToCart'] = false;
     }
@@ -302,6 +310,7 @@ class MySettingsListener with ChangeNotifier {
       }
       _cartList.add(cartData);
     }
+   
     print(_cartList);
     notifyListeners();
   }
@@ -314,7 +323,8 @@ class MySettingsListener with ChangeNotifier {
       poTypesList,
       CurrencyCode,
       imgBaseUrl,
-      profileData,AppTheme_) {
+      profileData,
+      AppTheme_) {
     if (mealsList.length > 0 && poTypesList['PreOrderType'] == "Daily") {
       for (var i = 0; i < mealsList.length; i++) {
         if (_cartList.contains(CommonFunctions.getPoDailyMealCartData(
@@ -340,12 +350,20 @@ class MySettingsListener with ChangeNotifier {
       "profileData": profileData
     };
     if (mealsList.isNotEmpty)
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => MealMenuPage(arguments,AppTheme_)));
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => MealMenuPage(arguments, AppTheme_)));
     //notifyListeners();
   }
 
   updatePoTypeMealsCartStatus(isDelete, UserSeqId, mealData, poTypesList) {
+     if (_cartList.isEmpty) {
+      var cartAddedDate =
+          DateUtil().convertDateNow(DateTime.now(), "yyyy/MM/dd");
+      MySharedPref().saveData(cartAddedDate, AppSettings.Sp_cartAddedDate);
+      print(cartAddedDate);
+    }
     String cartData = CommonFunctions.getPoDailyMealCartData(
         UserSeqId,
         mealData['ItemSeqId'],
@@ -357,7 +375,15 @@ class MySettingsListener with ChangeNotifier {
     } else {
       _cartList.add(cartData);
     }
+    if (_cartList.isEmpty) {
+      var cartAddedDate =
+          DateUtil().convertDateNow(DateTime.now(), "yyyy/MM/dd");
+      MySharedPref().saveData(cartAddedDate, AppSettings.Sp_cartAddedDate);
+      print(cartAddedDate);
+    }
+
     print(_cartList);
+
     notifyListeners();
   }
 

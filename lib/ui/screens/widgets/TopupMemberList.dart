@@ -15,7 +15,7 @@ class TopupMemberListView extends StatelessWidget {
   final List membersList;
   final AppTheme_;
   const TopupMemberListView(
-      this.imgBaseUrl, this.membersList, this.CurrencyCode,this.AppTheme_);
+      this.imgBaseUrl, this.membersList, this.CurrencyCode, this.AppTheme_);
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +57,8 @@ class TopupMemberListView extends StatelessWidget {
                                       )
                                     : CircleAvatar(
                                         radius: 25,
-                                        backgroundColor: HexColor(AppTheme_['SecondaryBgColor']),
+                                        backgroundColor: HexColor(
+                                            AppTheme_['SecondaryBgColor']),
                                         child: Text(
                                           CommonFunctions.getInitials(
                                                   membersList[index]['Name'])
@@ -82,7 +83,8 @@ class TopupMemberListView extends StatelessWidget {
                                       maxLines: 1,
                                       style: TextStyle(
                                         fontSize: 20,
-                                        color: HexColor(AppTheme_['SecondaryBgColor']),
+                                        color: HexColor(
+                                            AppTheme_['SecondaryBgColor']),
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -97,13 +99,28 @@ class TopupMemberListView extends StatelessWidget {
                                           ),
                                         )
                                       : SizedBox(), */
-                                    Text(
-                                      'Current Balance : ${CurrencyCode} ${membersList[index]['Balance'].toStringAsFixed(2)}',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: Color.fromARGB(255, 83, 83, 83),
-                                        fontWeight: FontWeight.w700,
-                                      ),
+                                      SizedBox(height: 5,),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          'Current Balance : ',
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color:
+                                                Color.fromARGB(255, 83, 83, 83),
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ),
+                                        Text(
+                                          '${CurrencyCode} ${membersList[index]['Balance'].toStringAsFixed(2)}',
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color:
+                                               HexColor(AppSettings.colorCurrencyCode),
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ),
+                                      ],
                                     )
                                   ],
                                 ),
@@ -132,7 +149,7 @@ class TopupMemberListView extends StatelessWidget {
                               checkMaximumAmount(context, index, value);
                             },
                             style: TextStyle(
-                                color: Color.fromARGB(255, 6, 105, 199),
+                                color: HexColor(AppSettings.colorCurrencyCode),
                                 fontWeight: FontWeight.bold,
                                 fontSize: 17),
                             textAlignVertical: TextAlignVertical.center,
@@ -149,7 +166,7 @@ class TopupMemberListView extends StatelessWidget {
                                 child: Text(CurrencyCode,
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
-                                        color: Color.fromARGB(255, 6, 105, 199),
+                                        color: HexColor(AppSettings.colorCurrencyCode),
                                         fontWeight: FontWeight.bold,
                                         fontSize: 17)),
                               ),

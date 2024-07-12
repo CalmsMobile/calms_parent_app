@@ -576,9 +576,10 @@ void showPaymentSelectOption(BuildContext buildContext, titleText, paymentList,
                                           style: TextStyle(
                                               fontSize: 18.0,
                                               fontFamily: "Montserrat",
+                                              color: HexColor(AppTheme_['SecondaryFrColor']),
                                               fontWeight: FontWeight.bold),
                                         ),
-                                        Icon(Icons.arrow_forward_ios)
+                                        Icon(Icons.arrow_forward_ios,color: HexColor(AppTheme_['SecondaryFrColor']))
                                       ],
                                     ),
                                     onPressed: checkedValue == true &&
@@ -1019,6 +1020,7 @@ void showCustomPaymentAlert(BuildContext buildContext, gatewayDetail,
                                               style: TextStyle(
                                                   fontSize: 18.0,
                                                   fontFamily: "Montserrat",
+                                                  color: HexColor(AppTheme_['SecondaryFrColor']),
                                                   fontWeight: FontWeight.bold),
                                             ),
                                             //Icon(Icons.payment)

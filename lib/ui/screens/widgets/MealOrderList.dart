@@ -14,7 +14,7 @@ import '../../../provider/rest_api.dart';
 
 class MealOrderListView extends StatelessWidget {
   //final String imgBaseUrl;
-  final String CurrencyCode;
+  String CurrencyCode;
   final profileData;
   final AppTheme_;
   List poSettings;
@@ -191,8 +191,7 @@ class MealOrderListView extends StatelessWidget {
                                                 border: Border.all(
                                                     color: Colors.white)),
                                             // color: Colors.grey,
-                                            child: Flexible(
-                                                child: Row(
+                                            child: Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment
                                                       .spaceBetween,
@@ -611,7 +610,7 @@ class MealOrderListView extends StatelessWidget {
                                                   ),
                                                 ),
                                               ],
-                                            )));
+                                            ));
                                       }),
                                 )
                               : SizedBox(), //SizedBox

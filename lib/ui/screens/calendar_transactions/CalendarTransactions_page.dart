@@ -401,9 +401,9 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                       }),
                       Consumer<MySettingsListener>(
                           builder: (context, data, child) =>
-                              data.calendarAttendanceList.isEmpty &&
-                                      data.calendarHolidaysList.isEmpty &&
-                                      data.calendarTransactionList.isEmpty
+                              data.calendarAttendanceList.length == 0 &&
+                                      data.calendarHolidaysList.length == 0 &&
+                                      data.calendarTransactionList.length == 0
                                   ? NoDataCard(
                                       AppSettings.imgAssetNoCalender,
                                       AppSettings.titleNoCalender,

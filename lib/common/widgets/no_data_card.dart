@@ -7,9 +7,9 @@ class NoDataCard extends StatelessWidget {
   final message;
 
   final title;
-  final marginTop;
+  double marginTop;
 
-  const NoDataCard(this.assetImageUrl, this.title, this.message,this.marginTop) : super();
+   NoDataCard(this.assetImageUrl, this.title, this.message,this.marginTop) : super();
   @override
   Widget build(BuildContext context) {
     return Card(

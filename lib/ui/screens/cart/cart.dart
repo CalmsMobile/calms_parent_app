@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 
 import '../../../common/app_settings.dart';
 import '../../../common/common_api.dart';
+import '../../../common/date_util.dart';
 import '../../../common/listener/settings_listener.dart';
 import '../../../common/my_shared_pref.dart';
 import '../../../common/util/common_funtions.dart';
@@ -19,7 +20,7 @@ class CartPage extends StatefulWidget {
   final imgBaseUrl;
   final profileData;
   final AppTheme_;
-  const CartPage(this.imgBaseUrl, this.profileData,this.AppTheme_, {Key? key})
+  const CartPage(this.imgBaseUrl, this.profileData, this.AppTheme_, {Key? key})
       : super(key: key);
 
   @override
@@ -40,7 +41,7 @@ class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       /*  appBar: getMyAppbar(true, context, "My Cart", [
+        /*  appBar: getMyAppbar(true, context, "My Cart", [
           Consumer<MySettingsListener>(builder: (contextt, data, settingsDta) {
             return data.finalCartList
                         .where((element) => element['isSelected'] == true)
@@ -108,7 +109,7 @@ class _CartPageState extends State<CartPage> {
                 : SizedBox();
           })
         ]), */
-         appBar: AppBar(
+        appBar: AppBar(
           toolbarHeight: 70,
           elevation: 0,
           backgroundColor: HexColor(widget.AppTheme_['SecondaryBgColor']),
@@ -164,9 +165,7 @@ class _CartPageState extends State<CartPage> {
               // Your widgets here
             ],
           ),
-          
         ),
-       
         resizeToAvoidBottomInset: false,
         body: SingleChildScrollView(child:
             Consumer<MySettingsListener>(builder: (context, data, settingsDta) {
@@ -194,8 +193,10 @@ class _CartPageState extends State<CartPage> {
                               child: Text(
                                 "Orders",
                                 style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                    fontSize: 15, color: HexColor(widget.AppTheme_['SecondaryFrColor'])),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15,
+                                    color: HexColor(
+                                        widget.AppTheme_['SecondaryFrColor'])),
                               ),
                             ),
                             Container(
@@ -213,7 +214,8 @@ class _CartPageState extends State<CartPage> {
                                           style: TextStyle(
                                             fontSize: 15,
                                             fontFamily: appFontFmaily,
-                                            color: HexColor(widget.AppTheme_['SecondaryFrColor']),
+                                            color: HexColor(widget
+                                                .AppTheme_['SecondaryFrColor']),
                                           ),
                                         ),
                                       ],
@@ -222,7 +224,8 @@ class _CartPageState extends State<CartPage> {
                                   Transform.scale(
                                     scale: 0.7,
                                     child: Checkbox(
-                                      activeColor: HexColor(widget.AppTheme_['SecondaryFrColor']),
+                                      activeColor: HexColor(
+                                          widget.AppTheme_['SecondaryFrColor']),
                                       // shape: CircleBorder(),
                                       value: getItemsSelectedState(
                                               data.finalCartList)
@@ -307,7 +310,8 @@ class _CartPageState extends State<CartPage> {
                                                             style: TextStyle(
                                                                 fontFamily:
                                                                     appFontFmaily,
-                                                                color: Colors.black,
+                                                                color: Colors
+                                                                    .black,
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .bold,
@@ -316,13 +320,15 @@ class _CartPageState extends State<CartPage> {
                                                         ),
                                                       ),
                                                       InkWell(
-                                                        onTap: () {setState(() {
-                                                          context
-                                                            .read<
-                                                                MySettingsListener>()
-                                                            .removeFromCart(
-                                                                index);
-                                                        }); },
+                                                        onTap: () {
+                                                          setState(() {
+                                                            context
+                                                                .read<
+                                                                    MySettingsListener>()
+                                                                .removeFromCart(
+                                                                    index);
+                                                          });
+                                                        },
                                                         child: Container(
                                                           width: 30,
                                                           height: 30,
@@ -330,13 +336,11 @@ class _CartPageState extends State<CartPage> {
                                                               EdgeInsets.only(
                                                                   left: 10),
                                                           child: Icon(
-                                                                Icons
-                                                                    .delete_outlined,
-                                                                color: Colors
-                                                                    .red,
-                                                                size: 25,
-                                                              ),
-                                                           
+                                                            Icons
+                                                                .delete_outlined,
+                                                            color: Colors.red,
+                                                            size: 25,
+                                                          ),
                                                         ),
                                                       ),
 
@@ -377,13 +381,14 @@ class _CartPageState extends State<CartPage> {
                                                                             "UserImgPath"]),
                                                                   )
                                                                 : CircleAvatar(
-                                                                    backgroundColor:HexColor(widget.AppTheme_['SecondaryBgColor']),
+                                                                    backgroundColor:
+                                                                        HexColor(
+                                                                            widget.AppTheme_['SecondaryBgColor']),
                                                                     child: Text(
-                                                                      CommonFunctions.getInitials(data.finalCartList[index]['member']
+                                                                      CommonFunctions.getInitials(data.finalCartList[index]['member'][0]
                                                                               [
-                                                                              0]
-                                                                          [
-                                                                          'Name']).toUpperCase(),
+                                                                              'Name'])
+                                                                          .toUpperCase(),
                                                                       style: TextStyle(
                                                                           fontSize:
                                                                               22.0,
@@ -416,7 +421,8 @@ class _CartPageState extends State<CartPage> {
                                                                                 14,
                                                                             fontFamily:
                                                                                 appFontFmaily,
-                                                                            color:HexColor(widget.AppTheme_['SecondaryBgColor']),
+                                                                            color:
+                                                                                HexColor(widget.AppTheme_['SecondaryBgColor']),
                                                                             fontWeight: FontWeight.bold),
                                                                       ),
                                                                       data.finalCartList[index]['member'][0]['Grade'] !=
@@ -438,8 +444,9 @@ class _CartPageState extends State<CartPage> {
                                                         child: Transform.scale(
                                                           scale: 1.5,
                                                           child: Checkbox(
-                                                            activeColor:
-                                                                HexColor(widget.AppTheme_['SecondaryBgColor']),
+                                                            activeColor: HexColor(
+                                                                widget.AppTheme_[
+                                                                    'SecondaryBgColor']),
                                                             value: data.finalCartList[
                                                                             index]
                                                                         [
@@ -552,8 +559,11 @@ class _CartPageState extends State<CartPage> {
             );
           } else
             return data.cartList.isEmpty
-                ? NoDataCard(AppSettings.imgAssetNoItemInCart,
-                    AppSettings.titleNoItemInCart, AppSettings.msgNoItemInCart,20)
+                ? NoDataCard(
+                    AppSettings.imgAssetNoItemInCart,
+                    AppSettings.titleNoItemInCart,
+                    AppSettings.msgNoItemInCart,
+                    20)
                 : SizedBox();
         })),
         bottomNavigationBar:
@@ -632,12 +642,13 @@ class _CartPageState extends State<CartPage> {
                                             data.paymentProvidersList,
                                             data.cartTotal,
                                             widget.profileData,
-                                            AppSettings.paymentTypeOrder,widget.AppTheme_);
+                                            AppSettings.paymentTypeOrder,
+                                            widget.AppTheme_);
                                       }
                                     : null,
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor:
-                                      HexColor(widget.AppTheme_['SecondaryBgColor']),
+                                  backgroundColor: HexColor(
+                                      widget.AppTheme_['SecondaryBgColor']),
                                   textStyle: TextStyle(color: Colors.white),
                                   shape: RoundedRectangleBorder(
                                       borderRadius:
@@ -757,5 +768,16 @@ class _CartPageState extends State<CartPage> {
     profileData = jsonDecode(profile);
     print(profileData);
     CommonUtil().getCartPageSettings(context, profileData);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      //do your stuff
+      /* var today = DateUtil().convertDateNow(DateTime.now(), "yyyy/MM/dd");
+      var cartAddedDate = MySharedPref().getData(AppSettings.Sp_cartAddedDate);
+      print(today + "==" + cartAddedDate); */
+      print("AppLifecycleState.resumed");
+    }
   }
 }

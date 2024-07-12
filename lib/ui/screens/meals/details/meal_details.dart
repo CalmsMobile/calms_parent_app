@@ -142,7 +142,8 @@ class _MealDetailsState extends State<MealDetails> {
                             MaterialPageRoute(
                               builder: (context) => CartPage(
                                   widget.arguments['imgBaseUrl'],
-                                  widget.arguments['profileData'],widget.AppTheme_),
+                                  widget.arguments['profileData'],
+                                  widget.AppTheme_),
                             ),
                           );
                         },
@@ -509,7 +510,7 @@ class _MealDetailsState extends State<MealDetails> {
                             ],
                           ),
                         ),
-                        /* if (widget.arguments['showCart'])
+                        if (widget.arguments['showCart'])
                           InkWell(
                             onTap: () {},
                             child: Container(
@@ -547,7 +548,7 @@ class _MealDetailsState extends State<MealDetails> {
                               ),
                             ),
                           ),
- */
+
                         /* InkWell(
                               onTap: () {
                                 MyCustomAlertDialog()
