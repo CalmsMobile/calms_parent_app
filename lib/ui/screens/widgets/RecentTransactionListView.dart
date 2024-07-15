@@ -137,8 +137,8 @@ class RecentTransactionListView extends StatelessWidget {
                         ],
                       ), */
                       onTap: () {
-                        Navigator.of(context).pushNamed('/PurchaseDetails',
-                            arguments: recentList[index]);
+                       /*  Navigator.of(context).pushNamed('/PurchaseDetails',
+                            arguments: recentList[index]); */
                       },
                     )
                   ]);

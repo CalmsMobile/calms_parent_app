@@ -19,7 +19,8 @@ import '../widgets/DashBordMenuList.dart';
 import '../widgets/TransactionSummery.dart';
 
 class CalendarTransactionsPage extends StatefulWidget {
-  static const String routeName = '/calendarTransactions';
+  final Map<String, dynamic> arg;
+  CalendarTransactionsPage(this.arg);
 
   @override
   _CalendarTransactionsPageState createState() =>
@@ -59,12 +60,33 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
     super.initState();
     selectedDateTime = DateTime.now();
     //this.getData("106312.0","11001",2023, 08, 31);
-    //context.read<MySettingsListener>().updateGetCalendarData([], [], []);
+    // final data = ModalRoute.of(context)?.settings.arguments as Map;
+
+    if (widget.arg['familyList'] != [] || widget.arg['familyList'] != null) {
+      print("initValues");
+      selectedUserSeqId = widget.arg['familyList'][senderIndex]['UserSeqId'];
+      selectedRefBranchSeqId =
+          widget.arg['familyList'][senderIndex]['RefBranchSeqId'];
+      getData(selectedUserSeqId, selectedRefBranchSeqId,
+          DateFormat("yyyy-MM-dd").format(selectedDateTime!));
+    }
   }
 
   Future<void> getData(RefUserSeqId, RefBranchSeqId, Date) async {
     CommonUtil()
         .getGetCalendarData(context, RefUserSeqId, RefBranchSeqId, Date);
+  }
+
+  selectMember(index) {
+    
+    setState(() {
+      print("index" == index.toString());
+      senderIndex = index;
+      selectedUserSeqId = widget.arg['familyList'][senderIndex]['UserSeqId'];
+      getData(selectedUserSeqId, selectedRefBranchSeqId,
+          DateFormat("yyyy-MM-dd").format(selectedDateTime!));
+      Navigator.pop(context);
+    });
   }
 
   @override
@@ -75,75 +97,22 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final data = ModalRoute.of(context)?.settings.arguments as Map;
-    final familyList = data['familyList'];
-    final imgBaseUrl = data['imgBaseUrl'];
-    final CurrencyCode = data['CurrencyCode'];
-    final AppTheme_ = data['AppTheme_'];
-    if (familyList != [] || familyList != null) {
+    if (widget.arg['familyList'] != [] || widget.arg['familyList'] != null) {
       print("initValues");
-      selectedUserSeqId = familyList[senderIndex]['UserSeqId'];
-      selectedRefBranchSeqId = familyList[senderIndex]['RefBranchSeqId'];
+      selectedUserSeqId = widget.arg['familyList'][senderIndex]['UserSeqId'];
+      selectedRefBranchSeqId =
+          widget.arg['familyList'][senderIndex]['RefBranchSeqId'];
       // setState(() {
       //getData(selectedUserSeqId, selectedRefBranchSeqId, DateTime.now().year,DateTime.now().month, DateTime.now().day);
       // });
     }
 
     return Scaffold(
-        /* appBar: getMyAppbar(false, context, "Calendar", [
-          // Navigate to the Search Screen
-          Container(
-            height: 30,
-            width: 150,
-            margin: EdgeInsets.only(right: 10),
-            child: Row(
-              children: [
-                Flexible(
-                  child: ListTile(
-                    horizontalTitleGap: 2,
-                    contentPadding: EdgeInsets.zero,
-                    onTap: () => {
-                      openMemberBottomSheet(context, familyList, imgBaseUrl,
-                          (index) {
-                        Navigator.pop(context);
-                        senderIndex = index;
-                        setState(() {
-                          getData(
-                              selectedUserSeqId,
-                              selectedRefBranchSeqId,
-                              DateFormat("yyyy-MM-dd")
-                                  .format(selectedDateTime!));
-                        });
-                      })
-                    },
-                    trailing: familyList[senderIndex]['UserImgPath'] != null
-                        ? CircleAvatar(
-                            backgroundImage: NetworkImage(imgBaseUrl +
-                                familyList[senderIndex]["UserImgPath"]),
-                          )
-                        : CircleAvatar(
-                            backgroundColor: Colors.blue[700],
-                            child: Text(
-                              CommonFunctions.getInitials(
-                                  familyList[senderIndex]['Name']).toUpperCase(),
-                              style: TextStyle(
-                                  fontSize: 22.0,
-                                  color: Colors.white,
-                                  letterSpacing: 2.0,
-                                  fontWeight: FontWeight.w900),
-                            ),
-                          ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ]),
-         */
         appBar: AppBar(
           toolbarHeight: 70,
           elevation: 0,
-          backgroundColor: HexColor(AppTheme_['SecondaryBgColor']),
+          backgroundColor:
+              HexColor(widget.arg['AppTheme_']['SecondaryBgColor']),
           //titleSpacing: -5,
           automaticallyImplyLeading: false,
           centerTitle: true,
@@ -169,7 +138,8 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                       //margin: EdgeInsets.only(left: 10),
                       decoration: BoxDecoration(
                         border: Border.all(
-                            color: HexColor(AppTheme_['SecondaryFrColor']),
+                            color: HexColor(
+                                widget.arg['AppTheme_']['SecondaryFrColor']),
                             width: 2),
                         color: Colors.white,
                         shape: BoxShape.circle,
@@ -178,7 +148,8 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                           padding: EdgeInsets.all(3),
                           child: Icon(
                             Icons.arrow_back_ios_new,
-                            color: HexColor(AppTheme_['SecondaryFrColor']),
+                            color: HexColor(
+                                widget.arg['AppTheme_']['SecondaryFrColor']),
                             size: 30,
                           )))),
               Padding(
@@ -186,7 +157,8 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                 child: Text(
                   "Calendar",
                   style: TextStyle(
-                      color: HexColor(AppTheme_['SecondaryFrColor']),
+                      color:
+                          HexColor(widget.arg['AppTheme_']['SecondaryFrColor']),
                       fontSize: 20,
                       fontWeight: FontWeight.bold),
                 ),
@@ -196,7 +168,7 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
           ),
           actions: [
             // Navigate to the Search Screen
-            if (familyList.length > 0 && senderIndex > -1)
+            if (widget.arg['familyList'].length > 0 && senderIndex > -1)
               Container(
                 height: 30,
                 width: 100,
@@ -208,29 +180,27 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                         horizontalTitleGap: 2,
                         contentPadding: EdgeInsets.zero,
                         onTap: () => {
-                          openMemberBottomSheet(context, familyList, imgBaseUrl,
-                              (index) {
-                            Navigator.pop(context);
-                            senderIndex = index;
-                            setState(() {
-                              getData(
-                                  selectedUserSeqId,
-                                  selectedRefBranchSeqId,
-                                  DateFormat("yyyy-MM-dd")
-                                      .format(selectedDateTime!));
-                            });
-                          })
+                          openMemberBottomSheet(
+                              context,
+                              widget.arg['familyList'],
+                              widget.arg['imgBaseUrl'],
+                              selectMember)
                         },
-                        trailing: familyList[senderIndex]['UserImgPath'] != null
+                        trailing: widget.arg['familyList'][senderIndex]
+                                    ['UserImgPath'] !=
+                                null
                             ? CircleAvatar(
-                                backgroundImage: NetworkImage(imgBaseUrl +
-                                    familyList[senderIndex]["UserImgPath"]),
+                                backgroundImage: NetworkImage(
+                                    widget.arg['imgBaseUrl'] +
+                                        widget.arg['familyList'][senderIndex]
+                                            ["UserImgPath"]),
                               )
                             : CircleAvatar(
                                 backgroundColor: Colors.blue[700],
                                 child: Text(
                                   CommonFunctions.getInitials(
-                                          familyList[senderIndex]['Name'])
+                                          widget.arg['familyList'][senderIndex]
+                                              ['Name'])
                                       .toUpperCase(),
                                   style: TextStyle(
                                       fontSize: 22.0,
@@ -253,8 +223,8 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
               begin: Alignment.topRight,
               end: Alignment.bottomLeft,
               colors: [
-                HexColor(AppTheme_['PrimaryBgColor']),
-                HexColor(AppTheme_['PrimaryBgColor']),
+                HexColor(widget.arg['AppTheme_']['PrimaryBgColor']),
+                HexColor(widget.arg['AppTheme_']['PrimaryBgColor']),
               ],
             )),
             child: SizedBox(
@@ -270,7 +240,7 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                         shadowColor: Colors.black,
                         borderOnForeground: true,
                         margin: EdgeInsets.only(
-                            top: 5, bottom: 20, left: 20, right: 20),
+                            top: 20, bottom: 20, left: 20, right: 20),
                         child: Padding(
                           padding: EdgeInsets.all(15),
                           child: SfCalendar(
@@ -358,48 +328,48 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                                   ),
                                 ),
                               ),
-                            if (data.calendarTransactionList.isNotEmpty)
-                              Card(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15.0),
-                                ),
-                                elevation: 10,
-                                shadowColor: Colors.black,
-                                borderOnForeground: true,
-                                margin: EdgeInsets.only(
-                                    left: 20, right: 20, bottom: 20),
-                                child: Container(
-                                  margin: EdgeInsets.all(10),
-                                  child: Column(
-                                    children: [
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Container(
-                                            padding: EdgeInsets.only(
-                                                left: 10.0,
-                                                top: 10.0,
-                                                bottom: 10.0),
-                                            margin: EdgeInsets.zero,
-                                            width: double.infinity,
-                                            color: Colors.transparent,
-                                            child: Text(
-                                              "TRANSACTIONS",
-                                              style: TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.bold),
-                                            )),
-                                      ),
-                                      TransactionSummery(
-                                          data.calendarTransactionList,
-                                          CurrencyCode),
-                                    ],
-                                  ),
+                            // if (data.calendarTransactionList.isNotEmpty)
+                            Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
+                              elevation: 10,
+                              shadowColor: Colors.black,
+                              borderOnForeground: true,
+                              margin: EdgeInsets.only(
+                                  left: 20, right: 20, bottom: 20),
+                              child: Container(
+                                margin: EdgeInsets.all(10),
+                                child: Column(
+                                  children: [
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Container(
+                                          padding: EdgeInsets.only(
+                                              left: 10.0,
+                                              top: 10.0,
+                                              bottom: 10.0),
+                                          margin: EdgeInsets.zero,
+                                          width: double.infinity,
+                                          color: Colors.transparent,
+                                          child: Text(
+                                            "TRANSACTIONS",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold),
+                                          )),
+                                    ),
+                                    TransactionSummery(
+                                        data.calendarTransactionList,
+                                        widget.arg['CurrencyCode']),
+                                  ],
                                 ),
                               ),
+                            ),
                           ],
                         );
                       }),
-                      Consumer<MySettingsListener>(
+                      /*  Consumer<MySettingsListener>(
                           builder: (context, data, child) =>
                               data.calendarAttendanceList.length == 0 &&
                                       data.calendarHolidaysList.length == 0 &&
@@ -410,7 +380,7 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                                       AppSettings.msgNoCalender,
                                       20)
                                   : SizedBox())
-
+ */
                       /*  Card(
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15.0),

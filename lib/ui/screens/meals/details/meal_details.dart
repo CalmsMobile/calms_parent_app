@@ -3,6 +3,7 @@ import 'package:calms_parent_latest/common/util/common_funtions.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../common/app_settings.dart';
+import '../../../../common/common_api.dart';
 import '../../../../common/listener/settings_listener.dart';
 import '../../cart/cart.dart';
 import '/common/HexColor.dart';
@@ -510,7 +511,8 @@ class _MealDetailsState extends State<MealDetails> {
                             ],
                           ),
                         ),
-                        if (widget.arguments['showCart'])
+                       /*  if (widget.arguments['mealList_']['addedToCart'] !=
+                            null)
                           InkWell(
                             onTap: () {},
                             child: Container(
@@ -548,22 +550,178 @@ class _MealDetailsState extends State<MealDetails> {
                               ),
                             ),
                           ),
-
-                        /* InkWell(
-                              onTap: () {
-                                MyCustomAlertDialog()
-                                    .showToast(context, "Item added to cart ");
-                                setState(() {});
-                              },
-                              child: Container(
-                                width: 50,
-                                height: 50,
-                                margin: EdgeInsets.only(right: 15, bottom: 5),
-                                child: Image.asset(
-                                    "assets/images/ico_cart_white.png"),
+                        if (
+                            widget.arguments['mealList_']['AllowToCancel'] != null && widget.arguments['mealList_']['AllowToCancel'])
+                          InkWell(
+                            onTap: () {},
+                            child: Container(
+                              //margin: EdgeInsets.only(bottom: 10),
+                              child: ClipOval(
+                                child: Material(
+                                  color: Colors.red, // Button color
+                                  child: InkWell(
+                                    onTap: () async {
+                                      MyCustomAlertDialog().mealCustomAlert(
+                                          context,
+                                          "Alert!",
+                                          'Do you want to cancel meal?',
+                                          true,
+                                          true,
+                                          true,
+                                          true, () {
+                                        Navigator.pop(context);
+                                        
+                                        /* CommonUtil().cancelDailyMealItem(
+                                            context,
+                                            poTypesList['RefBranchSeqId'],
+                                            UserSeqId,
+                                            mealList_[index]['ItemSeqId'],
+                                            profileData['RefUserSeqId'],
+                                            mealList_[index]['ItemType'],
+                                            mealList_[index]['RefTransSeqId'],
+                                            mealList_[index]['ViewDate'],
+                                            mealList_[index]['RefPackageSeqId'],
+                                            poTypesList['RefMemberTypeSeqId'],
+                                            profileData['RefUserSeqId'],
+                                            onCancelDailyMeal,
+                                            index); */
+                                      }, () {
+                                        Navigator.pop(context);
+                                      }, "Yes", "No");
+                                    },
+                                    child: SizedBox(
+                                        width: 25,
+                                        height: 25,
+                                        child: Icon(
+                                          Icons.cancel_outlined,
+                                          color: Colors.white,
+                                          size: 15,
+                                        )),
+                                  ),
+                                ),
                               ),
-                            ) */
-                      ]),
+                            ),
+                          ),
+                        if (
+                            widget.arguments['mealList_']['AlreadyBuy'] != null && widget.arguments['mealList_']['AlreadyBuy'])
+                          InkWell(
+                            onTap: () {},
+                            child: Container(
+                              //margin: EdgeInsets.only(bottom: 10),
+                              child: ClipOval(
+                                child: Material(
+                                  color: Colors.green, // Button color
+                                  child: InkWell(
+                                    onTap: () async {},
+                                    child: SizedBox(
+                                        width: 25,
+                                        height: 25,
+                                        child: Icon(
+                                          Icons.shopping_bag_rounded,
+                                          color: Colors.white,
+                                          size: 15,
+                                        )),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        if (widget.arguments['mealList_']['AllowToCancel'] != null)
+                          InkWell(
+                            onTap: () {},
+                            child: Container(
+                              //margin: EdgeInsets.only(bottom: 10),
+                              child: ClipOval(
+                                child: Material(
+                                  color: widget.arguments['mealList_']['AllowToCancel']
+                                      ? Colors.red
+                                      : Colors.blue, // Button color
+                                  child: InkWell(
+                                    onTap: () async {
+                                     /*  widget.arguments['mealList_']['AllowToCancel']
+                                          ? MyCustomAlertDialog()
+                                              .mealCustomAlert(
+                                                  context,
+                                                  "Alert!",
+                                                  'Do you want to cancel meal?',
+                                                  true,
+                                                  true,
+                                                  true,
+                                                  true, () {
+                                              Navigator.pop(context);
+                                              CommonUtil().cancelTermMealItem(
+                                                  context,
+                                                  poTypesList['RefBranchSeqId'],
+                                                  UserSeqId,
+                                                  mealList_[index]['ItemSeqId'],
+                                                  profileData['RefUserSeqId'],
+                                                  mealList_[index]['ItemType'],
+                                                  mealList_[index]
+                                                      ['RefTransSeqId'],
+                                                  mealList_[index]['ViewDate'],
+                                                  mealList_[index]
+                                                      ['RefPackageSeqId'],
+                                                  poTypesList[
+                                                      'RefMemberTypeSeqId'],
+                                                  '',
+                                                  profileData['RefUserSeqId'],
+                                                  onCancelMeal,
+                                                  index);
+                                            }, () {
+                                              Navigator.pop(context);
+                                            }, "Yes", "No")
+                                          : MyCustomAlertDialog()
+                                              .mealCustomAlert(
+                                                  context,
+                                                  "Alert!",
+                                                  'Do you want to change meal?',
+                                                  true,
+                                                  true,
+                                                  true,
+                                                  true, () {
+                                              Navigator.pop(context);
+                                              print(mealList_[index]);
+                                              print(poTypesList);
+                                              CommonUtil().changeMealItem(
+                                                  context,
+                                                  poTypesList['RefBranchSeqId'],
+                                                  UserSeqId,
+                                                  mealList_[index]['ItemSeqId'],
+                                                  mealList_[index]['ItemType'],
+                                                  poTypesList['RefTransSeqId'],
+                                                  mealList_[index]['ViewDate'],
+                                                  mealList_[index]
+                                                      ['RefPackageSeqId'],
+                                                  poTypesList[
+                                                      'RefMemberTypeSeqId'],
+                                                  '',
+                                                  profileData['RefUserSeqId'],
+                                                  onChangeMeal,
+                                                  index);
+                                            }, () {
+                                              Navigator.pop(context);
+                                            }, "Yes", "No");
+                                     */},
+                                    child: SizedBox(
+                                        width: 25,
+                                        height: 25,
+                                        child: widget.arguments['mealList_']['AllowToCancel']
+                                            ? Icon(
+                                                Icons.cancel_outlined,
+                                                color: Colors.white,
+                                                size: 15,
+                                              )
+                                            : Icon(
+                                                Icons.podcasts_outlined,
+                                                color: Colors.white,
+                                                size: 15,
+                                              )),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                       */]),
                 ),
                 SizedBox(
                   height: 10,

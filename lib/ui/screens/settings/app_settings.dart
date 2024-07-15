@@ -129,7 +129,7 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
                           SizedBox(
                             height: 5,
                           ),
-                          Divider(
+                         /*  Divider(
                             height: 15,
                             color: Colors.grey,
                           ),
@@ -166,7 +166,7 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
                           ),
                           SizedBox(
                             height: 5,
-                          ),
+                          ), */
                           Divider(
                             height: 15,
                             color: Colors.grey.shade300,

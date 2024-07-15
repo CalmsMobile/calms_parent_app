@@ -445,7 +445,7 @@ class MealOrderListView extends StatelessWidget {
                                                                           i,
                                                                           false,
                                                                           memberDetails[
-                                                                              'UserSeqId']);
+                                                                              'UserSeqId'],context);
                                                                     else
                                                                       await context
                                                                           .read<
@@ -454,7 +454,7 @@ class MealOrderListView extends StatelessWidget {
                                                                               index,
                                                                               i,
                                                                               true,
-                                                                              memberDetails['UserSeqId']);
+                                                                              memberDetails['UserSeqId'],context);
                                                                   },
                                                                   child: SizedBox(
                                                                       width: 30,

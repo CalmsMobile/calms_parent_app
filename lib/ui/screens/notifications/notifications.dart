@@ -14,6 +14,7 @@ import 'package:provider/provider.dart';
 
 import '../../../common/util/common_funtions.dart';
 import '../../../main.dart';
+import '../cart/cart.dart';
 import '../home/Home.dart';
 import '/common/alert_dialog.dart';
 import '/common/app_settings.dart';
@@ -595,45 +596,92 @@ class _NotificationsState extends State<Notifications>
                       ],
                     ),
                   ),
-                  // Navigate to the Search Screen
-                  /* 
-                  Container(
-                    margin: EdgeInsets.only(right: 10),
-                    child: InkWell(
-                        child: Image(
-                            width: 50,
-                            height: 50,
-                            image: AssetImage("assets/images/ico_filter.png")),
-                        onTap: () => openFilterCategoryBottomSheet(
+                  if (!widget.NotifyOnly)
+                    Stack(
+                      children: [
+                        InkWell(
+                            onTap: () {
+                              Navigator.push(
                                 context,
-                                context
-                                    .read<MySettingsListener>()
-                                    .notificationCategoryList, (index) {
-                              Navigator.pop(context);
-                              //senderIndex = index;
-                              setState(() {
-                                String categoryName = context
-                                        .read<MySettingsListener>()
-                                        .notificationCategoryList[index]
-                                    ["category"];
-                                int id = context
-                                        .read<MySettingsListener>()
-                                        .notificationCategoryList[index]
-                                    ["notificationtype"];
-                                print("++++++++" + id.toString());
-                                appBarTitle = categoryName;
-                                CommonUtil().getCtegoryFilterNotification(
-                                    context,
-                                    apiURL,
-                                    startPosition,
-                                    profileData,
-                                    qrData,
-                                    id,
-                                    "");
-                              });
-                            })),
-                  ),
-                 */
+                                MaterialPageRoute(
+                                  builder: (context) => CartPage(
+                                      imgBaseUrl, profileData, AppTheme_),
+                                ),
+                              );
+                            },
+                            child: Container(
+                                margin: EdgeInsets.only(top: 15),
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: HexColor(
+                                          AppTheme_['SecondaryFrColor']),
+                                      width: 2),
+                                  color: Colors.white,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Padding(
+                                    padding: EdgeInsets.all(3),
+                                    child: Icon(
+                                      Icons.shopping_cart_outlined,
+                                      color: HexColor(
+                                          AppTheme_['SecondaryFrColor']),
+                                      size: 30,
+                                    )))),
+                        Consumer<MySettingsListener>(
+                            builder: (context, data, settingsDta) {
+                          return Positioned(
+                            top: 10,
+                            right: 0,
+                            child: Container(
+                              height: 18,
+                              width: 18,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.red,
+                              ),
+                              child: Center(
+                                  child: Text(
+                                data.cartList != []
+                                    ? data.cartList.length.toString()
+                                    : "0",
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              )),
+                            ),
+                          );
+                        })
+                      ],
+                    ),
+                  if (!widget.NotifyOnly)
+                    InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => AppSettingsPage(),
+                            ),
+                          );
+                        },
+                        child: Container(
+                            margin: EdgeInsets.only(left: 10,right: 10),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                  color:
+                                      HexColor(AppTheme_['SecondaryFrColor']),
+                                  width: 2),
+                              color: Colors.white,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Padding(
+                                padding: EdgeInsets.all(3),
+                                child: Icon(
+                                  Icons.settings_outlined,
+                                  color:
+                                      HexColor(AppTheme_['SecondaryFrColor']),
+                                  size: 30,
+                                )))),
                 ]),
             extendBodyBehindAppBar: false,
             body: TabBarView(
@@ -919,7 +967,7 @@ class _NotificationsState extends State<Notifications>
                           category: getCategoryById(
                               notificationList[index1]["NotificationType"]),
                           imgBaseUrl: imgBaseUrl,
-                          apiURL: apiURL),
+                          apiURL: apiURL,NotifyOnly:widget.NotifyOnly,AppTheme_:AppTheme_),
                     ),
                   );
                 },

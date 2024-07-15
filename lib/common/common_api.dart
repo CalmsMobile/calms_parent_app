@@ -71,7 +71,7 @@ class CommonUtil {
         else {
           context
               .read<MySettingsListener>()
-              .updateAppThemeData(response['Table5'][0]);
+              .updateAppThemeData(response['Table5'][0],null);
           context
               .read<MySettingsListener>()
               .updateEntryToDashboardFamilyList(response['Table1'], UserSeqId);
@@ -136,7 +136,7 @@ class CommonUtil {
       print("getAppTheme Success");
       context
           .read<MySettingsListener>()
-          .updateAppThemeData(response['Table1'][0]);
+          .updateAppThemeData(response['Table1'][0],context);
     }
   }
 
@@ -446,7 +446,7 @@ class CommonUtil {
           ? poTypesList['ToDate'].substring(0, 10)
           : poTypesList['CurrentDateTime'].substring(0, 10),
       "POTypeConfigSeqId": poTypesList['POTypeConfigSeqId'],
-      "MealType": poTypesList['MealType']
+      "MealType": poTypesList['MealTypes']
     };
     print(ParamData);
     Future<Map<String, dynamic>> res = RestApiProvider().authorizedPostRequest(
@@ -488,7 +488,7 @@ class CommonUtil {
       poTypesList,
       CurrencyCode,
       imgBaseUrl,
-      showCart,
+      mealList_,
       UserSeqId,
       callbackFun,
       mealIndex,AppTheme_) async {
@@ -514,7 +514,7 @@ class CommonUtil {
                   CurrencyCode,
                   imgBaseUrl,
                   ViewDate,
-                  showCart,
+                  mealList_,
                   UserSeqId,
                   callbackFun,
                   mealIndex,AppTheme_)
@@ -530,7 +530,7 @@ class CommonUtil {
       CurrencyCode,
       imgBaseUrl,
       ViewDate,
-      showCart,
+      mealList_,
       UserSeqId,
       Function callbackFun,
       mealIndex,AppTheme_) {
@@ -541,7 +541,7 @@ class CommonUtil {
       var arguments = {
         "mealInfo": response['Table1'][0],
         "ingredients": response['Table2'],
-        "showCart": showCart,
+        "mealList_": mealList_,
         "ViewDate": ViewDate,
         "poTypesList": poTypesList,
         "CurrencyCode": CurrencyCode,

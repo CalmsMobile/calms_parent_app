@@ -214,7 +214,7 @@ var myroutes = {
   "/FilterActivities": (context) => FilterActivities(),
   "/ViewImage": (context) => ViewImage(),
   "/MealDetails": (context) => MealDetails({}, () {},{}),
-  "/calendarTransactions": (context) => CalendarTransactionsPage(),
+  "/calendarTransactions": (context) => CalendarTransactionsPage({}),
   "/topupPayment": (context) => PaymentWebviewPage({}, ""),
   "/topupAfterPayment": (context) => AfterPaymentPage({}, ""),
 };

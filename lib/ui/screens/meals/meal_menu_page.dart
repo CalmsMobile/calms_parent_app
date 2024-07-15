@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../common/app_settings.dart';
+import '../../../common/my_shared_pref.dart';
 import '../../../common/widgets/no_data_card.dart';
 import '../cart/cart.dart';
 import '/common/HexColor.dart';
@@ -19,8 +20,7 @@ import 'package:flutter/services.dart';
 class MealMenuPage extends StatefulWidget {
   final arguments;
   final AppTheme_;
-  MealMenuPage(this.arguments, this.AppTheme_, {Key? key})
-      : super(key: key);
+  MealMenuPage(this.arguments, this.AppTheme_, {Key? key}) : super(key: key);
 
   @override
   _MealMenuPageState createState() => _MealMenuPageState();
@@ -225,7 +225,8 @@ class _MealMenuPageState extends State<MealMenuPage> {
                             MaterialPageRoute(
                               builder: (context) => CartPage(
                                   widget.arguments['imgBaseUrl'],
-                                  widget.arguments['profileData'],widget.AppTheme_),
+                                  widget.arguments['profileData'],
+                                  widget.AppTheme_),
                             ),
                           );
                         },
@@ -330,14 +331,17 @@ class _MealMenuPageState extends State<MealMenuPage> {
                                       decoration: BoxDecoration(
                                           color:
                                               _selectedDate == dateList[index]
-                                                  ? HexColor(widget.AppTheme_['SecondaryFrColor'])
+                                                  ? HexColor(widget.AppTheme_[
+                                                      'SecondaryFrColor'])
                                                   : Colors.white,
                                           borderRadius:
                                               BorderRadius.circular(20),
                                           border: _selectedDate ==
                                                   dateList[index]
                                               ? Border.all(
-                                                  color: HexColor(widget.AppTheme_['SecondaryFrColor']),
+                                                  color: HexColor(
+                                                      widget.AppTheme_[
+                                                          'SecondaryFrColor']),
                                                   width: 2,
                                                 )
                                               : Border.all(
@@ -437,7 +441,8 @@ class _MealMenuPageState extends State<MealMenuPage> {
                                               color: selectedTab ==
                                                       ItemTypeList[index]
                                                           ['ItemTypeSeqId']
-                                                  ? HexColor(widget.AppTheme_['SecondaryFrColor'])
+                                                  ? HexColor(widget.AppTheme_[
+                                                      'SecondaryFrColor'])
                                                   : Colors.transparent,
                                               width: 5.0),
                                         ),
@@ -448,7 +453,8 @@ class _MealMenuPageState extends State<MealMenuPage> {
                                           ItemTypeList[index]['Name'],
                                           style: TextStyle(
                                               fontSize: 16,
-                                              color: HexColor(widget.AppTheme_['PrimaryFrColor']),
+                                              color: HexColor(widget
+                                                  .AppTheme_['PrimaryFrColor']),
                                               fontWeight: FontWeight.bold),
                                         ),
                                       ),
@@ -469,7 +475,8 @@ class _MealMenuPageState extends State<MealMenuPage> {
                                   onCartClick,
                                   onCancelMeal,
                                   onChangeMeal,
-                                  onCancelDailyMeal,widget.AppTheme_))
+                                  onCancelDailyMeal,
+                                  widget.AppTheme_))
                         ])),
               ))
           : NoDataCard(AppSettings.imgAssetNoMeal, AppSettings.titleNoMeal,
@@ -479,10 +486,12 @@ class _MealMenuPageState extends State<MealMenuPage> {
     );
   }
 
-  void onCartClick(meal, index, isDelete) {
+  Future<void> onCartClick(meal, index, isDelete) async {
     print("call back index ${meal.toString()}");
+   
+
     context.read<MySettingsListener>().updatePoTypeMealsCartStatus(isDelete,
-        widget.arguments['UserSeqId'], meal, widget.arguments['poTypesList']);
+        widget.arguments['UserSeqId'], meal, widget.arguments['poTypesList'],context);
     setState(() {
       if (isDelete)
         mealListByItemType[index]['addedToCart'] = false;

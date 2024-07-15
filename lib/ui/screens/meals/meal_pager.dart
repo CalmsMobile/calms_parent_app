@@ -59,7 +59,7 @@ class MealPager extends StatelessWidget {
                 poTypesList,
                 CurrencyCode,
                 imgBaseUrl,
-                poTypesList['PreOrderType'] == 'Daily' ? true : false,
+                mealList_[index],
                 UserSeqId,
                 onCartClick,
                 index,
@@ -382,7 +382,7 @@ class MealPager extends StatelessWidget {
                                 child: Material(
                                   color: mealList_[index]['AllowToCancel']
                                       ? Colors.red
-                                      : Colors.blue, // Button color
+                                      :mealList_[index]['AllowToChoose']? Colors.blue:null, // Button color
                                   child: InkWell(
                                     onTap: () async {
                                       mealList_[index]['AllowToCancel']
@@ -419,7 +419,7 @@ class MealPager extends StatelessWidget {
                                             }, () {
                                               Navigator.pop(context);
                                             }, "Yes", "No")
-                                          : MyCustomAlertDialog()
+                                          :mealList_[index]['AllowToChoose']? MyCustomAlertDialog()
                                               .mealCustomAlert(
                                                   context,
                                                   "Alert!",
@@ -449,7 +449,7 @@ class MealPager extends StatelessWidget {
                                                   index);
                                             }, () {
                                               Navigator.pop(context);
-                                            }, "Yes", "No");
+                                            }, "Yes", "No"):null;
                                     },
                                     child: SizedBox(
                                         width: 25,
@@ -460,11 +460,11 @@ class MealPager extends StatelessWidget {
                                                 color: Colors.white,
                                                 size: 15,
                                               )
-                                            : Icon(
+                                            : mealList_[index]['AllowToChoose']?Icon(
                                                 Icons.podcasts_outlined,
                                                 color: Colors.white,
                                                 size: 15,
-                                              )),
+                                              ):null),
                                   ),
                                 ),
                               ),

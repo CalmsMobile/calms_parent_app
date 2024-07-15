@@ -92,8 +92,8 @@ Widget outStandingList(BuildContext context, int index, List details, String Cur
         ],
       ),
       onTap: () {
-        Navigator.of(context)
-            .pushNamed('/OutStandingDetails', arguments: details[index]);
+       /*  Navigator.of(context)
+            .pushNamed('/OutStandingDetails', arguments: details[index]); */
       },
     )
   ]);

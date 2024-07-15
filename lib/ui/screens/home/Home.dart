@@ -749,7 +749,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                 ],
                               ));
                         }),
-                        //TRANSACTION SUMMERY
+                        //TRANSACTION SUMMARY
                         Consumer<MySettingsListener>(
                             builder: (context, data, settingsDta) {
                          
@@ -765,7 +765,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                 child: Column(
                                   children: [
                                     ListTile(
-                                      title: Text("Transaction Summery"),
+                                      title: Text("Transaction Summary"),
                                       trailing: Text("(Last 30 days)"),
                                       tileColor: HexColor(
                                           AppTheme_['SecondaryBgColor']),

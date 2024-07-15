@@ -12,7 +12,8 @@ class TransactionSummery extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Column(
-        children: <Widget>[
+        children:[
+          if(purchaseList.isNotEmpty)
           Container(
             width: double.infinity,
             margin: EdgeInsets.zero,
@@ -125,13 +126,42 @@ class TransactionSummery extends StatelessWidget {
                         ],
                       ), */
                       onTap: () {
-                        Navigator.of(context).pushNamed('/PurchaseDetails',
-                            arguments: purchaseList[index]);
+                       /*  Navigator.of(context).pushNamed('/PurchaseDetails',
+                            arguments: purchaseList[index]); */
                       },
                     )
                   ]);
                 }),
-          ),
+          )
+           else
+            Container(
+              //margin: EdgeInsets.all(10),
+              width: double.infinity,
+              child: Column(
+                children: [
+                  Container(
+                      padding:
+                          EdgeInsets.only(left: 10.0, top: 10.0, bottom: 10.0),
+                      margin: EdgeInsets.zero,
+                      height: 100,
+                      color: Colors.transparent,
+                      child: Image.asset(AppSettings.imgAssetNoTxn)),
+                  /* Container(
+                                                  alignment: Alignment.center,
+                                                  margin: EdgeInsets.only(
+                                                      top: 10, bottom: 10),
+                                                  child: Text(
+                                                    "",
+                                                    style: TextStyle(
+                                                        fontSize: 18,
+                                                        fontWeight:
+                                                            FontWeight.normal),
+                                                  ),
+                                                ), */
+                ],
+              ),
+            ),
+        
         ],
       ),
     );

@@ -5,6 +5,8 @@ import 'package:flutter/foundation.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../common/HexColor.dart';
+import '../../cart/cart.dart';
+import '../../settings/app_settings.dart';
 import '/common/alert_dialog.dart';
 import '/common/app_settings.dart';
 import '/common/date_util.dart';
@@ -21,12 +23,16 @@ class NotificationView extends StatefulWidget {
       this.passData,
       this.category,
       this.imgBaseUrl,
-      this.apiURL});
+      this.apiURL,
+      this.NotifyOnly,
+      this.AppTheme_});
   final pos;
   final passData;
   final category;
   final imgBaseUrl;
   final apiURL;
+  final NotifyOnly;
+  final AppTheme_;
   @override
   State<NotificationView> createState() => _NotificationViewState();
 }
@@ -68,41 +74,150 @@ class _NotificationViewState extends State<NotificationView> {
 
     return Scaffold(
         backgroundColor: Colors.transparent,
-        appBar: AppBar(
-          toolbarHeight: 70,
-          elevation: 0,
-          backgroundColor: HexColor("#023047"),
-          //titleSpacing: -5,
-          automaticallyImplyLeading: false,
-          centerTitle: true,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              InkWell(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Image(
-                  width: 50,
-                  height: 50,
-                  image: AssetImage("assets/images/ico_back.png"),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 10),
-                child: Text(
-                  "Message",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold),
+        appBar: widget.NotifyOnly
+            ? AppBar(
+                toolbarHeight: 70,
+                elevation: 0,
+                backgroundColor: HexColor("#023047"),
+                //titleSpacing: -5,
+                automaticallyImplyLeading: false,
+                centerTitle: true,
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Image(
+                        width: 50,
+                        height: 50,
+                        image: AssetImage("assets/images/ico_back.png"),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 10),
+                      child: Text(
+                        "Message",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    )
+                    // Your widgets here
+                  ],
                 ),
               )
-              // Your widgets here
-            ],
-          ),
-        ),
+            : AppBar(
+                toolbarHeight: 70,
+                backgroundColor: HexColor(widget.AppTheme_['SecondaryBgColor']),
+                //titleSpacing: -5,
+                automaticallyImplyLeading: false,
+                centerTitle: true,
+                leading: InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                        //margin: EdgeInsets.only(left: 10),
+                        height: 30,
+                        width: 50,
+                        margin: EdgeInsets.only(left: 10),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                              color: HexColor(widget.AppTheme_['SecondaryFrColor']),
+                              width: 2),
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Padding(
+                            padding: EdgeInsets.all(3),
+                            child: Icon(
+                              Icons.arrow_back_ios_new,
+                              color: HexColor(widget.AppTheme_['SecondaryFrColor']),
+                              size: 30,
+                            )))),
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Flexible(
+                        child: Container(
+                            //margin: EdgeInsets.only(left: 10),
+                            child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              "Message",
+                              style: TextStyle(
+                                  color:
+                                      HexColor(widget.AppTheme_['SecondaryFrColor']),
+                                  fontSize: widget.NotifyOnly ? 13 : 16,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        )
+                      ],
+                    )))
+                    // Your widgets here
+                  ],
+                ),
+                actions: [
+                    /* if (filtered)
+                    IconButton(
+                      icon: Icon(Icons.close_sharp, color: Colors.black),
+                      onPressed: () {
+                        //Navigator.pop(context);
+                        setState(() {
+                          appBarTitle = "All Notifications";
+                          filtered = false;
+                        });
+                        CommonUtil().getCtegoryFilterNotification(
+                            context,
+                            apiURL,
+                            startPosition,
+                            profileData,
+                            qrData,
+                            widget.categoryList[selectedtypeIndex]
+                                ['notificationtype'],
+                            "",
+                            "");
+                      },
+                    ),
+                     */
+
+                    InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => AppSettingsPage(),
+                            ),
+                          );
+                        },
+                        child: Container(
+                            margin: EdgeInsets.only(left: 10, right: 10),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                  color:
+                                      HexColor(widget.AppTheme_['SecondaryFrColor']),
+                                  width: 2),
+                              color: Colors.white,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Padding(
+                                padding: EdgeInsets.all(3),
+                                child: Icon(
+                                  Icons.settings_outlined,
+                                  color:
+                                      HexColor(widget.AppTheme_['SecondaryFrColor']),
+                                  size: 30,
+                                )))),
+                  ]),
         extendBodyBehindAppBar: false,
         body: Container(
           constraints: BoxConstraints.expand(),

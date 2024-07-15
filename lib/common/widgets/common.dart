@@ -881,7 +881,7 @@ void showCustomPaymentAlert(BuildContext buildContext, gatewayDetail,
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Text(
-                                      "${topupAmount.toStringAsFixed(2)} ${profileData['CurrencyCode']}",
+                                      "${profileData['CurrencyCode']} ${topupAmount.toStringAsFixed(2)}",
                                       style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold),
@@ -891,7 +891,7 @@ void showCustomPaymentAlert(BuildContext buildContext, gatewayDetail,
                                       ? Padding(
                                           padding: const EdgeInsets.all(8.0),
                                           child: Text(
-                                            "${calTopupGst(topupAmount, gatewayDetail['GstType'], gatewayDetail['GstPercentage']).toStringAsFixed(2)} ${profileData['CurrencyCode']}",
+                                            "${profileData['CurrencyCode']} ${calTopupGst(topupAmount, gatewayDetail['GstType'], gatewayDetail['GstPercentage']).toStringAsFixed(2)}",
                                             style: TextStyle(
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.bold),
@@ -901,10 +901,10 @@ void showCustomPaymentAlert(BuildContext buildContext, gatewayDetail,
                                   gatewayDetail['IsAdminFee']
                                       ? Padding(
                                           padding: const EdgeInsets.all(8.0),
-                                          child: Text(
+                                          child: Text( "${profileData['CurrencyCode']} " +
                                             gatewayDetail['AdminTransFee']
-                                                    .toStringAsFixed(2) +
-                                                " ${profileData['CurrencyCode']}",
+                                                    .toStringAsFixed(2) 
+                                               ,
                                             style: TextStyle(
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.bold),
@@ -916,7 +916,7 @@ void showCustomPaymentAlert(BuildContext buildContext, gatewayDetail,
                                       ? Padding(
                                           padding: const EdgeInsets.all(8.0),
                                           child: Text(
-                                            "${calAdminGst(gatewayDetail['AdminTransFee'], gatewayDetail['AdminGstType'], gatewayDetail['AdminGstPercentage']).toStringAsFixed(2)} ${profileData['CurrencyCode']}",
+                                            "${profileData['CurrencyCode']} ${calAdminGst(gatewayDetail['AdminTransFee'], gatewayDetail['AdminGstType'], gatewayDetail['AdminGstPercentage']).toStringAsFixed(2)}",
                                             style: TextStyle(
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.bold),
@@ -926,7 +926,7 @@ void showCustomPaymentAlert(BuildContext buildContext, gatewayDetail,
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Text(
-                                      "${grandTotal(calWithAdminFee(topupAmount, gatewayDetail), gatewayDetail, topupAmount).toStringAsFixed(2)} ${profileData['CurrencyCode']}",
+                                      "${profileData['CurrencyCode']} ${grandTotal(calWithAdminFee(topupAmount, gatewayDetail), gatewayDetail, topupAmount).toStringAsFixed(2)}",
                                       style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold),

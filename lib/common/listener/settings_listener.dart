@@ -14,6 +14,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../../ui/screens/home/Home.dart';
+import '../alert_dialog.dart';
 import '../date_util.dart';
 
 class MySettingsListener with ChangeNotifier {
@@ -165,12 +167,17 @@ class MySettingsListener with ChangeNotifier {
     notifyListeners();
   }
 
-  updateAppThemeData(themeData) async {
+  updateAppThemeData(themeData, context) async {
     this._appTheme = themeData;
     MySharedPref()
         .saveData(jsonEncode(this._appTheme), AppSettings.Sp_AppTheme);
     String AppTheme = await MySharedPref().getData(AppSettings.Sp_AppTheme);
     var AppTheme_ = jsonDecode(AppTheme);
+    if (context != null)
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => HomePage()),
+          (route) => false);
     print(AppTheme_);
     notifyListeners();
   }
@@ -283,12 +290,18 @@ class MySettingsListener with ChangeNotifier {
     notifyListeners();
   }
 
-  updatePoTypePackageCartStatus(int i1, int i2, isDelete, UserSeqId) {
-     if (_cartList.isEmpty) {
-      var cartAddedDate =
-          DateUtil().convertDateNow(DateTime.now(), "yyyy/MM/dd");
-      MySharedPref().saveData(cartAddedDate, AppSettings.Sp_cartAddedDate);
-      print(cartAddedDate);
+  updatePoTypePackageCartStatus(
+      int i1, int i2, isDelete, UserSeqId, context) async {
+    var currentDate = DateUtil().convertDateNow(DateTime.now(), "yyyy/MM/dd");
+    var cartAdded = await MySharedPref().getData(AppSettings.Sp_cartAddedDate);
+
+    if (cartAdded != currentDate) {
+      clearCartListAfterPayment();
+      MyCustomAlertDialog().showToast(context, "Cleared old cart records");
+    }
+    if (_cartList.isEmpty) {
+      MySharedPref().saveData(currentDate, AppSettings.Sp_cartAddedDate);
+      print(currentDate);
     }
     for (var ip = 0; ip < _poTypesList[i1].length; ip++) {
       _poTypesList[i1][ip]['addedToCart'] = false;
@@ -310,7 +323,7 @@ class MySettingsListener with ChangeNotifier {
       }
       _cartList.add(cartData);
     }
-   
+
     print(_cartList);
     notifyListeners();
   }
@@ -357,12 +370,18 @@ class MySettingsListener with ChangeNotifier {
     //notifyListeners();
   }
 
-  updatePoTypeMealsCartStatus(isDelete, UserSeqId, mealData, poTypesList) {
-     if (_cartList.isEmpty) {
-      var cartAddedDate =
-          DateUtil().convertDateNow(DateTime.now(), "yyyy/MM/dd");
-      MySharedPref().saveData(cartAddedDate, AppSettings.Sp_cartAddedDate);
-      print(cartAddedDate);
+  updatePoTypeMealsCartStatus(
+      isDelete, UserSeqId, mealData, poTypesList, context) async {
+    var currentDate = DateUtil().convertDateNow(DateTime.now(), "yyyy/MM/dd");
+    var cartAdded = await MySharedPref().getData(AppSettings.Sp_cartAddedDate);
+
+    if (cartAdded != currentDate) {
+      clearCartListAfterPayment();
+      MyCustomAlertDialog().showToast(context, "Cleared old cart records");
+    }
+    if (_cartList.isEmpty) {
+      MySharedPref().saveData(currentDate, AppSettings.Sp_cartAddedDate);
+      print(currentDate);
     }
     String cartData = CommonFunctions.getPoDailyMealCartData(
         UserSeqId,
@@ -374,12 +393,6 @@ class MySettingsListener with ChangeNotifier {
       _cartList.remove(cartData);
     } else {
       _cartList.add(cartData);
-    }
-    if (_cartList.isEmpty) {
-      var cartAddedDate =
-          DateUtil().convertDateNow(DateTime.now(), "yyyy/MM/dd");
-      MySharedPref().saveData(cartAddedDate, AppSettings.Sp_cartAddedDate);
-      print(cartAddedDate);
     }
 
     print(_cartList);
@@ -436,7 +449,7 @@ class MySettingsListener with ChangeNotifier {
 
   clearCartListAfterPayment() {
     _cartList = [];
-
+    MySharedPref().saveData('', AppSettings.Sp_cartAddedDate);
     notifyListeners();
   }
 
@@ -463,6 +476,8 @@ class MySettingsListener with ChangeNotifier {
     print(cartData);
     _cartList.remove(cartData);
     _finalCartList.removeAt(index);
+    if (_cartList.isEmpty)
+      MySharedPref().saveData('', AppSettings.Sp_cartAddedDate);
     //notifyListeners();
     //updateSelectedOrderCalculateTotal(_finalCartList);
   }

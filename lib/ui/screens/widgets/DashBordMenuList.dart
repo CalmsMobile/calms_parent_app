@@ -8,6 +8,7 @@ import 'package:syncfusion_flutter_calendar/calendar.dart';
 import '../../../common/HexColor.dart';
 import '../../../model/_AppointmentDataSource.dart';
 import '../calendar/calendar_page.dart';
+import '../calendar_transactions/CalendarTransactions_page.dart';
 import '../home/Home.dart';
 import '../notifications/notifications.dart';
 
@@ -38,13 +39,16 @@ Widget menuList(BuildContext context, int index, List menu, List familyList,
               if (menu[index]['MenuId'] == 2022.0)
                 Navigator.of(context).pushNamed('/InvoicePayment'),
               if (menu[index]['MenuId'] == 1.0)
-                Navigator.of(context)
-                    .pushNamed('/calendarTransactions', arguments: {
-                  "familyList": familyList,
+               Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => CalendarTransactionsPage({
+                             "familyList": familyList,
                   "imgBaseUrl": imgBaseUrl,
                   "CurrencyCode": profileData['CurrencyCode'],
                   "AppTheme_": AppTheme_
-                }),
+                            }))),
+              
                 if(menu[index]['MenuId'] == 2.0)
                 Navigator.push(
                             context,

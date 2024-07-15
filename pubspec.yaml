@@ -73,6 +73,7 @@ dependencies:
   html: ^0.15.4
   url_launcher: ^6.1.11
   back_button_interceptor: ^6.0.2
+  focus_detector: ^2.0.1
 
 #dependency_overrides:
 dev_dependencies:
