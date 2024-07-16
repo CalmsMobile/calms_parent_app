@@ -213,10 +213,10 @@ var myroutes = {
   "/FilterPage": (context) => FilterPage(),
   "/FilterActivities": (context) => FilterActivities(),
   "/ViewImage": (context) => ViewImage(),
-  "/MealDetails": (context) => MealDetails({}, () {},{}),
+  "/MealDetails": (context) => MealDetails({}, () {},{},{}),
   "/calendarTransactions": (context) => CalendarTransactionsPage({}),
-  "/topupPayment": (context) => PaymentWebviewPage({}, ""),
-  "/topupAfterPayment": (context) => AfterPaymentPage({}, ""),
+  "/topupPayment": (context) => PaymentWebviewPage({}, "",{}),
+  "/topupAfterPayment": (context) => AfterPaymentPage({}, "",{}),
 };
 
 class MyApp extends StatefulWidget {
@@ -412,6 +412,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   verificationResponse(
       Map<String, dynamic> res, context, apiUrl, secureKey, MAppSeqId) {
+        
     if (res['Table'][0]['code'] == 10) {
       timer?.cancel();
       super.dispose();
@@ -423,7 +424,7 @@ class _SplashScreenState extends State<SplashScreen> {
       MySharedPref().saveData(MAppSeqId, AppSettings.Sp_MAppDevSeqId);
       MySharedPref().saveData(
           json.encode(AuthorizePayload), AppSettings.Sp_Payload_Authorize);
-      //if(res['Table1'])
+      if(res['Table1'] != null)
         MySharedPref().saveData(jsonEncode(res['Table1'][0]), AppSettings.Sp_AppTheme);
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => CreatePin()));

@@ -20,7 +20,8 @@ import 'package:flutter/services.dart';
 class MealMenuPage extends StatefulWidget {
   final arguments;
   final AppTheme_;
-  MealMenuPage(this.arguments, this.AppTheme_, {Key? key}) : super(key: key);
+  final poSettings;
+  MealMenuPage(this.arguments, this.AppTheme_,this.poSettings, {Key? key}) : super(key: key);
 
   @override
   _MealMenuPageState createState() => _MealMenuPageState();
@@ -383,7 +384,7 @@ class _MealMenuPageState extends State<MealMenuPage> {
                                             padding: EdgeInsets.all(10),
                                             margin: EdgeInsets.only(top: 3),
                                             decoration: BoxDecoration(
-                                                color: Colors.white,
+                                                color:dateList[index].weekday == DateTime.saturday? HexColor("#7bb9bb"):dateList[index].weekday == DateTime.sunday? HexColor("#879696"):Colors.white,
                                                 borderRadius:
                                                     BorderRadius.circular(60),
                                                 border: Border.all(
@@ -411,7 +412,9 @@ class _MealMenuPageState extends State<MealMenuPage> {
                             NoDataCard(
                                 AppSettings.imgAssetNoMeal,
                                 AppSettings.titleNoMeal,
-                                AppSettings.msgNoMeal,
+                               _selectedDate.weekday == DateTime.saturday? AppSettings.msgNoMealSaturday
+                               :_selectedDate.weekday == DateTime.sunday? AppSettings.msgNoMealSunday
+                               :AppSettings.msgNoMeal,
                                 20),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -476,7 +479,7 @@ class _MealMenuPageState extends State<MealMenuPage> {
                                   onCancelMeal,
                                   onChangeMeal,
                                   onCancelDailyMeal,
-                                  widget.AppTheme_))
+                                  widget.AppTheme_,widget.poSettings))
                         ])),
               ))
           : NoDataCard(AppSettings.imgAssetNoMeal, AppSettings.titleNoMeal,
@@ -486,17 +489,33 @@ class _MealMenuPageState extends State<MealMenuPage> {
     );
   }
 
-  Future<void> onCartClick(meal, index, isDelete) async {
+  Future<void> onCartClick(meal, index, isDelete, isSingleSelection) async {
     print("call back index ${meal.toString()}");
-   
 
-    context.read<MySettingsListener>().updatePoTypeMealsCartStatus(isDelete,
-        widget.arguments['UserSeqId'], meal, widget.arguments['poTypesList'],context);
+    context.read<MySettingsListener>().updatePoTypeMealsCartStatus(
+        isDelete,
+        widget.arguments['UserSeqId'],
+        meal,
+        widget.arguments['poTypesList'],
+        context,isSingleSelection);
     setState(() {
-      if (isDelete)
-        mealListByItemType[index]['addedToCart'] = false;
-      else
-        mealListByItemType[index]['addedToCart'] = true;
+      if (isSingleSelection) {
+        for (var i = 0; i < mealListByItemType.length; i++) {
+          if (isDelete) {
+            mealListByItemType[i]['addedToCart'] = false;
+          } else {
+            if (i == index)
+              mealListByItemType[i]['addedToCart'] = true;
+            else
+              mealListByItemType[i]['addedToCart'] = false;
+          }
+        }
+      } else {
+        if (isDelete)
+          mealListByItemType[index]['addedToCart'] = false;
+        else
+          mealListByItemType[index]['addedToCart'] = true;
+      }
     });
   }
 
@@ -610,114 +629,3 @@ List<dynamic> getMealsListByItemType(ItemType, mealsList) {
   print(mealsList_);
   return mealsList_;
 }
-
-/* void openMealCartBottomSheet(
-  BuildContext buildContext,
-  var storeInfo,
-) {
-  showModalBottomSheet(
-      context: buildContext,
-      builder: (BuildContext context) {
-        return BottomSheet(
-            enableDrag: true,
-            onClosing: () {},
-            builder: (BuildContext context) {
-              bool b = false;
-              return StatefulBuilder(
-                builder: (BuildContext context, setState) => Container(
-                  padding: EdgeInsets.only(bottom: 10),
-                  child:
-                      Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-                    AppBar(
-                      title: Text(
-                        "ADD TO CART",
-                        style: TextStyle(color: Colors.black, fontSize: 16),
-                      ),
-                      elevation: 1,
-                      backgroundColor: Colors.white,
-                      automaticallyImplyLeading: false,
-                      actions: [
-                        IconButton(
-                          icon: Icon(Icons.close_sharp, color: Colors.black),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                        ),
-                      ],
-                    ),
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Container(
-                          padding: EdgeInsets.only(top: 15, left: 15),
-                          child: Text("Meal Remark")),
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(top: 15, left: 15),
-                      child: TextField(
-                        style: TextStyle(fontSize: 14),
-                        textAlign: TextAlign.left,
-                        decoration: const InputDecoration(
-                          hintText: 'Maximum 100 characters',
-                          isDense: true,
-                        ),
-                        keyboardType:
-                            TextInputType.numberWithOptions(decimal: true),
-                        inputFormatters: [
-                          // Allow Decimal Number With Precision of 2 Only
-                          FilteringTextInputFormatter.allow(
-                              RegExp(r'^\d*\.?\d{0,2}')),
-                        ],
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.of(context).pop();
-                        MyCustomAlertDialog()
-                            .showToast(context, "Item added to cart ");
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.pinkAccent,
-                          borderRadius: BorderRadius.circular(1),
-                          border: Border(
-                            bottom:
-                                BorderSide(color: Colors.pinkAccent, width: 1),
-                            right:
-                                BorderSide(color: Colors.pinkAccent, width: 1),
-                            top: BorderSide(color: Colors.pinkAccent, width: 1),
-                            left:
-                                BorderSide(color: Colors.pinkAccent, width: 1),
-                          ),
-                          boxShadow: [
-                            new BoxShadow(
-                              color: Colors.pinkAccent,
-                              blurRadius: 1.0,
-                            ),
-                          ],
-                        ),
-                        padding: EdgeInsets.symmetric(vertical: 10),
-                        margin: EdgeInsets.only(
-                            top: 20, left: 10, right: 10, bottom: 20),
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: Container(
-                              color: Colors.pinkAccent,
-                              padding: EdgeInsets.only(left: 15, right: 15),
-                              child: Text(
-                                "PROCEED",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold),
-                              )),
-                        ),
-                      ),
-                    )
-                  ]),
-                ),
-              );
-            });
-      });
-}
- */

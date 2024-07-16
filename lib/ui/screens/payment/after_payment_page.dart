@@ -3,12 +3,14 @@ import 'package:calms_parent_latest/ui/screens/home/Home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
+import '../../../common/HexColor.dart';
 import '../../../common/widgets/common.dart';
 
 class AfterPaymentPage extends StatefulWidget {
   final txnDetail;
   final paymentFor;
-  const AfterPaymentPage(this.txnDetail, this.paymentFor, {Key? key})
+  final AppTheme_;
+  const AfterPaymentPage(this.txnDetail, this.paymentFor,this.AppTheme_, {Key? key})
       : super(key: key);
 
   @override
@@ -26,7 +28,34 @@ class _AfterPaymentPageState extends State<AfterPaymentPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: getMyAppbar(false, context, "Payment Status", []),
+        appBar: AppBar(
+          toolbarHeight: 70,
+          elevation: 0,
+          backgroundColor: HexColor(widget.AppTheme_['SecondaryBgColor']),
+          //titleSpacing: -5,
+          automaticallyImplyLeading: false,
+          centerTitle: true,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+             
+             Padding(
+                padding: EdgeInsets.only(left: 10),
+                child: Text(
+                  "Payment Status",
+                  style: TextStyle(
+                      color: HexColor(widget.AppTheme_['SecondaryFrColor']),
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
+                ),
+              )
+              // Your widgets here
+            ],
+          ),
+          actions: [
+           ],
+        ),
         body: SafeArea(
           child: Container(
             constraints: BoxConstraints.expand(),
@@ -36,8 +65,8 @@ class _AfterPaymentPageState extends State<AfterPaymentPage> {
               end: Alignment.bottomLeft,
               colors: [
                 //Color.fromARGB(255, 246, 249, 254),
-                Color.fromARGB(255, 246, 249, 254),
-                Color.fromARGB(255, 230, 231, 239),
+               HexColor(widget.AppTheme_['PrimaryBgColor']),
+                HexColor(widget.AppTheme_['PrimaryBgColor']),
               ],
             )),
             child: SingleChildScrollView(
@@ -70,7 +99,7 @@ class _AfterPaymentPageState extends State<AfterPaymentPage> {
                                     enableCaching: false,
                                     textStyle: TextStyle(
                                         fontSize: 18,
-                                        color: Color.fromARGB(255, 0, 0, 0)),
+                                        color: HexColor(widget.AppTheme_['SecondaryBgColor'])),
                                   ) /* Text(
                                           widget.txnDetail['Message'],
                                           style: TextStyle(

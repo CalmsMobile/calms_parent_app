@@ -16,7 +16,8 @@ import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 class PaymentWebviewPage extends StatefulWidget {
   final arguments;
   final paymentFor;
-  const PaymentWebviewPage(this.arguments, this.paymentFor, {Key? key})
+  final AppTheme_;
+  const PaymentWebviewPage(this.arguments, this.paymentFor,this.AppTheme_, {Key? key})
       : super(key: key);
 
   @override
@@ -79,7 +80,7 @@ class _PaymentWebviewPageState extends State<PaymentWebviewPage> {
                   context.read<MySettingsListener>().clearFinalCartList();
                 debugPrint("payment success");
                 CommonUtil().getAfterTopupPaymentSummary(context,
-                    widget.arguments['PaymentOrderId'], widget.paymentFor);
+                    widget.arguments['PaymentOrderId'], widget.paymentFor,widget.AppTheme_);
               }
               debugPrint('Page finished loading: $url');
             },
@@ -132,7 +133,7 @@ Page resource error:
                   context.read<MySettingsListener>().clearFinalCartList();
                 debugPrint("payment success");
                 CommonUtil().getAfterTopupPaymentSummary(context,
-                    widget.arguments['PaymentOrderId'], widget.paymentFor);
+                    widget.arguments['PaymentOrderId'], widget.paymentFor,widget.AppTheme_);
               }
               debugPrint('Page finished loading: $url');
             },

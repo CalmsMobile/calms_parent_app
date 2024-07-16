@@ -202,7 +202,7 @@ class MySettingsListener with ChangeNotifier {
   }
 
   updateTopupHeaderAndDetails(
-      BuildContext context, gatewayDetail, profileData, paymentFor) {
+      BuildContext context, gatewayDetail, profileData, paymentFor,AppTheme_) {
     _topupHeader = [];
     _topupDetails = [];
     for (int i = 0; i < topupMembersList.length; i++) {
@@ -244,7 +244,7 @@ class MySettingsListener with ChangeNotifier {
     print(jsonEncode(topupDetails));
     Navigator.of(context).pop();
     CommonUtil().MakeTransaction(context, topupHeader, topupDetails,
-        gatewayDetail, profileData, 0, 0, paymentFor);
+        gatewayDetail, profileData, 0, 0, paymentFor,AppTheme_);
   }
 
   updateTopupPaymentProvidersList(List paymentProvidersList) {
@@ -337,7 +337,7 @@ class MySettingsListener with ChangeNotifier {
       CurrencyCode,
       imgBaseUrl,
       profileData,
-      AppTheme_) {
+      AppTheme_,poSetting) {
     if (mealsList.length > 0 && poTypesList['PreOrderType'] == "Daily") {
       for (var i = 0; i < mealsList.length; i++) {
         if (_cartList.contains(CommonFunctions.getPoDailyMealCartData(
@@ -366,12 +366,12 @@ class MySettingsListener with ChangeNotifier {
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => MealMenuPage(arguments, AppTheme_)));
+              builder: (context) => MealMenuPage(arguments, AppTheme_,poSetting)));
     //notifyListeners();
   }
 
-  updatePoTypeMealsCartStatus(
-      isDelete, UserSeqId, mealData, poTypesList, context) async {
+  updatePoTypeMealsCartStatus(isDelete, UserSeqId, mealData, poTypesList,
+      context, isSingleSelection) async {
     var currentDate = DateUtil().convertDateNow(DateTime.now(), "yyyy/MM/dd");
     var cartAdded = await MySharedPref().getData(AppSettings.Sp_cartAddedDate);
 
@@ -389,10 +389,34 @@ class MySettingsListener with ChangeNotifier {
         mealData['ViewDate'],
         mealData['ItemType'],
         poTypesList['POTypeConfigSeqId']);
-    if (isDelete) {
+    /* if (isDelete) {
       _cartList.remove(cartData);
     } else {
       _cartList.add(cartData);
+    } */
+    if (isSingleSelection) {
+      if (isDelete)
+        _cartList.remove(cartData);
+      else {
+        for (var i = 0; i < _cartList.length; i++) {
+          /* if(_cartList[i].contains(mealData['ViewDate']) &&
+              _cartList[i].contains(mealData['ItemType']))
+              _cartList.removeAt(i); */
+          if (_cartList[i].contains(UserSeqId.toInt().toString()) &&
+              _cartList[i].contains(mealData['ViewDate']) &&
+              _cartList[i].contains(mealData['ItemType']) &&
+              _cartList[i].contains(
+                  poTypesList['POTypeConfigSeqId'].toInt().toString()))
+            _cartList.removeAt(i);
+        }
+        _cartList.add(cartData);
+      }
+    } else {
+      if (isDelete) {
+        _cartList.remove(cartData);
+      } else {
+        _cartList.add(cartData);
+      }
     }
 
     print(_cartList);
@@ -453,29 +477,40 @@ class MySettingsListener with ChangeNotifier {
     notifyListeners();
   }
 
-  removeFromCart(index) {
+  Future<void> removeFromCart(finalCartList) async {
     //List l = _finalCartList;
     //_finalCartList.removeWhere((element) => element['isSelected']);
     //_cartList.removeWhere((element) => element.toString().contains("other"));
-    print(index);
+    //print(index);
+    print("cartlist-------");
     print(_cartList);
-    print(_finalCartList[index]);
+    print("finalCartList-------");
+    print(finalCartList);
+    print(_finalCartList);
     String cartData = "";
-    if (_finalCartList[index]['PreOrderType'] == "Daily")
+    if (finalCartList['PreOrderType'] == "Daily")
       cartData = CommonFunctions.getPoDailyMealCartData(
-          _finalCartList[index]['RefUserSeqId'],
-          _finalCartList[index]['ItemSeqId'],
-          _finalCartList[index]['PurchaseDate'].toString().substring(0, 10),
-          _finalCartList[index]['ItemFor'],
-          _finalCartList[index]['RefPOTypeConfigSeqId']);
-    if (_finalCartList[index]['PreOrderType'] == "Terms")
+          finalCartList['RefUserSeqId'],
+          finalCartList['ItemSeqId'],
+          finalCartList['PurchaseDate'].toString().substring(0, 10),
+          finalCartList['ItemFor'],
+          finalCartList['RefPOTypeConfigSeqId']);
+    if (finalCartList['PreOrderType'] == "Terms")
       cartData = CommonFunctions.getPoTermCartData(
-          _finalCartList[index]['RefUserSeqId'],
-          _finalCartList[index]['RefPOTypeConfigSeqId'],
-          _finalCartList[index]['PackageSeqId']);
+          finalCartList['RefUserSeqId'],
+          finalCartList['RefPOTypeConfigSeqId'],
+          finalCartList['PackageSeqId']);
     print(cartData);
+
+    _finalCartList.remove(finalCartList);
     _cartList.remove(cartData);
-    _finalCartList.removeAt(index);
+
+    // _finalCartList.removeWhere(((element) =>element['RowId'] == finalCartList['RowId'] ));
+
+    print("=========cartlist-------");
+    print(_cartList);
+    print("==========_finalCartList-------");
+    print(_finalCartList);
     if (_cartList.isEmpty)
       MySharedPref().saveData('', AppSettings.Sp_cartAddedDate);
     //notifyListeners();
@@ -497,11 +532,14 @@ class MySettingsListener with ChangeNotifier {
     print("=====finalCartListForBilling=====");
     print(_finalCartListForBilling);
     print("=====End=====");
+    print("=====finalCartList=====");
+    print(_finalCartList);
+    print("=====End=====");
     notifyListeners();
   }
 
   updateOrderHeaderAndDetails(BuildContext context, gatewayDetail, profileData,
-      IsWallet, Balance, paymentFor) {
+      IsWallet, Balance, paymentFor,AppTheme_) {
     List orderHeader = [];
     List orderDetails = [];
     String currenFiltertDate =
@@ -672,7 +710,7 @@ class MySettingsListener with ChangeNotifier {
     print(jsonEncode(orderDetails));
     Navigator.of(context).pop();
     CommonUtil().MakeTransaction(context, orderHeader, orderDetails,
-        gatewayDetail, profileData, IsWallet, Balance, paymentFor);
+        gatewayDetail, profileData, IsWallet, Balance, paymentFor,AppTheme_);
   }
 
   updateSettings(var settingDetails) {

@@ -288,30 +288,54 @@ class _CartPageState extends State<CartPage> {
                                                           ),
                                                         ),
                                                       ),
-                                                      InkWell(
-                                                        onTap: () {
-                                                          setState(() {
-                                                            context
-                                                                .read<
-                                                                    MySettingsListener>()
-                                                                .removeFromCart(
-                                                                    index);
-                                                          });
-                                                        },
-                                                        child: Container(
-                                                          width: 30,
-                                                          height: 30,
-                                                          margin:
-                                                              EdgeInsets.only(
-                                                                  left: 10),
-                                                          child: Icon(
-                                                            Icons
-                                                                .delete_outlined,
-                                                            color: Colors.red,
-                                                            size: 25,
+                                                      if (data.finalCartList[
+                                                                      index][
+                                                                  'isSelected'] !=
+                                                              null &&
+                                                          !data.finalCartList[
+                                                                  index]
+                                                              ['isSelected'])
+                                                        InkWell(
+                                                          onTap: () {
+                                                            MyCustomAlertDialog()
+                                                                .mealCustomAlert(
+                                                                    context,
+                                                                    "Alert!",
+                                                                    'Do you want to delete?',
+                                                                    true,
+                                                                    true,
+                                                                    true,
+                                                                    true, () {
+                                                              Navigator.pop(
+                                                                  context);
+                                                              setState(() {
+                                                                context
+                                                                    .read<
+                                                                        MySettingsListener>()
+                                                                    .removeFromCart(
+                                                                        data.finalCartList[
+                                                                            index]);
+                                                               
+                                                              });
+                                                            }, () {
+                                                              Navigator.pop(
+                                                                  context);
+                                                            }, "Yes", "No");
+                                                          },
+                                                          child: Container(
+                                                            width: 30,
+                                                            height: 30,
+                                                            margin:
+                                                                EdgeInsets.only(
+                                                                    left: 10),
+                                                            child: Icon(
+                                                              Icons
+                                                                  .delete_outlined,
+                                                              color: Colors.red,
+                                                              size: 25,
+                                                            ),
                                                           ),
                                                         ),
-                                                      ),
 
                                                       /*  InkWell(
                                                           onTap: () => context

@@ -332,7 +332,7 @@ void openNotificationMemberBottomSheet(
 }
 
 void showPaymentSelectOption(BuildContext buildContext, titleText, paymentList,
-    topupAmount, profileData, paymentFor,AppTheme_) {
+    topupAmount, profileData, paymentFor, AppTheme_) {
   var selectedPaymentMethod = {};
   var checkedValue = false;
   final List<String> modalList = [
@@ -428,7 +428,8 @@ void showPaymentSelectOption(BuildContext buildContext, titleText, paymentList,
                                         color: selectedPaymentMethod[
                                                     'PayMode'] ==
                                                 paymentList[index]['PayMode']
-                                            ? HexColor(AppTheme_['SecondaryBgColor'])
+                                            ? HexColor(
+                                                AppTheme_['SecondaryBgColor'])
                                             : Color.fromARGB(
                                                 102, 158, 158, 158),
                                       ),
@@ -576,10 +577,13 @@ void showPaymentSelectOption(BuildContext buildContext, titleText, paymentList,
                                           style: TextStyle(
                                               fontSize: 18.0,
                                               fontFamily: "Montserrat",
-                                              color: HexColor(AppTheme_['SecondaryFrColor']),
+                                              color: HexColor(AppTheme_[
+                                                  'SecondaryFrColor']),
                                               fontWeight: FontWeight.bold),
                                         ),
-                                        Icon(Icons.arrow_forward_ios,color: HexColor(AppTheme_['SecondaryFrColor']))
+                                        Icon(Icons.arrow_forward_ios,
+                                            color: HexColor(
+                                                AppTheme_['SecondaryFrColor']))
                                       ],
                                     ),
                                     onPressed: checkedValue == true &&
@@ -602,13 +606,16 @@ void showPaymentSelectOption(BuildContext buildContext, titleText, paymentList,
                                                     ? selectedPaymentMethod[
                                                         'Balance']
                                                     : 0,
-                                                paymentFor,AppTheme_);
+                                                paymentFor,
+                                                AppTheme_);
                                           }
                                         : null,
                                     style: ElevatedButton.styleFrom(
-                                      backgroundColor:
-                                          HexColor(AppTheme_['SecondaryBgColor']),
-                                      textStyle: TextStyle(color: HexColor(AppTheme_['SecondaryFrColor'])),
+                                      backgroundColor: HexColor(
+                                          AppTheme_['SecondaryBgColor']),
+                                      textStyle: TextStyle(
+                                          color: HexColor(
+                                              AppTheme_['SecondaryFrColor'])),
                                       shape: RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(60.0)),
@@ -759,8 +766,7 @@ double grandTotal(amountwithAdminFee, gatewayDetail, topupAmount) {
 }
 
 void showCustomPaymentAlert(BuildContext buildContext, gatewayDetail,
-    topupAmount, profileData, IsWallet, Balance, paymentFor,AppTheme_) {
-  
+    topupAmount, profileData, IsWallet, Balance, paymentFor, AppTheme_) {
   var checkedValue = false;
   showModalBottomSheet(
       shape: RoundedRectangleBorder(
@@ -901,10 +907,10 @@ void showCustomPaymentAlert(BuildContext buildContext, gatewayDetail,
                                   gatewayDetail['IsAdminFee']
                                       ? Padding(
                                           padding: const EdgeInsets.all(8.0),
-                                          child: Text( "${profileData['CurrencyCode']} " +
-                                            gatewayDetail['AdminTransFee']
-                                                    .toStringAsFixed(2) 
-                                               ,
+                                          child: Text(
+                                            "${profileData['CurrencyCode']} " +
+                                                gatewayDetail['AdminTransFee']
+                                                    .toStringAsFixed(2),
                                             style: TextStyle(
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.bold),
@@ -951,7 +957,8 @@ void showCustomPaymentAlert(BuildContext buildContext, gatewayDetail,
                                             fontWeight: FontWeight.bold)),
                                     CheckboxListTile(
                                       checkColor: Colors.white,
-                                      activeColor: HexColor(AppTheme_['SecondaryBgColor']),
+                                      activeColor: HexColor(
+                                          AppTheme_['SecondaryBgColor']),
                                       contentPadding: EdgeInsets.zero,
                                       title: Text(gatewayDetail['TnC_Desc'],
                                           style: TextStyle(
@@ -999,74 +1006,187 @@ void showCustomPaymentAlert(BuildContext buildContext, gatewayDetail,
                                           ListTileControlAffinity.leading,
                                     ),
                                   ])),
-                        Container(
-                          margin: EdgeInsets.only(top: 10),
-                          //padding: EdgeInsets.symmetric(horizontal: 20),
-                          child: SizedBox(
-                              width: double.infinity,
-                              child: Container(
-                                  alignment: Alignment.bottomRight,
-                                  margin: EdgeInsets.all(10),
-                                  child: SizedBox(
-                                      height: 45,
-                                      child: ElevatedButton(
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Text(
-                                              "Proceed & Pay",
-                                              style: TextStyle(
-                                                  fontSize: 18.0,
-                                                  fontFamily: "Montserrat",
-                                                  color: HexColor(AppTheme_['SecondaryFrColor']),
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            //Icon(Icons.payment)
-                                          ],
-                                        ),
-                                        onPressed: (gatewayDetail['EnableTnC']
-                                                ? checkedValue == true
-                                                : checkedValue == false)
-                                            ? () {
-                                                if (paymentFor ==
-                                                    AppSettings
-                                                        .paymentTypeTopup)
-                                                  buildContext
-                                                      .read<
-                                                          MySettingsListener>()
-                                                      .updateTopupHeaderAndDetails(
-                                                          buildContext,
-                                                          gatewayDetail,
-                                                          profileData,
-                                                          paymentFor);
-                                                if (paymentFor ==
-                                                    AppSettings
-                                                        .paymentTypeOrder)
-                                                  buildContext
-                                                      .read<
-                                                          MySettingsListener>()
-                                                      .updateOrderHeaderAndDetails(
-                                                          buildContext,
-                                                          gatewayDetail,
-                                                          profileData,
-                                                          IsWallet,
-                                                          Balance,
-                                                          paymentFor);
-                                              }
-                                            : null,
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor:
-                                              HexColor(AppTheme_['SecondaryBgColor']),
-                                          textStyle:
-                                              TextStyle(color: Colors.white),
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(60.0)),
-                                        ),
-                                      )))),
-                        )
+                        if (topupAmount < gatewayDetail['TopMinAmt'] &&
+                            paymentFor == AppSettings.paymentTypeTopup)
+                          Container(
+                              margin: EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 10),
+                              child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                        "Minimum allowed amount is " +
+                                            gatewayDetail['TopMinAmt']
+                                                .toString(),
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            color: Colors.red,
+                                            fontWeight: FontWeight.bold)),
+                                  ])),
+                        if (topupAmount > gatewayDetail['TopMaxAmt'] &&
+                            paymentFor == AppSettings.paymentTypeTopup)
+                          Container(
+                              margin: EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 10),
+                              child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                        "Maximum allowed amount is " +
+                                            gatewayDetail['TopMaxAmt']
+                                                .toString(),
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            color: Colors.red,
+                                            fontWeight: FontWeight.bold)),
+                                  ])),
+                        if (!(topupAmount < gatewayDetail['TopMinAmt']) &&
+                            !(topupAmount > gatewayDetail['TopMaxAmt']) &&
+                            paymentFor == AppSettings.paymentTypeTopup)
+                          Container(
+                            margin: EdgeInsets.only(top: 10),
+                            //padding: EdgeInsets.symmetric(horizontal: 20),
+                            child: SizedBox(
+                                width: double.infinity,
+                                child: Container(
+                                    alignment: Alignment.bottomRight,
+                                    margin: EdgeInsets.all(10),
+                                    child: SizedBox(
+                                        height: 45,
+                                        child: ElevatedButton(
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Text(
+                                                "Proceed & Pay",
+                                                style: TextStyle(
+                                                    fontSize: 18.0,
+                                                    fontFamily: "Montserrat",
+                                                    color: HexColor(AppTheme_[
+                                                        'SecondaryFrColor']),
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              //Icon(Icons.payment)
+                                            ],
+                                          ),
+                                          onPressed: (gatewayDetail['EnableTnC']
+                                                  ? checkedValue == true
+                                                  : checkedValue == false)
+                                              ? () {
+                                                  if (paymentFor ==
+                                                      AppSettings
+                                                          .paymentTypeTopup)
+                                                    buildContext
+                                                        .read<
+                                                            MySettingsListener>()
+                                                        .updateTopupHeaderAndDetails(
+                                                            buildContext,
+                                                            gatewayDetail,
+                                                            profileData,
+                                                            paymentFor,AppTheme_);
+                                                  if (paymentFor ==
+                                                      AppSettings
+                                                          .paymentTypeOrder)
+                                                    buildContext
+                                                        .read<
+                                                            MySettingsListener>()
+                                                        .updateOrderHeaderAndDetails(
+                                                            buildContext,
+                                                            gatewayDetail,
+                                                            profileData,
+                                                            IsWallet,
+                                                            Balance,
+                                                            paymentFor,AppTheme_);
+                                                }
+                                              : null,
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: HexColor(
+                                                AppTheme_['SecondaryBgColor']),
+                                            textStyle:
+                                                TextStyle(color: Colors.white),
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        60.0)),
+                                          ),
+                                        )))),
+                          ),
+                      if (paymentFor == AppSettings.paymentTypeOrder)
+                          Container(
+                            margin: EdgeInsets.only(top: 10),
+                            //padding: EdgeInsets.symmetric(horizontal: 20),
+                            child: SizedBox(
+                                width: double.infinity,
+                                child: Container(
+                                    alignment: Alignment.bottomRight,
+                                    margin: EdgeInsets.all(10),
+                                    child: SizedBox(
+                                        height: 45,
+                                        child: ElevatedButton(
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Text(
+                                                "Proceed & Pay",
+                                                style: TextStyle(
+                                                    fontSize: 18.0,
+                                                    fontFamily: "Montserrat",
+                                                    color: HexColor(AppTheme_[
+                                                        'SecondaryFrColor']),
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              //Icon(Icons.payment)
+                                            ],
+                                          ),
+                                          onPressed: (gatewayDetail['EnableTnC']
+                                                  ? checkedValue == true
+                                                  : checkedValue == false)
+                                              ? () {
+                                                  if (paymentFor ==
+                                                      AppSettings
+                                                          .paymentTypeTopup)
+                                                    buildContext
+                                                        .read<
+                                                            MySettingsListener>()
+                                                        .updateTopupHeaderAndDetails(
+                                                            buildContext,
+                                                            gatewayDetail,
+                                                            profileData,
+                                                            paymentFor,AppTheme_);
+                                                  if (paymentFor ==
+                                                      AppSettings
+                                                          .paymentTypeOrder)
+                                                    buildContext
+                                                        .read<
+                                                            MySettingsListener>()
+                                                        .updateOrderHeaderAndDetails(
+                                                            buildContext,
+                                                            gatewayDetail,
+                                                            profileData,
+                                                            IsWallet,
+                                                            Balance,
+                                                            paymentFor,AppTheme_);
+                                                }
+                                              : null,
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: HexColor(
+                                                AppTheme_['SecondaryBgColor']),
+                                            textStyle:
+                                                TextStyle(color: Colors.white),
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        60.0)),
+                                          ),
+                                        )))),
+                          )
+                      
                       ],
                     ),
                   ),

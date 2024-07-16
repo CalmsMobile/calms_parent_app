@@ -91,8 +91,9 @@ static String colorCurrencyCode = "#0D47A1";
   static String msgNoItemInCart = "";
   static String imgAssetNoMeal = "assets/images/no_meal.png";
   static String titleNoMeal = "NO MEAL ITEM FOUND";
-  static String msgNoMeal =
-      "No meal item found for selected date, we'll update here when there is any new meal been uploaded.";
+  static String msgNoMeal = "Looks like there aren't any meals available for purchase today. It might be a school holiday or meals haven't been uploaded yet. Would you like to check back later?";
+  static String msgNoMealSaturday = "It's Saturday, and there are no meals available for your kids to purchase";
+  static String msgNoMealSunday = "It's Sunday, and there are no meals available for your kids to purchase";
       static String imgAssetNoCalender = "assets/images/no_calendar.png";
       static String imgAssetNoTxn = "assets/images/no_recent_transaction.png";
   static String titleNoCalender = "NO HISTORY";

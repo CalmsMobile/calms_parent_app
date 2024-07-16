@@ -17,9 +17,11 @@ import 'package:just_the_tooltip/just_the_tooltip.dart';
 
 class MealDetails extends StatefulWidget {
   final arguments;
+  final poSettings;
   final AppTheme_;
   final Function callbackFun;
-  const MealDetails(this.arguments, this.callbackFun, this.AppTheme_,
+  const MealDetails(
+      this.arguments, this.callbackFun, this.AppTheme_, this.poSettings,
       {Key? key})
       : super(key: key);
 
@@ -47,6 +49,8 @@ class _MealDetailsState extends State<MealDetails> {
     // TODO: implement initState
     super.initState();
     mealInfo = widget.arguments['mealInfo'];
+
+    print(widget.poSettings);
   }
 
   void onTapIngi(textToShow, BuildContext childContext) {
@@ -456,6 +460,7 @@ class _MealDetailsState extends State<MealDetails> {
                                   ),
                                 ),
                               ),
+                              if(widget.poSettings['ShowSRating'])
                               Container(
                                 margin: EdgeInsets.only(top: 5),
                                 child: mealInfo['Rating'] != null
@@ -511,7 +516,7 @@ class _MealDetailsState extends State<MealDetails> {
                             ],
                           ),
                         ),
-                       /*  if (widget.arguments['mealList_']['addedToCart'] !=
+                        /*  if (widget.arguments['mealList_']['addedToCart'] !=
                             null)
                           InkWell(
                             onTap: () {},
@@ -721,16 +726,39 @@ class _MealDetailsState extends State<MealDetails> {
                               ),
                             ),
                           ),
-                       */]),
+                       */
+                      ]),
                 ),
                 SizedBox(
                   height: 10,
                 ),
+                if(widget.poSettings['ShowMerchantImg'] && widget.poSettings['ShowMerchantName'])
                 ListTile(
                   leading: Image.network(CommonFunctions.getMealImageUrl(
                       widget.arguments['imgBaseUrl'], mealInfo['MerchantImg'])),
-                  title: Text(mealInfo['MerchantShortName']),
+                  title: Text(mealInfo['MerchantShortName'],style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold,color: HexColor(widget.AppTheme_['SecondaryBgColor']))),
                 ),
+                if(widget.poSettings['ShowMerchantImg'] && !widget.poSettings['ShowMerchantName'])
+                ListTile(
+                  leading: Image.network(CommonFunctions.getMealImageUrl(
+                      widget.arguments['imgBaseUrl'], mealInfo['MerchantImg'])),
+                  title: Text('',style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold,color: HexColor(widget.AppTheme_['SecondaryBgColor']))),
+                ),
+                if(!widget.poSettings['ShowMerchantImg'] && widget.poSettings['ShowMerchantName'])
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Container(
+                    padding: EdgeInsets.only(left: 15.0, top: 0.0, bottom: 5.0),
+                    child: Text(
+                      mealInfo['MerchantShortName'],
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold,color: HexColor(widget.AppTheme_['SecondaryBgColor'])),
+                    ),
+                  ),
+                ),
+                
                 SizedBox(
                   height: 10,
                 ),
@@ -805,23 +833,26 @@ class _MealDetailsState extends State<MealDetails> {
                   height: 1,
                   color: Colors.grey.shade300,
                 ),
-                Container(
-                  margin: EdgeInsets.only(top: 0, left: 5, right: 5),
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Calorie",
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.normal,
+                if (mealInfo['Calories'] != null &&
+                    widget.poSettings['ShowCalories'])
+                  Container(
+                    margin: EdgeInsets.only(top: 0, left: 5, right: 5),
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Calorie",
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.normal,
+                          ),
                         ),
-                      ),
-                      Text("400kcal", style: TextStyle(fontSize: 14))
-                    ],
+                        Text(mealInfo['Calories'].toString() + ' Kcal',
+                            style: TextStyle(fontSize: 14))
+                      ],
+                    ),
                   ),
-                ),
                 Container(
                   margin:
                       EdgeInsets.only(top: 5, left: 25, right: 25, bottom: 0),

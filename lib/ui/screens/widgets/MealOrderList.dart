@@ -135,7 +135,7 @@ class MealOrderListView extends StatelessWidget {
                                                 CurrencyCode,
                                                 imgBaseUrl,
                                                 profileData,AppTheme_,
-                                                false);
+                                                false,poSettings[0]);
                                           },
                                           child: Container(
                                             width: 30,
@@ -264,7 +264,7 @@ class MealOrderListView extends StatelessWidget {
                                                                 CurrencyCode,
                                                                 imgBaseUrl,
                                                                 profileData,AppTheme_,
-                                                                false);
+                                                                false,poSettings[0]);
                                                           },
                                                           child: Container(
                                                             width: 30,
@@ -293,7 +293,7 @@ class MealOrderListView extends StatelessWidget {
                                                             ),
                                                           ),
                                                         ),
-                                                      if (poTypesList[index][i][
+                                                      /* if (poTypesList[index][i][
                                                                   'MobMainStatus'] !=
                                                               null &&
                                                           poTypesList[index][i][
@@ -338,6 +338,7 @@ class MealOrderListView extends StatelessWidget {
                                                             ),
                                                           ),
                                                         ),
+                                                       */
                                                       if (poTypesList[index][i][
                                                                   'MobMainStatus'] !=
                                                               null &&
@@ -360,7 +361,7 @@ class MealOrderListView extends StatelessWidget {
                                                                 poTypesList[
                                                                         index][i]
                                                                     [
-                                                                    'AllowToChoose']);
+                                                                    'AllowToChoose'],poSettings[0]);
                                                           },
                                                           child: Container(
                                                             width: 30,
@@ -491,12 +492,7 @@ class MealOrderListView extends StatelessWidget {
                                                                     right: 10),
                                                             child: ClipOval(
                                                               child: Material(
-                                                                color: Color
-                                                                    .fromARGB(
-                                                                        255,
-                                                                        89,
-                                                                        126,
-                                                                        156), // Button color
+                                                                color: HexColor("#f4516c"), // Button color
                                                                 child: InkWell(
                                                                   onTap:
                                                                       () async {},
