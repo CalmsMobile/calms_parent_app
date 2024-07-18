@@ -13,6 +13,7 @@ import '../../../common/date_util.dart';
 import '../../../common/listener/settings_listener.dart';
 import '../../../common/my_shared_pref.dart';
 import '../../../common/util/common_funtions.dart';
+import '../notifications/notifications.dart';
 import '/common/HexColor.dart';
 import '/common/alert_dialog.dart';
 import '/common/constants.dart';
@@ -76,16 +77,7 @@ class _CartPageState extends State<CartPage> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  /* InkWell(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Image(
-                width: 50,
-                height: 50,
-                image: AssetImage("assets/images/ico_back.png"),
-              ),
-            ), */
+                 
                   InkWell(
                       onTap: () {
                         Navigator.pushReplacement(
@@ -124,7 +116,98 @@ class _CartPageState extends State<CartPage> {
                   // Your widgets here
                 ],
               ),
+             /*  actions: [
+            Container(
+              height: 30,
+              //width: 100,
+              margin: EdgeInsets.only(right: 10),
+              child: Row(children: [
+                Consumer<MySettingsListener>(
+                    builder: (context, data, settingsDta) {
+                  return InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Notifications(
+                                      NotifyOnly: profileData['NotifyOnly'],
+                                      categoryList:
+                                          data.NotificationCategoryList,
+                                      name: 'NotificationDashboard'
+                                    )));
+                      },
+                      child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                                color: HexColor(widget.AppTheme_['SecondaryFrColor']),
+                                width: 2),
+                            color: Colors.white,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Padding(
+                              padding: EdgeInsets.all(3),
+                              child: Icon(
+                                Icons.notifications_outlined,
+                                color: HexColor(widget.AppTheme_['SecondaryFrColor']),
+                                size: 30,
+                              ))));
+                }),
+                Stack(
+                  children: [
+                    InkWell(
+                        onTap: () {
+                          
+                        },
+                        child: Container(
+                            margin: EdgeInsets.only(left: 10),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                  color:
+                                      HexColor(widget.AppTheme_['SecondaryFrColor']),
+                                  width: 2),
+                              color: Colors.white,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Padding(
+                                padding: EdgeInsets.all(3),
+                                child: Icon(
+                                  Icons.delete_outline_sharp,
+                                  color:
+                                      HexColor(widget.AppTheme_['SecondaryFrColor']),
+                                  size: 30,
+                                )))),
+                    Consumer<MySettingsListener>(
+                        builder: (context, data, settingsDta) {
+                      return Positioned(
+                        top: 0,
+                        right: 0,
+                        child: Container(
+                          height: 18,
+                          width: 18,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.red,
+                          ),
+                          child: Center(
+                              child: Text(
+                            data.cartList != []
+                                ? data.finalCartListForBilling.length.toString()
+                                : "0",
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )),
+                        ),
+                      );
+                    })
+                  ],
+                ),
+               ]),
             ),
+          ],
+        
+            */ ),
             resizeToAvoidBottomInset: false,
             body: SingleChildScrollView(child: Consumer<MySettingsListener>(
                 builder: (context, data, settingsDta) {
@@ -306,17 +389,19 @@ class _CartPageState extends State<CartPage> {
                                                                     true,
                                                                     true,
                                                                     true, () {
-                                                              Navigator.pop(
-                                                                  context);
+                                                             
                                                               setState(() {
+                                                              
                                                                 context
                                                                     .read<
                                                                         MySettingsListener>()
                                                                     .removeFromCart(
                                                                         data.finalCartList[
-                                                                            index]);
+                                                                            index],data.finalCartList);
                                                                
-                                                              });
+                                                             });
+                                                              Navigator.pop(
+                                                                  context);
                                                             }, () {
                                                               Navigator.pop(
                                                                   context);

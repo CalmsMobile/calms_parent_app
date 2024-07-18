@@ -6,6 +6,7 @@ import 'package:calms_parent_latest/common/widgets/common.dart';
 import 'package:calms_parent_latest/ui/screens/meals/details/meal_details.dart';
 import 'package:calms_parent_latest/ui/screens/payment/after_payment_page.dart';
 import 'package:flutter/foundation.dart';
+import 'package:intl/intl.dart';
 
 import '../ui/screens/home/Home.dart';
 import '../ui/screens/meals/meal_menu_page.dart';
@@ -52,7 +53,6 @@ class CommonUtil {
 
   EntryToDashboardSuccess(
       BuildContext context, Map<String, dynamic> response, UserSeqId) {
-        
     if (response['Table'][0]['code'] == 10 && response['Table1'][0] != null) {
       print("getEntryToDashboard success");
       //CommonUtil().getAppTheme(context);
@@ -72,7 +72,7 @@ class CommonUtil {
         else {
           context
               .read<MySettingsListener>()
-              .updateAppThemeData(response['Table5'][0],null);
+              .updateAppThemeData(response['Table5'][0], null);
           context
               .read<MySettingsListener>()
               .updateEntryToDashboardFamilyList(response['Table1'], UserSeqId);
@@ -137,7 +137,7 @@ class CommonUtil {
       print("getAppTheme Success");
       context
           .read<MySettingsListener>()
-          .updateAppThemeData(response['Table1'][0],context);
+          .updateAppThemeData(response['Table1'][0], context);
     }
   }
 
@@ -202,7 +202,7 @@ class CommonUtil {
   }
 
   Future<void> getGatewayDetails(context, RefBranchSeqId, RefSettingSeqId,
-      topupTotal, profileData, Balance, IsWallet, paymentFor,AppTheme_) async {
+      topupTotal, profileData, Balance, IsWallet, paymentFor, AppTheme_) async {
     var ParamData = {
       "RefBranchSeqId": RefBranchSeqId,
       "RefSettingSeqId": RefSettingSeqId
@@ -218,7 +218,7 @@ class CommonUtil {
       res
           .then((response) => {
                 successGetGatewayDetails(context, response, topupTotal,
-                    profileData, IsWallet, Balance, paymentFor,AppTheme_)
+                    profileData, IsWallet, Balance, paymentFor, AppTheme_)
               })
           .onError((error, stackTrace) => {authorizedPostRequestError(error)});
     } else {
@@ -247,28 +247,28 @@ class CommonUtil {
         "PayMode": "WT"
       };
 
-      successGetGatewayDetails(
-          context, WT, topupTotal, profileData, IsWallet, Balance, paymentFor,AppTheme_);
+      successGetGatewayDetails(context, WT, topupTotal, profileData, IsWallet,
+          Balance, paymentFor, AppTheme_);
     }
   }
 
   successGetGatewayDetails(BuildContext context, response, topupTotal,
-      profileData, IsWallet, Balance, paymentFor,AppTheme_) async {
+      profileData, IsWallet, Balance, paymentFor, AppTheme_) async {
     if (IsWallet == 0) {
       if (response['Table'][0]['code'] == 10) {
         print("getGatewayDetailsSuccess success");
         if (response['Table1'] != null || response['Table1'] != [])
           showCustomPaymentAlert(context, response['Table1'][0], topupTotal,
-              profileData, IsWallet, Balance, paymentFor,AppTheme_);
+              profileData, IsWallet, Balance, paymentFor, AppTheme_);
       }
     } else {
       showCustomPaymentAlert(context, response, topupTotal, profileData,
-          IsWallet, Balance, paymentFor,AppTheme_);
+          IsWallet, Balance, paymentFor, AppTheme_);
     }
   }
 
   Future<void> MakeTransaction(context, Header, Details, gatewayDetail,
-      profileData, IsWallet, Balance, paymentFor,AppTheme_) async {
+      profileData, IsWallet, Balance, paymentFor, AppTheme_) async {
     var OrderData = {
       "Header": paymentFor == AppSettings.paymentTypeOrder ? Header : [],
       "Detail": paymentFor == AppSettings.paymentTypeOrder ? Details : [],
@@ -312,11 +312,12 @@ class CommonUtil {
     );
     res
         .then((response) =>
-            {successMakeTransaction(context, response, paymentFor,AppTheme_)})
+            {successMakeTransaction(context, response, paymentFor, AppTheme_)})
         .onError((error, stackTrace) => {authorizedPostRequestError(error)});
   }
 
-  successMakeTransaction(BuildContext context, response, paymentFor,AppTheme_) async {
+  successMakeTransaction(
+      BuildContext context, response, paymentFor, AppTheme_) async {
     context.read<MySettingsListener>().clearCartListAfterPayment();
     if (response['Table'][0]['code'] == "S") {
       print("MakeTransactionSuccess success");
@@ -328,19 +329,19 @@ class CommonUtil {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => AfterPaymentPage(res, paymentFor,AppTheme_),
+            builder: (context) => AfterPaymentPage(res, paymentFor, AppTheme_),
           ),
         );
       } else {
         if (kIsWeb) {
-          _showMyDialog(
-              context, response['Table'][0]['PaymentOrderId'], paymentFor,AppTheme_);
+          _showMyDialog(context, response['Table'][0]['PaymentOrderId'],
+              paymentFor, AppTheme_);
         } else
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) =>
-                  PaymentWebviewPage(response['Table'][0], paymentFor,AppTheme_),
+              builder: (context) => PaymentWebviewPage(
+                  response['Table'][0], paymentFor, AppTheme_),
             ),
           );
       }
@@ -348,7 +349,7 @@ class CommonUtil {
   }
 
   Future<void> _showMyDialog(
-      BuildContext context, PaymentOrderId, paymentFor,AppTheme_) async {
+      BuildContext context, PaymentOrderId, paymentFor, AppTheme_) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -368,7 +369,7 @@ class CommonUtil {
               child: const Text('Check Payment'),
               onPressed: () {
                 CommonUtil().getAfterTopupPaymentSummary(
-                    context, PaymentOrderId, paymentFor,AppTheme_);
+                    context, PaymentOrderId, paymentFor, AppTheme_);
               },
             ),
           ],
@@ -378,7 +379,7 @@ class CommonUtil {
   }
 
   Future<void> getAfterTopupPaymentSummary(
-      BuildContext context, OrderId, paymentFor,AppTheme_) async {
+      BuildContext context, OrderId, paymentFor, AppTheme_) async {
     var ParamData = {"OrderId": OrderId};
     Future<Map<String, dynamic>> res = RestApiProvider().authorizedPostRequest(
       ParamData,
@@ -387,20 +388,22 @@ class CommonUtil {
       true,
     );
     res
-        .then((response) =>
-            {successGetAfterTopupPaymentSummary(context, response, paymentFor,AppTheme_)})
+        .then((response) => {
+              successGetAfterTopupPaymentSummary(
+                  context, response, paymentFor, AppTheme_)
+            })
         .onError((error, stackTrace) => {authorizedPostRequestError(error)});
   }
 
   successGetAfterTopupPaymentSummary(
-      BuildContext context, response, paymentFor,AppTheme_) async {
+      BuildContext context, response, paymentFor, AppTheme_) async {
     if (response['Table'][0]['OrderId'] != null) {
       print("getAfterTopupPaymentSummarySuccess success");
       Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) =>
-              AfterPaymentPage(response['Table'][0], paymentFor,AppTheme_),
+              AfterPaymentPage(response['Table'][0], paymentFor, AppTheme_),
         ),
       );
     }
@@ -435,19 +438,39 @@ class CommonUtil {
     }
   }
 
-  Future<void> getMealItemsForUser(context, RefUserSeqId, RefBranchSeqId,
-      poTypesList, CurrencyCode, imgBaseUrl, profileData,AppTheme_, AllowToChoose,poSettings) async {
+  String checkedFromDate(FromDate, CurrentDateTime) {
+    DateTime fromDate = DateTime.parse(FromDate);
+    DateTime currentDateTime = DateTime.parse(CurrentDateTime);
+    if (currentDateTime.isAfter(fromDate))
+      return CurrentDateTime;
+    else
+      return FromDate;
+  }
+
+  Future<void> getMealItemsForUser(
+      context,
+      RefUserSeqId,
+      RefBranchSeqId,
+      poTypesList,
+      CurrencyCode,
+      imgBaseUrl,
+      profileData,
+      AppTheme_,
+      AllowToChoose,
+      poSettings) async {
     var ParamData = {
       "RefBranchSeqId": RefBranchSeqId,
       "RefUserSeqId": RefUserSeqId,
       "FromDate": poTypesList['FromDate'] != null
-          ? poTypesList['FromDate'].substring(0, 10)
+          ? checkedFromDate(poTypesList['FromDate'],
+              poTypesList['CurrentDateTime']).substring(0, 10)
           : poTypesList['CurrentDateTime'].substring(0, 10),
       "ToDate": poTypesList['ToDate'] != null
           ? poTypesList['ToDate'].substring(0, 10)
           : poTypesList['CurrentDateTime'].substring(0, 10),
       "POTypeConfigSeqId": poTypesList['POTypeConfigSeqId'],
-      "MealType": poTypesList['MealTypes']
+      "MealType": poTypesList['MealTypes'],
+      "RefPackageSeqId": poTypesList['PackageSeqId'],
     };
     print(ParamData);
     Future<Map<String, dynamic>> res = RestApiProvider().authorizedPostRequest(
@@ -458,14 +481,30 @@ class CommonUtil {
     );
     res
         .then((response) => {
-              successGetMealItemsForUser(context, response, RefUserSeqId,
-                  poTypesList, CurrencyCode, imgBaseUrl, profileData,AppTheme_,poSettings)
+              successGetMealItemsForUser(
+                  context,
+                  response,
+                  RefUserSeqId,
+                  poTypesList,
+                  CurrencyCode,
+                  imgBaseUrl,
+                  profileData,
+                  AppTheme_,
+                  poSettings)
             })
         .onError((error, stackTrace) => {authorizedPostRequestError(error)});
   }
 
-  successGetMealItemsForUser(BuildContext context, response, RefUserSeqId,
-      poTypesList, CurrencyCode, imgBaseUrl, profileData,AppTheme_,poSettings) {
+  successGetMealItemsForUser(
+      BuildContext context,
+      response,
+      RefUserSeqId,
+      poTypesList,
+      CurrencyCode,
+      imgBaseUrl,
+      profileData,
+      AppTheme_,
+      poSettings) {
     if (response['Table'][0]['code'] == 10) {
       print("getMealItemsForUser success");
 
@@ -477,7 +516,9 @@ class CommonUtil {
           poTypesList,
           CurrencyCode,
           imgBaseUrl,
-          profileData,AppTheme_,poSettings);
+          profileData,
+          AppTheme_,
+          poSettings);
     }
   }
 
@@ -492,7 +533,9 @@ class CommonUtil {
       mealList_,
       UserSeqId,
       callbackFun,
-      mealIndex,AppTheme_,poSettings) async {
+      mealIndex,
+      AppTheme_,
+      poSettings) async {
     var ParamData = {
       "RefItemSeqId": RefItemSeqId,
       "ViewDate": ViewDate,
@@ -518,7 +561,9 @@ class CommonUtil {
                   mealList_,
                   UserSeqId,
                   callbackFun,
-                  mealIndex,AppTheme_,poSettings)
+                  mealIndex,
+                  AppTheme_,
+                  poSettings)
             })
         .onError((error, stackTrace) => {authorizedPostRequestError(error)});
   }
@@ -534,7 +579,9 @@ class CommonUtil {
       mealList_,
       UserSeqId,
       Function callbackFun,
-      mealIndex,AppTheme_,poSettings) {
+      mealIndex,
+      AppTheme_,
+      poSettings) {
     if (response['Table'][0]['code'] == 10) {
       print("successGetMealItemDetail");
       response['Table1'][0]['addedToCart'] = addedToCart;
@@ -554,7 +601,8 @@ class CommonUtil {
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => MealDetails(arguments, callbackFun,AppTheme_,poSettings)));
+              builder: (context) =>
+                  MealDetails(arguments, callbackFun, AppTheme_, poSettings)));
     }
   }
 
@@ -590,7 +638,6 @@ class CommonUtil {
           getCartTermMealItems(
               context, profileData['RefBranchSeqId'], cartList, PackageSeqId);
       }
-      
     }
   }
 

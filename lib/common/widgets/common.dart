@@ -445,9 +445,19 @@ void showPaymentSelectOption(BuildContext buildContext, titleText, paymentList,
                                       ),
                                       onTap: () {
                                         setState(() {
-                                          checkedValue = true;
                                           selectedPaymentMethod =
                                               paymentList[index];
+                                          if (selectedPaymentMethod[
+                                                  'IsWallet'] ==
+                                              1) {
+                                            selectedPaymentMethod['Balance'] <
+                                                    topupAmount
+                                                ? checkedValue = false
+                                                : checkedValue = true;
+                                          } else {
+                                            checkedValue = true;
+                                          }
+                                          print(selectedPaymentMethod);
                                         });
                                       },
                                     ),
@@ -561,6 +571,21 @@ void showPaymentSelectOption(BuildContext buildContext, titleText, paymentList,
                                 ],
                               ),
                             ),
+                          if (selectedPaymentMethod['IsWallet'] == 1 &&
+                            selectedPaymentMethod['Balance'] < topupAmount)
+                          Container(
+                              margin: EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 10),
+                              child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                        "Your balance is less than purchase amount",
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            color: Colors.red,
+                                            fontWeight: FontWeight.bold)),
+                                  ])),
                           Container(
                               alignment: Alignment.bottomRight,
                               margin: EdgeInsets.all(10),
@@ -756,8 +781,9 @@ double grandTotal(amountwithAdminFee, gatewayDetail, topupAmount) {
   if (gatewayDetail['IsGst']) {
     if (gatewayDetail['GstType'] == 20) {
       total = amountwithAdminFee +
-          calTopupGst(topupAmount, gatewayDetail['GstType'],
-              gatewayDetail['GstPercentage']);
+          double.parse(calTopupGst(topupAmount, gatewayDetail['GstType'],
+                  gatewayDetail['GstPercentage'])
+              .toStringAsFixed(2));
     } else
       total = amountwithAdminFee;
   } else
@@ -1086,7 +1112,8 @@ void showCustomPaymentAlert(BuildContext buildContext, gatewayDetail,
                                                             buildContext,
                                                             gatewayDetail,
                                                             profileData,
-                                                            paymentFor,AppTheme_);
+                                                            paymentFor,
+                                                            AppTheme_);
                                                   if (paymentFor ==
                                                       AppSettings
                                                           .paymentTypeOrder)
@@ -1099,7 +1126,8 @@ void showCustomPaymentAlert(BuildContext buildContext, gatewayDetail,
                                                             profileData,
                                                             IsWallet,
                                                             Balance,
-                                                            paymentFor,AppTheme_);
+                                                            paymentFor,
+                                                            AppTheme_);
                                                 }
                                               : null,
                                           style: ElevatedButton.styleFrom(
@@ -1114,7 +1142,7 @@ void showCustomPaymentAlert(BuildContext buildContext, gatewayDetail,
                                           ),
                                         )))),
                           ),
-                      if (paymentFor == AppSettings.paymentTypeOrder)
+                        if (paymentFor == AppSettings.paymentTypeOrder)
                           Container(
                             margin: EdgeInsets.only(top: 10),
                             //padding: EdgeInsets.symmetric(horizontal: 20),
@@ -1158,7 +1186,8 @@ void showCustomPaymentAlert(BuildContext buildContext, gatewayDetail,
                                                             buildContext,
                                                             gatewayDetail,
                                                             profileData,
-                                                            paymentFor,AppTheme_);
+                                                            paymentFor,
+                                                            AppTheme_);
                                                   if (paymentFor ==
                                                       AppSettings
                                                           .paymentTypeOrder)
@@ -1171,7 +1200,8 @@ void showCustomPaymentAlert(BuildContext buildContext, gatewayDetail,
                                                             profileData,
                                                             IsWallet,
                                                             Balance,
-                                                            paymentFor,AppTheme_);
+                                                            paymentFor,
+                                                            AppTheme_);
                                                 }
                                               : null,
                                           style: ElevatedButton.styleFrom(
@@ -1186,7 +1216,6 @@ void showCustomPaymentAlert(BuildContext buildContext, gatewayDetail,
                                           ),
                                         )))),
                           )
-                      
                       ],
                     ),
                   ),

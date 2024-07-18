@@ -202,7 +202,7 @@ class MySettingsListener with ChangeNotifier {
   }
 
   updateTopupHeaderAndDetails(
-      BuildContext context, gatewayDetail, profileData, paymentFor,AppTheme_) {
+      BuildContext context, gatewayDetail, profileData, paymentFor, AppTheme_) {
     _topupHeader = [];
     _topupDetails = [];
     for (int i = 0; i < topupMembersList.length; i++) {
@@ -244,7 +244,7 @@ class MySettingsListener with ChangeNotifier {
     print(jsonEncode(topupDetails));
     Navigator.of(context).pop();
     CommonUtil().MakeTransaction(context, topupHeader, topupDetails,
-        gatewayDetail, profileData, 0, 0, paymentFor,AppTheme_);
+        gatewayDetail, profileData, 0, 0, paymentFor, AppTheme_);
   }
 
   updateTopupPaymentProvidersList(List paymentProvidersList) {
@@ -337,7 +337,8 @@ class MySettingsListener with ChangeNotifier {
       CurrencyCode,
       imgBaseUrl,
       profileData,
-      AppTheme_,poSetting) {
+      AppTheme_,
+      poSetting) {
     if (mealsList.length > 0 && poTypesList['PreOrderType'] == "Daily") {
       for (var i = 0; i < mealsList.length; i++) {
         if (_cartList.contains(CommonFunctions.getPoDailyMealCartData(
@@ -366,7 +367,8 @@ class MySettingsListener with ChangeNotifier {
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => MealMenuPage(arguments, AppTheme_,poSetting)));
+              builder: (context) =>
+                  MealMenuPage(arguments, AppTheme_, poSetting)));
     //notifyListeners();
   }
 
@@ -477,11 +479,14 @@ class MySettingsListener with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> removeFromCart(finalCartList) async {
-    //List l = _finalCartList;
-    //_finalCartList.removeWhere((element) => element['isSelected']);
-    //_cartList.removeWhere((element) => element.toString().contains("other"));
-    //print(index);
+  Future<void> removeFromCart(finalCartList, List flist) async {
+   var lcopy = [...flist];
+   print("------lcopy-------");
+   print(lcopy);
+   lcopy.remove(finalCartList);
+   print("------lcopy deleted-------");
+   print(lcopy);
+   print("----------------");
     print("cartlist-------");
     print(_cartList);
     print("finalCartList-------");
@@ -501,8 +506,8 @@ class MySettingsListener with ChangeNotifier {
           finalCartList['RefPOTypeConfigSeqId'],
           finalCartList['PackageSeqId']);
     print(cartData);
-
-    _finalCartList.remove(finalCartList);
+    
+    _finalCartList = lcopy;
     _cartList.remove(cartData);
 
     // _finalCartList.removeWhere(((element) =>element['RowId'] == finalCartList['RowId'] ));
@@ -513,7 +518,7 @@ class MySettingsListener with ChangeNotifier {
     print(_finalCartList);
     if (_cartList.isEmpty)
       MySharedPref().saveData('', AppSettings.Sp_cartAddedDate);
-    //notifyListeners();
+    notifyListeners();
     //updateSelectedOrderCalculateTotal(_finalCartList);
   }
 
@@ -539,7 +544,7 @@ class MySettingsListener with ChangeNotifier {
   }
 
   updateOrderHeaderAndDetails(BuildContext context, gatewayDetail, profileData,
-      IsWallet, Balance, paymentFor,AppTheme_) {
+      IsWallet, Balance, paymentFor, AppTheme_) {
     List orderHeader = [];
     List orderDetails = [];
     String currenFiltertDate =
@@ -624,85 +629,6 @@ class MySettingsListener with ChangeNotifier {
         };
         orderDetails.add(objDaily);
       }
-
-      /*  orderDetails.add([
-        {
-          "Amount": 361,
-          "PackageSeqId": 1016,
-          "RefPOTypeConfigSeqId": 10009,
-          "Name": "COMBO (MORNING SNACK + LUNCH)",
-          "PreOrderType": "Terms",
-          "PerDayAmt": 0,
-          "ConfigJSON":
-              '{\\"BPurchaseCutoff\\":\\"0\\",\\"BPurchaseCutoffDays\\":\\"\\",\\"BPurchaseCutoffHours\\":\\"\\",\\"APurchaseCutoff\\":\\"0\\",\\"APurchaseCutoffDays\\":\\"\\",\\"APurchaseCutoffHours\\":\\"\\",\\"ProRatedCutoff\\":\\"1\\",\\"ProRateCutoffNoofDays\\":0,\\"CancelCutoff\\":\\"0\\",\\"Cancellation\\":\\"1\\",\\"CancelWholeTermMeal\\":\\"0\\",\\"CancelCutoffDays\\":\\"\\",\\"CancelCutoffHours\\":\\"\\",\\"CancelAfterTermStart\\":\\"1\\",\\"MenuChangeCutoff\\":\\"0\\",\\"MenuChangeCutoffDays\\":\\"\\",\\"MenuChangeCutoffHours\\":\\"\\"}',
-          "RefUserSeqId": "100122",
-          "PurchaseDate": "1900-01-01",
-          "ItemSeqId": "0",
-          "ItemFor": "0",
-          "Category": "",
-          "SellingPrice": 133,
-          "IsAddon": "0",
-          "Gst": 0,
-          "RowId": 0,
-          "Discount": 0,
-          "GST_Percent": 0,
-          "GST_Type": "",
-          "FilterDate": 20230919,
-          "Remarks": "",
-          "lsCheckout": 1
-        },
-        {
-          "ItemSeqId": 1002,
-          "Name": "NASI LEMAK WITH EGG",
-          "SellingPrice": 2.5,
-          "GST_Percent": 0,
-          "GST_Type": "",
-          "RefItemType": "101",
-          "AvailableOn": "2023-09-20T00:00:00",
-          "ItemType": "Breakfast",
-          "ItemStyle": "Asian",
-          "RefPOTypeConfigSeqId": 10003,
-          "RefMerchantSeqId": 101,
-          "RefUserSeqId": "100122",
-          "PurchaseDate": "2023-09-20",
-          "ItemFor": "101",
-          "Category": "Breakfast",
-          "IsAddon": "0",
-          "Gst": 0,
-          "RowId": 0,
-          "Discount": 0,
-          "PackageSeqId": 0,
-          "FilterDate": 20230920,
-          "Remarks": "",
-          "lsCheckout": 1
-        },
-        {
-          "ItemSeqId": 1017,
-          "Name": "SOTO NOODLES",
-          "SellingPrice": 3,
-          "GST_Percent": 0,
-          "GST_Type": "",
-          "RefItemType": "101",
-          "AvailableOn": "2023-09-20T00:00:00",
-          "ItemType": "Breakfast",
-          "ItemStyle": "Asian",
-          "RefPOTypeConfigSeqId": 10003,
-          "RefMerchantSeqId": 101,
-          "RefUserSeqId": "100123",
-          "PurchaseDate": "2023-09-20",
-          "ItemFor": "101",
-          "Category": "Breakfast",
-          "IsAddon": "0",
-          "Gst": 0,
-          "RowId": 1,
-          "Discount": 0,
-          "PackageSeqId": 0,
-          "FilterDate": 20230920,
-          "Remarks": "",
-          "lsCheckout": 1
-        }
-      ]);
-     */
     }
     print("===========orderHeader===========");
     print(jsonEncode(orderHeader));
@@ -710,7 +636,7 @@ class MySettingsListener with ChangeNotifier {
     print(jsonEncode(orderDetails));
     Navigator.of(context).pop();
     CommonUtil().MakeTransaction(context, orderHeader, orderDetails,
-        gatewayDetail, profileData, IsWallet, Balance, paymentFor,AppTheme_);
+        gatewayDetail, profileData, IsWallet, Balance, paymentFor, AppTheme_);
   }
 
   updateSettings(var settingDetails) {

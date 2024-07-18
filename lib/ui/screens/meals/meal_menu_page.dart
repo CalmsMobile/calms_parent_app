@@ -166,7 +166,7 @@ class _MealMenuPageState extends State<MealMenuPage> {
                   Padding(
                     padding: EdgeInsets.only(left: 10),
                     child: Text(
-                      "Meal Order",
+                      "Meal Order ${_selectedDate != null ?'('+DateFormat('dd-MMM-yyyy').format(_selectedDate)+')':''}",
                       style: TextStyle(
                           color: HexColor(widget.AppTheme_['SecondaryFrColor']),
                           fontSize: 20,
