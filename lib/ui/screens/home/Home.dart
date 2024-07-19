@@ -694,7 +694,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                               child: Column(
                                 children: [
                                   ListTile(
-                                    title: Text("Recent Transaction"),
+                                    title: Text("Recent Transactions"),
                                     trailing: Text("(Last 30 days)"),
                                     tileColor:
                                         HexColor(AppTheme_['SecondaryBgColor']),
@@ -702,7 +702,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                         HexColor(AppTheme_['SecondaryFrColor']),
                                   ),
                                   Container(
-                                    margin: EdgeInsets.all(10),
+                                    margin: EdgeInsets.only(left: 0,right: 0,top: 10,bottom: 10),
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -711,7 +711,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                             .isNotEmpty)
                                           RecentTransactionListView(
                                               data.dashboardRecentActivityList,
-                                              profileData['CurrencyCode'])
+                                              profileData['CurrencyCode'],AppTheme_,data.dashboardRecentActivityList.length > 10 ? true :false,"Recent Transactions")
                                         else
                                           Container(
                                             margin: EdgeInsets.all(10),
@@ -749,7 +749,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                 ],
                               ));
                         }),
-                        //TRANSACTION SUMMARY
+                       /*  //TRANSACTION SUMMARY
                         Consumer<MySettingsListener>(
                             builder: (context, data, settingsDta) {
                          
@@ -821,7 +821,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                 ));
                           
                         }),
-                        Consumer<MySettingsListener>(
+                         *//* Consumer<MySettingsListener>(
                             builder: (context, data, settingsDta) {
                            
                             return Card(
@@ -911,7 +911,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                             );
                           
                         }),
-
+ */
                         /* Align(
                           alignment: Alignment.centerLeft,
                           child: Container(

@@ -227,7 +227,7 @@ class _MealDetailsState extends State<MealDetails> {
                             "position": 0
                           }); */
                     },
-                    child: Container(
+                    child:widget.poSettings['ShowItemImg']? Container(
                       child: ClipRRect(
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(20),
@@ -246,7 +246,17 @@ class _MealDetailsState extends State<MealDetails> {
                                 height: 300,
                               ),
                       ),
-                    ),
+                    ):Container(
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            topRight: Radius.circular(20)),
+                        child: Image.asset(
+                                "assets/images/no_image.png",
+                                height: 300,
+                              ),
+                      ),
+                    )
                   ),
                   Container(
                     height: 300,
@@ -449,7 +459,7 @@ class _MealDetailsState extends State<MealDetails> {
                                 margin: EdgeInsets.only(left: 3, top: 5),
                                 child: RichText(
                                   maxLines: 2,
-                                  text: TextSpan(
+                                  text:widget.arguments['poTypesList']['PreOrderType'] == 'Daily'? TextSpan(
                                     text:
                                         '${widget.arguments['CurrencyCode']} ${mealInfo["SellingPrice"].toStringAsFixed(2)}  ',
                                     style: TextStyle(
@@ -457,7 +467,15 @@ class _MealDetailsState extends State<MealDetails> {
                                         color: HexColor(
                                             AppSettings.colorCurrencyCode),
                                         fontWeight: FontWeight.bold),
-                                  ),
+                                  ):TextSpan(
+                                    text:
+                                        '',
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: HexColor(
+                                            AppSettings.colorCurrencyCode),
+                                        fontWeight: FontWeight.bold),
+                                  )
                                 ),
                               ),
                               if(widget.poSettings['ShowSRating'])

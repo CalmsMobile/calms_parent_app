@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 
 import '../../../common/HexColor.dart';
 import '../../../common/app_settings.dart';
+import '../../../common/date_util.dart';
 
 class RecentTransactionListView extends StatelessWidget {
   final List recentList;
   final String CurrencyCode;
-  const RecentTransactionListView(this.recentList, this.CurrencyCode);
+  final title;
+  final AppTheme_;
+  final bool showMore;
+  const RecentTransactionListView(this.recentList, this.CurrencyCode,this.AppTheme_,this.showMore,this.title);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +26,7 @@ class RecentTransactionListView extends StatelessWidget {
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(
                     parent: AlwaysScrollableScrollPhysics()),
-                itemCount: recentList.length,
+                itemCount:showMore?10:recentList.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Column(children: <Widget>[
                     Divider(
@@ -38,28 +42,60 @@ class RecentTransactionListView extends StatelessWidget {
                       title: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                recentList[index]['ActionName'],
-                                style: TextStyle(
-                                    color: HexColor(recentList[index]['color']),
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14),
-                              ),
-                               Text(
-                                recentList[index]['CreatedOn'].toString().substring(0,10),
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 10),
-                              ),
-                            ],
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "${recentList[index]['ActionName']} ${recentList[index]['ConfigName'] != null ? '(' + recentList[index]['ConfigName'] + ')' : ''}",
+                                  style: TextStyle(
+                                      color:
+                                          HexColor(recentList[index]['color']),
+                                      fontWeight: FontWeight.bold,
+                                      overflow: TextOverflow.ellipsis,
+                                      fontSize: 15),
+                                ),
+                                if (recentList[index]['PackageName'] != null)
+                                  Text(
+                                    "Package: ${recentList[index]['PackageName']}",
+                                    style: TextStyle(
+                                        color: Colors.grey,
+                                        fontWeight: FontWeight.normal,
+                                        overflow: TextOverflow.ellipsis,
+                                        fontSize: 12),
+                                  ),
+                                if (recentList[index]['ThroughBy'] != null)
+                                  Text(
+                                    "Trans. Mode: ${recentList[index]['ThroughBy']}",
+                                    style: TextStyle(
+                                        color: Colors.grey,
+                                        fontWeight: FontWeight.normal,
+                                        overflow: TextOverflow.ellipsis,
+                                        fontSize: 12),
+                                  ),
+                                Text(
+                                  "Done by: ${recentList[index]['DoneBy']}",
+                                  style: TextStyle(
+                                      color: Colors.grey,
+                                      fontWeight: FontWeight.normal,
+                                      overflow: TextOverflow.ellipsis,
+                                      fontSize: 12),
+                                ),
+                                Text(
+                                  "Trans. Date: ${DateUtil().convertStringFromDateformat(recentList[index]['CreatedOn'], "dd-MM-yyyy hh:mm a")}",
+                                  style: TextStyle(
+                                      color: Colors.grey,
+                                      overflow: TextOverflow.ellipsis,
+                                      fontWeight: FontWeight.normal,
+                                      fontSize: 12),
+                                ),
+                              ],
+                            ),
                           ),
                           Container(
                             width: 70,
                             child: RichText(
+                              textAlign: TextAlign.end,
                               text: TextSpan(
                                 // Note: Styles for TextSpans must be explicitly defined.
                                 // Child text spans will inherit styles from parent
@@ -79,7 +115,7 @@ class RecentTransactionListView extends StatelessWidget {
                                       text: recentList[index]['Total']
                                           .toStringAsFixed(2),
                                       style: TextStyle(
-                                        fontWeight: FontWeight.bold,
+                                          fontWeight: FontWeight.bold,
                                           fontSize: 14,
                                           color: HexColor(
                                               AppSettings.colorCurrencyCode))),
@@ -89,61 +125,71 @@ class RecentTransactionListView extends StatelessWidget {
                           )
                         ],
                       ),
-                      /* subtitle: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                               // "# " + recentList[index]['orderID'],
-                                "",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.grey.shade500,
-                                    fontSize: 10),
-                              ),
-                              Text(
-                                //"Payment for: " + recentList[index]['pay_for'],
-                                "",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.grey.shade500,
-                                    fontSize: 10),
-                              ),
-                            ],
-                          ),
-                          RichText(
-                            text: TextSpan(
-                              // Note: Styles for TextSpans must be explicitly defined.
-                              // Child text spans will inherit styles from parent
-                              style: TextStyle(
-                                fontSize: 14.0,
-                                color: Colors.black,
-                              ),
-                              children: <TextSpan>[
-                                TextSpan(
-                                    text: 'TOTAL: ',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.red.shade500,
-                                        fontSize: 12)),
-                                TextSpan(
-                                    text: recentList[index]['Total'].toString(),
-                                    style: TextStyle(fontSize: 14)),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ), */
                       onTap: () {
-                       /*  Navigator.of(context).pushNamed('/PurchaseDetails',
+                        /*  Navigator.of(context).pushNamed('/PurchaseDetails',
                             arguments: recentList[index]); */
                       },
                     )
                   ]);
                 }),
           ),
+          if (showMore)
+            ElevatedButton(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    "More",
+                    style: TextStyle(
+                        fontSize: 18.0,
+                        fontFamily: "Montserrat",
+                        fontWeight: FontWeight.bold),
+                  ),
+                  //Icon(Icons.payment)
+                ],
+              ),
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute<void>(
+                  fullscreenDialog: true,
+                  builder: (BuildContext context) {
+                    return Scaffold(
+                      appBar: AppBar(
+                        backgroundColor: HexColor(AppTheme_['SecondaryBgColor']),
+                        title: Text(title),
+                        leading: IconButton(
+                          icon: Icon(Icons.close,color: HexColor(AppTheme_['SecondaryFrColor'])),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ),
+                     body:Container(
+                constraints: BoxConstraints.expand(),
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                  colors: [
+                   Colors.white,
+                    Colors.white,
+                  ],
+                )),
+                child: SizedBox(
+                    height: MediaQuery.of(context).size.height,
+                    child: SingleChildScrollView(child: RecentTransactionListView(recentList,CurrencyCode,AppTheme_,false,title),
+                      
+                    ))));
+                  },
+                ));
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: HexColor(AppTheme_['SecondaryBgColor']),
+                textStyle: TextStyle(color: HexColor(AppTheme_['SecondaryFrColor'])),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(60.0)),
+              ),
+            )
         ],
       ),
     );

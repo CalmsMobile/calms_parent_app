@@ -384,7 +384,7 @@ class _MealMenuPageState extends State<MealMenuPage> {
                                             padding: EdgeInsets.all(10),
                                             margin: EdgeInsets.only(top: 3),
                                             decoration: BoxDecoration(
-                                                color:dateList[index].weekday == DateTime.saturday? HexColor("#7bb9bb"):dateList[index].weekday == DateTime.sunday? HexColor("#879696"):Colors.white,
+                                                color:dateList[index].weekday == DateTime.saturday? HexColor("#1b3a5a"):dateList[index].weekday == DateTime.sunday? HexColor("#001a2b"):Colors.white,
                                                 borderRadius:
                                                     BorderRadius.circular(60),
                                                 border: Border.all(
@@ -398,7 +398,7 @@ class _MealMenuPageState extends State<MealMenuPage> {
                                                           dateList[index]
                                                       ? 12
                                                       : 10,
-                                                  color: Colors.black,
+                                                  color: (dateList[index].weekday == DateTime.saturday || dateList[index].weekday == DateTime.sunday)? Colors.white:HexColor(widget.AppTheme_['SecondaryBgColor']),
                                                   fontWeight: FontWeight.bold),
                                             ),
                                           ),
@@ -411,7 +411,7 @@ class _MealMenuPageState extends State<MealMenuPage> {
                           if (mealListBydate.length == 0)
                             NoDataCard(
                                 AppSettings.imgAssetNoMeal,
-                                AppSettings.titleNoMeal,
+                                '',
                                _selectedDate.weekday == DateTime.saturday? AppSettings.msgNoMealSaturday
                                :_selectedDate.weekday == DateTime.sunday? AppSettings.msgNoMealSunday
                                :AppSettings.msgNoMeal,

@@ -528,16 +528,8 @@ class MealOrderListView extends StatelessWidget {
                                                                     right: 10),
                                                             child: ClipOval(
                                                               child: Material(
-                                                                color: poTypesList[
-                                                                            index][i]
-                                                                        [
-                                                                        'AllowToCancel']
-                                                                    ? Colors.red
-                                                                    : Color.fromARGB(
-                                                                        255,
-                                                                        9,
-                                                                        88,
-                                                                        43), // Button color
+                                                                color: Colors.red,
+                                                                   // Button color
                                                                 child: InkWell(
                                                                   onTap:
                                                                       () async {
@@ -586,13 +578,45 @@ class MealOrderListView extends StatelessWidget {
                                                                   child: SizedBox(
                                                                       width: 30,
                                                                       height: 30,
-                                                                      child: poTypesList[index][i]['AllowToCancel']
-                                                                          ? Icon(
+                                                                      child:Icon(
                                                                               Icons.cancel_outlined,
                                                                               color: Colors.white,
                                                                               size: 20,
-                                                                            )
-                                                                          : Icon(
+                                                                            )),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ):SizedBox(),
+                                                    if (poTypesList[index][i][
+                                                                  'MobMainStatus'] !=
+                                                              null &&
+                                                          poTypesList[index][i][
+                                                                  'MobMainStatus'] ==
+                                                              30)
+                                                       poTypesList[index][i]['AlreadyBuy']? InkWell(
+                                                          onTap: () {},
+                                                          child: Container(
+                                                            width: 30,
+                                                            height: 30,
+                                                            margin:
+                                                                EdgeInsets.only(
+                                                                    right: 10),
+                                                            child: ClipOval(
+                                                              child: Material(
+                                                                color: Color.fromARGB(
+                                                                        255,
+                                                                        9,
+                                                                        88,
+                                                                        43), // Button color
+                                                                child: InkWell(
+                                                                  onTap:
+                                                                      () async {
+                                                                     },
+                                                                  child: SizedBox(
+                                                                      width: 30,
+                                                                      height: 30,
+                                                                      child: Icon(
                                                                               Icons.shopping_bag_outlined,
                                                                               color: Colors.white,
                                                                               size: 20,
@@ -602,6 +626,7 @@ class MealOrderListView extends StatelessWidget {
                                                             ),
                                                           ),
                                                         ):SizedBox()
+                                                    
                                                     ],
                                                   ),
                                                 ),

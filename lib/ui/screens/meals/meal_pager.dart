@@ -21,7 +21,8 @@ class MealPager extends StatelessWidget {
       this.onCancelMeal,
       this.onChangeMeal,
       this.onCancelDailyMeal,
-      this.AppTheme_,this.poSettings)
+      this.AppTheme_,
+      this.poSettings)
       : super();
 
   final mealList_;
@@ -64,7 +65,8 @@ class MealPager extends StatelessWidget {
                   UserSeqId,
                   onCartClick,
                   index,
-                  AppTheme_,poSettings);
+                  AppTheme_,
+                  poSettings);
               // moveToDetails(_foundStoreList, index, context);
               /* Navigator.of(context)
                     .pushNamed('/MealDetails', arguments: mealList_[index]); */
@@ -232,16 +234,26 @@ class MealPager extends StatelessWidget {
                           RichText(
                               maxLines: 1,
                               text: TextSpan(children: [
-                                TextSpan(
-                                  text:
-                                      "${CurrencyCode} ${mealList_[index]['SellingPrice'].toStringAsFixed(2)}",
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      fontFamily: appFontFmaily,
-                                      color: HexColor(
-                                          AppSettings.colorCurrencyCode),
-                                      fontWeight: FontWeight.bold),
-                                ),
+                                poTypesList['PreOrderType'] == 'Daily'
+                                    ? TextSpan(
+                                        text:
+                                            "${CurrencyCode} ${mealList_[index]['SellingPrice'].toStringAsFixed(2)}",
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            fontFamily: appFontFmaily,
+                                            color: HexColor(
+                                                AppSettings.colorCurrencyCode),
+                                            fontWeight: FontWeight.bold),
+                                      )
+                                    : TextSpan(
+                                        text: "",
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            fontFamily: appFontFmaily,
+                                            color: HexColor(
+                                                AppSettings.colorCurrencyCode),
+                                            fontWeight: FontWeight.bold),
+                                      )
                               ])),
                           if (poTypesList['PreOrderType'] == 'Daily' &&
                               mealList_[index]['addedToCart'] &&
@@ -256,7 +268,12 @@ class MealPager extends StatelessWidget {
                                     child: InkWell(
                                       onTap: () async {
                                         onCartClick(
-                                            mealList_[index], index, true,poTypesList['SelectionMode'] == 'S'?true:false);
+                                            mealList_[index],
+                                            index,
+                                            true,
+                                            poTypesList['SelectionMode'] == 'S'
+                                                ? true
+                                                : false);
                                       },
                                       child: SizedBox(
                                           width: 25,
@@ -273,7 +290,9 @@ class MealPager extends StatelessWidget {
                             ),
                           if (poTypesList['PreOrderType'] == 'Daily' &&
                               !mealList_[index]['addedToCart'] &&
-                              mealList_[index]['AllowToBuy'])
+                              mealList_[index]['AllowToBuy'] &&
+                              (poTypesList['SelectionMode'] == 'S' &&
+                              checkAlreadyBuyWhileSingleSelection(mealList_)))
                             InkWell(
                               onTap: () {},
                               child: Container(
@@ -284,7 +303,12 @@ class MealPager extends StatelessWidget {
                                     child: InkWell(
                                       onTap: () async {
                                         onCartClick(
-                                            mealList_[index], index, false,poTypesList['SelectionMode'] == 'S'?true:false);
+                                            mealList_[index],
+                                            index,
+                                            false,
+                                            poTypesList['SelectionMode'] == 'S'
+                                                ? true
+                                                : false);
                                       },
                                       child: SizedBox(
                                           width: 25,
@@ -519,5 +543,13 @@ class MealPager extends StatelessWidget {
             )),
       ),
     );
+  }
+
+  bool checkAlreadyBuyWhileSingleSelection(List mealList) {
+    int i = mealList.indexWhere((element) => element['AlreadyBuy'] == true);
+    if (i != -1)
+      return false;
+    else
+      return true;
   }
 }
