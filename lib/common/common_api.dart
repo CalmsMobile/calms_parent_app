@@ -456,8 +456,8 @@ class CommonUtil {
       imgBaseUrl,
       profileData,
       AppTheme_,
-      AllowToChoose,
-      poSettings) async {
+      
+      poSettings,isReload) async {
     var ParamData = {
       "RefBranchSeqId": RefBranchSeqId,
       "RefUserSeqId": RefUserSeqId,
@@ -490,7 +490,7 @@ class CommonUtil {
                   imgBaseUrl,
                   profileData,
                   AppTheme_,
-                  poSettings)
+                  poSettings,isReload)
             })
         .onError((error, stackTrace) => {authorizedPostRequestError(error)});
   }
@@ -504,7 +504,7 @@ class CommonUtil {
       imgBaseUrl,
       profileData,
       AppTheme_,
-      poSettings) {
+      poSettings,isReload) {
     if (response['Table'][0]['code'] == 10) {
       print("getMealItemsForUser success");
 
@@ -518,7 +518,7 @@ class CommonUtil {
           imgBaseUrl,
           profileData,
           AppTheme_,
-          poSettings);
+          poSettings,isReload);
     }
   }
 
@@ -765,13 +765,13 @@ class CommonUtil {
           "Notification!",
           response['Table'][0]['description'],
           false,
-          true,
-          true,
+          false,
+          false,
           true,
           null, () {
         Navigator.pop(context);
       }, "", "Ok");
-      callbackFun();
+      //callbackFun();
     } else {
       MyCustomAlertDialog().mealCustomAlert(
           context,
@@ -836,8 +836,8 @@ class CommonUtil {
           "Notification!",
           response['Table'][0]['description'],
           false,
-          true,
-          true,
+          false,
+          false,
           true,
           null, () {
         Navigator.pop(context);
@@ -905,8 +905,8 @@ class CommonUtil {
           "Notification!",
           response['Table'][0]['description'],
           false,
-          true,
-          true,
+          false,
+          false,
           true,
           null, () {
         Navigator.pop(context);
@@ -974,8 +974,8 @@ class CommonUtil {
           "Notification!",
           response['Table'][0]['description'],
           false,
-          true,
-          true,
+          false,
+          false,
           true,
           null, () {
         Navigator.pop(context);

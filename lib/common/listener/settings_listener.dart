@@ -338,8 +338,12 @@ class MySettingsListener with ChangeNotifier {
       imgBaseUrl,
       profileData,
       AppTheme_,
-      poSetting) {
-    if (mealsList.length > 0 && poTypesList['PreOrderType'] == "Daily") {
+      poSetting,isReload) {
+        if(isReload){
+
+notifyListeners();
+        }else{
+if (mealsList.length > 0 && poTypesList['PreOrderType'] == "Daily") {
       for (var i = 0; i < mealsList.length; i++) {
         if (_cartList.contains(CommonFunctions.getPoDailyMealCartData(
             UserSeqId,
@@ -361,7 +365,8 @@ class MySettingsListener with ChangeNotifier {
       "poTypesList": poTypesList,
       "CurrencyCode": CurrencyCode,
       "imgBaseUrl": imgBaseUrl,
-      "profileData": profileData
+      "profileData": profileData,
+      "familyListWithoutParent":familyListWithoutParent
     };
     if (mealsList.isNotEmpty)
       Navigator.push(
@@ -369,6 +374,8 @@ class MySettingsListener with ChangeNotifier {
           MaterialPageRoute(
               builder: (context) =>
                   MealMenuPage(arguments, AppTheme_, poSetting)));
+        }
+    
     //notifyListeners();
   }
 

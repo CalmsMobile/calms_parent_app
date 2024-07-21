@@ -73,20 +73,20 @@ class _MealDetailsState extends State<MealDetails> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: _willPopCallback,
-      child: Scaffold(
-        appBar: AppBar(
-          toolbarHeight: 70,
-          elevation: 0,
-          backgroundColor: HexColor(widget.AppTheme_['SecondaryBgColor']),
-          //titleSpacing: -5,
-          automaticallyImplyLeading: false,
-          centerTitle: true,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              /* InkWell(
+        onWillPop: _willPopCallback,
+        child: Scaffold(
+            appBar: AppBar(
+              toolbarHeight: 70,
+              elevation: 0,
+              backgroundColor: HexColor(widget.AppTheme_['SecondaryBgColor']),
+              //titleSpacing: -5,
+              automaticallyImplyLeading: false,
+              centerTitle: true,
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  /* InkWell(
               onTap: () {
                 Navigator.pop(context);
               },
@@ -96,175 +96,181 @@ class _MealDetailsState extends State<MealDetails> {
                 image: AssetImage("assets/images/ico_back.png"),
               ),
             ), */
-              InkWell(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                      //margin: EdgeInsets.only(left: 10),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                            color:
-                                HexColor(widget.AppTheme_['SecondaryFrColor']),
-                            width: 2),
-                        color: Colors.white,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Padding(
-                          padding: EdgeInsets.all(3),
-                          child: Icon(
-                            Icons.arrow_back_ios_new,
-                            color:
-                                HexColor(widget.AppTheme_['SecondaryFrColor']),
-                            size: 30,
-                          )))),
-              Padding(
-                padding: EdgeInsets.only(left: 10),
-                child: Text(
-                  "Meal Details",
-                  style: TextStyle(
-                      color: HexColor(widget.AppTheme_['SecondaryFrColor']),
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold),
-                ),
-              )
-              // Your widgets here
-            ],
-          ),
-          actions: [
-            // Navigate to the Search Screen
-            Container(
-              height: 30,
-              width: 60,
-              margin: EdgeInsets.only(right: 10),
-              child: Row(children: [
-                Stack(
-                  children: [
-                    InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => CartPage(
-                                  widget.arguments['imgBaseUrl'],
-                                  widget.arguments['profileData'],
-                                  widget.AppTheme_),
+                  InkWell(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                          //margin: EdgeInsets.only(left: 10),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                                color: HexColor(
+                                    widget.AppTheme_['SecondaryFrColor']),
+                                width: 2),
+                            color: Colors.white,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Padding(
+                              padding: EdgeInsets.all(3),
+                              child: Icon(
+                                Icons.arrow_back_ios_new,
+                                color: HexColor(
+                                    widget.AppTheme_['SecondaryFrColor']),
+                                size: 30,
+                              )))),
+                  Padding(
+                    padding: EdgeInsets.only(left: 10),
+                    child: Text(
+                      "Meal Details",
+                      style: TextStyle(
+                          color: HexColor(widget.AppTheme_['SecondaryFrColor']),
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  )
+                  // Your widgets here
+                ],
+              ),
+              actions: [
+                // Navigate to the Search Screen
+                Container(
+                  height: 30,
+                  width: 60,
+                  margin: EdgeInsets.only(right: 10),
+                  child: Row(children: [
+                    Stack(
+                      children: [
+                        InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => CartPage(
+                                      widget.arguments['imgBaseUrl'],
+                                      widget.arguments['profileData'],
+                                      widget.AppTheme_),
+                                ),
+                              );
+                            },
+                            child: Container(
+                                margin: EdgeInsets.only(left: 10),
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: HexColor(
+                                          widget.AppTheme_['SecondaryFrColor']),
+                                      width: 2),
+                                  color: Colors.white,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Padding(
+                                    padding: EdgeInsets.all(3),
+                                    child: Icon(
+                                      Icons.shopping_cart_outlined,
+                                      color: HexColor(
+                                          widget.AppTheme_['SecondaryFrColor']),
+                                      size: 30,
+                                    )))),
+                        Consumer<MySettingsListener>(
+                            builder: (context, data, settingsDta) {
+                          return Positioned(
+                            top: 0,
+                            right: 0,
+                            child: Container(
+                              height: 18,
+                              width: 18,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.red,
+                              ),
+                              child: Center(
+                                  child: Text(
+                                data.cartList != []
+                                    ? data.cartList.length.toString()
+                                    : "0",
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              )),
                             ),
                           );
-                        },
-                        child: Container(
-                            margin: EdgeInsets.only(left: 10),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: HexColor(
-                                      widget.AppTheme_['SecondaryFrColor']),
-                                  width: 2),
-                              color: Colors.white,
-                              shape: BoxShape.circle,
-                            ),
-                            child: Padding(
-                                padding: EdgeInsets.all(3),
-                                child: Icon(
-                                  Icons.shopping_cart_outlined,
-                                  color: HexColor(
-                                      widget.AppTheme_['SecondaryFrColor']),
-                                  size: 30,
-                                )))),
-                    Consumer<MySettingsListener>(
-                        builder: (context, data, settingsDta) {
-                      return Positioned(
-                        top: 0,
-                        right: 0,
-                        child: Container(
-                          height: 18,
-                          width: 18,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.red,
-                          ),
-                          child: Center(
-                              child: Text(
-                            data.cartList != []
-                                ? data.cartList.length.toString()
-                                : "0",
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          )),
-                        ),
-                      );
-                    })
-                  ],
+                        })
+                      ],
+                    ),
+                  ]),
                 ),
-              ]),
-            ),
-          ],
-        ),
-        //resizeToAvoidBottomInset: false,
-        body: Container(
-            constraints: BoxConstraints.expand(),
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
-              colors: [
-                HexColor(widget.AppTheme_['PrimaryBgColor']),
-                HexColor(widget.AppTheme_['PrimaryBgColor']),
               ],
-            )),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Stack(alignment: Alignment.topLeft, children: [
-                  InkWell(
-                    onTap: () {
-                      /* Navigator.of(context)
+            ),
+            //resizeToAvoidBottomInset: false,
+            body: Container(
+                constraints: BoxConstraints.expand(),
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                  colors: [
+                    HexColor(widget.AppTheme_['PrimaryBgColor']),
+                    HexColor(widget.AppTheme_['PrimaryBgColor']),
+                  ],
+                )),
+                child: SizedBox(
+                  height: MediaQuery.of(context).size.height,
+                  child: SingleChildScrollView(
+                    child: Container(
+                        child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Stack(alignment: Alignment.topLeft, children: [
+                          InkWell(
+                              onTap: () {
+                                /* Navigator.of(context)
                               .pushNamed('/ViewImage', arguments: {
                             "images": mealInfo['image'] != ""
                                 ? [mealInfo['image']]
                                 : [],
                             "position": 0
                           }); */
-                    },
-                    child:widget.poSettings['ShowItemImg']? Container(
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(20),
-                            topRight: Radius.circular(20)),
-                        child: mealInfo['ImgPathUrl'] != null &&
-                                mealInfo['ImgPathUrl'] != ""
-                            ? Image.network(
-                                CommonFunctions.getMealImageUrl(
-                                    widget.arguments['imgBaseUrl'],
-                                    mealInfo['ImgPathUrl']),
-                                width: double.infinity,
-                                height: 300,
-                                fit: BoxFit.cover)
-                            : Image.asset(
-                                "assets/images/no_image.png",
-                                height: 300,
-                              ),
-                      ),
-                    ):Container(
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(20),
-                            topRight: Radius.circular(20)),
-                        child: Image.asset(
-                                "assets/images/no_image.png",
-                                height: 300,
-                              ),
-                      ),
-                    )
-                  ),
-                  Container(
-                    height: 300,
-                    width: double.infinity,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        /* Row(
+                              },
+                              child: widget.poSettings['ShowItemImg']
+                                  ? Container(
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(20),
+                                            topRight: Radius.circular(20)),
+                                        child: mealInfo['ImgPathUrl'] != null &&
+                                                mealInfo['ImgPathUrl'] != ""
+                                            ? Image.network(
+                                                CommonFunctions.getMealImageUrl(
+                                                    widget.arguments[
+                                                        'imgBaseUrl'],
+                                                    mealInfo['ImgPathUrl']),
+                                                width: double.infinity,
+                                                height: 300,
+                                                fit: BoxFit.cover)
+                                            : Image.asset(
+                                                "assets/images/no_image.png",
+                                                height: 300,
+                                              ),
+                                      ),
+                                    )
+                                  : Container(
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(20),
+                                            topRight: Radius.circular(20)),
+                                        child: Image.asset(
+                                          "assets/images/no_image.png",
+                                          height: 300,
+                                        ),
+                                      ),
+                                    )),
+                          Container(
+                            height: 300,
+                            width: double.infinity,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                /* Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -314,66 +320,75 @@ class _MealDetailsState extends State<MealDetails> {
                               ],
                             ), */
 
-                        if (widget.arguments['ingredients'].length > 0)
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Flexible(
-                                child: Container(
-                                  height: 100,
-                                  child: GridView.builder(
-                                    itemCount:
-                                        widget.arguments['ingredients'].length,
-                                    gridDelegate:
-                                        SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: widget
-                                          .arguments['ingredients'].length,
-                                      mainAxisSpacing: 0,
-                                      crossAxisSpacing: 0,
-                                    ),
-                                    itemBuilder: (context1, index) => Container(
-                                      width: 100,
-                                      height: 100,
-                                      child: Column(children: [
-                                        Flexible(
-                                          child: Container(
-                                            decoration: selectedIngi ==
-                                                    widget.arguments[
-                                                            'ingredients']
-                                                        [index]['Name']
-                                                ? BoxDecoration(
-                                                    color: Colors.white,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10),
-                                                    border: Border.all(
-                                                        color: Colors.white,
-                                                        width: 2))
-                                                : BoxDecoration(),
-                                            child: Center(
-                                              child: Wrap(
-                                                children: [
-                                                  Text(
-                                                    selectedIngi ==
+                                if (widget.arguments['ingredients'].length > 0)
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Flexible(
+                                        child: Container(
+                                          height: 100,
+                                          child: GridView.builder(
+                                            itemCount: widget
+                                                .arguments['ingredients']
+                                                .length,
+                                            gridDelegate:
+                                                SliverGridDelegateWithFixedCrossAxisCount(
+                                              crossAxisCount: widget
+                                                  .arguments['ingredients']
+                                                  .length,
+                                              mainAxisSpacing: 0,
+                                              crossAxisSpacing: 0,
+                                            ),
+                                            itemBuilder: (context1, index) =>
+                                                Container(
+                                              width: 100,
+                                              height: 100,
+                                              child: Column(children: [
+                                                Flexible(
+                                                  child: Container(
+                                                    decoration: selectedIngi ==
                                                             widget.arguments[
                                                                     'ingredients']
                                                                 [index]['Name']
-                                                        ? widget.arguments[
-                                                                'ingredients']
-                                                            [index]['Name']
-                                                        : "",
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
-                                                      fontSize: 12,
+                                                        ? BoxDecoration(
+                                                            color: Colors.white,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10),
+                                                            border: Border.all(
+                                                                color: Colors
+                                                                    .white,
+                                                                width: 2))
+                                                        : BoxDecoration(),
+                                                    child: Center(
+                                                      child: Wrap(
+                                                        children: [
+                                                          Text(
+                                                            selectedIngi ==
+                                                                    widget.arguments['ingredients']
+                                                                            [
+                                                                            index]
+                                                                        ['Name']
+                                                                ? widget.arguments[
+                                                                        'ingredients']
+                                                                    [
+                                                                    index]['Name']
+                                                                : "",
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                            style: TextStyle(
+                                                              fontSize: 12,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
                                                     ),
                                                   ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        /* InkWell(
+                                                ),
+                                                /* InkWell(
                                               onTap: () {
                                                 selectedIngi =
                                                     widget.arguments['ingredients']
@@ -396,145 +411,188 @@ class _MealDetailsState extends State<MealDetails> {
                                                 fit: BoxFit.cover,
                                               ),
                                             ), */
-                                      ]),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          )
-                      ],
-                    ),
-                  )
-                ]),
-                Container(
-                  height: 25,
-                  width: double.infinity,
-                  padding: EdgeInsets.only(top: 5),
-                  //padding:EdgeInsets.symmetric(vertical: 5, horizontal: 0),
-                  decoration: BoxDecoration(
-                    color: HexColor(mealInfo['Colour']),
-                  ),
-                  child: Text(
-                      "${mealInfo['ItemStyle'] != null || mealInfo['ItemStyle'] != "" ? mealInfo['ItemStyle'] : ""}",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold)),
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                      color: HexColor("#f0f6f4"),
-                      boxShadow: [
-                        new BoxShadow(
-                          color: Colors.grey,
-                          blurRadius: 20.0,
-                        ),
-                      ],
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(20),
-                        bottomRight: Radius.circular(20),
-                      )),
-                  padding:
-                      EdgeInsets.only(right: 10, left: 10, top: 10, bottom: 25),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Flexible(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                margin: EdgeInsets.only(left: 3),
-                                child: Text(
-                                  mealInfo['Name'],
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 16),
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(left: 3, top: 5),
-                                child: RichText(
-                                  maxLines: 2,
-                                  text:widget.arguments['poTypesList']['PreOrderType'] == 'Daily'? TextSpan(
-                                    text:
-                                        '${widget.arguments['CurrencyCode']} ${mealInfo["SellingPrice"].toStringAsFixed(2)}  ',
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        color: HexColor(
-                                            AppSettings.colorCurrencyCode),
-                                        fontWeight: FontWeight.bold),
-                                  ):TextSpan(
-                                    text:
-                                        '',
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        color: HexColor(
-                                            AppSettings.colorCurrencyCode),
-                                        fontWeight: FontWeight.bold),
+                                              ]),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   )
+                              ],
+                            ),
+                          )
+                        ]),
+                        Container(
+                          height: 25,
+                          width: double.infinity,
+                          padding: EdgeInsets.only(top: 5),
+                          //padding:EdgeInsets.symmetric(vertical: 5, horizontal: 0),
+                          decoration: BoxDecoration(
+                            color: HexColor(mealInfo['Colour']),
+                          ),
+                          child: Text(
+                              "${mealInfo['ItemStyle'] != null || mealInfo['ItemStyle'] != "" ? mealInfo['ItemStyle'] : ""}",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold)),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                              color: HexColor("#f0f6f4"),
+                              boxShadow: [
+                                new BoxShadow(
+                                  color: Colors.grey,
+                                  blurRadius: 20.0,
                                 ),
-                              ),
-                              if(widget.poSettings['ShowSRating'])
-                              Container(
-                                margin: EdgeInsets.only(top: 5),
-                                child: mealInfo['Rating'] != null
-                                    ? Row(
+                              ],
+                              borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(20),
+                                bottomRight: Radius.circular(20),
+                              )),
+                          padding: EdgeInsets.only(
+                              right: 10, left: 10, top: 10, bottom: 25),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
                                         children: [
-                                          Icon(
-                                            mealInfo['Rating'] > 0
-                                                ? Icons.star
-                                                : Icons.star_border_outlined,
-                                            color: Colors.orange,
+                                          Container(
+                                            margin: EdgeInsets.only(left: 3),
+                                            child: Text(
+                                              mealInfo['Name'],
+                                              overflow: TextOverflow.ellipsis,
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.normal,
+                                                  fontSize: 16),
+                                            ),
                                           ),
-                                          Icon(
-                                            mealInfo['Rating'] > 1
-                                                ? Icons.star
-                                                : Icons.star_border_outlined,
-                                            color: Colors.orange,
-                                          ),
-                                          Icon(
-                                            mealInfo['Rating'] > 2
-                                                ? Icons.star
-                                                : Icons.star_border_outlined,
-                                            color: Colors.orange,
-                                          ),
-                                          Icon(
-                                            mealInfo['Rating'] > 3
-                                                ? Icons.star
-                                                : Icons.star_border_outlined,
-                                            color: Colors.orange,
-                                          ),
-                                          Icon(
-                                            mealInfo['Rating'] > 4
-                                                ? Icons.star
-                                                : Icons.star_border_outlined,
-                                            color: Colors.orange,
-                                          ),
-                                        ],
-                                      )
-                                    : Row(
-                                        children: [
-                                          Icon(Icons.star_border_outlined,
-                                              color: Colors.orangeAccent),
-                                          Icon(Icons.star_border_outlined,
-                                              color: Colors.orangeAccent),
-                                          Icon(Icons.star_border_outlined,
-                                              color: Colors.orangeAccent),
-                                          Icon(Icons.star_border_outlined,
-                                              color: Colors.orangeAccent),
-                                          Icon(Icons.star_border_outlined,
-                                              color: Colors.orangeAccent),
+                                          if (widget.poSettings['ShowHRating'])
+                                            Container(
+                                                child: Image.network(
+                                              CommonFunctions
+                                                  .getMealIconImageUrl(
+                                                      widget.arguments[
+                                                          'imgBaseUrl'],
+                                                      mealInfo['HRatingIcon'],
+                                                      11),
+                                              width: 25,
+                                              height: 25,
+                                            ))
                                         ],
                                       ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        /*  if (widget.arguments['mealList_']['addedToCart'] !=
+                                      Container(
+                                        margin:
+                                            EdgeInsets.only(left: 3, top: 5),
+                                        child: RichText(
+                                            maxLines: 2,
+                                            text: widget.arguments[
+                                                            'poTypesList']
+                                                        ['PreOrderType'] ==
+                                                    'Daily'
+                                                ? TextSpan(
+                                                    text:
+                                                        '${widget.arguments['CurrencyCode']} ${mealInfo["SellingPrice"].toStringAsFixed(2)}  ',
+                                                    style: TextStyle(
+                                                        fontSize: 14,
+                                                        color: HexColor(AppSettings
+                                                            .colorCurrencyCode),
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  )
+                                                : TextSpan(
+                                                    text: '',
+                                                    style: TextStyle(
+                                                        fontSize: 14,
+                                                        color: HexColor(AppSettings
+                                                            .colorCurrencyCode),
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  )),
+                                      ),
+                                      if (widget.poSettings['ShowSRating'])
+                                        Container(
+                                          margin: EdgeInsets.only(top: 5),
+                                          child: mealInfo['Rating'] != null
+                                              ? Row(
+                                                  children: [
+                                                    Icon(
+                                                      mealInfo['Rating'] > 0
+                                                          ? Icons.star
+                                                          : Icons
+                                                              .star_border_outlined,
+                                                      color: Colors.orange,
+                                                    ),
+                                                    Icon(
+                                                      mealInfo['Rating'] > 1
+                                                          ? Icons.star
+                                                          : Icons
+                                                              .star_border_outlined,
+                                                      color: Colors.orange,
+                                                    ),
+                                                    Icon(
+                                                      mealInfo['Rating'] > 2
+                                                          ? Icons.star
+                                                          : Icons
+                                                              .star_border_outlined,
+                                                      color: Colors.orange,
+                                                    ),
+                                                    Icon(
+                                                      mealInfo['Rating'] > 3
+                                                          ? Icons.star
+                                                          : Icons
+                                                              .star_border_outlined,
+                                                      color: Colors.orange,
+                                                    ),
+                                                    Icon(
+                                                      mealInfo['Rating'] > 4
+                                                          ? Icons.star
+                                                          : Icons
+                                                              .star_border_outlined,
+                                                      color: Colors.orange,
+                                                    ),
+                                                  ],
+                                                )
+                                              : Row(
+                                                  children: [
+                                                    Icon(
+                                                        Icons
+                                                            .star_border_outlined,
+                                                        color: Colors
+                                                            .orangeAccent),
+                                                    Icon(
+                                                        Icons
+                                                            .star_border_outlined,
+                                                        color: Colors
+                                                            .orangeAccent),
+                                                    Icon(
+                                                        Icons
+                                                            .star_border_outlined,
+                                                        color: Colors
+                                                            .orangeAccent),
+                                                    Icon(
+                                                        Icons
+                                                            .star_border_outlined,
+                                                        color: Colors
+                                                            .orangeAccent),
+                                                    Icon(
+                                                        Icons
+                                                            .star_border_outlined,
+                                                        color: Colors
+                                                            .orangeAccent),
+                                                  ],
+                                                ),
+                                        ),
+                                    ],
+                                  ),
+                                ),
+                                /*  if (widget.arguments['mealList_']['addedToCart'] !=
                             null)
                           InkWell(
                             onTap: () {},
@@ -745,168 +803,260 @@ class _MealDetailsState extends State<MealDetails> {
                             ),
                           ),
                        */
-                      ]),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                if(widget.poSettings['ShowMerchantImg'] && widget.poSettings['ShowMerchantName'])
-                ListTile(
-                  leading: Image.network(CommonFunctions.getMealImageUrl(
-                      widget.arguments['imgBaseUrl'], mealInfo['MerchantImg'])),
-                  title: Text(mealInfo['MerchantShortName'],style:
-                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold,color: HexColor(widget.AppTheme_['SecondaryBgColor']))),
-                ),
-                if(widget.poSettings['ShowMerchantImg'] && !widget.poSettings['ShowMerchantName'])
-                ListTile(
-                  leading: Image.network(CommonFunctions.getMealImageUrl(
-                      widget.arguments['imgBaseUrl'], mealInfo['MerchantImg'])),
-                  title: Text('',style:
-                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold,color: HexColor(widget.AppTheme_['SecondaryBgColor']))),
-                ),
-                if(!widget.poSettings['ShowMerchantImg'] && widget.poSettings['ShowMerchantName'])
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Container(
-                    padding: EdgeInsets.only(left: 15.0, top: 0.0, bottom: 5.0),
-                    child: Text(
-                      mealInfo['MerchantShortName'],
-                      style:
-                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold,color: HexColor(widget.AppTheme_['SecondaryBgColor'])),
-                    ),
-                  ),
-                ),
-                
-                SizedBox(
-                  height: 10,
-                ),
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Container(
-                    padding: EdgeInsets.only(left: 15.0, top: 0.0, bottom: 5.0),
-                    child: Text(
-                      "Description",
-                      style:
-                          TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Container(
-                    padding:
-                        EdgeInsets.only(left: 15.0, top: 0.0, bottom: 10.0),
-                    child: Text(
-                      mealInfo['Desc'],
-                      style: TextStyle(fontSize: 12),
-                    ),
-                  ),
-                ),
-                /*  Container(
-                      margin: EdgeInsets.only(top: 0, left: 5, right: 5),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Item style",
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.normal,
+                              ]),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        if (widget.poSettings['ShowMerchantImg'] &&
+                            widget.poSettings['ShowMerchantName'])
+                          ListTile(
+                            leading: Image.network(
+                                CommonFunctions.getMealImageUrl(
+                                    widget.arguments['imgBaseUrl'],
+                                    mealInfo['MerchantImg'])),
+                            title: Text(mealInfo['MerchantShortName'],
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    color: HexColor(
+                                        widget.AppTheme_['SecondaryBgColor']))),
+                          ),
+                        if (widget.poSettings['ShowMerchantImg'] &&
+                            !widget.poSettings['ShowMerchantName'])
+                          ListTile(
+                            leading: Image.network(
+                                CommonFunctions.getMealImageUrl(
+                                    widget.arguments['imgBaseUrl'],
+                                    mealInfo['MerchantImg'])),
+                            title: Text('',
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    color: HexColor(
+                                        widget.AppTheme_['SecondaryBgColor']))),
+                          ),
+                        if (!widget.poSettings['ShowMerchantImg'] &&
+                            widget.poSettings['ShowMerchantName'])
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Container(
+                              padding: EdgeInsets.only(
+                                  left: 15.0, top: 0.0, bottom: 5.0),
+                              child: Text(
+                                mealInfo['MerchantShortName'],
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    color: HexColor(
+                                        widget.AppTheme_['SecondaryBgColor'])),
+                              ),
                             ),
                           ),
-                          Text(mealInfo['ItemStyle'],
-                              style: TextStyle(fontSize: 14))
-                        ],
-                      ),
-                    ), */
-                Container(
-                  margin:
-                      EdgeInsets.only(top: 5, left: 25, right: 25, bottom: 0),
-                  height: 1,
-                  color: Colors.grey.shade300,
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 0, left: 5, right: 5),
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Category",
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.normal,
+                        SizedBox(
+                          height: 10,
                         ),
-                      ),
-                      Text(mealInfo['ItemTypeName'],
-                          style: TextStyle(fontSize: 14))
-                    ],
-                  ),
-                ),
-                Container(
-                  margin:
-                      EdgeInsets.only(top: 5, left: 25, right: 25, bottom: 0),
-                  height: 1,
-                  color: Colors.grey.shade300,
-                ),
-                if (mealInfo['Calories'] != null &&
-                    widget.poSettings['ShowCalories'])
-                  Container(
-                    margin: EdgeInsets.only(top: 0, left: 5, right: 5),
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Calorie",
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.normal,
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Container(
+                            padding: EdgeInsets.only(
+                                left: 15.0, top: 0.0, bottom: 5.0),
+                            child: Text(
+                              "Description",
+                              style: TextStyle(
+                                  fontSize: 14, fontWeight: FontWeight.bold),
+                            ),
                           ),
                         ),
-                        Text(mealInfo['Calories'].toString() + ' Kcal',
-                            style: TextStyle(fontSize: 14))
-                      ],
-                    ),
-                  ),
-                Container(
-                  margin:
-                      EdgeInsets.only(top: 5, left: 25, right: 25, bottom: 0),
-                  height: 1,
-                  color: Colors.grey.shade300,
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 0, left: 5, right: 5),
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Meal Date",
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.normal,
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Container(
+                            padding: EdgeInsets.only(
+                                left: 15.0, top: 0.0, bottom: 10.0),
+                            child: Text(
+                              mealInfo['Desc'],
+                              style: TextStyle(fontSize: 12),
+                            ),
+                          ),
                         ),
-                      ),
-                      Text(
-                          DateFormat('dd-MMM-yyyy').format(
-                              DateTime.parse(widget.arguments['ViewDate'])),
-                          style: TextStyle(fontSize: 14))
-                    ],
+                        if (widget.poSettings['ShowIngredients'] &&
+                            widget.arguments['ingredients'].length > 0)
+                          Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                            elevation: 10,
+                            shadowColor: Colors.black,
+                            borderOnForeground: true,
+                            margin: EdgeInsets.only(
+                                top: 5, bottom: 20, left: 20, right: 20),
+                            child: Container(
+                              margin:
+                                  const EdgeInsets.symmetric(vertical: 20.0),
+                              height: 80.0,
+                              child: ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount:
+                                      widget.arguments['ingredients'].length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return Container(
+                                      width: 90.0,
+                                      child: InkWell(
+                                          child: Column(
+                                        children: [
+                                          Container(
+                                              child: Image.network(
+                                            CommonFunctions.getMealIconImageUrl(
+                                                widget.arguments['imgBaseUrl'],
+                                                widget.arguments['ingredients']
+                                                    [index]['Icon'],
+                                                12),
+                                            width: 50,
+                                            height: 50,
+                                          )),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          Text(
+                                            widget.arguments['ingredients']
+                                                [index]['Name'],
+                                            style: TextStyle(
+                                                fontSize: 11.0,
+                                                color: Colors.black,
+                                                //letterSpacing: 2.0,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      )),
+                                    );
+                                  }),
+                            ),
+                          ),
+                        Container(
+                          margin: EdgeInsets.only(
+                              top: 5, left: 25, right: 25, bottom: 0),
+                          height: 1,
+                          color: Colors.grey.shade300,
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(top: 0, left: 5, right: 5),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Category",
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
+                              Text(mealInfo['ItemTypeName'],
+                                  style: TextStyle(fontSize: 14))
+                            ],
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(
+                              top: 5, left: 25, right: 25, bottom: 0),
+                          height: 1,
+                          color: Colors.grey.shade300,
+                        ),
+                        if (mealInfo['Calories'] != null &&
+                            widget.poSettings['ShowCalories'])
+                          Container(
+                            margin: EdgeInsets.only(top: 0, left: 5, right: 5),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Calorie",
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                                ),
+                                Text(mealInfo['Calories'].toString() + ' Kcal',
+                                    style: TextStyle(fontSize: 14))
+                              ],
+                            ),
+                          ),
+                        Container(
+                          margin: EdgeInsets.only(
+                              top: 5, left: 25, right: 25, bottom: 0),
+                          height: 1,
+                          color: Colors.grey.shade300,
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(top: 0, left: 5, right: 5),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Meal Date",
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
+                              Text(
+                                  DateFormat('dd-MMM-yyyy').format(
+                                      DateTime.parse(
+                                          widget.arguments['ViewDate'])),
+                                  style: TextStyle(fontSize: 14))
+                            ],
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(
+                              top: 5, left: 25, right: 25, bottom: 0),
+                          height: 1,
+                          color: Colors.grey.shade300,
+                        ),
+                        if (mealInfo['Remarks'] != null &&
+                           mealInfo['Remarks'] != '' &&
+                            widget.poSettings['ShowMealRemark'])
+                            Column(
+                              children: [
+                                SizedBox(
+                          height: 10,
+                        ),
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Container(
+                            padding: EdgeInsets.only(
+                                left: 15.0, top: 0.0, bottom: 5.0),
+                            child: Text(
+                              "Remarks",
+                              style: TextStyle(
+                                  fontSize: 14, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Container(
+                            padding: EdgeInsets.only(
+                                left: 15.0, top: 0.0, bottom: 10.0),
+                            child: Text(
+                              mealInfo['Remarks'],
+                              style: TextStyle(fontSize: 12),
+                            ),
+                          ),
+                        ),
+                        
+                              ],
+                            )
+                           ],
+                    )),
                   ),
-                ),
-                Container(
-                  margin:
-                      EdgeInsets.only(top: 5, left: 25, right: 25, bottom: 0),
-                  height: 1,
-                  color: Colors.grey.shade300,
-                ),
-              ],
-            )),
-      ),
-    );
+                ))));
   }
 
   void onCartClick(isDelete) {

@@ -534,6 +534,55 @@ class MealPager extends StatelessWidget {
                                 ),
                               ),
                             ),
+                       if (poTypesList['PreOrderType'] == 'Terms' &&
+                              mealList_[index]['AlreadyBuy'])
+                            InkWell(
+                              onTap: () {},
+                              child: Container(
+                                //margin: EdgeInsets.only(bottom: 10),
+                                child: ClipOval(
+                                  child: Material(
+                                    color: Colors.green, // Button color
+                                    child: InkWell(
+                                      onTap: () async {},
+                                      child: SizedBox(
+                                          width: 25,
+                                          height: 25,
+                                          child: Icon(
+                                            Icons.shopping_bag_rounded,
+                                            color: Colors.white,
+                                            size: 15,
+                                          )),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          if (poTypesList['PreOrderType'] == 'Terms' &&
+                              mealList_[index]['AlreadyExpired'])
+                            InkWell(
+                              onTap: () {},
+                              child: Container(
+                                //margin: EdgeInsets.only(bottom: 10),
+                                child: ClipOval(
+                                  child: Material(
+                                    color: HexColor("#36a3f7"), // Button color
+                                    child: InkWell(
+                                      onTap: () async {},
+                                      child: SizedBox(
+                                          width: 25,
+                                          height: 25,
+                                          child: Icon(
+                                            Icons.history_rounded,
+                                            color: Colors.white,
+                                            size: 15,
+                                          )),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          
                         ],
                       ),
                     ),

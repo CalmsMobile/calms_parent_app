@@ -118,7 +118,7 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
                                   ),
                                 ),
                                 Text(
-                                  "3.0.1",
+                                  "3.0.3",
                                   style: TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.bold),

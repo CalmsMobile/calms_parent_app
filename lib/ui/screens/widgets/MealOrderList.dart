@@ -134,8 +134,7 @@ class MealOrderListView extends StatelessWidget {
                                                 poTypesList[index][0],
                                                 CurrencyCode,
                                                 imgBaseUrl,
-                                                profileData,AppTheme_,
-                                                false,poSettings[0]);
+                                                profileData,AppTheme_,poSettings[0],false);
                                           },
                                           child: Container(
                                             width: 30,
@@ -263,8 +262,7 @@ class MealOrderListView extends StatelessWidget {
                                                                     index][i],
                                                                 CurrencyCode,
                                                                 imgBaseUrl,
-                                                                profileData,AppTheme_,
-                                                                false,poSettings[0]);
+                                                                profileData,AppTheme_,poSettings[0],false);
                                                           },
                                                           child: Container(
                                                             width: 30,
@@ -358,10 +356,7 @@ class MealOrderListView extends StatelessWidget {
                                                                 CurrencyCode,
                                                                 imgBaseUrl,
                                                                 profileData,AppTheme_,
-                                                                poTypesList[
-                                                                        index][i]
-                                                                    [
-                                                                    'AllowToChoose'],poSettings[0]);
+                                                               poSettings[0],false);
                                                           },
                                                           child: Container(
                                                             width: 30,

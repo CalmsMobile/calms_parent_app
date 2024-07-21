@@ -17,6 +17,8 @@ import '/ui/screens/meals/meal_pager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'MealOrder.dart';
+
 class MealMenuPage extends StatefulWidget {
   final arguments;
   final AppTheme_;
@@ -520,21 +522,33 @@ class _MealMenuPageState extends State<MealMenuPage> {
   }
 
   void onCancelMeal(index) {
-    setState(() {
+    /* setState(() {
       mealListByItemType[index]['AllowToCancel'] = false;
       mealListByItemType[index]['AllowToChoose'] = true;
-    });
+    }); */
   }
 
   void onCancelDailyMeal(index) {
-    setState(() {
+    /* setState(() {
       mealListByItemType[index]['AllowToCancel'] = false;
       mealListByItemType[index]['AllowToBuy'] = true;
-    });
+    }); */
   }
 
   void onChangeMeal(index) {
-    setState(() {
+
+   /*  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => MealOrder({
+                              "familyList":  widget.arguments['familyListWithoutParent'],
+                              "profileData": widget.arguments['profileData'],
+                              "imgBaseUrl": widget.arguments['imgBaseUrl'],
+                              "selectedMemberIndex": 1
+                            },widget.AppTheme_))); */
+                            
+          
+   /*  setState(() {
       for (var i = 0; i < mealListByItemType.length; i++) {
         if (i == index) {
           mealListByItemType[i]['AllowToCancel'] = true;
@@ -542,9 +556,10 @@ class _MealMenuPageState extends State<MealMenuPage> {
         } else {
           mealListByItemType[i]['AllowToCancel'] = false;
           mealListByItemType[i]['AllowToChoose'] = true;
+          mealListByItemType[i]['AlreadyBuy'] = false;
         }
       }
-    });
+    }); */
   }
 
   Widget _getFilterFAB() {
