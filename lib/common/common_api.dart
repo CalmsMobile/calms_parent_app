@@ -35,7 +35,7 @@ class CommonUtil {
   }
 
 //ParentApp
-  Future<void> getEntryToDashboard(BuildContext context, UserSeqId) async {
+  Future<void> getEntryToDashboard(BuildContext context, UserSeqId,isRestart) async {
     var ParamData = {
       "MAppDevSeqId": await MySharedPref().getData(AppSettings.Sp_MAppDevSeqId)
     };
@@ -47,12 +47,12 @@ class CommonUtil {
     );
     res
         .then((response) =>
-            {EntryToDashboardSuccess(context, response, UserSeqId)})
+            {EntryToDashboardSuccess(context, response, UserSeqId,isRestart)})
         .onError((error, stackTrace) => {authorizedPostRequestError(error)});
   }
 
   EntryToDashboardSuccess(
-      BuildContext context, Map<String, dynamic> response, UserSeqId) {
+      BuildContext context, Map<String, dynamic> response, UserSeqId,isRestart) {
     if (response['Table'][0]['code'] == 10 && response['Table1'][0] != null) {
       print("getEntryToDashboard success");
       //CommonUtil().getAppTheme(context);
@@ -72,7 +72,7 @@ class CommonUtil {
         else {
           context
               .read<MySettingsListener>()
-              .updateAppThemeData(response['Table5'][0], null);
+              .updateAppThemeData(response['Table5'][0]);
           context
               .read<MySettingsListener>()
               .updateEntryToDashboardFamilyList(response['Table1'], UserSeqId);
@@ -86,14 +86,14 @@ class CommonUtil {
                   ['UserSeqId'],
               response['Table1'][context.read<MySettingsListener>().familyPos]
                   ['RefBranchSeqId'],
-              response['Table4']);
+              response['Table4'],isRestart);
         }
       }
     }
   }
 
   Future<void> getDashboard(BuildContext context, RefUserSeqId, RefBranchSeqId,
-      NotificationCategoryList) async {
+      NotificationCategoryList,isRestart) async {
     var ParamData = {
       "RefUserSeqId": RefUserSeqId,
       "RefBranchSeqId": RefBranchSeqId
@@ -106,16 +106,16 @@ class CommonUtil {
     );
     res
         .then((response) =>
-            {getDashboardSuccess(context, response, NotificationCategoryList)})
+            {getDashboardSuccess(context, response, NotificationCategoryList,isRestart)})
         .onError((error, stackTrace) => {authorizedPostRequestError(error)});
   }
 
   getDashboardSuccess(BuildContext context, Map<String, dynamic> response,
-      NotificationCategoryList) {
+      NotificationCategoryList,isRestart) {
     if (response['Table'][0]['code'] == 10) {
       print("getDashboard success");
       context.read<MySettingsListener>().updateDashBoardList(response['Table1'],
-          response['Table2'], response['Table3'], NotificationCategoryList);
+          response['Table2'], response['Table3'], NotificationCategoryList,isRestart,context);
     }
   }
 
@@ -137,7 +137,7 @@ class CommonUtil {
       print("getAppTheme Success");
       context
           .read<MySettingsListener>()
-          .updateAppThemeData(response['Table1'][0], context);
+          .updateAppThemeData(response['Table1'][0]);
     }
   }
 
@@ -438,7 +438,7 @@ class CommonUtil {
     }
   }
 
-  String checkedFromDate(FromDate, CurrentDateTime) {
+ static String checkedFromDate(FromDate, CurrentDateTime) {
     DateTime fromDate = DateTime.parse(FromDate);
     DateTime currentDateTime = DateTime.parse(CurrentDateTime);
     if (currentDateTime.isAfter(fromDate))
@@ -456,8 +456,8 @@ class CommonUtil {
       imgBaseUrl,
       profileData,
       AppTheme_,
-      AllowToChoose,
-      poSettings) async {
+      
+      poSettings,isReload) async {
     var ParamData = {
       "RefBranchSeqId": RefBranchSeqId,
       "RefUserSeqId": RefUserSeqId,
@@ -490,7 +490,7 @@ class CommonUtil {
                   imgBaseUrl,
                   profileData,
                   AppTheme_,
-                  poSettings)
+                  poSettings,isReload)
             })
         .onError((error, stackTrace) => {authorizedPostRequestError(error)});
   }
@@ -504,7 +504,7 @@ class CommonUtil {
       imgBaseUrl,
       profileData,
       AppTheme_,
-      poSettings) {
+      poSettings,isReload) {
     if (response['Table'][0]['code'] == 10) {
       print("getMealItemsForUser success");
 
@@ -518,7 +518,7 @@ class CommonUtil {
           imgBaseUrl,
           profileData,
           AppTheme_,
-          poSettings);
+          poSettings,isReload);
     }
   }
 
@@ -765,13 +765,13 @@ class CommonUtil {
           "Notification!",
           response['Table'][0]['description'],
           false,
-          true,
-          true,
+          false,
+          false,
           true,
           null, () {
         Navigator.pop(context);
       }, "", "Ok");
-      callbackFun();
+      //callbackFun();
     } else {
       MyCustomAlertDialog().mealCustomAlert(
           context,
@@ -836,8 +836,8 @@ class CommonUtil {
           "Notification!",
           response['Table'][0]['description'],
           false,
-          true,
-          true,
+          false,
+          false,
           true,
           null, () {
         Navigator.pop(context);
@@ -905,8 +905,8 @@ class CommonUtil {
           "Notification!",
           response['Table'][0]['description'],
           false,
-          true,
-          true,
+          false,
+          false,
           true,
           null, () {
         Navigator.pop(context);
@@ -974,8 +974,8 @@ class CommonUtil {
           "Notification!",
           response['Table'][0]['description'],
           false,
-          true,
-          true,
+          false,
+          false,
           true,
           null, () {
         Navigator.pop(context);

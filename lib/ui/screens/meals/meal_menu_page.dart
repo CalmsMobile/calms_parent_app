@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../common/app_settings.dart';
+import '../../../common/common_api.dart';
 import '../../../common/my_shared_pref.dart';
 import '../../../common/widgets/no_data_card.dart';
 import '../cart/cart.dart';
@@ -16,6 +17,8 @@ import '/ui/screens/activities/Activities.dart';
 import '/ui/screens/meals/meal_pager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+import 'MealOrder.dart';
 
 class MealMenuPage extends StatefulWidget {
   final arguments;
@@ -49,9 +52,12 @@ class _MealMenuPageState extends State<MealMenuPage> {
     if (widget.arguments['poTypesList']['PreOrderType'] == "Daily")
       initdateList(widget.arguments['poTypesList']['FromDate'],
           widget.arguments['mealsList'][0]['MaxDate']);
-    else
-      initdateList(widget.arguments['poTypesList']['FromDate'],
+    else{
+          initdateList( CommonUtil.checkedFromDate(widget.arguments['poTypesList']['FromDate'],
+              widget.arguments['poTypesList']['CurrentDateTime']).substring(0, 10),
           widget.arguments['poTypesList']['ToDate']);
+    }
+      
   }
 
   //Method for showing the date picker
@@ -384,7 +390,7 @@ class _MealMenuPageState extends State<MealMenuPage> {
                                             padding: EdgeInsets.all(10),
                                             margin: EdgeInsets.only(top: 3),
                                             decoration: BoxDecoration(
-                                                color:dateList[index].weekday == DateTime.saturday? HexColor("#1b3a5a"):dateList[index].weekday == DateTime.sunday? HexColor("#001a2b"):Colors.white,
+                                                color:dateList[index].weekday == DateTime.saturday? HexColor("#ca282c"):dateList[index].weekday == DateTime.sunday? HexColor("#ca282c"):Colors.white,
                                                 borderRadius:
                                                     BorderRadius.circular(60),
                                                 border: Border.all(
@@ -520,21 +526,33 @@ class _MealMenuPageState extends State<MealMenuPage> {
   }
 
   void onCancelMeal(index) {
-    setState(() {
+    /* setState(() {
       mealListByItemType[index]['AllowToCancel'] = false;
       mealListByItemType[index]['AllowToChoose'] = true;
-    });
+    }); */
   }
 
   void onCancelDailyMeal(index) {
-    setState(() {
+    /* setState(() {
       mealListByItemType[index]['AllowToCancel'] = false;
       mealListByItemType[index]['AllowToBuy'] = true;
-    });
+    }); */
   }
 
   void onChangeMeal(index) {
-    setState(() {
+
+   /*  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => MealOrder({
+                              "familyList":  widget.arguments['familyListWithoutParent'],
+                              "profileData": widget.arguments['profileData'],
+                              "imgBaseUrl": widget.arguments['imgBaseUrl'],
+                              "selectedMemberIndex": 1
+                            },widget.AppTheme_))); */
+                            
+          
+   /*  setState(() {
       for (var i = 0; i < mealListByItemType.length; i++) {
         if (i == index) {
           mealListByItemType[i]['AllowToCancel'] = true;
@@ -542,9 +560,10 @@ class _MealMenuPageState extends State<MealMenuPage> {
         } else {
           mealListByItemType[i]['AllowToCancel'] = false;
           mealListByItemType[i]['AllowToChoose'] = true;
+          mealListByItemType[i]['AlreadyBuy'] = false;
         }
       }
-    });
+    }); */
   }
 
   Widget _getFilterFAB() {

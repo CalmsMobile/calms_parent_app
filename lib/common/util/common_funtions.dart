@@ -79,7 +79,11 @@ class CommonFunctions {
     baseUrl = baseUrl.toString().replaceAll("/FS/", "");
     return "${baseUrl}/Handler/ImagePathHandler.ashx?ImagePath=${imgPath}&Default=10&PROUrl=${baseUrl}/&StoreageUrl=${baseUrl}/FS/";
   }
-
+ static String getMealIconImageUrl(baseUrl, img,screentype) {
+  //https://demosgl.calmscloud.com/Handler/PortalImageHandler.ashx?RefSlno=105&ScreenType=11
+    baseUrl = baseUrl.toString().replaceAll("/FS/", "");
+    return "${baseUrl}/Handler/PortalImageHandler.ashx?RefSlno=${img}&ScreenType=${screentype}";
+  }
   static String getDailyMealsInCart(cartList) {
     List mealsList = [];
     if (cartList.length > 0) {

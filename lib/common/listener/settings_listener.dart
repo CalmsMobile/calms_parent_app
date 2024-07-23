@@ -159,25 +159,31 @@ class MySettingsListener with ChangeNotifier {
       List dashboardSpendingList,
       List dashboardRecentActivityList,
       List dashboardOutStandingList,
-      List NotificationCategoryList) {
+      List NotificationCategoryList,bool isRestart,context) {
     this._dashboardSpendingList = dashboardSpendingList;
     this._dashboardRecentActivityList = dashboardRecentActivityList;
     this._dashboardOutStandingList = dashboardOutStandingList;
     this._NotificationCategoryList = NotificationCategoryList;
     notifyListeners();
+    if(isRestart){
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => HomePage()),
+          (route) => false);
+    }
   }
 
-  updateAppThemeData(themeData, context) async {
+  updateAppThemeData(themeData) async {
     this._appTheme = themeData;
     MySharedPref()
         .saveData(jsonEncode(this._appTheme), AppSettings.Sp_AppTheme);
     String AppTheme = await MySharedPref().getData(AppSettings.Sp_AppTheme);
     var AppTheme_ = jsonDecode(AppTheme);
-    if (context != null)
+   /*  if (context != null)
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => HomePage()),
-          (route) => false);
+          (route) => false); */
     print(AppTheme_);
     notifyListeners();
   }
@@ -338,8 +344,12 @@ class MySettingsListener with ChangeNotifier {
       imgBaseUrl,
       profileData,
       AppTheme_,
-      poSetting) {
-    if (mealsList.length > 0 && poTypesList['PreOrderType'] == "Daily") {
+      poSetting,isReload) {
+        if(isReload){
+
+notifyListeners();
+        }else{
+if (mealsList.length > 0 && poTypesList['PreOrderType'] == "Daily") {
       for (var i = 0; i < mealsList.length; i++) {
         if (_cartList.contains(CommonFunctions.getPoDailyMealCartData(
             UserSeqId,
@@ -361,7 +371,8 @@ class MySettingsListener with ChangeNotifier {
       "poTypesList": poTypesList,
       "CurrencyCode": CurrencyCode,
       "imgBaseUrl": imgBaseUrl,
-      "profileData": profileData
+      "profileData": profileData,
+      "familyListWithoutParent":familyListWithoutParent
     };
     if (mealsList.isNotEmpty)
       Navigator.push(
@@ -369,6 +380,8 @@ class MySettingsListener with ChangeNotifier {
           MaterialPageRoute(
               builder: (context) =>
                   MealMenuPage(arguments, AppTheme_, poSetting)));
+        }
+    
     //notifyListeners();
   }
 
@@ -498,7 +511,7 @@ class MySettingsListener with ChangeNotifier {
           finalCartList['RefUserSeqId'],
           finalCartList['ItemSeqId'],
           finalCartList['PurchaseDate'].toString().substring(0, 10),
-          finalCartList['ItemFor'],
+          finalCartList['ItemFor'].toInt(),
           finalCartList['RefPOTypeConfigSeqId']);
     if (finalCartList['PreOrderType'] == "Terms")
       cartData = CommonFunctions.getPoTermCartData(

@@ -195,7 +195,7 @@ class _NotificationViewState extends State<NotificationView> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => AppSettingsPage(),
+                              builder: (context) => AppSettingsPage(widget.AppTheme_),
                             ),
                           );
                         },

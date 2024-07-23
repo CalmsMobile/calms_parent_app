@@ -204,7 +204,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     profileData = jsonDecode(profile);
     print("profileData");
     print(profileData);
-    CommonUtil().getEntryToDashboard(context, profileData['RefUserSeqId']);
+    CommonUtil().getEntryToDashboard(context, profileData['RefUserSeqId'],false);
   }
   @override
   void initState() {
@@ -378,7 +378,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => AppSettingsPage(),
+                          builder: (context) => AppSettingsPage(AppTheme_),
                         ),
                       );
                     },
@@ -597,7 +597,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                             data.familyList[index]['UserSeqId'],
                                             data.familyList[index]
                                                 ['RefBranchSeqId'],
-                                            data.NotificationCategoryList);
+                                            data.NotificationCategoryList,false);
                                       },
                                       initialPage: data.familyPos),
                                 ),

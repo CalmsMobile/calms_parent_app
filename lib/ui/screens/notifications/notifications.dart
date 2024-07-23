@@ -660,7 +660,7 @@ class _NotificationsState extends State<Notifications>
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => AppSettingsPage(),
+                              builder: (context) => AppSettingsPage(AppTheme_),
                             ),
                           );
                         },
