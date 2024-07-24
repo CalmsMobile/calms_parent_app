@@ -1,5 +1,6 @@
 import 'package:calms_parent_latest/common/json_responses.dart';
 import 'package:calms_parent_latest/common/util/common_funtions.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../common/app_settings.dart';
@@ -34,6 +35,10 @@ class _MealDetailsState extends State<MealDetails> {
   SuperTooltip? tooltip;
 
   var mealInfo;
+
+  bool isMultipleImgs = false;
+  
+  late int currentPos;
   Future<bool> _willPopCallback() async {
     // If the tooltip is open we don't pop the page on a backbutton press
     // but close the ToolTip
@@ -49,8 +54,16 @@ class _MealDetailsState extends State<MealDetails> {
     // TODO: implement initState
     super.initState();
     mealInfo = widget.arguments['mealInfo'];
+    setState(() {
+       if (mealInfo['ImgPathUrl'] != null && mealInfo['ImgPathUrl'] != '')
+      isMultipleImgs = mealInfo['ImgPathUrl'].toString().split('~').length > 1
+          ? true
+          : false;
+    });
+   
 
-    print(widget.poSettings);
+    //print(mealInfo['ImgPathUrl'].toString().split('~').length);
+    print(isMultipleImgs);
   }
 
   void onTapIngi(textToShow, BuildContext childContext) {
@@ -221,6 +234,7 @@ class _MealDetailsState extends State<MealDetails> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Stack(alignment: Alignment.topLeft, children: [
+                          if(!isMultipleImgs)
                           InkWell(
                               onTap: () {
                                 /* Navigator.of(context)
@@ -263,7 +277,46 @@ class _MealDetailsState extends State<MealDetails> {
                                           height: 300,
                                         ),
                                       ),
-                                    )),
+                                    )
+                            ),
+                            if(isMultipleImgs)
+                            CarouselSlider(
+                        options: CarouselOptions(
+                            height: 300,
+                            enlargeCenterPage: false,
+                            autoPlay: false,
+                            //aspectRatio: 10.0,
+                            autoPlayCurve: Curves.fastOutSlowIn,
+                            enableInfiniteScroll: true,
+                            autoPlayAnimationDuration:
+                                Duration(milliseconds: 800),
+                            viewportFraction: 0.7,
+                            onPageChanged: (index, reason) {
+                              currentPos = index;
+                            }),
+                        items: mealInfo['ImgPathUrl'].split('~')
+                            .map<Widget>((e) => Container(
+                                  child: InkWell(
+                                    onTap: () {
+                                      
+                                    },
+                                    child: Container(
+                                      margin: EdgeInsets.all(6.0),
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                        image: DecorationImage(
+                                          image: NetworkImage( CommonFunctions.getMealImageUrl(
+                                                    widget.arguments[
+                                                        'imgBaseUrl'],e)),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ))
+                            .toList(),
+                      ),
                           Container(
                             height: 300,
                             width: double.infinity,

@@ -35,7 +35,8 @@ class CommonUtil {
   }
 
 //ParentApp
-  Future<void> getEntryToDashboard(BuildContext context, UserSeqId,isRestart) async {
+  Future<void> getEntryToDashboard(
+      BuildContext context, UserSeqId, isRestart) async {
     var ParamData = {
       "MAppDevSeqId": await MySharedPref().getData(AppSettings.Sp_MAppDevSeqId)
     };
@@ -47,12 +48,12 @@ class CommonUtil {
     );
     res
         .then((response) =>
-            {EntryToDashboardSuccess(context, response, UserSeqId,isRestart)})
+            {EntryToDashboardSuccess(context, response, UserSeqId, isRestart)})
         .onError((error, stackTrace) => {authorizedPostRequestError(error)});
   }
 
-  EntryToDashboardSuccess(
-      BuildContext context, Map<String, dynamic> response, UserSeqId,isRestart) {
+  EntryToDashboardSuccess(BuildContext context, Map<String, dynamic> response,
+      UserSeqId, isRestart) {
     if (response['Table'][0]['code'] == 10 && response['Table1'][0] != null) {
       print("getEntryToDashboard success");
       //CommonUtil().getAppTheme(context);
@@ -86,14 +87,15 @@ class CommonUtil {
                   ['UserSeqId'],
               response['Table1'][context.read<MySettingsListener>().familyPos]
                   ['RefBranchSeqId'],
-              response['Table4'],isRestart);
+              response['Table4'],
+              isRestart);
         }
       }
     }
   }
 
   Future<void> getDashboard(BuildContext context, RefUserSeqId, RefBranchSeqId,
-      NotificationCategoryList,isRestart) async {
+      NotificationCategoryList, isRestart) async {
     var ParamData = {
       "RefUserSeqId": RefUserSeqId,
       "RefBranchSeqId": RefBranchSeqId
@@ -105,17 +107,24 @@ class CommonUtil {
       true,
     );
     res
-        .then((response) =>
-            {getDashboardSuccess(context, response, NotificationCategoryList,isRestart)})
+        .then((response) => {
+              getDashboardSuccess(
+                  context, response, NotificationCategoryList, isRestart)
+            })
         .onError((error, stackTrace) => {authorizedPostRequestError(error)});
   }
 
   getDashboardSuccess(BuildContext context, Map<String, dynamic> response,
-      NotificationCategoryList,isRestart) {
+      NotificationCategoryList, isRestart) {
     if (response['Table'][0]['code'] == 10) {
       print("getDashboard success");
-      context.read<MySettingsListener>().updateDashBoardList(response['Table1'],
-          response['Table2'], response['Table3'], NotificationCategoryList,isRestart,context);
+      context.read<MySettingsListener>().updateDashBoardList(
+          response['Table1'],
+          response['Table2'],
+          response['Table3'],
+          NotificationCategoryList,
+          isRestart,
+          context);
     }
   }
 
@@ -165,6 +174,38 @@ class CommonUtil {
       if (response['Table1'] != null || response['Table1'] != [])
         context.read<MySettingsListener>().updateGetCalendarData(
             response['Table1'], response['Table2'], response['Table3']);
+    }
+  }
+
+  Future<void> getGetCalendarIndicationData(BuildContext context, RefUserSeqId,
+      RefBranchSeqId, MonthStart, MonthEnd) async {
+    var ParamData = {
+      "RefUserSeqId": RefUserSeqId,
+      "RefBranchSeqId": RefBranchSeqId,
+      "MonthStart": MonthStart,
+      "MonthEnd": MonthEnd
+    };
+    Future<Map<String, dynamic>> res = RestApiProvider().authorizedPostRequest(
+      ParamData,
+      AppSettings.GetCalendarIndicationData,
+      context,
+      true,
+    );
+    res
+        .then(
+            (response) => {successGetCalendarIndicationData(context, response)})
+        .onError((error, stackTrace) => {authorizedPostRequestError(error)});
+  }
+
+  successGetCalendarIndicationData(
+      BuildContext context, Map<String, dynamic> response) {
+    if (response['Table'][0]['code'] == 10) {
+      print("GetCalendarIndicationData success");
+      if (response['Table1'] != null &&
+          response['Table2'] != null &&
+          response['Table2'].length > 0)
+        context.read<MySettingsListener>().updateCalendarIndicationData(
+            response['Table1'], response['Table2'][0]);
     }
   }
 
@@ -438,7 +479,7 @@ class CommonUtil {
     }
   }
 
- static String checkedFromDate(FromDate, CurrentDateTime) {
+  static String checkedFromDate(FromDate, CurrentDateTime) {
     DateTime fromDate = DateTime.parse(FromDate);
     DateTime currentDateTime = DateTime.parse(CurrentDateTime);
     if (currentDateTime.isAfter(fromDate))
@@ -456,14 +497,15 @@ class CommonUtil {
       imgBaseUrl,
       profileData,
       AppTheme_,
-      
-      poSettings,isReload) async {
+      poSettings,
+      isReload) async {
     var ParamData = {
       "RefBranchSeqId": RefBranchSeqId,
       "RefUserSeqId": RefUserSeqId,
       "FromDate": poTypesList['FromDate'] != null
-          ? checkedFromDate(poTypesList['FromDate'],
-              poTypesList['CurrentDateTime']).substring(0, 10)
+          ? checkedFromDate(
+                  poTypesList['FromDate'], poTypesList['CurrentDateTime'])
+              .substring(0, 10)
           : poTypesList['CurrentDateTime'].substring(0, 10),
       "ToDate": poTypesList['ToDate'] != null
           ? poTypesList['ToDate'].substring(0, 10)
@@ -490,7 +532,8 @@ class CommonUtil {
                   imgBaseUrl,
                   profileData,
                   AppTheme_,
-                  poSettings,isReload)
+                  poSettings,
+                  isReload)
             })
         .onError((error, stackTrace) => {authorizedPostRequestError(error)});
   }
@@ -504,7 +547,8 @@ class CommonUtil {
       imgBaseUrl,
       profileData,
       AppTheme_,
-      poSettings,isReload) {
+      poSettings,
+      isReload) {
     if (response['Table'][0]['code'] == 10) {
       print("getMealItemsForUser success");
 
@@ -518,7 +562,8 @@ class CommonUtil {
           imgBaseUrl,
           profileData,
           AppTheme_,
-          poSettings,isReload);
+          poSettings,
+          isReload);
     }
   }
 

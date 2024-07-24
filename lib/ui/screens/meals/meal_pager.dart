@@ -93,7 +93,10 @@ class MealPager extends StatelessWidget {
                                 mealList_[index]['ImgPathUrl'] != ""
                             ? Image.network(
                                 CommonFunctions.getMealImageUrl(
-                                    imgBaseUrl, mealList_[index]['ImgPathUrl']),
+                                    imgBaseUrl,
+                                    mealList_[index]['ImgPathUrl']
+                                        .toString()
+                                        .split("~")[0]),
                                 width: double.infinity,
                                 height: 110,
                                 fit: BoxFit.cover)
@@ -532,7 +535,7 @@ class MealPager extends StatelessWidget {
                                 ),
                               ),
                             ),
-                       if (poTypesList['PreOrderType'] == 'Terms' &&
+                          if (poTypesList['PreOrderType'] == 'Terms' &&
                               mealList_[index]['AlreadyBuy'])
                             InkWell(
                               onTap: () {},
@@ -580,7 +583,6 @@ class MealPager extends StatelessWidget {
                                 ),
                               ),
                             ),
-                          
                         ],
                       ),
                     ),

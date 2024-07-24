@@ -5,6 +5,7 @@ import 'package:calms_parent_latest/common/widgets/no_data_card.dart';
 import 'package:calms_parent_latest/ui/screens/widgets/AttendanceListView.dart';
 import 'package:calms_parent_latest/ui/screens/widgets/HolidayListView.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
@@ -36,8 +37,12 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
   late String selectedRefBranchSeqId;
   late DateTime? selectedDateTime;
 
+  bool veryFirst = true;
+
+  bool hideBottomDetailsCards = false;
+
   void calendarTapped(CalendarTapDetails calendarTapDetails) {
-    //print(calendarTapDetails.targetElement.name);
+    print(calendarTapDetails.targetElement);
     print(selectedUserSeqId);
     print(selectedRefBranchSeqId);
     if (calendarTapDetails.targetElement.name == "calendarCell") {
@@ -47,19 +52,50 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
             DateFormat("yyyy-MM-dd").format(selectedDateTime!));
       });
     }
-    /* if (calendarTapDetails.targetElement == CalendarElement.calendarCell) {
+  }
+
+  void viewChanged(ViewChangedDetails viewChangedDetails) {
+    SchedulerBinding.instance!.addPostFrameCallback((Duration duration) {
+      //setState(() {
+      /*   var _month = DateFormat('MMMM').format(viewChangedDetails
+          .visibleDates[viewChangedDetails.visibleDates.length ~/ 2]).toString();
+    var _year = DateFormat('yyyy').format(viewChangedDetails
+          .visibleDates[viewChangedDetails.visibleDates.length ~/ 2]).toString(); */
       setState(() {
-        _appointmentDetails =
-            calendarTapDetails.appointments!.cast<Appointment>();
+        hideBottomDetailsCards = true;
+        if (veryFirst) {
+          veryFirst = false;
+          selectedDateTime = DateTime.now();
+          getData(selectedUserSeqId, selectedRefBranchSeqId,
+              DateFormat("yyyy-MM-dd").format(selectedDateTime!));
+        } else {
+          /* selectedDateTime = viewChangedDetails
+            .visibleDates[viewChangedDetails.visibleDates.length ~/ 2];
+        getData(
+            selectedUserSeqId,
+            selectedRefBranchSeqId,
+            DateFormat("yyyy-MM-dd").format(
+                DateTime(selectedDateTime!.year, selectedDateTime!.month, 1))); */
+        }
+        selectedDateTime = viewChangedDetails
+            .visibleDates[viewChangedDetails.visibleDates.length ~/ 2];
+        CommonUtil().getGetCalendarIndicationData(
+            context,
+            selectedUserSeqId,
+            selectedRefBranchSeqId,
+            DateFormat("yyyy-MM-dd").format(
+                DateTime(selectedDateTime!.year, selectedDateTime!.month, 1)),
+            DateFormat("yyyy-MM-dd").format(DateTime(
+                selectedDateTime!.year, selectedDateTime!.month + 1, 0)));
       });
-    } */
+    });
   }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    selectedDateTime = DateTime.now();
+
     //this.getData("106312.0","11001",2023, 08, 31);
     // final data = ModalRoute.of(context)?.settings.arguments as Map;
 
@@ -68,24 +104,44 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
       selectedUserSeqId = widget.arg['familyList'][senderIndex]['UserSeqId'];
       selectedRefBranchSeqId =
           widget.arg['familyList'][senderIndex]['RefBranchSeqId'];
-      getData(selectedUserSeqId, selectedRefBranchSeqId,
-          DateFormat("yyyy-MM-dd").format(selectedDateTime!));
+      /*  if (veryFirst) {
+        getData(selectedUserSeqId, selectedRefBranchSeqId,
+            DateFormat("yyyy-MM-dd").format(selectedDateTime!));
+        CommonUtil().getGetCalendarIndicationData(
+            context,
+            selectedUserSeqId,
+            selectedRefBranchSeqId,
+            DateFormat("yyyy-MM-dd").format(
+                DateTime(selectedDateTime!.year, selectedDateTime!.month, 1)),
+            DateFormat("yyyy-MM-dd").format(DateTime(
+                selectedDateTime!.year, selectedDateTime!.month + 1, 0)));
+        veryFirst = false;
+      } */
     }
   }
 
   Future<void> getData(RefUserSeqId, RefBranchSeqId, Date) async {
+    hideBottomDetailsCards = false;
     CommonUtil()
         .getGetCalendarData(context, RefUserSeqId, RefBranchSeqId, Date);
   }
 
   selectMember(index) {
-    
     setState(() {
       print("index" == index.toString());
       senderIndex = index;
       selectedUserSeqId = widget.arg['familyList'][senderIndex]['UserSeqId'];
-      getData(selectedUserSeqId, selectedRefBranchSeqId,
-          DateFormat("yyyy-MM-dd").format(selectedDateTime!));
+      /* getData(selectedUserSeqId, selectedRefBranchSeqId,
+          DateFormat("yyyy-MM-dd").format(selectedDateTime!)); */
+      hideBottomDetailsCards = true;
+      CommonUtil().getGetCalendarIndicationData(
+          context,
+          selectedUserSeqId,
+          selectedRefBranchSeqId,
+          DateFormat("yyyy-MM-dd").format(
+              DateTime(selectedDateTime!.year, selectedDateTime!.month, 1)),
+          DateFormat("yyyy-MM-dd").format(DateTime(
+              selectedDateTime!.year, selectedDateTime!.month + 1, 0)));
       Navigator.pop(context);
     });
   }
@@ -233,26 +289,130 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                 child: SingleChildScrollView(
                   child: Container(
                     child: Column(children: [
-                      Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0),
-                        ),
-                        elevation: 10,
-                        shadowColor: Colors.black,
-                        borderOnForeground: true,
-                        margin: EdgeInsets.only(
-                            top: 20, bottom: 20, left: 20, right: 20),
-                        child: Padding(
-                          padding: EdgeInsets.all(15),
-                          child: SfCalendar(
-                            view: CalendarView.month,
-                            showDatePickerButton: true,
-                            // dataSource: _getCalendarDataSource(),
-                            onTap: calendarTapped,
-                          ),
+                      Consumer<MySettingsListener>(
+                          builder: (context, data, settingsDta) {
+                        return Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                            elevation: 10,
+                            shadowColor: Colors.black,
+                            borderOnForeground: true,
+                            margin: EdgeInsets.only(
+                                top: 20, bottom: 0, left: 20, right: 20),
+                            child: Padding(
+                              padding: EdgeInsets.all(15),
+                              child: SfCalendar(
+                                view: CalendarView.month,
+                                showDatePickerButton: true,
+                                //dataSource: _getCalendarDataSource(),
+                                dataSource: AppointmentDataSource(
+                                    data.calendarIndicationDataList),
+                                onTap: calendarTapped,
+                                onViewChanged: viewChanged,
+                              ),
+                            ));
+                      }),
+                      Container(
+                        margin:
+                            EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        //color: Colors.white,
+                        child: Column(
+                          children: [
+                            Container(
+                              margin:
+                                  EdgeInsets.only(top: 0, left: 4, right: 4),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  RichText(
+                                    textAlign: TextAlign.center,
+                                    text: TextSpan(children: [
+                                      WidgetSpan(
+                                          child: Container(
+                                        width: 15,
+                                        height: 15,
+                                        padding: EdgeInsets.only(top: 0),
+                                        decoration: BoxDecoration(
+                                            color: HexColor("#F3C416"),
+                                            borderRadius:
+                                                BorderRadius.circular(60.0)),
+                                      )),
+                                      WidgetSpan(
+                                          child: Container(
+                                        padding:
+                                            EdgeInsets.only(bottom: 0, left: 5),
+                                        child: Text(
+                                          "Purchase",
+                                          style: TextStyle(
+                                              color: HexColor(widget.arg['AppTheme_']['PrimaryFrColor']),
+                                              fontSize: 12),
+                                        ),
+                                      )),
+                                    ]),
+                                  ),
+                                  RichText(
+                                    textAlign: TextAlign.center,
+                                    text: TextSpan(children: [
+                                      WidgetSpan(
+                                          child: Container(
+                                        width: 15,
+                                        height: 15,
+                                        padding: EdgeInsets.only(top: 0),
+                                        decoration: BoxDecoration(
+                                            color: HexColor("#2D3E50"),
+                                            borderRadius:
+                                                BorderRadius.circular(60.0)),
+                                      )),
+                                      WidgetSpan(
+                                          child: Container(
+                                        padding:
+                                            EdgeInsets.only(bottom: 0, left: 5),
+                                        child: Text(
+                                          "Top-up",
+                                          style: TextStyle(
+                                              color: HexColor(widget.arg['AppTheme_']['PrimaryFrColor']),
+                                              fontSize: 12),
+                                        ),
+                                      )),
+                                    ]),
+                                  ),
+                                  RichText(
+                                    textAlign: TextAlign.center,
+                                    text: TextSpan(children: [
+                                      WidgetSpan(
+                                          child: Container(
+                                        width: 15,
+                                        height: 15,
+                                        padding: EdgeInsets.only(top: 0),
+                                        decoration: BoxDecoration(
+                                            color: HexColor("#E94D40"),
+                                            borderRadius:
+                                                BorderRadius.circular(60.0)),
+                                      )),
+                                      WidgetSpan(
+                                          child: Container(
+                                        padding:
+                                            EdgeInsets.only(bottom: 0, left: 5),
+                                        child: Text(
+                                          "Holiday",
+                                          style: TextStyle(
+                                              color: HexColor(widget.arg['AppTheme_']['PrimaryFrColor']),
+                                              fontSize: 12),
+                                        ),
+                                      )),
+                                    ]),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                       Consumer<MySettingsListener>(
+                      if (!hideBottomDetailsCards)
+                        Consumer<MySettingsListener>(
                             builder: (context, data, settingsDta) {
                           return Card(
                               /*  shape: RoundedRectangleBorder(
@@ -268,22 +428,30 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                                   ListTile(
                                     title: Text("Transactions"),
                                     //trailing: Text("(Last 30 days)"),
-                                    tileColor:
-                                        HexColor(widget.arg['AppTheme_']['SecondaryBgColor']),
-                                    textColor:
-                                        HexColor(widget.arg['AppTheme_']['SecondaryFrColor']),
+                                    tileColor: HexColor(widget.arg['AppTheme_']
+                                        ['SecondaryBgColor']),
+                                    textColor: HexColor(widget.arg['AppTheme_']
+                                        ['SecondaryFrColor']),
                                   ),
                                   Container(
-                                    margin: EdgeInsets.only(left: 0,right: 0,top: 10,bottom: 10),
+                                    margin: EdgeInsets.only(
+                                        left: 0, right: 0, top: 10, bottom: 10),
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        if (data.calendarTransactionList
-                                            .isNotEmpty)
+                                        if (data
+                                            .calendarTransactionList.isNotEmpty)
                                           RecentTransactionListView(
                                               data.calendarTransactionList,
-                                              widget.arg['CurrencyCode'],widget.arg['AppTheme_'],data.calendarTransactionList.length>10?true:false,"Transactions")
+                                              widget.arg['CurrencyCode'],
+                                              widget.arg['AppTheme_'],
+                                              data.calendarTransactionList
+                                                          .length >
+                                                      10
+                                                  ? true
+                                                  : false,
+                                              "Transactions")
                                         else
                                           Container(
                                             margin: EdgeInsets.all(10),
@@ -298,8 +466,9 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                                                     margin: EdgeInsets.zero,
                                                     height: 100,
                                                     color: Colors.transparent,
-                                                    child: Image.asset(AppSettings
-                                                        .imgAssetNoTxn)),
+                                                    child: Image.asset(
+                                                        AppSettings
+                                                            .imgAssetNoTxn)),
                                                 /* Container(
                                                   alignment: Alignment.center,
                                                   margin: EdgeInsets.only(
@@ -321,8 +490,8 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                                 ],
                               ));
                         }),
-                     
-                       Consumer<MySettingsListener>(
+                      if (!hideBottomDetailsCards)
+                        Consumer<MySettingsListener>(
                             builder: (context, data, settingsDta) {
                           return Card(
                               /*  shape: RoundedRectangleBorder(
@@ -338,19 +507,20 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                                   ListTile(
                                     title: Text("Holiday"),
                                     //trailing: Text("(Last 30 days)"),
-                                    tileColor:
-                                        HexColor(widget.arg['AppTheme_']['SecondaryBgColor']),
-                                    textColor:
-                                        HexColor(widget.arg['AppTheme_']['SecondaryFrColor']),
+                                    tileColor: HexColor(widget.arg['AppTheme_']
+                                        ['SecondaryBgColor']),
+                                    textColor: HexColor(widget.arg['AppTheme_']
+                                        ['SecondaryFrColor']),
                                   ),
                                   Container(
-                                    margin: EdgeInsets.only(left: 0,right: 0,top: 10,bottom: 10),
+                                    margin: EdgeInsets.only(
+                                        left: 0, right: 0, top: 10, bottom: 10),
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        if (data.calendarHolidaysList
-                                            .isNotEmpty)
+                                        if (data
+                                            .calendarHolidaysList.isNotEmpty)
                                           HolidayListView(
                                               data.calendarHolidaysList)
                                         else
@@ -367,9 +537,9 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                                                     margin: EdgeInsets.zero,
                                                     height: 100,
                                                     color: Colors.transparent,
-                                                    child: Image.asset(AppSettings
-                                                        .imgAssetNoTxn)),
-                                               
+                                                    child: Image.asset(
+                                                        AppSettings
+                                                            .imgAssetNoTxn)),
                                               ],
                                             ),
                                           ),
@@ -379,8 +549,7 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                                 ],
                               ));
                         }),
-                       
-                       
+
                       /*  Consumer<MySettingsListener>(
                           builder: (context, data, child) =>
                               data.calendarAttendanceList.length == 0 &&
@@ -638,7 +807,7 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
           "clockin_time": DateTime.now().add(Duration(hours: 1)).toString(),
           "clock_out_time": DateTime.now().add(Duration(hours: 8)).toString()
         })));
-
+//print(appointments);
     return AppointmentDataSource(appointments);
   }
 }

@@ -2,6 +2,7 @@ import 'dart:collection';
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:calms_parent_latest/common/HexColor.dart';
 import 'package:calms_parent_latest/common/app_settings.dart';
 import 'package:calms_parent_latest/common/common_api.dart';
 import 'package:calms_parent_latest/common/my_shared_pref.dart';
@@ -13,6 +14,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 import '../../ui/screens/home/Home.dart';
 import '../alert_dialog.dart';
@@ -33,6 +35,7 @@ class MySettingsListener with ChangeNotifier {
   List _calendarHolidaysList = [];
   List _calendarAttendanceList = [];
   List _calendarTransactionList = [];
+  List<Appointment> _calendarIndicationDataList = [];
 
   List _topupMembersList = [];
   List _paymentProvidersList = [];
@@ -95,6 +98,8 @@ class MySettingsListener with ChangeNotifier {
       UnmodifiableListView(_calendarAttendanceList);
   UnmodifiableListView<dynamic> get calendarTransactionList =>
       UnmodifiableListView(_calendarTransactionList);
+  UnmodifiableListView<Appointment> get calendarIndicationDataList =>
+      UnmodifiableListView(_calendarIndicationDataList);
 
   UnmodifiableListView<dynamic> get topupMembersList =>
       UnmodifiableListView(_topupMembersList);
@@ -159,14 +164,16 @@ class MySettingsListener with ChangeNotifier {
       List dashboardSpendingList,
       List dashboardRecentActivityList,
       List dashboardOutStandingList,
-      List NotificationCategoryList,bool isRestart,context) {
+      List NotificationCategoryList,
+      bool isRestart,
+      context) {
     this._dashboardSpendingList = dashboardSpendingList;
     this._dashboardRecentActivityList = dashboardRecentActivityList;
     this._dashboardOutStandingList = dashboardOutStandingList;
     this._NotificationCategoryList = NotificationCategoryList;
     notifyListeners();
-    if(isRestart){
-        Navigator.pushAndRemoveUntil(
+    if (isRestart) {
+      Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => HomePage()),
           (route) => false);
@@ -179,7 +186,7 @@ class MySettingsListener with ChangeNotifier {
         .saveData(jsonEncode(this._appTheme), AppSettings.Sp_AppTheme);
     String AppTheme = await MySharedPref().getData(AppSettings.Sp_AppTheme);
     var AppTheme_ = jsonDecode(AppTheme);
-   /*  if (context != null)
+    /*  if (context != null)
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => HomePage()),
@@ -193,6 +200,50 @@ class MySettingsListener with ChangeNotifier {
     _calendarHolidaysList = calendarHolidaysList;
     _calendarAttendanceList = calendarAttendanceList;
     _calendarTransactionList = calendarTransactionList;
+    notifyListeners();
+  }
+
+  updateCalendarIndicationData(List list, colorCodes) {
+    //list = [];
+    List<Appointment> appointments = <Appointment>[];
+    print(list);
+    print(colorCodes);
+    if (list.length > 0) {
+      for (var i = 0; i < list.length; i++) {
+        var s = DateTime.parse(list[i]['EventDate'].substring(0, 10));
+          var e = DateTime.parse(list[i]['EventDate'].substring(0, 10));
+        if (list[i]['IsTopup'] == 1) {
+         
+          appointments.add(Appointment(
+            startTime: s,
+            endTime: e,
+            subject: 'Topup',
+            color:HexColor("#2D3E50"),
+          ));
+        }
+        if (list[i]['IsPurchase'] == 1) {
+          appointments.add(Appointment(
+            startTime: s,
+            endTime: e,
+            subject: 'Purchase',
+            color:HexColor("#F3C416"),
+          ));
+        }
+        if (list[i]['IsHoliday'] == 1) {
+          appointments.add(Appointment(
+           startTime: s,
+            endTime: e,
+            subject: 'Holiday',
+            color:HexColor("#E94D40"),
+          ));
+        }
+        
+      }
+      //print(appointments);
+    }else{
+      _calendarIndicationDataList = [];
+    }
+    _calendarIndicationDataList = [...appointments];
     notifyListeners();
   }
 
@@ -344,44 +395,44 @@ class MySettingsListener with ChangeNotifier {
       imgBaseUrl,
       profileData,
       AppTheme_,
-      poSetting,isReload) {
-        if(isReload){
-
-notifyListeners();
-        }else{
-if (mealsList.length > 0 && poTypesList['PreOrderType'] == "Daily") {
-      for (var i = 0; i < mealsList.length; i++) {
-        if (_cartList.contains(CommonFunctions.getPoDailyMealCartData(
-            UserSeqId,
-            mealsList[i]['ItemSeqId'],
-            mealsList[i]['ViewDate'],
-            mealsList[i]['ItemType'],
-            poTypesList['POTypeConfigSeqId']))) {
-          mealsList[i]['addedToCart'] = true;
-        } else
-          mealsList[i]['addedToCart'] = false;
-      }
-    }
-    _mealsList = mealsList;
-    _mealsCtgryList = mealsCtgryList;
-    var arguments = {
-      "mealsList": mealsList,
-      "mealsCtgryList": mealsCtgryList,
-      "UserSeqId": UserSeqId,
-      "poTypesList": poTypesList,
-      "CurrencyCode": CurrencyCode,
-      "imgBaseUrl": imgBaseUrl,
-      "profileData": profileData,
-      "familyListWithoutParent":familyListWithoutParent
-    };
-    if (mealsList.isNotEmpty)
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) =>
-                  MealMenuPage(arguments, AppTheme_, poSetting)));
+      poSetting,
+      isReload) {
+    if (isReload) {
+      notifyListeners();
+    } else {
+      if (mealsList.length > 0 && poTypesList['PreOrderType'] == "Daily") {
+        for (var i = 0; i < mealsList.length; i++) {
+          if (_cartList.contains(CommonFunctions.getPoDailyMealCartData(
+              UserSeqId,
+              mealsList[i]['ItemSeqId'],
+              mealsList[i]['ViewDate'],
+              mealsList[i]['ItemType'],
+              poTypesList['POTypeConfigSeqId']))) {
+            mealsList[i]['addedToCart'] = true;
+          } else
+            mealsList[i]['addedToCart'] = false;
         }
-    
+      }
+      _mealsList = mealsList;
+      _mealsCtgryList = mealsCtgryList;
+      var arguments = {
+        "mealsList": mealsList,
+        "mealsCtgryList": mealsCtgryList,
+        "UserSeqId": UserSeqId,
+        "poTypesList": poTypesList,
+        "CurrencyCode": CurrencyCode,
+        "imgBaseUrl": imgBaseUrl,
+        "profileData": profileData,
+        "familyListWithoutParent": familyListWithoutParent
+      };
+      if (mealsList.isNotEmpty)
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    MealMenuPage(arguments, AppTheme_, poSetting)));
+    }
+
     //notifyListeners();
   }
 
@@ -493,13 +544,13 @@ if (mealsList.length > 0 && poTypesList['PreOrderType'] == "Daily") {
   }
 
   Future<void> removeFromCart(finalCartList, List flist) async {
-   var lcopy = [...flist];
-   print("------lcopy-------");
-   print(lcopy);
-   lcopy.remove(finalCartList);
-   print("------lcopy deleted-------");
-   print(lcopy);
-   print("----------------");
+    var lcopy = [...flist];
+    print("------lcopy-------");
+    print(lcopy);
+    lcopy.remove(finalCartList);
+    print("------lcopy deleted-------");
+    print(lcopy);
+    print("----------------");
     print("cartlist-------");
     print(_cartList);
     print("finalCartList-------");
@@ -519,7 +570,7 @@ if (mealsList.length > 0 && poTypesList['PreOrderType'] == "Daily") {
           finalCartList['RefPOTypeConfigSeqId'],
           finalCartList['PackageSeqId']);
     print(cartData);
-    
+
     _finalCartList = lcopy;
     _cartList.remove(cartData);
 

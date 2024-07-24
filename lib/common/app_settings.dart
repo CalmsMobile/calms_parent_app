@@ -49,6 +49,7 @@ class AppSettings {
   static String EntryToDashboard = 'parentapp/EntryToDashboard';
   static String GetDashboard = 'parentapp/GetDashboard';
   static String GetCalendarData = 'parentapp/GetCalendarData';
+  static String GetCalendarIndicationData = 'parentapp/GetCalendarIndicationData';
   static String GetFamilyMemberForTopup = 'parentapp/GetFamilyMemberForTopup';
   static String CheckUserEWalletBalMaxAmt =
       'parentapp/CheckUserEWalletBalMaxAmt';

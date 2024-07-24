@@ -147,7 +147,7 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
                                           ),
                                         ),
                                         Text(
-                                          "3.0.4",
+                                          "3.0.5",
                                           style: TextStyle(
                                               fontSize: 14,
                                               fontWeight: FontWeight.bold,color: HexColor(widget.AppTheme_['PrimaryFrColor'])),
