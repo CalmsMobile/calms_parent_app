@@ -147,7 +147,7 @@ class MealPager extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                if (mealList_[index]['Rating'] == null)
+                                if (poSettings['ShowSRating'] && mealList_[index]['Rating'] == null)
                                   Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -179,7 +179,7 @@ class MealPager extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                if (mealList_[index]['Rating'] != null)
+                                if (poSettings['ShowSRating'] && mealList_[index]['Rating'] != null)
                                   Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,

@@ -1,7 +1,7 @@
 name: calms_parent_latest
 description: A new Flutter project.
 publish_to: "none"
-version: 3.0.5+18
+version: 3.0.6+19
 
 environment:
   sdk: ">=2.19.6 <3.0.0"
