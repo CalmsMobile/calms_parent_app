@@ -443,7 +443,7 @@ class _NotificationsState extends State<Notifications>
                   children: [
                     Flexible(
                         child: Container(
-                            //margin: EdgeInsets.only(left: 10),
+                            margin: EdgeInsets.only(top:widget.NotifyOnly? 15:0),
                             child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -453,6 +453,7 @@ class _NotificationsState extends State<Notifications>
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 16,
+                                overflow: TextOverflow.ellipsis,
                                 fontWeight: FontWeight.bold),
                           ),
                         if (widget.NotifyOnly)
@@ -461,6 +462,11 @@ class _NotificationsState extends State<Notifications>
                           ),
                         Row(
                           children: [
+                            Flexible(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children:[
                             Text(
                               filterTitle,
                               style: TextStyle(
@@ -468,7 +474,10 @@ class _NotificationsState extends State<Notifications>
                                       ? Colors.white
                                       : HexColor(AppTheme_['SecondaryFrColor']),
                                   fontSize: widget.NotifyOnly ? 13 : 16,
-                                  fontWeight: FontWeight.bold),
+                                  fontWeight: FontWeight.bold,
+                                  overflow: TextOverflow.clip,
+                                  ),
+                                  maxLines:2
                             ),
                             Text(
                               "${filterSelectedDate != "" ? " | " + DateFormat("dd-MM-yyyy").format(DateTime.parse(filterSelectedDate)) : ""}",
@@ -479,7 +488,7 @@ class _NotificationsState extends State<Notifications>
                                   fontSize: widget.NotifyOnly ? 13 : 16,
                                   fontWeight: FontWeight.bold),
                             ),
-                          ],
+                          ]))],
                         )
                       ],
                     )))
