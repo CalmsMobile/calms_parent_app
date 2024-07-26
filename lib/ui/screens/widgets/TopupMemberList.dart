@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
@@ -184,11 +186,14 @@ class TopupMemberListView extends StatelessWidget {
                                   : null,
                             ),
                             keyboardType:
-                                TextInputType.numberWithOptions(decimal: true),
+                                Platform.isIOS? 
+                    TextInputType.numberWithOptions(signed: true, decimal: true)
+                  : TextInputType.number,
+                  textInputAction: TextInputAction.done,
                             inputFormatters: [
                               // Allow Decimal Number With Precision of 2 Only
                               FilteringTextInputFormatter.allow(
-                                  RegExp(r'^\d*\.?\d{0,2}')),
+                                  RegExp(r'^\d+\.?\d{0,2}')),
                             ],
                           ),
                           //SizedBox
