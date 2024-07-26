@@ -1041,8 +1041,8 @@ void showCustomPaymentAlert(BuildContext buildContext, gatewayDetail,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                        "Minimum allowed amount is " +
-                                            gatewayDetail['TopMinAmt']
+                                        "The eWallet has a top-up limitation with a minimum amount of " +
+                                          profileData['CurrencyCode']+' '+gatewayDetail['TopMinAmt']
                                                 .toString(),
                                         style: TextStyle(
                                             fontSize: 15,
@@ -1058,8 +1058,8 @@ void showCustomPaymentAlert(BuildContext buildContext, gatewayDetail,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                        "Maximum allowed amount is " +
-                                            gatewayDetail['TopMaxAmt']
+                                        "The eWallet has a top-up limitation with a maximum amount of " +
+                                            profileData['CurrencyCode']+' '+gatewayDetail['TopMaxAmt']
                                                 .toString(),
                                         style: TextStyle(
                                             fontSize: 15,

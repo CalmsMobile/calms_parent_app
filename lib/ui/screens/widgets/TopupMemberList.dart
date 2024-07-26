@@ -186,9 +186,7 @@ class TopupMemberListView extends StatelessWidget {
                                   : null,
                             ),
                             keyboardType:
-                                Platform.isIOS? 
-                    TextInputType.numberWithOptions(signed: true, decimal: true)
-                  : TextInputType.number,
+                    TextInputType.numberWithOptions(signed: true, decimal: true),
                   textInputAction: TextInputAction.done,
                             inputFormatters: [
                               // Allow Decimal Number With Precision of 2 Only

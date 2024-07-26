@@ -799,12 +799,13 @@ class CommonUtil {
     );
     res
         .then((response) =>
-            {successCancelWholeTerm(context, response, callbackFun)})
+            {successCancelWholeTerm(context, response, callbackFun,RefUserSeqId)})
         .onError((error, stackTrace) => {authorizedPostRequestError(error)});
   }
 
-  successCancelWholeTerm(BuildContext context, response, Function callbackFun) {
+  successCancelWholeTerm(BuildContext context, response, Function callbackFun,RefUserSeqId) {
     if (response['Table'][0]['code'] == 10) {
+      getEntryToDashboard(context, RefUserSeqId, false);
       MyCustomAlertDialog().mealCustomAlert(
           context,
           "Notification!",
@@ -869,13 +870,14 @@ class CommonUtil {
     );
     res
         .then((response) =>
-            {successCancelTermMealItem(context, response, callbackFun, index)})
+            {successCancelTermMealItem(context, response, callbackFun, index,RefUserSeqId)})
         .onError((error, stackTrace) => {authorizedPostRequestError(error)});
   }
 
   successCancelTermMealItem(
-      BuildContext context, response, Function callbackFun, index) {
+      BuildContext context, response, Function callbackFun, index,RefUserSeqId) {
     if (response['Table'][0]['code'] == 10) {
+      getEntryToDashboard(context, RefUserSeqId, false);
       MyCustomAlertDialog().mealCustomAlert(
           context,
           "Notification!",
@@ -938,13 +940,14 @@ class CommonUtil {
     );
     res
         .then((response) =>
-            {successCancelDailyMealItem(context, response, callbackFun, index)})
+            {successCancelDailyMealItem(context, response, callbackFun, index,RefUserSeqId)})
         .onError((error, stackTrace) => {authorizedPostRequestError(error)});
   }
 
   successCancelDailyMealItem(
-      BuildContext context, response, Function callbackFun, index) {
+      BuildContext context, response, Function callbackFun, index,RefUserSeqId) {
     if (response['Table'][0]['code'] == 10) {
+      getEntryToDashboard(context, RefUserSeqId, false);
       MyCustomAlertDialog().mealCustomAlert(
           context,
           "Notification!",

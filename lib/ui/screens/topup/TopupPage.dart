@@ -132,7 +132,7 @@ class _TopupPageState extends State<TopupPage> {
             ),
           )),
       bottomNavigationBar: SizedBox(
-        height: 160,
+        height: 110,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -181,7 +181,7 @@ class _TopupPageState extends State<TopupPage> {
                 ],
               ),
             ),
-            Flexible(
+            /* Flexible(
               child: Container(
                 margin: EdgeInsets.only(top: 10, left: 10, right: 10),
                 child: RichText(
@@ -199,7 +199,7 @@ class _TopupPageState extends State<TopupPage> {
                           style: TextStyle(fontSize: 14, color: Colors.grey)),
                     ])),
               ),
-            ),
+            ), */
             Consumer<MySettingsListener>(builder: (context, data, settingsDta) {
               return Container(
                   alignment: Alignment.bottomRight,
