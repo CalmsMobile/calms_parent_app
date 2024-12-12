@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 import 'dart:math';
 
 import 'package:calms_parent_latest/provider/rest_api.dart';
@@ -86,7 +87,19 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   }
 }
 
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
+}
+
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  HttpOverrides.global = new MyHttpOverrides();
+//runApp(Myapp());
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -179,7 +192,7 @@ void main() async {
 }
 
 var myroutes = {
-  "/TopupPage": (context) => new TopupPage({},{}),
+  "/TopupPage": (context) => new TopupPage({}, {}),
   "/DonationPage": (context) => new DonationPage(),
   "/ProfilePage": (context) => new ProfilePage(),
   "/MerchantTransaction": (context) => new MerchantTransaction(),
@@ -193,11 +206,11 @@ var myroutes = {
   "/Activities": (context) => Activities(),
   "/ActivityDetails": (context) => ActivityDetails(),
   "/InvoiceDetails": (context) => InvoiceDetails(),
-  "/MealOrder": (context) => MealOrder({},{}),
+  "/MealOrder": (context) => MealOrder({}, {}),
   "/Notifications": (context) => Notifications(),
   "/NotificationView": (context) => NotificationView(),
   "/AppSettingsPage": (context) => AppSettingsPage({}),
-  "/CartPage": (context) => CartPage("", "",{}),
+  "/CartPage": (context) => CartPage("", "", {}),
   "/ParentPickup": (context) => ParentPickup(),
   "/StudentTracking": (context) => StudentTracking(),
   "/BusTracking": (context) => BusTracking(),
@@ -213,10 +226,10 @@ var myroutes = {
   "/FilterPage": (context) => FilterPage(),
   "/FilterActivities": (context) => FilterActivities(),
   "/ViewImage": (context) => ViewImage(),
-  "/MealDetails": (context) => MealDetails({}, () {},{},{}),
+  "/MealDetails": (context) => MealDetails({}, () {}, {}, {}),
   "/calendarTransactions": (context) => CalendarTransactionsPage({}),
-  "/topupPayment": (context) => PaymentWebviewPage({}, "",{}),
-  "/topupAfterPayment": (context) => AfterPaymentPage({}, "",{}),
+  "/topupPayment": (context) => PaymentWebviewPage({}, "", {}),
+  "/topupAfterPayment": (context) => AfterPaymentPage({}, "", {}),
 };
 
 class MyApp extends StatefulWidget {
@@ -412,7 +425,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
   verificationResponse(
       Map<String, dynamic> res, context, apiUrl, secureKey, MAppSeqId) {
-        
     if (res['Table'][0]['code'] == 10) {
       timer?.cancel();
       super.dispose();
@@ -424,8 +436,9 @@ class _SplashScreenState extends State<SplashScreen> {
       MySharedPref().saveData(MAppSeqId, AppSettings.Sp_MAppDevSeqId);
       MySharedPref().saveData(
           json.encode(AuthorizePayload), AppSettings.Sp_Payload_Authorize);
-      if(res['Table1'] != null)
-        MySharedPref().saveData(jsonEncode(res['Table1'][0]), AppSettings.Sp_AppTheme);
+      if (res['Table1'] != null)
+        MySharedPref()
+            .saveData(jsonEncode(res['Table1'][0]), AppSettings.Sp_AppTheme);
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => CreatePin()));
     } else if (res['Table'][0]['code'] == 50) {
