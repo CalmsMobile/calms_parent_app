@@ -114,7 +114,7 @@ class _MealMenuPageState extends State<MealMenuPage> {
       appBar: AppBar(
         toolbarHeight: 70,
         elevation: 0,
-        backgroundColor: HexColor(widget.AppTheme_['SecondaryBgColor']),
+        backgroundColor: HexColor(widget.AppTheme_['AppHeaderBgColor']),
         //titleSpacing: -5,
         automaticallyImplyLeading: false,
         centerTitle: true,
@@ -156,9 +156,10 @@ class _MealMenuPageState extends State<MealMenuPage> {
                           decoration: BoxDecoration(
                             border: Border.all(
                                 color: HexColor(
-                                    widget.AppTheme_['SecondaryFrColor']),
+                                    widget.AppTheme_['IconOutlineColor']),
                                 width: 2),
-                            color: Colors.white,
+                            color: HexColor(
+                                    widget.AppTheme_['IconBgColor']),
                             shape: BoxShape.circle,
                           ),
                           child: Padding(
@@ -166,7 +167,7 @@ class _MealMenuPageState extends State<MealMenuPage> {
                               child: Icon(
                                 Icons.arrow_back_ios_new,
                                 color: HexColor(
-                                    widget.AppTheme_['SecondaryFrColor']),
+                                    widget.AppTheme_['IconOutlineColor']),
                                 size: 30,
                               )))),
                   Padding(
@@ -174,7 +175,7 @@ class _MealMenuPageState extends State<MealMenuPage> {
                     child: Text(
                       "Meal Order ${_selectedDate != null ?'('+DateFormat('dd-MMM-yyyy').format(_selectedDate)+')':''}",
                       style: TextStyle(
-                          color: HexColor(widget.AppTheme_['SecondaryFrColor']),
+                          color: HexColor(widget.AppTheme_['AppHeaderFontColor']),
                           fontSize: 20,
                           fontWeight: FontWeight.bold),
                     ),
@@ -242,9 +243,10 @@ class _MealMenuPageState extends State<MealMenuPage> {
                             decoration: BoxDecoration(
                               border: Border.all(
                                   color: HexColor(
-                                      widget.AppTheme_['SecondaryFrColor']),
+                                      widget.AppTheme_['IconOutlineColor']),
                                   width: 2),
-                              color: Colors.white,
+                              color: HexColor(
+                                      widget.AppTheme_['IconBgColor']),
                               shape: BoxShape.circle,
                             ),
                             child: Padding(
@@ -252,7 +254,7 @@ class _MealMenuPageState extends State<MealMenuPage> {
                                 child: Icon(
                                   Icons.shopping_cart_outlined,
                                   color: HexColor(
-                                      widget.AppTheme_['SecondaryFrColor']),
+                                      widget.AppTheme_['IconOutlineColor']),
                                   size: 30,
                                 )))),
                     Consumer<MySettingsListener>(
@@ -295,14 +297,14 @@ class _MealMenuPageState extends State<MealMenuPage> {
                 begin: Alignment.topRight,
                 end: Alignment.bottomLeft,
                 colors: [
-                  HexColor(widget.AppTheme_['PrimaryBgColor']),
-                  HexColor(widget.AppTheme_['PrimaryBgColor']),
+                  HexColor(widget.AppTheme_['AppBgColor']),
+                  HexColor(widget.AppTheme_['AppBgColor']),
                 ],
               )),
               child: SizedBox(
                 height: MediaQuery.of(context).size.height,
                 child: Container(
-                    color: HexColor(widget.AppTheme_['PrimaryBgColor']),
+                    color: HexColor(widget.AppTheme_['AppBgColor']),
                     margin: EdgeInsets.only(top: 10),
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -339,7 +341,7 @@ class _MealMenuPageState extends State<MealMenuPage> {
                                           color:
                                               _selectedDate == dateList[index]
                                                   ? HexColor(widget.AppTheme_[
-                                                      'SecondaryFrColor'])
+                                                      'IconOutlineColor'])
                                                   : Colors.white,
                                           borderRadius:
                                               BorderRadius.circular(20),
@@ -348,7 +350,7 @@ class _MealMenuPageState extends State<MealMenuPage> {
                                               ? Border.all(
                                                   color: HexColor(
                                                       widget.AppTheme_[
-                                                          'SecondaryFrColor']),
+                                                          'IconOutlineColor']),
                                                   width: 2,
                                                 )
                                               : Border.all(
@@ -378,7 +380,7 @@ class _MealMenuPageState extends State<MealMenuPage> {
                                                       : 10,
                                                   color: _selectedDate ==
                                                           dateList[index]
-                                                      ? Colors.white
+                                                      ? HexColor(widget.AppTheme_['IconBgColor'])
                                                       : Colors.black,
                                                   fontWeight: _selectedDate ==
                                                           dateList[index]
@@ -404,7 +406,7 @@ class _MealMenuPageState extends State<MealMenuPage> {
                                                           dateList[index]
                                                       ? 12
                                                       : 10,
-                                                  color: (dateList[index].weekday == DateTime.saturday || dateList[index].weekday == DateTime.sunday)? Colors.white:HexColor(widget.AppTheme_['SecondaryBgColor']),
+                                                  color: (dateList[index].weekday == DateTime.saturday || dateList[index].weekday == DateTime.sunday)? Colors.white:HexColor(widget.AppTheme_['IconOutlineColor']),
                                                   fontWeight: FontWeight.bold),
                                             ),
                                           ),
@@ -421,7 +423,7 @@ class _MealMenuPageState extends State<MealMenuPage> {
                                _selectedDate.weekday == DateTime.saturday? AppSettings.msgNoMealSaturday
                                :_selectedDate.weekday == DateTime.sunday? AppSettings.msgNoMealSunday
                                :AppSettings.msgNoMeal,
-                                20),
+                                20,widget.AppTheme_),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Row(
@@ -451,7 +453,7 @@ class _MealMenuPageState extends State<MealMenuPage> {
                                                       ItemTypeList[index]
                                                           ['ItemTypeSeqId']
                                                   ? HexColor(widget.AppTheme_[
-                                                      'SecondaryFrColor'])
+                                                      'IconOutlineColor'])
                                                   : Colors.transparent,
                                               width: 5.0),
                                         ),
@@ -463,7 +465,7 @@ class _MealMenuPageState extends State<MealMenuPage> {
                                           style: TextStyle(
                                               fontSize: 16,
                                               color: HexColor(widget
-                                                  .AppTheme_['PrimaryFrColor']),
+                                                  .AppTheme_['TitleFontColor']),
                                               fontWeight: FontWeight.bold),
                                         ),
                                       ),
@@ -489,7 +491,7 @@ class _MealMenuPageState extends State<MealMenuPage> {
                         ])),
               ))
           : NoDataCard(AppSettings.imgAssetNoMeal, AppSettings.titleNoMeal,
-              AppSettings.msgNoMeal, 20),
+              AppSettings.msgNoMeal, 20,widget.AppTheme_),
       //floatingActionButtonLocation: ExpandableFab.location,
       // floatingActionButton: _getFilterFAB()
     );

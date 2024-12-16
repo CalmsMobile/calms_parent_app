@@ -169,7 +169,7 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
           toolbarHeight: 70,
           elevation: 0,
           backgroundColor:
-              HexColor(widget.arg['AppTheme_']['SecondaryBgColor']),
+              HexColor(widget.arg['AppTheme_']['AppHeaderBgColor']),
           //titleSpacing: -5,
           automaticallyImplyLeading: false,
           centerTitle: true,
@@ -196,9 +196,10 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                       decoration: BoxDecoration(
                         border: Border.all(
                             color: HexColor(
-                                widget.arg['AppTheme_']['SecondaryFrColor']),
+                                widget.arg['AppTheme_']['IconOutlineColor']),
                             width: 2),
-                        color: Colors.white,
+                        color:  HexColor(
+                                widget.arg['AppTheme_']['IconBgColor']),
                         shape: BoxShape.circle,
                       ),
                       child: Padding(
@@ -206,7 +207,7 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                           child: Icon(
                             Icons.arrow_back_ios_new,
                             color: HexColor(
-                                widget.arg['AppTheme_']['SecondaryFrColor']),
+                                widget.arg['AppTheme_']['IconOutlineColor']),
                             size: 30,
                           )))),
               Padding(
@@ -215,7 +216,7 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                   "Calendar",
                   style: TextStyle(
                       color:
-                          HexColor(widget.arg['AppTheme_']['SecondaryFrColor']),
+                          HexColor(widget.arg['AppTheme_']['AppHeaderFontColor']),
                       fontSize: 20,
                       fontWeight: FontWeight.bold),
                 ),
@@ -280,8 +281,8 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
               begin: Alignment.topRight,
               end: Alignment.bottomLeft,
               colors: [
-                HexColor(widget.arg['AppTheme_']['PrimaryBgColor']),
-                HexColor(widget.arg['AppTheme_']['PrimaryBgColor']),
+                HexColor(widget.arg['AppTheme_']['AppBgColor']),
+                HexColor(widget.arg['AppTheme_']['AppBgColor']),
               ],
             )),
             child: SizedBox(
@@ -292,6 +293,7 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                       Consumer<MySettingsListener>(
                           builder: (context, data, settingsDta) {
                         return Card(
+                          color:  HexColor(widget.arg['AppTheme_']['PanelBgColor']),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15.0),
                             ),
@@ -347,7 +349,7 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                                         child: Text(
                                           "Purchase",
                                           style: TextStyle(
-                                              color: HexColor(widget.arg['AppTheme_']['PrimaryFrColor']),
+                                              color: HexColor(widget.arg['AppTheme_']['SubTitleFontColor']),
                                               fontSize: 12),
                                         ),
                                       )),
@@ -373,7 +375,7 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                                         child: Text(
                                           "Top-up",
                                           style: TextStyle(
-                                              color: HexColor(widget.arg['AppTheme_']['PrimaryFrColor']),
+                                              color: HexColor(widget.arg['AppTheme_']['SubTitleFontColor']),
                                               fontSize: 12),
                                         ),
                                       )),
@@ -399,7 +401,7 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                                         child: Text(
                                           "Holiday",
                                           style: TextStyle(
-                                              color: HexColor(widget.arg['AppTheme_']['PrimaryFrColor']),
+                                              color: HexColor(widget.arg['AppTheme_']['SubTitleFontColor']),
                                               fontSize: 12),
                                         ),
                                       )),
@@ -415,9 +417,7 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                         Consumer<MySettingsListener>(
                             builder: (context, data, settingsDta) {
                           return Card(
-                              /*  shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15.0),
-                                ), */
+                              color:  HexColor(widget.arg['AppTheme_']['PanelBgColor']),
                               elevation: 10,
                               shadowColor: Colors.black,
                               borderOnForeground: true,
@@ -429,9 +429,9 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                                     title: Text("Transactions"),
                                     //trailing: Text("(Last 30 days)"),
                                     tileColor: HexColor(widget.arg['AppTheme_']
-                                        ['SecondaryBgColor']),
+                                        ['PanelHeaderBgColor']),
                                     textColor: HexColor(widget.arg['AppTheme_']
-                                        ['SecondaryFrColor']),
+                                        ['PanelHeaderFontColor']),
                                   ),
                                   Container(
                                     margin: EdgeInsets.only(
@@ -494,9 +494,7 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                         Consumer<MySettingsListener>(
                             builder: (context, data, settingsDta) {
                           return Card(
-                              /*  shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15.0),
-                                ), */
+                             color:  HexColor(widget.arg['AppTheme_']['PanelBgColor']),
                               elevation: 10,
                               shadowColor: Colors.black,
                               borderOnForeground: true,
@@ -508,9 +506,9 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                                     title: Text("Holiday"),
                                     //trailing: Text("(Last 30 days)"),
                                     tileColor: HexColor(widget.arg['AppTheme_']
-                                        ['SecondaryBgColor']),
+                                        ['PanelHeaderBgColor']),
                                     textColor: HexColor(widget.arg['AppTheme_']
-                                        ['SecondaryFrColor']),
+                                        ['PanelHeaderFontColor']),
                                   ),
                                   Container(
                                     margin: EdgeInsets.only(
@@ -522,7 +520,7 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                                         if (data
                                             .calendarHolidaysList.isNotEmpty)
                                           HolidayListView(
-                                              data.calendarHolidaysList)
+                                              data.calendarHolidaysList,widget.arg['AppTheme_'])
                                         else
                                           Container(
                                             margin: EdgeInsets.all(10),

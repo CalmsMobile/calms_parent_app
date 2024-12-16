@@ -91,7 +91,7 @@ class _MealDetailsState extends State<MealDetails> {
             appBar: AppBar(
               toolbarHeight: 70,
               elevation: 0,
-              backgroundColor: HexColor(widget.AppTheme_['SecondaryBgColor']),
+              backgroundColor: HexColor(widget.AppTheme_['AppHeaderBgColor']),
               //titleSpacing: -5,
               automaticallyImplyLeading: false,
               centerTitle: true,
@@ -118,9 +118,9 @@ class _MealDetailsState extends State<MealDetails> {
                           decoration: BoxDecoration(
                             border: Border.all(
                                 color: HexColor(
-                                    widget.AppTheme_['SecondaryFrColor']),
+                                    widget.AppTheme_['IconOutlineColor']),
                                 width: 2),
-                            color: Colors.white,
+                            color: HexColor(widget.AppTheme_['IconBgColor']),
                             shape: BoxShape.circle,
                           ),
                           child: Padding(
@@ -128,7 +128,7 @@ class _MealDetailsState extends State<MealDetails> {
                               child: Icon(
                                 Icons.arrow_back_ios_new,
                                 color: HexColor(
-                                    widget.AppTheme_['SecondaryFrColor']),
+                                    widget.AppTheme_['IconOutlineColor']),
                                 size: 30,
                               )))),
                   Padding(
@@ -136,7 +136,7 @@ class _MealDetailsState extends State<MealDetails> {
                     child: Text(
                       "Meal Details",
                       style: TextStyle(
-                          color: HexColor(widget.AppTheme_['SecondaryFrColor']),
+                          color: HexColor(widget.AppTheme_['AppHeaderFontColor']),
                           fontSize: 20,
                           fontWeight: FontWeight.bold),
                     ),
@@ -170,9 +170,10 @@ class _MealDetailsState extends State<MealDetails> {
                                 decoration: BoxDecoration(
                                   border: Border.all(
                                       color: HexColor(
-                                          widget.AppTheme_['SecondaryFrColor']),
+                                          widget.AppTheme_['IconOutlineColor']),
                                       width: 2),
-                                  color: Colors.white,
+                                  color: HexColor(
+                                      widget.AppTheme_['IconBgColor']),
                                   shape: BoxShape.circle,
                                 ),
                                 child: Padding(
@@ -180,7 +181,7 @@ class _MealDetailsState extends State<MealDetails> {
                                     child: Icon(
                                       Icons.shopping_cart_outlined,
                                       color: HexColor(
-                                          widget.AppTheme_['SecondaryFrColor']),
+                                          widget.AppTheme_['IconOutlineColor']),
                                       size: 30,
                                     )))),
                         Consumer<MySettingsListener>(
@@ -222,8 +223,8 @@ class _MealDetailsState extends State<MealDetails> {
                   begin: Alignment.topRight,
                   end: Alignment.bottomLeft,
                   colors: [
-                    HexColor(widget.AppTheme_['PrimaryBgColor']),
-                    HexColor(widget.AppTheme_['PrimaryBgColor']),
+                    HexColor(widget.AppTheme_['AppBgColor']),
+                    HexColor(widget.AppTheme_['AppBgColor']),
                   ],
                 )),
                 child: SizedBox(
@@ -520,7 +521,8 @@ class _MealDetailsState extends State<MealDetails> {
                                           mealInfo['Name'],
                                           overflow: TextOverflow.clip,
                                           style: TextStyle(
-                                              fontWeight: FontWeight.normal,
+                                              fontWeight: FontWeight.bold,
+                                              color: HexColor(widget.AppTheme_['SubTitleFontColor']),
                                               fontSize: 16),
                                         ),
                                       ),
@@ -873,9 +875,9 @@ class _MealDetailsState extends State<MealDetails> {
                             title: Text(mealInfo['MerchantShortName'],
                                 style: TextStyle(
                                     fontSize: 15,
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: FontWeight.normal,
                                     color: HexColor(
-                                        widget.AppTheme_['SecondaryBgColor']))),
+                                        widget.AppTheme_['SubTitleFontColor']))),
                           ),
                         if (widget.poSettings['ShowMerchantImg'] &&
                             !widget.poSettings['ShowMerchantName'])
@@ -887,9 +889,9 @@ class _MealDetailsState extends State<MealDetails> {
                             title: Text('',
                                 style: TextStyle(
                                     fontSize: 15,
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: FontWeight.normal,
                                     color: HexColor(
-                                        widget.AppTheme_['SecondaryBgColor']))),
+                                        widget.AppTheme_['SubTitleFontColor']))),
                           ),
                         if (!widget.poSettings['ShowMerchantImg'] &&
                             widget.poSettings['ShowMerchantName'])
@@ -902,9 +904,9 @@ class _MealDetailsState extends State<MealDetails> {
                                 mealInfo['MerchantShortName'],
                                 style: TextStyle(
                                     fontSize: 15,
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: FontWeight.normal,
                                     color: HexColor(
-                                        widget.AppTheme_['SecondaryBgColor'])),
+                                        widget.AppTheme_['SubTitleFontColor'])),
                               ),
                             ),
                           ),
@@ -919,7 +921,7 @@ class _MealDetailsState extends State<MealDetails> {
                             child: Text(
                               "Description",
                               style: TextStyle(
-                                  fontSize: 14, fontWeight: FontWeight.bold),
+                                  fontSize: 14, fontWeight: FontWeight.bold,color: HexColor(widget.AppTheme_['SubTitleFontColor'])),
                             ),
                           ),
                         ),
@@ -930,13 +932,14 @@ class _MealDetailsState extends State<MealDetails> {
                                 left: 15.0, top: 0.0, bottom: 10.0),
                             child: Text(
                               mealInfo['Desc'],
-                              style: TextStyle(fontSize: 12),
+                              style: TextStyle(fontSize: 12,color: HexColor(widget.AppTheme_['ContentFontColor'])),
                             ),
                           ),
                         ),
                         if (widget.poSettings['ShowIngredients'] &&
                             widget.arguments['ingredients'].length > 0)
                           Card(
+                            color:  HexColor(widget.AppTheme_['PanelBgColor']),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15.0),
                             ),
@@ -978,7 +981,7 @@ class _MealDetailsState extends State<MealDetails> {
                                                 [index]['Name'],
                                             style: TextStyle(
                                                 fontSize: 11.0,
-                                                color: Colors.black,
+                                                color: HexColor(widget.AppTheme_['ContentFontColor']),
                                                 //letterSpacing: 2.0,
                                                 fontWeight: FontWeight.bold),
                                           ),
@@ -992,7 +995,7 @@ class _MealDetailsState extends State<MealDetails> {
                           margin: EdgeInsets.only(
                               top: 5, left: 25, right: 25, bottom: 0),
                           height: 1,
-                          color: Colors.grey.shade300,
+                          //color: Colors.grey.shade300,
                         ),
                         Container(
                           margin: EdgeInsets.only(top: 0, left: 5, right: 5),
@@ -1005,11 +1008,12 @@ class _MealDetailsState extends State<MealDetails> {
                                 "Category",
                                 style: TextStyle(
                                   fontSize: 14,
-                                  fontWeight: FontWeight.normal,
+                                  fontWeight: FontWeight.bold,
+                                  color: HexColor(widget.AppTheme_['SubTitleFontColor'])
                                 ),
                               ),
                               Text(mealInfo['ItemTypeName'],
-                                  style: TextStyle(fontSize: 14))
+                                  style: TextStyle(fontSize: 14,color: HexColor(widget.AppTheme_['ContentFontColor'])))
                             ],
                           ),
                         ),
@@ -1017,7 +1021,7 @@ class _MealDetailsState extends State<MealDetails> {
                           margin: EdgeInsets.only(
                               top: 5, left: 25, right: 25, bottom: 0),
                           height: 1,
-                          color: Colors.grey.shade300,
+                          //color: Colors.grey.shade300,
                         ),
                         if (mealInfo['Calories'] != null &&
                             widget.poSettings['ShowCalories'])
@@ -1031,12 +1035,13 @@ class _MealDetailsState extends State<MealDetails> {
                                 Text(
                                   "Calorie",
                                   style: TextStyle(
+                                    color: HexColor(widget.AppTheme_['SubTitleFontColor']),
                                     fontSize: 14,
-                                    fontWeight: FontWeight.normal,
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
                                 Text(mealInfo['Calories'].toString() + ' Kcal',
-                                    style: TextStyle(fontSize: 14))
+                                    style: TextStyle(fontSize: 14,color: HexColor(widget.AppTheme_['ContentFontColor'])))
                               ],
                             ),
                           ),
@@ -1044,7 +1049,7 @@ class _MealDetailsState extends State<MealDetails> {
                           margin: EdgeInsets.only(
                               top: 5, left: 25, right: 25, bottom: 0),
                           height: 1,
-                          color: Colors.grey.shade300,
+                          //color: Colors.grey.shade300,
                         ),
                         Container(
                           margin: EdgeInsets.only(top: 0, left: 5, right: 5),
@@ -1056,15 +1061,16 @@ class _MealDetailsState extends State<MealDetails> {
                               Text(
                                 "Meal Date",
                                 style: TextStyle(
+                                  color: HexColor(widget.AppTheme_['SubTitleFontColor']),
                                   fontSize: 14,
-                                  fontWeight: FontWeight.normal,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
                               Text(
                                   DateFormat('dd-MMM-yyyy').format(
                                       DateTime.parse(
                                           widget.arguments['ViewDate'])),
-                                  style: TextStyle(fontSize: 14))
+                                  style: TextStyle(fontSize: 14,color: HexColor(widget.AppTheme_['ContentFontColor'])))
                             ],
                           ),
                         ),
@@ -1072,7 +1078,7 @@ class _MealDetailsState extends State<MealDetails> {
                           margin: EdgeInsets.only(
                               top: 5, left: 25, right: 25, bottom: 0),
                           height: 1,
-                          color: Colors.grey.shade300,
+                          //color: Colors.grey.shade300,
                         ),
                         if (mealInfo['Remarks'] != null &&
                             mealInfo['Remarks'] != '' &&
@@ -1090,6 +1096,7 @@ class _MealDetailsState extends State<MealDetails> {
                                   child: Text(
                                     "Remarks",
                                     style: TextStyle(
+                                      color: HexColor(widget.AppTheme_['SubTitleFontColor']),
                                         fontSize: 14,
                                         fontWeight: FontWeight.bold),
                                   ),
@@ -1102,7 +1109,7 @@ class _MealDetailsState extends State<MealDetails> {
                                       left: 15.0, top: 0.0, bottom: 10.0),
                                   child: Text(
                                     mealInfo['Remarks'],
-                                    style: TextStyle(fontSize: 12),
+                                    style: TextStyle(fontSize: 12,color: HexColor(widget.AppTheme_['ContentFontColor'])),
                                   ),
                                 ),
                               ),

@@ -5,7 +5,8 @@ import '../../../common/app_settings.dart';
 
 class HolidayListView extends StatelessWidget {
   final List holidayList;
-  const HolidayListView(this.holidayList);
+  final AppTheme_;
+  const HolidayListView(this.holidayList,this.AppTheme_);
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +48,7 @@ class HolidayListView extends StatelessWidget {
                               Text(
                                "Description: ${holidayList[index]['description']}" ,
                                 style: TextStyle(
-                                    color: Colors.grey,
+                                    color: HexColor(AppTheme_['ContentFontColor']),
                                     fontWeight: FontWeight.normal,
                                     overflow: TextOverflow.ellipsis,
                                     fontSize: 12),
@@ -56,7 +57,7 @@ class HolidayListView extends StatelessWidget {
                               Text(
                                "${holidayList[index]['start']} to ${holidayList[index]['end']}" ,
                                 style: TextStyle(
-                                    color: Colors.grey,
+                                    color: HexColor(AppTheme_['ContentFontColor']),
                                     fontWeight: FontWeight.normal,
                                     overflow: TextOverflow.ellipsis,
                                     fontSize: 12),

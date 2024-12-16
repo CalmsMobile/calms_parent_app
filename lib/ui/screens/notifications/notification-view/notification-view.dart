@@ -46,6 +46,7 @@ class _NotificationViewState extends State<NotificationView> {
     print(widget.category);
     print(widget.imgBaseUrl);
     print(widget.apiURL);
+    print(widget.AppTheme_);
     super.initState();
     BackButtonInterceptor.add(myInterceptor);
     updateReadStatus(widget.passData, context, widget.pos, widget.apiURL);
@@ -112,7 +113,7 @@ class _NotificationViewState extends State<NotificationView> {
               )
             : AppBar(
                 toolbarHeight: 70,
-                backgroundColor: HexColor(widget.AppTheme_['SecondaryBgColor']),
+                backgroundColor: HexColor(widget.AppTheme_['AppHeaderBgColor']),
                 //titleSpacing: -5,
                 automaticallyImplyLeading: false,
                 centerTitle: true,
@@ -127,16 +128,16 @@ class _NotificationViewState extends State<NotificationView> {
                         margin: EdgeInsets.only(left: 10),
                         decoration: BoxDecoration(
                           border: Border.all(
-                              color: HexColor(widget.AppTheme_['SecondaryFrColor']),
+                              color: HexColor(widget.AppTheme_['IconOutlineColor']),
                               width: 2),
-                          color: Colors.white,
+                          color: HexColor(widget.AppTheme_['IconBgColor']),
                           shape: BoxShape.circle,
                         ),
                         child: Padding(
                             padding: EdgeInsets.all(3),
                             child: Icon(
                               Icons.arrow_back_ios_new,
-                              color: HexColor(widget.AppTheme_['SecondaryFrColor']),
+                              color: HexColor(widget.AppTheme_['IconOutlineColor']),
                               size: 30,
                             )))),
                 title: Row(
@@ -155,7 +156,7 @@ class _NotificationViewState extends State<NotificationView> {
                               "Message",
                               style: TextStyle(
                                   color:
-                                      HexColor(widget.AppTheme_['SecondaryFrColor']),
+                                      HexColor(widget.AppTheme_['AppHeaderFontColor']),
                                   fontSize: widget.NotifyOnly ? 13 : 16,
                                   fontWeight: FontWeight.bold),
                             ),
@@ -204,9 +205,9 @@ class _NotificationViewState extends State<NotificationView> {
                             decoration: BoxDecoration(
                               border: Border.all(
                                   color:
-                                      HexColor(widget.AppTheme_['SecondaryFrColor']),
+                                      HexColor(widget.AppTheme_['IconOutlineColor']),
                                   width: 2),
-                              color: Colors.white,
+                              color: HexColor(widget.AppTheme_['IconBgColor']),
                               shape: BoxShape.circle,
                             ),
                             child: Padding(
@@ -214,7 +215,7 @@ class _NotificationViewState extends State<NotificationView> {
                                 child: Icon(
                                   Icons.settings_outlined,
                                   color:
-                                      HexColor(widget.AppTheme_['SecondaryFrColor']),
+                                      HexColor(widget.AppTheme_['IconOutlineColor']),
                                   size: 30,
                                 )))),
                   ]),
@@ -226,8 +227,8 @@ class _NotificationViewState extends State<NotificationView> {
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
             colors: [
-              Color.fromARGB(255, 246, 249, 254),
-              Color.fromARGB(255, 230, 231, 239),
+             widget.NotifyOnly? Color.fromARGB(255, 246, 249, 254):HexColor(widget.AppTheme_['AppBgColor']),
+              widget.NotifyOnly? Color.fromARGB(255, 230, 231, 239):HexColor(widget.AppTheme_['AppBgColor']),
             ],
           )),
           child: SingleChildScrollView(
@@ -256,7 +257,7 @@ class _NotificationViewState extends State<NotificationView> {
                               widget.passData["HtmlContent"],
                               onTapUrl: (url) => launchUrl(Uri.parse(url)),
                               enableCaching: false,
-                              textStyle: TextStyle(fontSize: 16),
+                              textStyle: TextStyle(fontSize: 16,color: widget.NotifyOnly?Colors.black:HexColor(widget.AppTheme_['ContentFontColor'])),
                             )),
                         Align(
                           alignment: Alignment.topRight,

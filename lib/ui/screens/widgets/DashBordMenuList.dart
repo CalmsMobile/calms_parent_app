@@ -65,31 +65,31 @@ Widget menuList(BuildContext context, int index, List menu, List familyList,
             if (menu[index]['MenuId'] == 2017.0)
               Icon(
                 Icons.restaurant_menu_outlined,
-                color: HexColor(AppTheme_['SecondaryBgColor']),
+                color: HexColor(AppTheme_['IconOutlineColor']),
                 size: 50,
               ),
             if (menu[index]['MenuId'] == 2012.0)
               Icon(
                 Icons.transfer_within_a_station_outlined,
-                color: HexColor(AppTheme_['SecondaryBgColor']),
+                color: HexColor(AppTheme_['IconOutlineColor']),
                 size: 50,
               ),
             if (menu[index]['MenuId'] == 2019.0)
               Icon(
                 Icons.wallet_outlined,
-                color: HexColor(AppTheme_['SecondaryBgColor']),
+                color: HexColor(AppTheme_['IconOutlineColor']),
                 size: 50,
               ),
             if (menu[index]['MenuId'] == 1.0)
               Icon(
                 Icons.calendar_month_outlined,
-                color: HexColor(AppTheme_['SecondaryBgColor']),
+                color: HexColor(AppTheme_['IconOutlineColor']),
                 size: 50,
               ),
             if (menu[index]['MenuId'] == 2.0)
              Icon(
                 Icons.notifications_outlined,
-                color: HexColor(AppTheme_['SecondaryBgColor']),
+                color: HexColor(AppTheme_['IconOutlineColor']),
                 size: 50,
               ),
             SizedBox(

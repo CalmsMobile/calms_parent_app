@@ -45,7 +45,7 @@ class _MealOrderState extends State<MealOrder> {
       appBar: AppBar(
         toolbarHeight: 70,
         elevation: 0,
-        backgroundColor: HexColor(widget.AppTheme_['SecondaryBgColor']),
+        backgroundColor: HexColor(widget.AppTheme_['AppHeaderBgColor']),
         //titleSpacing: -5,
         automaticallyImplyLeading: false,
         centerTitle: true,
@@ -71,16 +71,16 @@ class _MealOrderState extends State<MealOrder> {
                     //margin: EdgeInsets.only(left: 10),
                     decoration: BoxDecoration(
                       border: Border.all(
-                          color: HexColor(widget.AppTheme_['SecondaryFrColor']),
+                          color: HexColor(widget.AppTheme_['IconOutlineColor']),
                           width: 2),
-                      color: Colors.white,
+                      color: HexColor(widget.AppTheme_['IconBgColor']),
                       shape: BoxShape.circle,
                     ),
                     child: Padding(
                         padding: EdgeInsets.all(3),
                         child: Icon(
                           Icons.arrow_back_ios_new,
-                          color: HexColor(widget.AppTheme_['SecondaryFrColor']),
+                          color: HexColor(widget.AppTheme_['IconOutlineColor']),
                           size: 30,
                         )))),
             Padding(
@@ -88,7 +88,7 @@ class _MealOrderState extends State<MealOrder> {
               child: Text(
                 "Meal Order",
                 style: TextStyle(
-                    color:  HexColor(widget.AppTheme_['SecondaryFrColor']),
+                    color:  HexColor(widget.AppTheme_['AppHeaderFontColor']),
                     fontSize: 20,
                     fontWeight: FontWeight.bold),
               ),
@@ -159,9 +159,9 @@ class _MealOrderState extends State<MealOrder> {
                             decoration: BoxDecoration(
                               border: Border.all(
                                   color:
-                                      HexColor(widget.AppTheme_['SecondaryFrColor']),
+                                      HexColor(widget.AppTheme_['IconOutlineColor']),
                                   width: 2),
-                              color: Colors.white,
+                              color: HexColor(widget.AppTheme_['IconBgColor']),
                               shape: BoxShape.circle,
                             ),
                             child: Padding(
@@ -169,7 +169,7 @@ class _MealOrderState extends State<MealOrder> {
                                 child: Icon(
                                   Icons.shopping_cart_outlined,
                                   color:
-                                      HexColor(widget.AppTheme_['SecondaryFrColor']),
+                                      HexColor(widget.AppTheme_['IconOutlineColor']),
                                   size: 30,
                                 )))),
                     Consumer<MySettingsListener>(
@@ -212,8 +212,8 @@ class _MealOrderState extends State<MealOrder> {
           begin: Alignment.topRight,
           end: Alignment.bottomLeft,
           colors: [
-            HexColor(widget.AppTheme_['PrimaryBgColor']),
-            HexColor(widget.AppTheme_['PrimaryBgColor']),
+            HexColor(widget.AppTheme_['AppBgColor']),
+            HexColor(widget.AppTheme_['AppBgColor']),
           ],
         )),
         child: SizedBox(
@@ -243,7 +243,7 @@ class _MealOrderState extends State<MealOrder> {
                                 AppSettings.imgAssetNoMeal,
                                 AppSettings.titleNoMeal,
                                 AppSettings.msgNoMeal,
-                                20);
+                                20,widget.AppTheme_);
                       } else {
                         return SizedBox();
                       }

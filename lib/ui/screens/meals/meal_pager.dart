@@ -77,7 +77,7 @@ class MealPager extends StatelessWidget {
               ),
               elevation: 10,
               shadowColor: Colors.black,
-              color: Colors.white,
+              color: HexColor(AppTheme_['PanelBgColor']),
               borderOnForeground: true,
               child: Container(
                 width: double.infinity,
@@ -141,7 +141,7 @@ class MealPager extends StatelessWidget {
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 1,
                                     style: TextStyle(
-                                      color: kTextColor,
+                                      color: HexColor(AppTheme_['SubTitleFontColor']),
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold,
                                     ),

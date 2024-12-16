@@ -35,13 +35,14 @@ class TopupMemberListView extends StatelessWidget {
                 itemCount: membersList.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Card(
+                    color:  HexColor(AppTheme_['PanelBgColor']),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15.0),
                     ),
                     margin: EdgeInsets.only(left: 20, right: 20, top: 20),
                     elevation: 10,
                     shadowColor: Colors.black,
-                    color: Color.fromARGB(255, 249, 249, 249),
+                    //color: Color.fromARGB(255, 249, 249, 249),
                     child: Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: Column(
@@ -60,14 +61,15 @@ class TopupMemberListView extends StatelessWidget {
                                     : CircleAvatar(
                                         radius: 25,
                                         backgroundColor: HexColor(
-                                            AppTheme_['SecondaryBgColor']),
+                                            AppTheme_['IconBgColor']),
                                         child: Text(
                                           CommonFunctions.getInitials(
                                                   membersList[index]['Name'])
                                               .toUpperCase(),
                                           style: TextStyle(
                                               fontSize: 22.0,
-                                              color: Colors.white,
+                                              color: HexColor(
+                                            AppTheme_['IconOutlineColor']),
                                               letterSpacing: 2.0,
                                               fontWeight: FontWeight.w900),
                                         ),
@@ -86,7 +88,7 @@ class TopupMemberListView extends StatelessWidget {
                                       style: TextStyle(
                                         fontSize: 20,
                                         color: HexColor(
-                                            AppTheme_['SecondaryBgColor']),
+                                            AppTheme_['TitleFontColor']),
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -109,7 +111,8 @@ class TopupMemberListView extends StatelessWidget {
                                           style: TextStyle(
                                             fontSize: 14,
                                             color:
-                                                Color.fromARGB(255, 83, 83, 83),
+                                                HexColor(
+                                            AppTheme_['SubTitleFontColor']),
                                             fontWeight: FontWeight.w700,
                                           ),
                                         ),
@@ -140,7 +143,8 @@ class TopupMemberListView extends StatelessWidget {
                                 style: TextStyle(
                                   fontSize: 13,
                                   fontWeight: FontWeight.bold,
-                                  color: Color.fromARGB(255, 0, 0, 0),
+                                  color: HexColor(
+                                            AppTheme_['ContentFontColor']),
                                 )),
                           ),
                           const SizedBox(

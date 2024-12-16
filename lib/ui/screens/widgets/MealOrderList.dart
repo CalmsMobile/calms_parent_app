@@ -52,13 +52,14 @@ class MealOrderListView extends StatelessWidget {
                 itemCount: poTypesList.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Card(
+                    color:  HexColor(AppTheme_['PanelBgColor']),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15.0),
                     ),
                     margin: EdgeInsets.only(left: 20, right: 20, top: 20),
                     elevation: 10,
                     shadowColor: Colors.black,
-                    color: Color.fromARGB(255, 249, 249, 249),
+                    //color: Color.fromARGB(255, 249, 249, 249),
                     child: Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: Column(
@@ -79,18 +80,16 @@ class MealOrderListView extends StatelessWidget {
                                               "Daily Meals",
                                               style: TextStyle(
                                                 fontSize: 18,
-                                                color: Color.fromARGB(
-                                                    255, 0, 0, 0),
-                                                fontWeight: FontWeight.w500,
+                                                color: HexColor(AppTheme_['TitleFontColor']),
+                                                fontWeight: FontWeight.bold,
                                               ),
                                             )
                                           : Text(
                                               "Package Meals",
                                               style: TextStyle(
                                                 fontSize: 18,
-                                                color: Color.fromARGB(
-                                                    255, 0, 0, 0),
-                                                fontWeight: FontWeight.w500,
+                                               color: HexColor(AppTheme_['TitleFontColor']),
+                                                fontWeight: FontWeight.bold,
                                               ),
                                             ),
                                     ),
@@ -100,7 +99,7 @@ class MealOrderListView extends StatelessWidget {
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                         fontSize:16,
-                                        color:  HexColor(AppTheme_['SecondaryBgColor']),
+                                        color:  HexColor(AppTheme_['SubTitleFontColor']),
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -112,7 +111,7 @@ class MealOrderListView extends StatelessWidget {
                                             overflow: TextOverflow.ellipsis,
                                             style: TextStyle(
                                               fontSize: 12,
-                                              color: Colors.black54,
+                                              color: HexColor(AppTheme_['ContentFontColor']),
                                               fontWeight: FontWeight.w300,
                                             ),
                                           )
@@ -177,7 +176,7 @@ class MealOrderListView extends StatelessWidget {
                                         return Container(
                                             margin: EdgeInsets.symmetric(
                                                 horizontal: 0, vertical: 5),
-                                            decoration: BoxDecoration(
+                                            /* decoration: BoxDecoration(
                                                 boxShadow: [
                                                   new BoxShadow(
                                                     color: Colors.white,
@@ -188,7 +187,7 @@ class MealOrderListView extends StatelessWidget {
                                                 borderRadius:
                                                     BorderRadius.circular(15),
                                                 border: Border.all(
-                                                    color: Colors.white)),
+                                                    color: Colors.white)), */
                                             // color: Colors.grey,
                                             child: Row(
                                               mainAxisAlignment:
@@ -210,7 +209,7 @@ class MealOrderListView extends StatelessWidget {
                                                             .ellipsis,
                                                         style: TextStyle(
                                                             fontSize: 16,
-                                                            color: Colors.black,
+                                                            color: HexColor(AppTheme_['SubTitleFontColor']),
                                                             fontWeight:
                                                                 FontWeight
                                                                     .bold),

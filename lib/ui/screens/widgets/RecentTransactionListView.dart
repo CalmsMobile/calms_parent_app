@@ -59,7 +59,7 @@ class RecentTransactionListView extends StatelessWidget {
                                   Text(
                                     "Package: ${recentList[index]['PackageName']}",
                                     style: TextStyle(
-                                        color: Colors.grey,
+                                        color: HexColor(AppTheme_['ContentFontColor']),
                                         fontWeight: FontWeight.normal,
                                         overflow: TextOverflow.ellipsis,
                                         fontSize: 12),
@@ -68,7 +68,7 @@ class RecentTransactionListView extends StatelessWidget {
                                   Text(
                                     "Trans. Mode: ${recentList[index]['ThroughBy']}",
                                     style: TextStyle(
-                                        color: Colors.grey,
+                                        color: HexColor(AppTheme_['ContentFontColor']),
                                         fontWeight: FontWeight.normal,
                                         overflow: TextOverflow.ellipsis,
                                         fontSize: 12),
@@ -76,7 +76,7 @@ class RecentTransactionListView extends StatelessWidget {
                                 Text(
                                   "Done by: ${recentList[index]['DoneBy']}",
                                   style: TextStyle(
-                                      color: Colors.grey,
+                                      color: HexColor(AppTheme_['ContentFontColor']),
                                       fontWeight: FontWeight.normal,
                                       overflow: TextOverflow.ellipsis,
                                       fontSize: 12),
@@ -84,7 +84,7 @@ class RecentTransactionListView extends StatelessWidget {
                                 Text(
                                   "Trans. Date: ${DateUtil().convertStringFromDateformat(recentList[index]['CreatedOn'], "dd-MM-yyyy hh:mm a")}",
                                   style: TextStyle(
-                                      color: Colors.grey,
+                                      color: HexColor(AppTheme_['ContentFontColor']),
                                       overflow: TextOverflow.ellipsis,
                                       fontWeight: FontWeight.normal,
                                       fontSize: 12),
@@ -142,6 +142,7 @@ class RecentTransactionListView extends StatelessWidget {
                   Text(
                     "More",
                     style: TextStyle(
+                      color: HexColor(AppTheme_['ButtonFontColor']),
                         fontSize: 18.0,
                         fontFamily: "Montserrat",
                         fontWeight: FontWeight.bold),
@@ -155,10 +156,10 @@ class RecentTransactionListView extends StatelessWidget {
                   builder: (BuildContext context) {
                     return Scaffold(
                       appBar: AppBar(
-                        backgroundColor: HexColor(AppTheme_['SecondaryBgColor']),
+                        backgroundColor: HexColor(AppTheme_['AppHeaderBgColor']),
                         title: Text(title),
                         leading: IconButton(
-                          icon: Icon(Icons.close,color: HexColor(AppTheme_['SecondaryFrColor'])),
+                          icon: Icon(Icons.close,color: HexColor(AppTheme_['IconOutlineColor'])),
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
@@ -184,8 +185,8 @@ class RecentTransactionListView extends StatelessWidget {
                 ));
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: HexColor(AppTheme_['SecondaryBgColor']),
-                textStyle: TextStyle(color: HexColor(AppTheme_['SecondaryFrColor'])),
+                backgroundColor: HexColor(AppTheme_['ButtonBgColor']),
+                textStyle: TextStyle(color: HexColor(AppTheme_['ButtonFontColor'])),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(60.0)),
               ),

@@ -1,5 +1,7 @@
 import 'package:calms_parent_latest/common/common_api.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../ui/screens/home/Home.dart';
 import '../listener/settings_listener.dart';
@@ -429,7 +431,7 @@ void showPaymentSelectOption(BuildContext buildContext, titleText, paymentList,
                                                     'PayMode'] ==
                                                 paymentList[index]['PayMode']
                                             ? HexColor(
-                                                AppTheme_['SecondaryBgColor'])
+                                                AppTheme_['IconOutlineColor'])
                                             : Color.fromARGB(
                                                 102, 158, 158, 158),
                                       ),
@@ -603,12 +605,12 @@ void showPaymentSelectOption(BuildContext buildContext, titleText, paymentList,
                                               fontSize: 18.0,
                                               fontFamily: "Montserrat",
                                               color: HexColor(AppTheme_[
-                                                  'SecondaryFrColor']),
+                                                  'ButtonFontColor']),
                                               fontWeight: FontWeight.bold),
                                         ),
                                         Icon(Icons.arrow_forward_ios,
                                             color: HexColor(
-                                                AppTheme_['SecondaryFrColor']))
+                                                AppTheme_['ButtonFontColor']))
                                       ],
                                     ),
                                     onPressed: checkedValue == true &&
@@ -637,10 +639,10 @@ void showPaymentSelectOption(BuildContext buildContext, titleText, paymentList,
                                         : null,
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: HexColor(
-                                          AppTheme_['SecondaryBgColor']),
+                                          AppTheme_['ButtonBgColor']),
                                       textStyle: TextStyle(
                                           color: HexColor(
-                                              AppTheme_['SecondaryFrColor'])),
+                                              AppTheme_['ButtonFontColor'])),
                                       shape: RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(60.0)),
@@ -982,15 +984,22 @@ void showCustomPaymentAlert(BuildContext buildContext, gatewayDetail,
                                             color: Colors.black,
                                             fontWeight: FontWeight.bold)),
                                     CheckboxListTile(
-                                      checkColor: Colors.white,
+                                      checkColor: HexColor(
+                                          AppTheme_['IconOutlineColor']),
                                       activeColor: HexColor(
-                                          AppTheme_['SecondaryBgColor']),
+                                          AppTheme_['IconBgColor']),
                                       contentPadding: EdgeInsets.zero,
-                                      title: Text(gatewayDetail['TnC_Desc'],
+                                      title: HtmlWidget(
+                              gatewayDetail['TnC_Desc'],
+                              onTapUrl: (url) => launchUrl(Uri.parse(url)),
+                              enableCaching: false,
+                              textStyle: TextStyle(fontSize: 16),
+                            ),
+                                      /* title: Text(gatewayDetail['TnC_Desc'],
                                           style: TextStyle(
                                               fontSize: 12,
                                               color: Colors.black,
-                                              fontWeight: FontWeight.normal)),
+                                              fontWeight: FontWeight.normal)), */
 
                                       /*  RichText(
                                 maxLines: 2,
@@ -1091,7 +1100,7 @@ void showCustomPaymentAlert(BuildContext buildContext, gatewayDetail,
                                                     fontSize: 18.0,
                                                     fontFamily: "Montserrat",
                                                     color: HexColor(AppTheme_[
-                                                        'SecondaryFrColor']),
+                                                        'ButtonFontColor']),
                                                     fontWeight:
                                                         FontWeight.bold),
                                               ),
@@ -1132,9 +1141,10 @@ void showCustomPaymentAlert(BuildContext buildContext, gatewayDetail,
                                               : null,
                                           style: ElevatedButton.styleFrom(
                                             backgroundColor: HexColor(
-                                                AppTheme_['SecondaryBgColor']),
+                                                AppTheme_['ButtonBgColor']),
                                             textStyle:
-                                                TextStyle(color: Colors.white),
+                                                TextStyle(color: HexColor(AppTheme_[
+                                                        'ButtonFontColor'])),
                                             shape: RoundedRectangleBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(
@@ -1165,7 +1175,7 @@ void showCustomPaymentAlert(BuildContext buildContext, gatewayDetail,
                                                     fontSize: 18.0,
                                                     fontFamily: "Montserrat",
                                                     color: HexColor(AppTheme_[
-                                                        'SecondaryFrColor']),
+                                                        'ButtonFontColor']),
                                                     fontWeight:
                                                         FontWeight.bold),
                                               ),
@@ -1206,9 +1216,10 @@ void showCustomPaymentAlert(BuildContext buildContext, gatewayDetail,
                                               : null,
                                           style: ElevatedButton.styleFrom(
                                             backgroundColor: HexColor(
-                                                AppTheme_['SecondaryBgColor']),
+                                                AppTheme_['ButtonBgColor']),
                                             textStyle:
-                                                TextStyle(color: Colors.white),
+                                                TextStyle(color: HexColor(
+                                                AppTheme_['ButtonFontColor'])),
                                             shape: RoundedRectangleBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(

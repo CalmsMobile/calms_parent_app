@@ -311,16 +311,16 @@ class _NotificationsState extends State<Notifications>
                       minTime: DateTime(2000, 1, 1),
                       maxTime: DateTime.now(),
                       theme: DatePickerTheme(
-                          headerColor: Theme.of(context).primaryColor,
-                          backgroundColor: Colors.white,
+                          headerColor: widget.NotifyOnly? Colors.blue:HexColor(AppTheme_['PanelHeaderBgColor']),
+                          backgroundColor:widget.NotifyOnly? Colors.white:HexColor(AppTheme_['PanelBgColor']),
                           itemStyle: TextStyle(
-                              color: Colors.black,
+                              color: widget.NotifyOnly? Colors.black:HexColor(AppTheme_['SubTitleFontColor']),
                               fontWeight: FontWeight.bold,
                               fontSize: 18),
                           cancelStyle:
-                              TextStyle(color: Colors.white, fontSize: 16),
+                              TextStyle(color: widget.NotifyOnly? Colors.white:HexColor(AppTheme_['ButtonFontColor']), fontSize: 16),
                           doneStyle:
-                              TextStyle(color: Colors.white, fontSize: 16)),
+                              TextStyle(color: widget.NotifyOnly? Colors.white:HexColor(AppTheme_['ButtonFontColor']), fontSize: 16)),
                       onChanged: (date) {}, onConfirm: (date) {
                       print('confirm $date');
                       setState(() {
@@ -345,16 +345,16 @@ class _NotificationsState extends State<Notifications>
                     }, currentTime: DateTime.now(), locale: LocaleType.en),
               backgroundColor: filteredDate
                   ? Colors.red
-                  : widget.NotifyOnly
+                  : (widget.NotifyOnly
                       ? HexColor("#023047")
-                      : HexColor(AppTheme_['SecondaryBgColor']),
+                      : HexColor(AppTheme_['IconBgColor'])),
               child: filteredDate
                   ? Icon(Icons.close_sharp)
-                  : Icon(Icons.calendar_month),
+                  : Icon(Icons.calendar_month, color: widget.NotifyOnly?Colors.white:HexColor(AppTheme_['IconOutlineColor']),),
             ),
             backgroundColor: widget.NotifyOnly
                 ? Color.fromRGBO(255, 255, 255, 1)
-                : HexColor(AppTheme_['PrimaryBgColor']),
+                : HexColor(AppTheme_['AppBgColor']),
             appBar: AppBar(
                 bottom: TabBar(
                     isScrollable: true,
@@ -367,7 +367,7 @@ class _NotificationsState extends State<Notifications>
                     },
                     labelColor: widget.NotifyOnly
                         ? Colors.white
-                        : HexColor(AppTheme_['SecondaryFrColor']),
+                        : HexColor(AppTheme_['PanelHeaderFontColor']),
                     unselectedLabelColor: Color.fromARGB(151, 246, 243, 243),
                     tabs: [
                       for (int i = 0; i < widget.categoryList.length; i++)
@@ -383,7 +383,7 @@ class _NotificationsState extends State<Notifications>
                 toolbarHeight: 70,
                 backgroundColor: widget.NotifyOnly
                     ? HexColor("#023047")
-                    : HexColor(AppTheme_['SecondaryBgColor']),
+                    : HexColor(AppTheme_['AppHeaderBgColor']),
                 //titleSpacing: -5,
                 automaticallyImplyLeading: false,
                 centerTitle: true,
@@ -399,14 +399,14 @@ class _NotificationsState extends State<Notifications>
                                           profileData_["BranchImg"])),
                                 )
                               : CircleAvatar(
-                                  backgroundColor: HexColor("#ffb703"),
+                                  backgroundColor:widget.NotifyOnly? HexColor("#ffb703"):HexColor(AppTheme_['IconBgColor']),
                                   child: Text(
                                     CommonFunctions.getInitials(
                                             profileData_['BranchName'])
                                         .toUpperCase(),
                                     style: TextStyle(
                                         fontSize: 20.0,
-                                        color: Colors.white,
+                                        color:widget.NotifyOnly? Colors.white:HexColor(AppTheme_['IconOutlineColor']),
                                         letterSpacing: 2.0,
                                         fontWeight: FontWeight.w900),
                                   ),
@@ -424,9 +424,9 @@ class _NotificationsState extends State<Notifications>
                             decoration: BoxDecoration(
                               border: Border.all(
                                   color:
-                                      HexColor(AppTheme_['SecondaryFrColor']),
+                                      HexColor(AppTheme_['IconOutlineColor']),
                                   width: 2),
-                              color: Colors.white,
+                              color:  HexColor(AppTheme_['IconBgColor']),
                               shape: BoxShape.circle,
                             ),
                             child: Padding(
@@ -434,7 +434,7 @@ class _NotificationsState extends State<Notifications>
                                 child: Icon(
                                   Icons.arrow_back_ios_new,
                                   color:
-                                      HexColor(AppTheme_['SecondaryFrColor']),
+                                      HexColor(AppTheme_['IconOutlineColor']),
                                   size: 30,
                                 )))),
                 title: Row(
@@ -472,7 +472,7 @@ class _NotificationsState extends State<Notifications>
                               style: TextStyle(
                                   color: widget.NotifyOnly
                                       ? Colors.white
-                                      : HexColor(AppTheme_['SecondaryFrColor']),
+                                      : HexColor(AppTheme_['AppHeaderFontColor']),
                                   fontSize: widget.NotifyOnly ? 13 : 16,
                                   fontWeight: FontWeight.bold,
                                   overflow: TextOverflow.clip,
@@ -484,7 +484,7 @@ class _NotificationsState extends State<Notifications>
                               style: TextStyle(
                                   color: widget.NotifyOnly
                                       ? Colors.white
-                                      : HexColor(AppTheme_['SecondaryFrColor']),
+                                      : HexColor(AppTheme_['AppHeaderFontColor']),
                                   fontSize: widget.NotifyOnly ? 13 : 16,
                                   fontWeight: FontWeight.bold),
                             ),
@@ -623,9 +623,10 @@ class _NotificationsState extends State<Notifications>
                                 decoration: BoxDecoration(
                                   border: Border.all(
                                       color: HexColor(
-                                          AppTheme_['SecondaryFrColor']),
+                                          AppTheme_['IconOutlineColor']),
                                       width: 2),
-                                  color: Colors.white,
+                                  color: HexColor(
+                                          AppTheme_['IconBgColor']),
                                   shape: BoxShape.circle,
                                 ),
                                 child: Padding(
@@ -633,7 +634,7 @@ class _NotificationsState extends State<Notifications>
                                     child: Icon(
                                       Icons.shopping_cart_outlined,
                                       color: HexColor(
-                                          AppTheme_['SecondaryFrColor']),
+                                          AppTheme_['IconOutlineColor']),
                                       size: 30,
                                     )))),
                         Consumer<MySettingsListener>(
@@ -678,9 +679,9 @@ class _NotificationsState extends State<Notifications>
                             decoration: BoxDecoration(
                               border: Border.all(
                                   color:
-                                      HexColor(AppTheme_['SecondaryFrColor']),
+                                      HexColor(AppTheme_['IconOutlineColor']),
                                   width: 2),
-                              color: Colors.white,
+                              color: HexColor(AppTheme_['IconBgColor']),
                               shape: BoxShape.circle,
                             ),
                             child: Padding(
@@ -688,7 +689,7 @@ class _NotificationsState extends State<Notifications>
                                 child: Icon(
                                   Icons.settings_outlined,
                                   color:
-                                      HexColor(AppTheme_['SecondaryFrColor']),
+                                      HexColor(AppTheme_['IconOutlineColor']),
                                   size: 30,
                                 )))),
                 ]),
@@ -708,8 +709,8 @@ class _NotificationsState extends State<Notifications>
                         begin: Alignment.topRight,
                         end: Alignment.bottomLeft,
                         colors: [
-                          Color.fromARGB(255, 246, 249, 254),
-                          Color.fromARGB(255, 230, 231, 239),
+                         widget.NotifyOnly? Color.fromARGB(255, 246, 249, 254):HexColor(AppTheme_['AppBgColor']),
+                         widget.NotifyOnly? Color.fromARGB(255, 246, 249, 254):HexColor(AppTheme_['AppBgColor']),
                         ],
                       )),
                       child: Container(
@@ -728,7 +729,7 @@ class _NotificationsState extends State<Notifications>
                                     data.notificationList,
                                     context
                                         .read<MySettingsListener>()
-                                        .notificationCategoryList);
+                                        .notificationCategoryList,AppTheme_);
                               });
                         }),
                       ),
@@ -924,7 +925,7 @@ class _NotificationsState extends State<Notifications>
   }
 
   Widget _makeCard(BuildContext context, int index1, List notificationList,
-      List categoryList) {
+      List categoryList,AppTheme_) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -1272,6 +1273,6 @@ class _NotificationsState extends State<Notifications>
     String AppTheme = await MySharedPref().getData(AppSettings.Sp_AppTheme);
     this.AppTheme_ = jsonDecode(AppTheme);
     print("test + " + AppTheme);
-    AppSettings.colorCurrencyCode = this.AppTheme_['SecondaryBgColor'];
+    AppSettings.colorCurrencyCode = this.AppTheme_['TitleFontColor'];
   }
 }

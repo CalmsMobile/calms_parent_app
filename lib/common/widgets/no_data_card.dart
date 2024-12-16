@@ -1,3 +1,4 @@
+import 'package:calms_parent_latest/common/HexColor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -7,19 +8,21 @@ class NoDataCard extends StatelessWidget {
   final message;
 
   final title;
+  final AppTheme_;
   double marginTop;
 
-  NoDataCard(this.assetImageUrl, this.title, this.message, this.marginTop)
+  NoDataCard(this.assetImageUrl, this.title, this.message, this.marginTop,this.AppTheme_)
       : super();
   @override
   Widget build(BuildContext context) {
     return Card(
-      shape: RoundedRectangleBorder(
+      /* shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15.0),
-      ),
-      elevation: 10,
-      shadowColor: Colors.black,
-      borderOnForeground: true,
+      ), */
+      elevation: 0,
+      //shadowColor: Colors.black,
+      color: HexColor(AppTheme_['AppBgColor']),
+      borderOnForeground: false,
       margin: EdgeInsets.only(top: marginTop, left: 20, right: 20, bottom: 20),
       child: Container(
         margin: EdgeInsets.all(10),
@@ -39,7 +42,7 @@ class NoDataCard extends StatelessWidget {
                 margin: EdgeInsets.only(top: 20, bottom: 10),
                 child: Text(
                   title,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color: HexColor(AppTheme_['SubTitleFontColor'])),
                 ),
               ),
             if (message != "")
@@ -49,7 +52,7 @@ class NoDataCard extends StatelessWidget {
                 child: Text(
                   message,
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.normal),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.normal,color: HexColor(AppTheme_['ContentFontColor'])),
                 ),
               ),
           ],

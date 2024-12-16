@@ -33,7 +33,7 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
         appBar: AppBar(
           toolbarHeight: 70,
           elevation: 0,
-          backgroundColor: HexColor(widget.AppTheme_['SecondaryBgColor']),
+          backgroundColor: HexColor(widget.AppTheme_['AppHeaderBgColor']),
           //titleSpacing: -5,
           automaticallyImplyLeading: false,
           centerTitle: true,
@@ -50,9 +50,9 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
                       decoration: BoxDecoration(
                         border: Border.all(
                             color:
-                                HexColor(widget.AppTheme_['SecondaryFrColor']),
+                                HexColor(widget.AppTheme_['IconOutlineColor']),
                             width: 2),
-                        color: Colors.white,
+                        color: HexColor(widget.AppTheme_['IconBgColor']),
                         shape: BoxShape.circle,
                       ),
                       child: Padding(
@@ -60,7 +60,7 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
                           child: Icon(
                             Icons.arrow_back_ios_new,
                             color:
-                                HexColor(widget.AppTheme_['SecondaryFrColor']),
+                                HexColor(widget.AppTheme_['IconOutlineColor']),
                             size: 30,
                           )))),
               Padding(
@@ -68,7 +68,7 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
                 child: Text(
                   "Settings",
                   style: TextStyle(
-                      color: HexColor(widget.AppTheme_['SecondaryFrColor']),
+                      color: HexColor(widget.AppTheme_['AppHeaderFontColor']),
                       fontSize: 20,
                       fontWeight: FontWeight.bold),
                 ),
@@ -85,8 +85,8 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
               begin: Alignment.topRight,
               end: Alignment.bottomLeft,
               colors: [
-                HexColor(widget.AppTheme_['PrimaryBgColor']),
-                HexColor(widget.AppTheme_['PrimaryBgColor']),
+                HexColor(widget.AppTheme_['AppBgColor']),
+                HexColor(widget.AppTheme_['AppBgColor']),
               ],
             )),
             child: SingleChildScrollView(
@@ -95,9 +95,7 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Card(
-                        /*  shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15.0),
-                                ), */
+                        color:  HexColor(widget.AppTheme_['PanelBgColor']),
                         elevation: 10,
                         shadowColor: Colors.black,
                         borderOnForeground: true,
@@ -109,9 +107,9 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
                               title: Text("General Settings"),
                               //trailing: Text("(Last 30 days)"),
                               tileColor: HexColor(
-                                  widget.AppTheme_['SecondaryBgColor']),
+                                  widget.AppTheme_['PanelHeaderBgColor']),
                               textColor: HexColor(
-                                  widget.AppTheme_['SecondaryFrColor']),
+                                  widget.AppTheme_['PanelHeaderFontColor']),
                             ),
                             Container(
                               margin: EdgeInsets.only(
@@ -138,19 +136,19 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
                                             leading: Icon(
                                               Icons.info_outline,
                                               size: 24,
-                                              color: HexColor(widget.AppTheme_['SecondaryBgColor']),
+                                              color: HexColor(widget.AppTheme_['IconOutlineColor']),
                                             ),
                                             title: Text(
                                               "App version ",
-                                              style: TextStyle(fontSize: 14,color: HexColor(widget.AppTheme_['SecondaryBgColor'])),
+                                              style: TextStyle(fontSize: 14,color: HexColor(widget.AppTheme_['SubTitleFontColor'])),
                                             ),
                                           ),
                                         ),
                                         Text(
-                                          "3.0.7",
+                                          "3.1.0",
                                           style: TextStyle(
                                               fontSize: 14,
-                                              fontWeight: FontWeight.bold,color: HexColor(widget.AppTheme_['PrimaryFrColor'])),
+                                              fontWeight: FontWeight.bold,color: HexColor(widget.AppTheme_['ContentFontColor'])),
                                         ),
                                       ],
                                     ),
@@ -184,16 +182,16 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
                                               leading: Icon(
                                                 Icons.browser_updated,
                                                 size: 24,
-                                                color: HexColor(widget.AppTheme_['SecondaryBgColor'])
+                                                color: HexColor(widget.AppTheme_['IconOutlineColor'])
                                               ),
                                               title: Text(
                                                 "Sync now",
-                                                style: TextStyle(fontSize: 14,color: HexColor(widget.AppTheme_['SecondaryBgColor'])),
+                                                style: TextStyle(fontSize: 14,color: HexColor(widget.AppTheme_['SubTitleFontColor'])),
                                                 
                                               ),
                                             ),
                                           ),
-                                          Icon(Icons.sync,color: HexColor(widget.AppTheme_['SecondaryFrColor']),)
+                                          Icon(Icons.sync,color: HexColor(widget.AppTheme_['IconOutlineColor']),)
                                         ],
                                       ),
                                     ),

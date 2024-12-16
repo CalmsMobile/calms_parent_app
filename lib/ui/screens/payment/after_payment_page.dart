@@ -31,7 +31,7 @@ class _AfterPaymentPageState extends State<AfterPaymentPage> {
         appBar: AppBar(
           toolbarHeight: 70,
           elevation: 0,
-          backgroundColor: HexColor(widget.AppTheme_['SecondaryBgColor']),
+          backgroundColor: HexColor(widget.AppTheme_['AppHeaderBgColor']),
           //titleSpacing: -5,
           automaticallyImplyLeading: false,
           centerTitle: true,
@@ -45,7 +45,7 @@ class _AfterPaymentPageState extends State<AfterPaymentPage> {
                 child: Text(
                   "Payment Status",
                   style: TextStyle(
-                      color: HexColor(widget.AppTheme_['SecondaryFrColor']),
+                      color: HexColor(widget.AppTheme_['AppHeaderFontColor']),
                       fontSize: 20,
                       fontWeight: FontWeight.bold),
                 ),
@@ -65,8 +65,8 @@ class _AfterPaymentPageState extends State<AfterPaymentPage> {
               end: Alignment.bottomLeft,
               colors: [
                 //Color.fromARGB(255, 246, 249, 254),
-               HexColor(widget.AppTheme_['PrimaryBgColor']),
-                HexColor(widget.AppTheme_['PrimaryBgColor']),
+               HexColor(widget.AppTheme_['AppBgColor']),
+                HexColor(widget.AppTheme_['AppBgColor']),
               ],
             )),
             child: SingleChildScrollView(
@@ -75,6 +75,7 @@ class _AfterPaymentPageState extends State<AfterPaymentPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Card(
+                      color:  HexColor(widget.AppTheme_['PanelBgColor']),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15.0),
                       ),
@@ -99,7 +100,7 @@ class _AfterPaymentPageState extends State<AfterPaymentPage> {
                                     enableCaching: false,
                                     textStyle: TextStyle(
                                         fontSize: 18,
-                                        color: HexColor(widget.AppTheme_['SecondaryBgColor'])),
+                                        color: HexColor(widget.AppTheme_['ContentFontColor'])),
                                   ) /* Text(
                                           widget.txnDetail['Message'],
                                           style: TextStyle(
@@ -127,6 +128,7 @@ class _AfterPaymentPageState extends State<AfterPaymentPage> {
                                           Text(
                                             "Ok",
                                             style: TextStyle(
+                                              color: HexColor(widget.AppTheme_['ButtonFontColor']),
                                                 fontSize: 18.0,
                                                 fontFamily: "Montserrat",
                                                 fontWeight: FontWeight.bold),
@@ -144,7 +146,7 @@ class _AfterPaymentPageState extends State<AfterPaymentPage> {
                                       },
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor:
-                                            Color.fromARGB(255, 6, 105, 199),
+                                            HexColor(widget.AppTheme_['ButtonBgColor']),
                                         textStyle:
                                             TextStyle(color: Colors.white),
                                         shape: RoundedRectangleBorder(

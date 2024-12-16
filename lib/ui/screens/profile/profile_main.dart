@@ -30,7 +30,7 @@ class _ProfileMainState extends State<ProfileMain> {
         appBar: AppBar(
           toolbarHeight: 70,
           elevation: 0,
-          backgroundColor: HexColor(AppTheme_['SecondaryBgColor']),
+          backgroundColor: HexColor(AppTheme_['AppHeaderBgColor']),
           //titleSpacing: -5,
           automaticallyImplyLeading: false,
           centerTitle: true,
@@ -56,16 +56,16 @@ class _ProfileMainState extends State<ProfileMain> {
                       //margin: EdgeInsets.only(left: 10),
                       decoration: BoxDecoration(
                         border: Border.all(
-                            color: HexColor(AppTheme_['SecondaryFrColor']),
+                            color: HexColor(AppTheme_['IconOutlineColor']),
                             width: 2),
-                        color: Colors.white,
+                        color: HexColor(AppTheme_['IconBgColor']),
                         shape: BoxShape.circle,
                       ),
                       child: Padding(
                           padding: EdgeInsets.all(3),
                           child: Icon(
                             Icons.arrow_back_ios_new,
-                            color: HexColor(AppTheme_['SecondaryFrColor']),
+                            color: HexColor(AppTheme_['IconOutlineColor']),
                             size: 30,
                           )))),
               Padding(
@@ -73,7 +73,7 @@ class _ProfileMainState extends State<ProfileMain> {
                 child: Text(
                   "Profile",
                   style: TextStyle(
-                      color: HexColor(AppTheme_['SecondaryFrColor']),
+                      color: HexColor(AppTheme_['AppHeaderFontColor']),
                       fontSize: 20,
                       fontWeight: FontWeight.bold),
                 ),
@@ -89,8 +89,8 @@ class _ProfileMainState extends State<ProfileMain> {
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
             colors: [
-              HexColor(AppTheme_['PrimaryBgColor']),
-              HexColor(AppTheme_['PrimaryBgColor']),
+              HexColor(AppTheme_['AppBgColor']),
+              HexColor(AppTheme_['AppBgColor']),
             ],
           )),
           child: SizedBox(
@@ -120,7 +120,7 @@ class _ProfileMainState extends State<ProfileMain> {
                               )
                             else
                               CircleAvatar(
-                                backgroundColor: HexColor(AppTheme_['SecondaryBgColor']),
+                                backgroundColor: HexColor(AppTheme_['IconBgColor']),
                                 radius: 72,
                                 child: Text(
                                   CommonFunctions.getInitials(
@@ -128,7 +128,7 @@ class _ProfileMainState extends State<ProfileMain> {
                                       .toUpperCase(),
                                   style: TextStyle(
                                       fontSize: 32.0,
-                                      color: Colors.white,
+                                      color: HexColor(AppTheme_['IconOutlineColor']),
                                       letterSpacing: 2.0,
                                       fontWeight: FontWeight.w900),
                                 ),
@@ -153,13 +153,13 @@ class _ProfileMainState extends State<ProfileMain> {
                     Text(
                       profileData["Name"],
                       style:
-                          TextStyle(fontSize: 20,color:HexColor(AppTheme_['PrimaryFrColor']), fontWeight: FontWeight.bold),
+                          TextStyle(fontSize: 20,color:HexColor(AppTheme_['TitleFontColor']), fontWeight: FontWeight.bold),
                     ),
                     Text(
                       "Wallet Ballance",
                       style: TextStyle(
                           fontSize: 14.0,
-                          color: HexColor(AppTheme_['PrimaryFrColor']),
+                          color: HexColor(AppTheme_['SubTitleFontColor']),
                           letterSpacing: 2.0,
                           fontWeight: FontWeight.w300),
                     ),
@@ -172,6 +172,7 @@ class _ProfileMainState extends State<ProfileMain> {
                           fontWeight: FontWeight.bold),
                     ),
                     Card(
+                      color:  HexColor(AppTheme_['PanelBgColor']),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15.0),
                         ),
@@ -203,6 +204,7 @@ class _ProfileMainState extends State<ProfileMain> {
                                           Text(
                                             "ID",
                                             style: TextStyle(
+                                              color: HexColor(AppTheme_['SubTitleFontColor']),
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.bold),
                                           ),
@@ -213,7 +215,7 @@ class _ProfileMainState extends State<ProfileMain> {
                                                 ? "" + profileData["MemberId"]!
                                                 : "--",
                                             style: TextStyle(
-                                                color: Colors.grey,
+                                                color: HexColor(AppTheme_['ContentFontColor']),
                                                 fontSize: 13,
                                                 fontWeight: FontWeight.bold),
                                           ),
@@ -244,6 +246,7 @@ class _ProfileMainState extends State<ProfileMain> {
                                           Text(
                                             "Email",
                                             style: TextStyle(
+                                              color: HexColor(AppTheme_['SubTitleFontColor']),
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.bold),
                                           ),
@@ -253,7 +256,7 @@ class _ProfileMainState extends State<ProfileMain> {
                                                 ? "" + profileData["Email"]!
                                                 : "--",
                                             style: TextStyle(
-                                                color: Colors.grey,
+                                                color: HexColor(AppTheme_['ContentFontColor']),
                                                 fontSize: 13,
                                                 fontWeight: FontWeight.bold),
                                           ),
@@ -284,6 +287,7 @@ class _ProfileMainState extends State<ProfileMain> {
                                           Text(
                                             "Contact",
                                             style: TextStyle(
+                                              color: HexColor(AppTheme_['SubTitleFontColor']),
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.bold),
                                           ),
@@ -294,7 +298,7 @@ class _ProfileMainState extends State<ProfileMain> {
                                                 ? "" + profileData["ContactNo"]!
                                                 : "--",
                                             style: TextStyle(
-                                                color: Colors.grey,
+                                                color: HexColor(AppTheme_['ContentFontColor']),
                                                 fontSize: 13,
                                                 fontWeight: FontWeight.bold),
                                           ),
@@ -325,6 +329,7 @@ class _ProfileMainState extends State<ProfileMain> {
                                           Text(
                                             "Relationship",
                                             style: TextStyle(
+                                              color: HexColor(AppTheme_['SubTitleFontColor']),
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.bold),
                                           ),
@@ -338,7 +343,7 @@ class _ProfileMainState extends State<ProfileMain> {
                                                     profileData["RelationShip"]!
                                                 : "--",
                                             style: TextStyle(
-                                                color: Colors.grey,
+                                                color: HexColor(AppTheme_['ContentFontColor']),
                                                 fontSize: 13,
                                                 fontWeight: FontWeight.bold),
                                           ),
@@ -371,6 +376,7 @@ class _ProfileMainState extends State<ProfileMain> {
                                             Text(
                                               "Grade",
                                               style: TextStyle(
+                                                color: HexColor(AppTheme_['SubTitleFontColor']),
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.bold),
                                             ),
@@ -380,7 +386,7 @@ class _ProfileMainState extends State<ProfileMain> {
                                                   ? "" + profileData["Grade"]!
                                                   : "--",
                                               style: TextStyle(
-                                                  color: Colors.grey,
+                                                  color: HexColor(AppTheme_['ContentFontColor']),
                                                   fontSize: 13,
                                                   fontWeight: FontWeight.bold),
                                             ),
@@ -413,6 +419,7 @@ class _ProfileMainState extends State<ProfileMain> {
                                             Text(
                                               "Year",
                                               style: TextStyle(
+                                                color: HexColor(AppTheme_['SubTitleFontColor']),
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.bold),
                                             ),
@@ -422,7 +429,7 @@ class _ProfileMainState extends State<ProfileMain> {
                                                   ? "" + profileData["Year"]!
                                                   : "--",
                                               style: TextStyle(
-                                                  color: Colors.grey,
+                                                  color: HexColor(AppTheme_['ContentFontColor']),
                                                   fontSize: 13,
                                                   fontWeight: FontWeight.bold),
                                             ),
@@ -455,6 +462,7 @@ class _ProfileMainState extends State<ProfileMain> {
                                             Text(
                                               "Class",
                                               style: TextStyle(
+                                                color: HexColor(AppTheme_['SubTitleFontColor']),
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.bold),
                                             ),
@@ -464,7 +472,7 @@ class _ProfileMainState extends State<ProfileMain> {
                                                   ? "" + profileData["Class"]!
                                                   : "--",
                                               style: TextStyle(
-                                                  color: Colors.grey,
+                                                  color: HexColor(AppTheme_['ContentFontColor']),
                                                   fontSize: 13,
                                                   fontWeight: FontWeight.bold),
                                             ),
