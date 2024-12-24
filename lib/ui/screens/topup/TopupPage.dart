@@ -224,7 +224,7 @@ class _TopupPageState extends State<TopupPage> {
                         ),
                         onPressed: data.topupTotal > 0
                             ? () {
-                                showPaymentSelectOption(
+                                showPaymentSelectOptionForTopup(
                                     context,
                                     "Choose payment type",
                                     data.paymentProvidersList,

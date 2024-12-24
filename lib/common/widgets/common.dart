@@ -333,8 +333,8 @@ void openNotificationMemberBottomSheet(
       });
 }
 
-void showPaymentSelectOption(BuildContext buildContext, titleText, paymentList,
-    topupAmount, profileData, paymentFor, AppTheme_) {
+void showPaymentSelectOptionForTopup(BuildContext buildContext, titleText,
+    List paymentList, topupAmount, profileData, paymentFor, AppTheme_) {
   var selectedPaymentMethod = {};
   var checkedValue = false;
   final List<String> modalList = [
@@ -574,20 +574,21 @@ void showPaymentSelectOption(BuildContext buildContext, titleText, paymentList,
                               ),
                             ),
                           if (selectedPaymentMethod['IsWallet'] == 1 &&
-                            selectedPaymentMethod['Balance'] < topupAmount)
-                          Container(
-                              margin: EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 10),
-                              child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                        "Your balance is less than purchase amount",
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            color: Colors.red,
-                                            fontWeight: FontWeight.bold)),
-                                  ])),
+                              selectedPaymentMethod['Balance'] < topupAmount)
+                            Container(
+                                margin: EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 10),
+                                child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                          "Your balance is less than purchase amount",
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              color: Colors.red,
+                                              fontWeight: FontWeight.bold)),
+                                    ])),
                           Container(
                               alignment: Alignment.bottomRight,
                               margin: EdgeInsets.all(10),
@@ -604,8 +605,8 @@ void showPaymentSelectOption(BuildContext buildContext, titleText, paymentList,
                                           style: TextStyle(
                                               fontSize: 18.0,
                                               fontFamily: "Montserrat",
-                                              color: HexColor(AppTheme_[
-                                                  'ButtonFontColor']),
+                                              color: HexColor(
+                                                  AppTheme_['ButtonFontColor']),
                                               fontWeight: FontWeight.bold),
                                         ),
                                         Icon(Icons.arrow_forward_ios,
@@ -638,8 +639,8 @@ void showPaymentSelectOption(BuildContext buildContext, titleText, paymentList,
                                           }
                                         : null,
                                     style: ElevatedButton.styleFrom(
-                                      backgroundColor: HexColor(
-                                          AppTheme_['ButtonBgColor']),
+                                      backgroundColor:
+                                          HexColor(AppTheme_['ButtonBgColor']),
                                       textStyle: TextStyle(
                                           color: HexColor(
                                               AppTheme_['ButtonFontColor'])),
@@ -726,6 +727,340 @@ void showPaymentSelectOption(BuildContext buildContext, titleText, paymentList,
                               ),
                             )*/
                           ,
+                        ]),
+                      ));
+            });
+      });
+}
+
+void showPaymentSelectOptionForOrder(
+    BuildContext buildContext,
+    titleText,
+    List paymentList,
+    paymentSetting,
+    orderAmount,
+    profileData,
+    paymentFor,
+    AppTheme_) {
+  var selectedPaymentMethod = {};
+  var checkedValue = false;
+  var disableGatewayPayments = false;
+  var disableWallet = false;
+  var walletPayment = {};
+  var actualOrderAmount = orderAmount;
+  var deductAmountFromWallet = 0;
+  var selectWallet = false;
+  List pl = List.from(paymentList);
+  if (paymentSetting['MixedModePayment']) {
+    walletPayment =
+        paymentList.where((element) => element['IsWallet'] == 1).toList()[0];
+    pl.removeWhere((element) => element['IsWallet'] == 1);
+   // orderAmount = 65;
+    /*  if (paymentSetting['MustDetectFromWallet']) {
+      disableWallet = true;
+      if (walletPayment['Balance'] >= orderAmount) {
+        selectedPaymentMethod = walletPayment;
+        disableGatewayPayments = true;
+        checkedValue = true;
+      } else {
+        orderAmount = orderAmount - walletPayment['Balance'];
+        deductAmountFromWallet = walletPayment['Balance'];
+        disableGatewayPayments = false;
+        checkedValue = false;
+      }
+    } */
+
+    print("walletPayment");
+    print(walletPayment);
+    print(pl);
+  }
+
+  showModalBottomSheet(
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(60.0))),
+      context: buildContext,
+      backgroundColor: Colors.white,
+      isScrollControlled: true,
+      builder: (BuildContext context) {
+        return BottomSheet(
+            enableDrag: true,
+            onClosing: () {},
+            builder: (BuildContext context) {
+              return StatefulBuilder(
+                  builder: (BuildContext context, setState) =>
+                      SingleChildScrollView(
+                        child:
+                            Column(mainAxisSize: MainAxisSize.min, children: <
+                                Widget>[
+                          AppBar(
+                            title: Text(
+                              titleText,
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 16),
+                            ),
+                            elevation: 1,
+                            backgroundColor: Colors.white,
+                            automaticallyImplyLeading: false,
+                            actions: [
+                              IconButton(
+                                icon: Icon(Icons.close_sharp,
+                                    color: Colors.black),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                            ],
+                          ),
+                          if (paymentSetting['MixedModePayment'] &&
+                              walletPayment != {})
+                            Container(
+                              color: Colors.white,
+                              height: 45,
+                              child: ListTile(
+                                enabled: disableWallet ? false : true,
+                                horizontalTitleGap: -8,
+                                title: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        walletPayment["Name"],
+                                        style: TextStyle(fontSize: 22),
+                                      ),
+                                      Text(
+                                        "Wallet Balance = ${profileData['CurrencyCode']} " +
+                                            walletPayment["Balance"]
+                                                .toStringAsFixed(2),
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            color: HexColor(
+                                                AppSettings.colorCurrencyCode),
+                                            fontWeight: FontWeight.bold),
+                                      )
+                                    ]),
+                                leading: Icon(
+                                  Icons.check_box_rounded,
+                                  size: 25,
+                                  color: selectWallet
+                                      ? HexColor(AppTheme_['IconOutlineColor'])
+                                      : Color.fromARGB(102, 158, 158, 158),
+                                ),
+                                trailing: Container(
+                                  height: 45,
+                                  width: 45,
+                                  child: walletPayment["ImgPathUrl"] != ""
+                                      ? Image.network(
+                                          walletPayment["ImgPathUrl"])
+                                      : null,
+                                ),
+                                onTap: () {
+                                  setState(() {
+                                    if (selectWallet) {
+                                      selectWallet = false;
+                                      orderAmount = actualOrderAmount;
+                                      if (selectedPaymentMethod['IsWallet'] ==
+                                          1) {
+                                        selectedPaymentMethod = {};
+                                        checkedValue = false;
+                                      }
+                                      disableGatewayPayments = false;
+                                    } else {
+                                      selectWallet = true;
+                                      if (walletPayment['Balance'] >=
+                                          orderAmount) {
+                                        selectedPaymentMethod = walletPayment;
+                                        disableGatewayPayments = true;
+                                        checkedValue = true;
+                                      } else {
+                                        orderAmount = orderAmount -
+                                            walletPayment['Balance'];
+                                        deductAmountFromWallet =
+                                            walletPayment['Balance'];
+                                        disableGatewayPayments = false;
+
+                                        checkedValue = false;
+                                        print("selectedPaymentMethod");
+                                        print(selectedPaymentMethod);
+                                        if (selectedPaymentMethod['IsWallet'] ==
+                                            0) {
+                                         
+                                          checkedValue = true;
+                                        }
+                                      }
+                                    }
+
+                                    /* selectedPaymentMethod = walletPayment;
+                                    if (selectedPaymentMethod['IsWallet'] ==
+                                        1) {
+                                      selectedPaymentMethod['Balance'] <
+                                              topupAmount
+                                          ? checkedValue = false
+                                          : checkedValue = true;
+                                    } else {
+                                      checkedValue = true;
+                                    }
+                                    print(selectedPaymentMethod); */
+                                  });
+                                },
+                              ),
+                            ),
+                          ListView.builder(
+                              physics: NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: pl.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return Column(children: <Widget>[
+                                  Container(
+                                    color: Colors.white,
+                                    height: 45,
+                                    child: ListTile(
+                                      enabled:
+                                          disableGatewayPayments ? false : true,
+                                      horizontalTitleGap: -8,
+                                      title: pl[index]["IsWallet"] == 1
+                                          ? Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                  Text(
+                                                    pl[index]["Name"],
+                                                    style:
+                                                        TextStyle(fontSize: 22),
+                                                  ),
+                                                  Text(
+                                                    "Wallet Balance = ${profileData['CurrencyCode']} " +
+                                                        pl[index]["Balance"]
+                                                            .toStringAsFixed(2),
+                                                    style: TextStyle(
+                                                        fontSize: 12,
+                                                        color: HexColor(AppSettings
+                                                            .colorCurrencyCode),
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  )
+                                                ])
+                                          : Text(
+                                              pl[index]["Name"],
+                                              style: TextStyle(fontSize: 22),
+                                            ),
+                                      leading: Icon(
+                                        Icons.check_circle_rounded,
+                                        size: 25,
+                                        color: selectedPaymentMethod[
+                                                    'PayMode'] ==
+                                                pl[index]['PayMode']
+                                            ? HexColor(
+                                                AppTheme_['IconOutlineColor'])
+                                            : Color.fromARGB(
+                                                102, 158, 158, 158),
+                                      ),
+                                      trailing: Container(
+                                        height: 45,
+                                        width: 45,
+                                        child: pl[index]["ImgPathUrl"] != ""
+                                            ? Image.network(
+                                                pl[index]["ImgPathUrl"])
+                                            : null,
+                                      ),
+                                      onTap: () {
+                                        setState(() {
+                                          selectedPaymentMethod = pl[index];
+                                          if (selectedPaymentMethod[
+                                                  'IsWallet'] ==
+                                              1) {
+                                            selectedPaymentMethod['Balance'] <
+                                                    orderAmount
+                                                ? checkedValue = false
+                                                : checkedValue = true;
+                                          } else {
+                                            checkedValue = true;
+                                          }
+                                          print(selectedPaymentMethod);
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                  Divider(
+                                    height: 1,
+                                  ),
+                                ]);
+                              }),
+                          if (selectedPaymentMethod['IsWallet'] == 1 &&
+                              selectedPaymentMethod['Balance'] < orderAmount)
+                            Container(
+                                margin: EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 10),
+                                child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                          "Your balance is less than purchase amount",
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              color: Colors.red,
+                                              fontWeight: FontWeight.bold)),
+                                    ])),
+                          Container(
+                              alignment: Alignment.bottomRight,
+                              margin: EdgeInsets.all(10),
+                              child: SizedBox(
+                                  height: 45,
+                                  child: ElevatedButton(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(
+                                          "Next",
+                                          style: TextStyle(
+                                              fontSize: 18.0,
+                                              fontFamily: "Montserrat",
+                                              color: HexColor(
+                                                  AppTheme_['ButtonFontColor']),
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Icon(Icons.arrow_forward_ios,
+                                            color: HexColor(
+                                                AppTheme_['ButtonFontColor']))
+                                      ],
+                                    ),
+                                    onPressed: checkedValue == true &&
+                                            selectedPaymentMethod != {}
+                                        ? () {
+                                            Navigator.of(buildContext).pop();
+                                            CommonUtil().getGatewayDetails(
+                                                buildContext,
+                                                selectedPaymentMethod[
+                                                    'RefBranchSeqId'],
+                                                selectedPaymentMethod[
+                                                    'SettingsSeqId'],
+                                                orderAmount,
+                                                profileData,
+                                                selectedPaymentMethod[
+                                                    'IsWallet'],
+                                                selectedPaymentMethod[
+                                                            'Balance'] !=
+                                                        null
+                                                    ? selectedPaymentMethod[
+                                                        'Balance']
+                                                    : 0,
+                                                paymentFor,
+                                                AppTheme_);
+                                          }
+                                        : null,
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor:
+                                          HexColor(AppTheme_['ButtonBgColor']),
+                                      textStyle: TextStyle(
+                                          color: HexColor(
+                                              AppTheme_['ButtonFontColor'])),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(60.0)),
+                                    ),
+                                  )))
                         ]),
                       ));
             });
@@ -986,15 +1321,16 @@ void showCustomPaymentAlert(BuildContext buildContext, gatewayDetail,
                                     CheckboxListTile(
                                       checkColor: HexColor(
                                           AppTheme_['IconOutlineColor']),
-                                      activeColor: HexColor(
-                                          AppTheme_['IconBgColor']),
+                                      activeColor:
+                                          HexColor(AppTheme_['IconBgColor']),
                                       contentPadding: EdgeInsets.zero,
                                       title: HtmlWidget(
-                              gatewayDetail['TnC_Desc'],
-                              onTapUrl: (url) => launchUrl(Uri.parse(url)),
-                              enableCaching: false,
-                              textStyle: TextStyle(fontSize: 16),
-                            ),
+                                        gatewayDetail['TnC_Desc'],
+                                        onTapUrl: (url) =>
+                                            launchUrl(Uri.parse(url)),
+                                        enableCaching: false,
+                                        textStyle: TextStyle(fontSize: 16),
+                                      ),
                                       /* title: Text(gatewayDetail['TnC_Desc'],
                                           style: TextStyle(
                                               fontSize: 12,
@@ -1051,7 +1387,9 @@ void showCustomPaymentAlert(BuildContext buildContext, gatewayDetail,
                                   children: [
                                     Text(
                                         "The eWallet has a top-up limitation with a minimum amount of " +
-                                          profileData['CurrencyCode']+' '+gatewayDetail['TopMinAmt']
+                                            profileData['CurrencyCode'] +
+                                            ' ' +
+                                            gatewayDetail['TopMinAmt']
                                                 .toString(),
                                         style: TextStyle(
                                             fontSize: 15,
@@ -1068,7 +1406,9 @@ void showCustomPaymentAlert(BuildContext buildContext, gatewayDetail,
                                   children: [
                                     Text(
                                         "The eWallet has a top-up limitation with a maximum amount of " +
-                                            profileData['CurrencyCode']+' '+gatewayDetail['TopMaxAmt']
+                                            profileData['CurrencyCode'] +
+                                            ' ' +
+                                            gatewayDetail['TopMaxAmt']
                                                 .toString(),
                                         style: TextStyle(
                                             fontSize: 15,
@@ -1142,9 +1482,9 @@ void showCustomPaymentAlert(BuildContext buildContext, gatewayDetail,
                                           style: ElevatedButton.styleFrom(
                                             backgroundColor: HexColor(
                                                 AppTheme_['ButtonBgColor']),
-                                            textStyle:
-                                                TextStyle(color: HexColor(AppTheme_[
-                                                        'ButtonFontColor'])),
+                                            textStyle: TextStyle(
+                                                color: HexColor(AppTheme_[
+                                                    'ButtonFontColor'])),
                                             shape: RoundedRectangleBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(
@@ -1217,9 +1557,9 @@ void showCustomPaymentAlert(BuildContext buildContext, gatewayDetail,
                                           style: ElevatedButton.styleFrom(
                                             backgroundColor: HexColor(
                                                 AppTheme_['ButtonBgColor']),
-                                            textStyle:
-                                                TextStyle(color: HexColor(
-                                                AppTheme_['ButtonFontColor'])),
+                                            textStyle: TextStyle(
+                                                color: HexColor(AppTheme_[
+                                                    'ButtonFontColor'])),
                                             shape: RoundedRectangleBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(

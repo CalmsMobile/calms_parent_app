@@ -61,6 +61,8 @@ class MySettingsListener with ChangeNotifier {
   List _notificationMembersList = [];
 
   var _appTheme;
+  var _calendarColorCodes = {};
+  var _paymentSetting = {};
 
   UnmodifiableListView<dynamic> get familyList =>
       UnmodifiableListView(_familyList);
@@ -144,6 +146,8 @@ class MySettingsListener with ChangeNotifier {
       UnmodifiableMapView(_driverDetails == null ? {} : _driverDetails);
 
   UnmodifiableMapView get appTheme => UnmodifiableMapView(_appTheme);
+   UnmodifiableMapView get calendarColorCodes => UnmodifiableMapView(_calendarColorCodes);
+   UnmodifiableMapView get paymentSetting => UnmodifiableMapView(_paymentSetting);
 
   updateEntryToDashboardFamilyList(List familyList, loginUserSeqId) {
     _familyList = familyList;
@@ -207,18 +211,21 @@ class MySettingsListener with ChangeNotifier {
     //list = [];
     List<Appointment> appointments = <Appointment>[];
     print(list);
-    print(colorCodes);
+    
+    if (colorCodes != {}) {
+      print(colorCodes);
+      this._calendarColorCodes = colorCodes;
+    }
     if (list.length > 0) {
       for (var i = 0; i < list.length; i++) {
         var s = DateTime.parse(list[i]['EventDate'].substring(0, 10));
-          var e = DateTime.parse(list[i]['EventDate'].substring(0, 10));
+        var e = DateTime.parse(list[i]['EventDate'].substring(0, 10));
         if (list[i]['IsTopup'] == 1) {
-         
           appointments.add(Appointment(
             startTime: s,
             endTime: e,
             subject: 'Topup',
-            color:HexColor("#2D3E50"),
+            color: HexColor(colorCodes['Topup']),
           ));
         }
         if (list[i]['IsPurchase'] == 1) {
@@ -226,21 +233,36 @@ class MySettingsListener with ChangeNotifier {
             startTime: s,
             endTime: e,
             subject: 'Purchase',
-            color:HexColor("#F3C416"),
+            color: HexColor(colorCodes['Purchase']),
           ));
         }
         if (list[i]['IsHoliday'] == 1) {
           appointments.add(Appointment(
-           startTime: s,
+            startTime: s,
             endTime: e,
             subject: 'Holiday',
-            color:HexColor("#E94D40"),
+            color: HexColor(colorCodes['Holiday']),
           ));
         }
-        
+        if (list[i]['IsAbsent'] == 1) {
+          appointments.add(Appointment(
+            startTime: s,
+            endTime: e,
+            subject: 'Absent',
+            color: HexColor(colorCodes['Absent']),
+          ));
+        }
+        if (list[i]['IsAbsent'] == 0) {
+          appointments.add(Appointment(
+            startTime: s,
+            endTime: e,
+            subject: 'Present',
+            color: HexColor(colorCodes['Present']),
+          ));
+        }
       }
       //print(appointments);
-    }else{
+    } else {
       _calendarIndicationDataList = [];
     }
     _calendarIndicationDataList = [...appointments];
@@ -310,10 +332,12 @@ class MySettingsListener with ChangeNotifier {
     print("_paymentProvidersList updated");
   }
 
-  updateMealOrderPaymentProvidersList(List paymentProvidersList) {
+  updateMealOrderPaymentProvidersList(List paymentProvidersList,PaymentSetting) {
     //paymentProvidersList.removeWhere((element) => element['IsWallet'] == 1);
     _paymentProvidersList = paymentProvidersList;
+    _paymentSetting = PaymentSetting;
     print("_paymentProvidersList updated");
+    print(paymentSetting);
   }
 
   updatePOConfigForUser(

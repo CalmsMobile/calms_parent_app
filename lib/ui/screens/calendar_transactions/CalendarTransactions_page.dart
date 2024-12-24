@@ -315,7 +315,9 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                               ),
                             ));
                       }),
-                      Container(
+                      Consumer<MySettingsListener>(
+                            builder: (context, data, settingsDta) {
+                          return Container(
                         margin:
                             EdgeInsets.symmetric(vertical: 5, horizontal: 20),
                         padding: EdgeInsets.symmetric(vertical: 10),
@@ -338,7 +340,7 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                                         height: 15,
                                         padding: EdgeInsets.only(top: 0),
                                         decoration: BoxDecoration(
-                                            color: HexColor("#F3C416"),
+                                            color: HexColor(data.calendarColorCodes['Purchase']),
                                             borderRadius:
                                                 BorderRadius.circular(60.0)),
                                       )),
@@ -364,7 +366,7 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                                         height: 15,
                                         padding: EdgeInsets.only(top: 0),
                                         decoration: BoxDecoration(
-                                            color: HexColor("#2D3E50"),
+                                            color: HexColor(data.calendarColorCodes['Topup']),
                                             borderRadius:
                                                 BorderRadius.circular(60.0)),
                                       )),
@@ -390,7 +392,7 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                                         height: 15,
                                         padding: EdgeInsets.only(top: 0),
                                         decoration: BoxDecoration(
-                                            color: HexColor("#E94D40"),
+                                            color: HexColor(data.calendarColorCodes['Holiday']),
                                             borderRadius:
                                                 BorderRadius.circular(60.0)),
                                       )),
@@ -407,13 +409,67 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                                       )),
                                     ]),
                                   ),
+                                  RichText(
+                                    textAlign: TextAlign.center,
+                                    text: TextSpan(children: [
+                                      WidgetSpan(
+                                          child: Container(
+                                        width: 15,
+                                        height: 15,
+                                        padding: EdgeInsets.only(top: 0),
+                                        decoration: BoxDecoration(
+                                            color: HexColor(data.calendarColorCodes['Present']),
+                                            borderRadius:
+                                                BorderRadius.circular(60.0)),
+                                      )),
+                                      WidgetSpan(
+                                          child: Container(
+                                        padding:
+                                            EdgeInsets.only(bottom: 0, left: 5),
+                                        child: Text(
+                                          "Present",
+                                          style: TextStyle(
+                                              color: HexColor(widget.arg['AppTheme_']['SubTitleFontColor']),
+                                              fontSize: 12),
+                                        ),
+                                      )),
+                                    ]),
+                                  ),
+                                   RichText(
+                                    textAlign: TextAlign.center,
+                                    text: TextSpan(children: [
+                                      WidgetSpan(
+                                          child: Container(
+                                        width: 15,
+                                        height: 15,
+                                        padding: EdgeInsets.only(top: 0),
+                                        decoration: BoxDecoration(
+                                            color: HexColor(data.calendarColorCodes['Absent']),
+                                            borderRadius:
+                                                BorderRadius.circular(60.0)),
+                                      )),
+                                      WidgetSpan(
+                                          child: Container(
+                                        padding:
+                                            EdgeInsets.only(bottom: 0, left: 5),
+                                        child: Text(
+                                          "Absent",
+                                          style: TextStyle(
+                                              color: HexColor(widget.arg['AppTheme_']['SubTitleFontColor']),
+                                              fontSize: 12),
+                                        ),
+                                      )),
+                                    ]),
+                                  ),
+                                
                                 ],
                               ),
                             ),
                           ],
                         ),
-                      ),
-                      if (!hideBottomDetailsCards)
+                      );
+                            }),
+                            if (!hideBottomDetailsCards)
                         Consumer<MySettingsListener>(
                             builder: (context, data, settingsDta) {
                           return Card(
@@ -503,7 +559,7 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                               child: Column(
                                 children: [
                                   ListTile(
-                                    title: Text("Holiday"),
+                                    title: Text("Attendance & Holiday"),
                                     //trailing: Text("(Last 30 days)"),
                                     tileColor: HexColor(widget.arg['AppTheme_']
                                         ['PanelHeaderBgColor']),

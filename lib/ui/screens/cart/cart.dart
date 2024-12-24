@@ -740,10 +740,14 @@ class _CartPageState extends State<CartPage> {
                                     ),
                                     onPressed: data.cartTotal > 0
                                         ? () {
-                                            showPaymentSelectOption(
+                                          if(data.paymentSetting['MixedModePayment']){
+
+                                          }
+                                            showPaymentSelectOptionForOrder(
                                                 context,
                                                 "Choose payment type",
                                                 data.paymentProvidersList,
+                                                data.paymentSetting,
                                                 data.cartTotal,
                                                 widget.profileData,
                                                 AppSettings.paymentTypeOrder,

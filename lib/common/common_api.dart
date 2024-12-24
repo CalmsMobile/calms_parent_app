@@ -325,7 +325,15 @@ class CommonUtil {
       "TopupHeader": paymentFor == AppSettings.paymentTypeTopup ? Header : [],
       "TopupDetails": paymentFor == AppSettings.paymentTypeTopup ? Details : [],
       "MFPData": [],
-      "MixedPayment": []
+      "MixedPayment": IsWallet == 1
+          ? []
+          : [
+              {
+                "SettingId": 1001,
+                "Amount": 1,
+                "WalletAmount": 1
+              }
+            ]
     };
     var ParamData = {
       "OrderData": jsonEncode(OrderData),
@@ -341,7 +349,7 @@ class CommonUtil {
       "Email": profileData['Email'],
       "RefUserSeqId": profileData['RefUserSeqId'],
       "RefMemberTypeSeqId": profileData['RefMemberTypeSeqId'],
-      "IsTopup": "1",
+      "IsTopup":paymentFor == AppSettings.paymentTypeTopup? 1:0,
       "WalletAmount": "0"
     };
     print(ParamData);
@@ -669,7 +677,7 @@ class CommonUtil {
   successGetCartPageSettings(BuildContext context, response, profileData) {
     if (response['Table'][0]['code'] == 10 && response['Table1'][0] != null) {
       getGatewayListForCart(context, profileData['RefBranchSeqId'],
-          profileData['RefUserSeqId'], profileData['RefMemberTypeSeqId']);
+          profileData['RefUserSeqId'], profileData['RefMemberTypeSeqId'],response['Table1'][0]);
       print("successGetCartPageSettings");
       context.read<MySettingsListener>().clearFinalCartList();
       List cartList = context.read<MySettingsListener>().cartList;
@@ -740,7 +748,7 @@ class CommonUtil {
   }
 
   Future<void> getGatewayListForCart(
-      context, RefBranchSeqId, RefUserSeqId, RefMemberTypeSeqId) async {
+      context, RefBranchSeqId, RefUserSeqId, RefMemberTypeSeqId, PaymentSetting) async {
     var ParamData = {
       "RefBranchSeqId": RefBranchSeqId,
       "RefUserSeqId": RefUserSeqId,
@@ -755,16 +763,16 @@ class CommonUtil {
       false,
     );
     res
-        .then((response) => {successgetGatewayListForCart(context, response)})
+        .then((response) => {successgetGatewayListForCart(context, response,PaymentSetting)})
         .onError((error, stackTrace) => {authorizedPostRequestError(error)});
   }
 
-  successgetGatewayListForCart(BuildContext context, response) {
+  successgetGatewayListForCart(BuildContext context, response,PaymentSetting) {
     if (response['Table'][0]['code'] == 10) {
       print("successgetGatewayListForCart");
       context
           .read<MySettingsListener>()
-          .updateMealOrderPaymentProvidersList(response['Table1']);
+          .updateMealOrderPaymentProvidersList(response['Table1'],PaymentSetting);
     }
   }
 
@@ -798,12 +806,15 @@ class CommonUtil {
       true,
     );
     res
-        .then((response) =>
-            {successCancelWholeTerm(context, response, callbackFun,RefUserSeqId)})
+        .then((response) => {
+              successCancelWholeTerm(
+                  context, response, callbackFun, RefUserSeqId)
+            })
         .onError((error, stackTrace) => {authorizedPostRequestError(error)});
   }
 
-  successCancelWholeTerm(BuildContext context, response, Function callbackFun,RefUserSeqId) {
+  successCancelWholeTerm(
+      BuildContext context, response, Function callbackFun, RefUserSeqId) {
     if (response['Table'][0]['code'] == 10) {
       getEntryToDashboard(context, RefUserSeqId, false);
       MyCustomAlertDialog().mealCustomAlert(
@@ -869,13 +880,15 @@ class CommonUtil {
       true,
     );
     res
-        .then((response) =>
-            {successCancelTermMealItem(context, response, callbackFun, index,RefUserSeqId)})
+        .then((response) => {
+              successCancelTermMealItem(
+                  context, response, callbackFun, index, RefUserSeqId)
+            })
         .onError((error, stackTrace) => {authorizedPostRequestError(error)});
   }
 
-  successCancelTermMealItem(
-      BuildContext context, response, Function callbackFun, index,RefUserSeqId) {
+  successCancelTermMealItem(BuildContext context, response,
+      Function callbackFun, index, RefUserSeqId) {
     if (response['Table'][0]['code'] == 10) {
       getEntryToDashboard(context, RefUserSeqId, false);
       MyCustomAlertDialog().mealCustomAlert(
@@ -939,13 +952,15 @@ class CommonUtil {
       true,
     );
     res
-        .then((response) =>
-            {successCancelDailyMealItem(context, response, callbackFun, index,RefUserSeqId)})
+        .then((response) => {
+              successCancelDailyMealItem(
+                  context, response, callbackFun, index, RefUserSeqId)
+            })
         .onError((error, stackTrace) => {authorizedPostRequestError(error)});
   }
 
-  successCancelDailyMealItem(
-      BuildContext context, response, Function callbackFun, index,RefUserSeqId) {
+  successCancelDailyMealItem(BuildContext context, response,
+      Function callbackFun, index, RefUserSeqId) {
     if (response['Table'][0]['code'] == 10) {
       getEntryToDashboard(context, RefUserSeqId, false);
       MyCustomAlertDialog().mealCustomAlert(
