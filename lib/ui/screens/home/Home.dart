@@ -187,7 +187,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   var profileData = {};
   List<Appointment> _appointmentDetails = <Appointment>[];
 
-  var AppTheme_;
+  var AppTheme_ = {};
 
   void calendarTapped(CalendarTapDetails calendarTapDetails) {
     if (calendarTapDetails.targetElement == CalendarElement.calendarCell) {
@@ -240,7 +240,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       appBar: AppBar(
         toolbarHeight: 70,
         elevation: 0,
-        backgroundColor: HexColor(AppTheme_['AppHeaderBgColor']),
+        backgroundColor: AppTheme_ != null && AppTheme_['AppHeaderBgColor'] != null
+          ? HexColor(AppTheme_['AppHeaderBgColor'])
+          : Colors.amber,
         //titleSpacing: -5,
         automaticallyImplyLeading: false,
         centerTitle: true,

@@ -243,7 +243,7 @@ class CommonUtil {
   }
 
   Future<void> getGatewayDetails(context, RefBranchSeqId, RefSettingSeqId,
-      topupTotal, profileData, Balance, IsWallet, paymentFor, AppTheme_) async {
+      topupTotal, profileData, Balance, IsWallet, paymentFor, AppTheme_,actualOrderAmount,deductAmountFromWallet,walletSettingId) async {
     var ParamData = {
       "RefBranchSeqId": RefBranchSeqId,
       "RefSettingSeqId": RefSettingSeqId
@@ -259,7 +259,7 @@ class CommonUtil {
       res
           .then((response) => {
                 successGetGatewayDetails(context, response, topupTotal,
-                    profileData, IsWallet, Balance, paymentFor, AppTheme_)
+                    profileData, IsWallet, Balance, paymentFor, AppTheme_,actualOrderAmount,deductAmountFromWallet,walletSettingId)
               })
           .onError((error, stackTrace) => {authorizedPostRequestError(error)});
     } else {
@@ -289,27 +289,27 @@ class CommonUtil {
       };
 
       successGetGatewayDetails(context, WT, topupTotal, profileData, IsWallet,
-          Balance, paymentFor, AppTheme_);
+          Balance, paymentFor, AppTheme_,actualOrderAmount,deductAmountFromWallet,walletSettingId);
     }
   }
 
   successGetGatewayDetails(BuildContext context, response, topupTotal,
-      profileData, IsWallet, Balance, paymentFor, AppTheme_) async {
+      profileData, IsWallet, Balance, paymentFor, AppTheme_,actualOrderAmount,deductAmountFromWallet,walletSettingId) async {
     if (IsWallet == 0) {
       if (response['Table'][0]['code'] == 10) {
         print("getGatewayDetailsSuccess success");
         if (response['Table1'] != null || response['Table1'] != [])
           showCustomPaymentAlert(context, response['Table1'][0], topupTotal,
-              profileData, IsWallet, Balance, paymentFor, AppTheme_);
+              profileData, IsWallet, Balance, paymentFor, AppTheme_,actualOrderAmount,deductAmountFromWallet,walletSettingId);
       }
     } else {
       showCustomPaymentAlert(context, response, topupTotal, profileData,
-          IsWallet, Balance, paymentFor, AppTheme_);
+          IsWallet, Balance, paymentFor, AppTheme_,actualOrderAmount,deductAmountFromWallet,walletSettingId);
     }
   }
 
   Future<void> MakeTransaction(context, Header, Details, gatewayDetail,
-      profileData, IsWallet, Balance, paymentFor, AppTheme_) async {
+      profileData, IsWallet, Balance, paymentFor, AppTheme_,actualOrderAmount,deductAmountFromWallet,orderAmount,walletSettingId) async {
     var OrderData = {
       "Header": paymentFor == AppSettings.paymentTypeOrder ? Header : [],
       "Detail": paymentFor == AppSettings.paymentTypeOrder ? Details : [],
@@ -327,13 +327,13 @@ class CommonUtil {
       "MFPData": [],
       "MixedPayment": IsWallet == 1
           ? []
-          : [
+          :deductAmountFromWallet>0? [
               {
-                "SettingId": 1001,
-                "Amount": 1,
-                "WalletAmount": 1
+                "SettingId": walletSettingId,
+                "Amount": orderAmount,
+                "WalletAmount": deductAmountFromWallet
               }
-            ]
+            ]:[]
     };
     var ParamData = {
       "OrderData": jsonEncode(OrderData),

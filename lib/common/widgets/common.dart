@@ -635,7 +635,9 @@ void showPaymentSelectOptionForTopup(BuildContext buildContext, titleText,
                                                         'Balance']
                                                     : 0,
                                                 paymentFor,
-                                                AppTheme_);
+                                                AppTheme_,
+                                                0,
+                                                0,0);
                                           }
                                         : null,
                                     style: ElevatedButton.styleFrom(
@@ -748,27 +750,29 @@ void showPaymentSelectOptionForOrder(
   var disableWallet = false;
   var walletPayment = {};
   var actualOrderAmount = orderAmount;
-  var deductAmountFromWallet = 0;
+  var deductAmountFromWallet = 0.0;
   var selectWallet = false;
   List pl = List.from(paymentList);
   if (paymentSetting['MixedModePayment']) {
     walletPayment =
         paymentList.where((element) => element['IsWallet'] == 1).toList()[0];
     pl.removeWhere((element) => element['IsWallet'] == 1);
-   // orderAmount = 65;
-    /*  if (paymentSetting['MustDetectFromWallet']) {
+    // orderAmount = 65;
+     if (paymentSetting['MustDetectFromWallet']) {
       disableWallet = true;
+       selectWallet = true;
       if (walletPayment['Balance'] >= orderAmount) {
         selectedPaymentMethod = walletPayment;
         disableGatewayPayments = true;
         checkedValue = true;
+       
       } else {
         orderAmount = orderAmount - walletPayment['Balance'];
         deductAmountFromWallet = walletPayment['Balance'];
         disableGatewayPayments = false;
         checkedValue = false;
       }
-    } */
+    }
 
     print("walletPayment");
     print(walletPayment);
@@ -883,7 +887,6 @@ void showPaymentSelectOptionForOrder(
                                         print(selectedPaymentMethod);
                                         if (selectedPaymentMethod['IsWallet'] ==
                                             0) {
-                                         
                                           checkedValue = true;
                                         }
                                       }
@@ -1047,7 +1050,9 @@ void showPaymentSelectOptionForOrder(
                                                         'Balance']
                                                     : 0,
                                                 paymentFor,
-                                                AppTheme_);
+                                                AppTheme_,
+                                                actualOrderAmount,
+                                                deductAmountFromWallet,walletPayment['SettingsSeqId']);
                                           }
                                         : null,
                                     style: ElevatedButton.styleFrom(
@@ -1128,8 +1133,17 @@ double grandTotal(amountwithAdminFee, gatewayDetail, topupAmount) {
   return total;
 }
 
-void showCustomPaymentAlert(BuildContext buildContext, gatewayDetail,
-    topupAmount, profileData, IsWallet, Balance, paymentFor, AppTheme_) {
+void showCustomPaymentAlert(
+    BuildContext buildContext,
+    gatewayDetail,
+    orderAmount,
+    profileData,
+    IsWallet,
+    Balance,
+    paymentFor,
+    AppTheme_,
+    actualOrderAmount,
+    deductAmountFromWallet,walletSettingId) {
   var checkedValue = false;
   showModalBottomSheet(
       shape: RoundedRectangleBorder(
@@ -1182,6 +1196,28 @@ void showCustomPaymentAlert(BuildContext buildContext, gatewayDetail,
                                           fontWeight: FontWeight.normal),
                                     ),
                                   ),
+                                  if (deductAmountFromWallet > 0)
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        "From eWallet",
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.normal),
+                                      ),
+                                    ),
+                                  if (deductAmountFromWallet > 0)
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        "From " + gatewayDetail['EnvName'],
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.normal),
+                                      ),
+                                    ),
                                   gatewayDetail['IsGst']
                                       ? Padding(
                                           padding: const EdgeInsets.all(8.0),
@@ -1250,17 +1286,37 @@ void showCustomPaymentAlert(BuildContext buildContext, gatewayDetail,
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Text(
-                                      "${profileData['CurrencyCode']} ${topupAmount.toStringAsFixed(2)}",
+                                      "${profileData['CurrencyCode']} ${deductAmountFromWallet > 0 ? actualOrderAmount.toStringAsFixed(2) : orderAmount.toStringAsFixed(2)}",
                                       style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold),
                                     ),
                                   ),
+                                  if (deductAmountFromWallet > 0)
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        "${profileData['CurrencyCode']} ${deductAmountFromWallet.toStringAsFixed(2)}",
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  if (deductAmountFromWallet > 0)
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        "${profileData['CurrencyCode']} ${orderAmount.toStringAsFixed(2)}",
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
                                   gatewayDetail['IsGst']
                                       ? Padding(
                                           padding: const EdgeInsets.all(8.0),
                                           child: Text(
-                                            "${profileData['CurrencyCode']} ${calTopupGst(topupAmount, gatewayDetail['GstType'], gatewayDetail['GstPercentage']).toStringAsFixed(2)}",
+                                            "${profileData['CurrencyCode']} ${calTopupGst(orderAmount, gatewayDetail['GstType'], gatewayDetail['GstPercentage']).toStringAsFixed(2)}",
                                             style: TextStyle(
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.bold),
@@ -1295,7 +1351,7 @@ void showCustomPaymentAlert(BuildContext buildContext, gatewayDetail,
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Text(
-                                      "${profileData['CurrencyCode']} ${grandTotal(calWithAdminFee(topupAmount, gatewayDetail), gatewayDetail, topupAmount).toStringAsFixed(2)}",
+                                      "${profileData['CurrencyCode']} ${grandTotal(calWithAdminFee(orderAmount, gatewayDetail), gatewayDetail, orderAmount).toStringAsFixed(2)}",
                                       style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold),
@@ -1377,7 +1433,7 @@ void showCustomPaymentAlert(BuildContext buildContext, gatewayDetail,
                                           ListTileControlAffinity.leading,
                                     ),
                                   ])),
-                        if (topupAmount < gatewayDetail['TopMinAmt'] &&
+                        if (orderAmount < gatewayDetail['TopMinAmt'] &&
                             paymentFor == AppSettings.paymentTypeTopup)
                           Container(
                               margin: EdgeInsets.symmetric(
@@ -1396,7 +1452,7 @@ void showCustomPaymentAlert(BuildContext buildContext, gatewayDetail,
                                             color: Colors.red,
                                             fontWeight: FontWeight.bold)),
                                   ])),
-                        if (topupAmount > gatewayDetail['TopMaxAmt'] &&
+                        if (orderAmount > gatewayDetail['TopMaxAmt'] &&
                             paymentFor == AppSettings.paymentTypeTopup)
                           Container(
                               margin: EdgeInsets.symmetric(
@@ -1415,8 +1471,8 @@ void showCustomPaymentAlert(BuildContext buildContext, gatewayDetail,
                                             color: Colors.red,
                                             fontWeight: FontWeight.bold)),
                                   ])),
-                        if (!(topupAmount < gatewayDetail['TopMinAmt']) &&
-                            !(topupAmount > gatewayDetail['TopMaxAmt']) &&
+                        if (!(orderAmount < gatewayDetail['TopMinAmt']) &&
+                            !(orderAmount > gatewayDetail['TopMaxAmt']) &&
                             paymentFor == AppSettings.paymentTypeTopup)
                           Container(
                             margin: EdgeInsets.only(top: 10),
@@ -1451,32 +1507,15 @@ void showCustomPaymentAlert(BuildContext buildContext, gatewayDetail,
                                                   ? checkedValue == true
                                                   : checkedValue == false)
                                               ? () {
-                                                  if (paymentFor ==
-                                                      AppSettings
-                                                          .paymentTypeTopup)
-                                                    buildContext
-                                                        .read<
-                                                            MySettingsListener>()
-                                                        .updateTopupHeaderAndDetails(
-                                                            buildContext,
-                                                            gatewayDetail,
-                                                            profileData,
-                                                            paymentFor,
-                                                            AppTheme_);
-                                                  if (paymentFor ==
-                                                      AppSettings
-                                                          .paymentTypeOrder)
-                                                    buildContext
-                                                        .read<
-                                                            MySettingsListener>()
-                                                        .updateOrderHeaderAndDetails(
-                                                            buildContext,
-                                                            gatewayDetail,
-                                                            profileData,
-                                                            IsWallet,
-                                                            Balance,
-                                                            paymentFor,
-                                                            AppTheme_);
+                                                  buildContext
+                                                      .read<
+                                                          MySettingsListener>()
+                                                      .updateTopupHeaderAndDetails(
+                                                          buildContext,
+                                                          gatewayDetail,
+                                                          profileData,
+                                                          paymentFor,
+                                                          AppTheme_);
                                                 }
                                               : null,
                                           style: ElevatedButton.styleFrom(
@@ -1526,32 +1565,19 @@ void showCustomPaymentAlert(BuildContext buildContext, gatewayDetail,
                                                   ? checkedValue == true
                                                   : checkedValue == false)
                                               ? () {
-                                                  if (paymentFor ==
-                                                      AppSettings
-                                                          .paymentTypeTopup)
-                                                    buildContext
-                                                        .read<
-                                                            MySettingsListener>()
-                                                        .updateTopupHeaderAndDetails(
-                                                            buildContext,
-                                                            gatewayDetail,
-                                                            profileData,
-                                                            paymentFor,
-                                                            AppTheme_);
-                                                  if (paymentFor ==
-                                                      AppSettings
-                                                          .paymentTypeOrder)
-                                                    buildContext
-                                                        .read<
-                                                            MySettingsListener>()
-                                                        .updateOrderHeaderAndDetails(
-                                                            buildContext,
-                                                            gatewayDetail,
-                                                            profileData,
-                                                            IsWallet,
-                                                            Balance,
-                                                            paymentFor,
-                                                            AppTheme_);
+                                                  buildContext
+                                                      .read<
+                                                          MySettingsListener>()
+                                                      .updateOrderHeaderAndDetails(
+                                                          buildContext,
+                                                          gatewayDetail,
+                                                          profileData,
+                                                          IsWallet,
+                                                          Balance,
+                                                          paymentFor,
+                                                          AppTheme_,
+                                                          actualOrderAmount,
+                                                          deductAmountFromWallet,orderAmount,walletSettingId);
                                                 }
                                               : null,
                                           style: ElevatedButton.styleFrom(

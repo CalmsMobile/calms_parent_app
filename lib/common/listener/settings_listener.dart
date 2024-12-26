@@ -323,7 +323,7 @@ class MySettingsListener with ChangeNotifier {
     print(jsonEncode(topupDetails));
     Navigator.of(context).pop();
     CommonUtil().MakeTransaction(context, topupHeader, topupDetails,
-        gatewayDetail, profileData, 0, 0, paymentFor, AppTheme_);
+        gatewayDetail, profileData, 0, 0, paymentFor, AppTheme_,0,0,0,0);
   }
 
   updateTopupPaymentProvidersList(List paymentProvidersList) {
@@ -632,7 +632,7 @@ class MySettingsListener with ChangeNotifier {
   }
 
   updateOrderHeaderAndDetails(BuildContext context, gatewayDetail, profileData,
-      IsWallet, Balance, paymentFor, AppTheme_) {
+      IsWallet, Balance, paymentFor, AppTheme_,actualOrderAmount,deductAmountFromWallet,orderAmount,walletSettingId) {
     List orderHeader = [];
     List orderDetails = [];
     String currenFiltertDate =
@@ -724,7 +724,7 @@ class MySettingsListener with ChangeNotifier {
     print(jsonEncode(orderDetails));
     Navigator.of(context).pop();
     CommonUtil().MakeTransaction(context, orderHeader, orderDetails,
-        gatewayDetail, profileData, IsWallet, Balance, paymentFor, AppTheme_);
+        gatewayDetail, profileData, IsWallet, Balance, paymentFor, AppTheme_,actualOrderAmount,deductAmountFromWallet,orderAmount,walletSettingId);
   }
 
   updateSettings(var settingDetails) {
