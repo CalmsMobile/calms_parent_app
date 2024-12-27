@@ -226,7 +226,7 @@ class MealOrderListView extends StatelessWidget {
                                                           color: HexColor(AppSettings.colorCurrencyCode),
                                                           fontWeight:
                                                               FontWeight.bold), */
-                                                        "${CurrencyCode} ${poTypesList[index][i]['Amount']}",
+                                                        "${CurrencyCode} ${poTypesList[index][i]['Amount'].toStringAsFixed(2)}",
                                                         style: TextStyle(
                                                             fontSize: 16,
                                                             color: HexColor(

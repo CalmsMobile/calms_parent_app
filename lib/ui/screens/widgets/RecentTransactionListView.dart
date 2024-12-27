@@ -10,7 +10,8 @@ class RecentTransactionListView extends StatelessWidget {
   final title;
   final AppTheme_;
   final bool showMore;
-  const RecentTransactionListView(this.recentList, this.CurrencyCode,this.AppTheme_,this.showMore,this.title);
+  const RecentTransactionListView(this.recentList, this.CurrencyCode,
+      this.AppTheme_, this.showMore, this.title);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,7 @@ class RecentTransactionListView extends StatelessWidget {
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(
                     parent: AlwaysScrollableScrollPhysics()),
-                itemCount:showMore?10:recentList.length,
+                itemCount: showMore ? 10 : recentList.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Column(children: <Widget>[
                     Divider(
@@ -59,7 +60,8 @@ class RecentTransactionListView extends StatelessWidget {
                                   Text(
                                     "Package: ${recentList[index]['PackageName']}",
                                     style: TextStyle(
-                                        color: HexColor(AppTheme_['ContentFontColor']),
+                                        color: HexColor(
+                                            AppTheme_['ContentFontColor']),
                                         fontWeight: FontWeight.normal,
                                         overflow: TextOverflow.ellipsis,
                                         fontSize: 12),
@@ -68,7 +70,8 @@ class RecentTransactionListView extends StatelessWidget {
                                   Text(
                                     "Trans. Mode: ${recentList[index]['ThroughBy']}",
                                     style: TextStyle(
-                                        color: HexColor(AppTheme_['ContentFontColor']),
+                                        color: HexColor(
+                                            AppTheme_['ContentFontColor']),
                                         fontWeight: FontWeight.normal,
                                         overflow: TextOverflow.ellipsis,
                                         fontSize: 12),
@@ -76,7 +79,8 @@ class RecentTransactionListView extends StatelessWidget {
                                 Text(
                                   "Done by: ${recentList[index]['DoneBy']}",
                                   style: TextStyle(
-                                      color: HexColor(AppTheme_['ContentFontColor']),
+                                      color: HexColor(
+                                          AppTheme_['ContentFontColor']),
                                       fontWeight: FontWeight.normal,
                                       overflow: TextOverflow.ellipsis,
                                       fontSize: 12),
@@ -84,7 +88,8 @@ class RecentTransactionListView extends StatelessWidget {
                                 Text(
                                   "Trans. Date: ${DateUtil().convertStringFromDateformat(recentList[index]['CreatedOn'], "dd-MM-yyyy hh:mm a")}",
                                   style: TextStyle(
-                                      color: HexColor(AppTheme_['ContentFontColor']),
+                                      color: HexColor(
+                                          AppTheme_['ContentFontColor']),
                                       overflow: TextOverflow.ellipsis,
                                       fontWeight: FontWeight.normal,
                                       fontSize: 12),
@@ -134,63 +139,55 @@ class RecentTransactionListView extends StatelessWidget {
                 }),
           ),
           if (showMore)
-            ElevatedButton(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    "More",
-                    style: TextStyle(
-                      color: HexColor(AppTheme_['ButtonFontColor']),
-                        fontSize: 18.0,
-                        fontFamily: "Montserrat",
-                        fontWeight: FontWeight.bold),
-                  ),
-                  //Icon(Icons.payment)
-                ],
-              ),
-              onPressed: () {
+            InkWell(
+              onTap: () async {
                 Navigator.of(context).push(MaterialPageRoute<void>(
                   fullscreenDialog: true,
                   builder: (BuildContext context) {
                     return Scaffold(
-                      appBar: AppBar(
-                        backgroundColor: HexColor(AppTheme_['AppHeaderBgColor']),
-                        title: Text(title),
-                        leading: IconButton(
-                          icon: Icon(Icons.close,color: HexColor(AppTheme_['IconOutlineColor'])),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
+                        appBar: AppBar(
+                          backgroundColor:
+                              HexColor(AppTheme_['AppHeaderBgColor']),
+                          title: Text(title),
+                          leading: IconButton(
+                            icon: Icon(Icons.close,
+                                color: HexColor(AppTheme_['IconOutlineColor'])),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
                         ),
-                      ),
-                     body:Container(
-                constraints: BoxConstraints.expand(),
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                  begin: Alignment.topRight,
-                  end: Alignment.bottomLeft,
-                  colors: [
-                   Colors.white,
-                    Colors.white,
-                  ],
-                )),
-                child: SizedBox(
-                    height: MediaQuery.of(context).size.height,
-                    child: SingleChildScrollView(child: RecentTransactionListView(recentList,CurrencyCode,AppTheme_,false,title),
-                      
-                    ))));
+                        body: Container(
+                            constraints: BoxConstraints.expand(),
+                            decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                              begin: Alignment.topRight,
+                              end: Alignment.bottomLeft,
+                              colors: [
+                                Colors.white,
+                                Colors.white,
+                              ],
+                            )),
+                            child: SizedBox(
+                                height: MediaQuery.of(context).size.height,
+                                child: SingleChildScrollView(
+                                  child: RecentTransactionListView(recentList,
+                                      CurrencyCode, AppTheme_, false, title),
+                                ))));
                   },
                 ));
               },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: HexColor(AppTheme_['ButtonBgColor']),
-                textStyle: TextStyle(color: HexColor(AppTheme_['ButtonFontColor'])),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(60.0)),
+              child: Text(
+                'Show More',
+                style: TextStyle(
+                  color: HexColor(AppTheme_['ButtonBgColor']),
+                  fontSize: 16.0,
+                  fontFamily: "Montserrat",
+                  fontWeight: FontWeight.bold,
+                  decoration: TextDecoration.underline,
+                ),
               ),
-            )
+            ),
         ],
       ),
     );

@@ -240,9 +240,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       appBar: AppBar(
         toolbarHeight: 70,
         elevation: 0,
-        backgroundColor: AppTheme_ != null && AppTheme_['AppHeaderBgColor'] != null
-          ? HexColor(AppTheme_['AppHeaderBgColor'])
-          : Colors.amber,
+        backgroundColor:
+            AppTheme_ != null && AppTheme_['AppHeaderBgColor'] != null
+                ? HexColor(AppTheme_['AppHeaderBgColor'])
+                : Colors.amber,
         //titleSpacing: -5,
         automaticallyImplyLeading: false,
         centerTitle: true,
@@ -261,7 +262,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         .toUpperCase(),
                     style: TextStyle(
                         fontSize: 22.0,
-                        color: HexColor(AppTheme_['IconOutlineColor']),
+                        color: AppTheme_ != {}
+                            ? HexColor(AppTheme_['IconOutlineColor'])
+                            : Colors.black,
                         letterSpacing: 2.0,
                         fontWeight: FontWeight.w900),
                   ),
@@ -611,8 +614,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                 "Wallet Ballance",
                                 style: TextStyle(
                                     fontSize: 14.0,
-                                    color:
-                                        HexColor(AppTheme_['SubTitleFontColor']),
+                                    color: HexColor(
+                                        AppTheme_['SubTitleFontColor']),
                                     letterSpacing: 2.0,
                                     fontWeight: FontWeight.w300),
                               ),
@@ -636,7 +639,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   Column(
                     children: [
                       Card(
-                        color:  HexColor(AppTheme_['PanelBgColor']),
+                        color: HexColor(AppTheme_['PanelBgColor']),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15.0),
                         ),
@@ -678,7 +681,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       Consumer<MySettingsListener>(
                           builder: (context, data, settingsDta) {
                         return Card(
-                          color:  HexColor(AppTheme_['PanelBgColor']),
+                            color: HexColor(AppTheme_['PanelBgColor']),
                             elevation: 10,
                             shadowColor: Colors.black,
                             borderOnForeground: true,
@@ -691,8 +694,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                   trailing: Text("(Last 30 days)"),
                                   tileColor:
                                       HexColor(AppTheme_['PanelHeaderBgColor']),
-                                  textColor:
-                                      HexColor(AppTheme_['PanelHeaderFontColor']),
+                                  textColor: HexColor(
+                                      AppTheme_['PanelHeaderFontColor']),
                                 ),
                                 Container(
                                   margin: EdgeInsets.only(

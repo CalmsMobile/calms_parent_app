@@ -408,7 +408,7 @@ void showPaymentSelectOptionForTopup(BuildContext buildContext, titleText,
                                                         TextStyle(fontSize: 22),
                                                   ),
                                                   Text(
-                                                    "Wallet Balance = ${profileData['CurrencyCode']} " +
+                                                    "${profileData['CurrencyCode']} " +
                                                         paymentList[index]
                                                                 ["Balance"]
                                                             .toStringAsFixed(2),
@@ -772,7 +772,7 @@ void showPaymentSelectOptionForOrder(
         disableGatewayPayments = false;
         checkedValue = false;
       }
-    }
+    } 
 
     print("walletPayment");
     print(walletPayment);
@@ -832,7 +832,7 @@ void showPaymentSelectOptionForOrder(
                                         style: TextStyle(fontSize: 22),
                                       ),
                                       Text(
-                                        "Wallet Balance = ${profileData['CurrencyCode']} " +
+                                        "${profileData['CurrencyCode']} " +
                                             walletPayment["Balance"]
                                                 .toStringAsFixed(2),
                                         style: TextStyle(
@@ -931,7 +931,7 @@ void showPaymentSelectOptionForOrder(
                                                         TextStyle(fontSize: 22),
                                                   ),
                                                   Text(
-                                                    "Wallet Balance = ${profileData['CurrencyCode']} " +
+                                                    "${profileData['CurrencyCode']} " +
                                                         pl[index]["Balance"]
                                                             .toStringAsFixed(2),
                                                     style: TextStyle(

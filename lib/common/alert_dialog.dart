@@ -46,70 +46,75 @@ class MyCustomAlertDialog {
                 ],
               ),
             ),
-            if (_okPress != null)
-              Container(
-                  alignment: Alignment.centerRight,
-                  margin: EdgeInsets.all(10),
-                  child: SizedBox(
-                      height: 45,
-                      child: ElevatedButton(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              okBtnText,
-                              style: TextStyle(
-                                  fontSize: 18.0,
-                                  fontFamily: "Montserrat",
-                                  fontWeight: FontWeight.bold),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                if (_okPress != null)
+                  Container(
+                      alignment: Alignment.centerRight,
+                      margin: EdgeInsets.all(10),
+                      child: SizedBox(
+                          height: 45,
+                          child: ElevatedButton(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  okBtnText,
+                                  style: TextStyle(
+                                      fontSize: 18.0,
+                                      fontFamily: "Montserrat",
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                //Icon(Icons.payment)
+                              ],
                             ),
-                            //Icon(Icons.payment)
-                          ],
-                        ),
-                        onPressed: () {
-                          //Navigator.pop(context);
-                          _okPress();
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color.fromARGB(255, 6, 105, 199),
-                          textStyle: TextStyle(color: Colors.white),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(60.0)),
-                        ),
-                      ))),
-            if (_cancelPress != null)
-              Container(
-                  alignment: Alignment.centerRight,
-                  margin: EdgeInsets.all(10),
-                  child: SizedBox(
-                      height: 45,
-                      child: ElevatedButton(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              cancelBtnText,
-                              style: TextStyle(
-                                  fontSize: 18.0,
-                                  fontFamily: "Montserrat",
-                                  fontWeight: FontWeight.bold),
+                            onPressed: () {
+                              //Navigator.pop(context);
+                              _okPress();
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Color.fromARGB(255, 6, 105, 199),
+                              textStyle: TextStyle(color: Colors.white),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(60.0)),
                             ),
-                            //Icon(Icons.payment)
-                          ],
-                        ),
-                        onPressed: () {
-                          Navigator.pop(context);
-                          _cancelPress();
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color.fromARGB(255, 6, 105, 199),
-                          textStyle: TextStyle(color: Colors.white),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(60.0)),
-                        ),
-                      ))),
+                          ))),
+                if (_cancelPress != null)
+                  Container(
+                      alignment: Alignment.centerRight,
+                      margin: EdgeInsets.all(10),
+                      child: SizedBox(
+                          height: 45,
+                          child: ElevatedButton(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  cancelBtnText,
+                                  style: TextStyle(
+                                      fontSize: 18.0,
+                                      fontFamily: "Montserrat",
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                //Icon(Icons.payment)
+                              ],
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                              _cancelPress();
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Color.fromARGB(255, 6, 105, 199),
+                              textStyle: TextStyle(color: Colors.white),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(60.0)),
+                            ),
+                          ))),
+              ],
+            )
           ],
         );
       },
@@ -160,70 +165,75 @@ class MyCustomAlertDialog {
                 ],
               ),
             ),
-            if (_okPress != null)
-              Container(
-                  alignment: Alignment.centerRight,
-                  margin: EdgeInsets.all(10),
-                  child: SizedBox(
-                      height: 45,
-                      child: ElevatedButton(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              okBtnText,
-                              style: TextStyle(
-                                  fontSize: 18.0,
-                                  fontFamily: "Montserrat",
-                                  fontWeight: FontWeight.bold),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                if (_okPress != null)
+                  Container(
+                      alignment: Alignment.centerRight,
+                      margin: EdgeInsets.all(10),
+                      child: SizedBox(
+                          height: 45,
+                          child: ElevatedButton(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  okBtnText,
+                                  style: TextStyle(
+                                      fontSize: 18.0,
+                                      fontFamily: "Montserrat",
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                //Icon(Icons.payment)
+                              ],
                             ),
-                            //Icon(Icons.payment)
-                          ],
-                        ),
-                        onPressed: () {
-                          //Navigator.pop(context);
-                          _okPress();
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color.fromARGB(255, 6, 105, 199),
-                          textStyle: TextStyle(color: Colors.white),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(60.0)),
-                        ),
-                      ))),
-            if (_cancelPress != null)
-              Container(
-                  alignment: Alignment.centerRight,
-                  margin: EdgeInsets.all(10),
-                  child: SizedBox(
-                      height: 45,
-                      child: ElevatedButton(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              cancelBtnText,
-                              style: TextStyle(
-                                  fontSize: 18.0,
-                                  fontFamily: "Montserrat",
-                                  fontWeight: FontWeight.bold),
+                            onPressed: () {
+                              //Navigator.pop(context);
+                              _okPress();
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Color.fromARGB(255, 6, 105, 199),
+                              textStyle: TextStyle(color: Colors.white),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(60.0)),
                             ),
-                            //Icon(Icons.payment)
-                          ],
-                        ),
-                        onPressed: () {
-                          Navigator.pop(context);
-                          _cancelPress();
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color.fromARGB(255, 6, 105, 199),
-                          textStyle: TextStyle(color: Colors.white),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(60.0)),
-                        ),
-                      ))),
+                          ))),
+                if (_cancelPress != null)
+                  Container(
+                      alignment: Alignment.centerRight,
+                      margin: EdgeInsets.all(10),
+                      child: SizedBox(
+                          height: 45,
+                          child: ElevatedButton(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  cancelBtnText,
+                                  style: TextStyle(
+                                      fontSize: 18.0,
+                                      fontFamily: "Montserrat",
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                //Icon(Icons.payment)
+                              ],
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                              _cancelPress();
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Color.fromARGB(255, 6, 105, 199),
+                              textStyle: TextStyle(color: Colors.white),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(60.0)),
+                            ),
+                          ))),
+              ],
+            )
           ],
         );
       },

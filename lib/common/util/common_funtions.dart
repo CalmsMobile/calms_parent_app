@@ -10,6 +10,8 @@ import '../listener/settings_listener.dart';
 
 class CommonFunctions {
   static String getInitials(name) {
+    if(name == null || name == "")
+     return "";
     List<String> names = name.split(" ");
     if (names.length == 1)
       return names[0].toString()[0] + names[0].toString()[names[0].length - 1];
