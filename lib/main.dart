@@ -135,8 +135,10 @@ void main() async {
     token = await messaging.getToken(
       vapidKey: vapidKey,
     );
-  } else {
+  } else if (DefaultFirebaseOptions.currentPlatform == DefaultFirebaseOptions.android){
     token = await messaging.getToken();
+  }else if (DefaultFirebaseOptions.currentPlatform == DefaultFirebaseOptions.ios){
+    token = await messaging.getAPNSToken();
   }
 
   if (kDebugMode) {
