@@ -87,6 +87,42 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   }
 }
 
+// Add this function before main()
+Future<String?> getTokenWithRetry({int maxAttempts = 3}) async {
+  final messaging = FirebaseMessaging.instance;
+  String? token;
+  int attempts = 0;
+ // TODO: replace with your own VAPID key
+  const vapidKey =
+      "BBrWoGXmuqJsPbKZsnTRFHfMpf5zuxxUUVP01qwO2s9qMg_9b_e1tZnDp03z6demYHDQhJlS6hSVQyAQgyHd-nU";
+
+  while (attempts < maxAttempts && token == null) {
+    try {
+      if (DefaultFirebaseOptions.currentPlatform == DefaultFirebaseOptions.web) {
+        token = await messaging.getToken(
+          vapidKey: vapidKey,
+        );
+      } else {
+        token = await messaging.getToken();
+      }
+
+      if (token != null) {
+        return token;
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Failed to get FCM token (attempt ${attempts + 1}): $e');
+      }
+      attempts++;
+      
+      if (attempts < maxAttempts) {
+        await Future.delayed(Duration(seconds: 2)); // Wait before retrying
+      }
+    }
+  }
+  return null;
+}
+
 class MyHttpOverrides extends HttpOverrides {
   @override
   HttpClient createHttpClient(SecurityContext? context) {
@@ -123,30 +159,26 @@ void main() async {
     print('Permission granted: ${settings.authorizationStatus}');
   }
 
-  // TODO: replace with your own VAPID key
-  const vapidKey =
-      "BBrWoGXmuqJsPbKZsnTRFHfMpf5zuxxUUVP01qwO2s9qMg_9b_e1tZnDp03z6demYHDQhJlS6hSVQyAQgyHd-nU";
-
+ 
   // TODO: Register with FCM
   // use the registration token to send messages to users from your trusted server environment
   String? token;
 
-  if (DefaultFirebaseOptions.currentPlatform == DefaultFirebaseOptions.web) {
-    token = await messaging.getToken(
-      vapidKey: vapidKey,
-    );
-  } else if (DefaultFirebaseOptions.currentPlatform == DefaultFirebaseOptions.android){
-    token = await messaging.getToken();
-  }else if (DefaultFirebaseOptions.currentPlatform == DefaultFirebaseOptions.ios){
-    token = await messaging.getAPNSToken();
+  // Get FCM token with retry mechanism
+  token = await getTokenWithRetry();
+  
+  if (token != null) {
+    if (kDebugMode) {
+      print('FCM Registration Token: $token');
+    }
+   MySharedPref().saveData(token, AppSettings.fcmId);
+  } else {
+    if (kDebugMode) {
+      print('Failed to get FCM token after multiple attempts');
+    }
+    // Continue app initialization even if token retrieval fails
+    // The app can try to get the token again later
   }
-
-  if (kDebugMode) {
-    print('Registration Token=$token');
-  }
-  String tokenFcm = token!;
-  print("token" + tokenFcm);
-  MySharedPref().saveData(tokenFcm, AppSettings.fcmId);
 
   // TODO: Set up foreground message handler
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
