@@ -78,7 +78,7 @@ class AppSettings {
 
   static String appType_Notification = "NOTIFICATION";
 
-  static String commonCryptoKey = "qweqweqweqweqweq";
+  static String commonCryptoKey = "qweqweqweqweqweqqweqweqweqweqweq";
   // static String appType_Notification = "NOTIFICATION";
 
 static String colorCurrencyCode = "#0D47A1";

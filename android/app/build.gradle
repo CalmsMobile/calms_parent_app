@@ -56,10 +56,16 @@ android {
         applicationId "com.calms.calms_parent"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdkVersion 20
+        minSdkVersion 21       // Updated from 20 to 21 (Android 5.0+)
         targetSdkVersion 34
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        
+        // Add security configurations
+        resConfigs "en"        // Include only needed locales
+        ndk {
+            abiFilters "armeabi-v7a", "arm64-v8a", "x86_64"
+        }
     }
     signingConfigs {
         release {
@@ -67,14 +73,20 @@ android {
             keyPassword keystoreProperties['keyPassword']
             storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
             storePassword keystoreProperties['storePassword']
+            
+            // Disable v1 signing and enable v2/v3
+            v1SigningEnabled false
+            v2SigningEnabled true
+            //v3SigningEnabled true
         }
     }
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            // signingConfig signingConfigs.debug
             signingConfig signingConfigs.release
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            debuggable false
         }
     }
 }
@@ -85,4 +97,11 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    
+    // Remove duplicate RootBeer implementations and use only one version
+    implementation 'com.github.scottyab:rootbeer:0.1.0'
+    // Exclude the older version
+    configurations {
+        implementation.exclude group: 'com.scottyab', module: 'rootbeer-lib'
+    }
 }

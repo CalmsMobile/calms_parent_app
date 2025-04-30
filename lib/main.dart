@@ -72,6 +72,9 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 // TODO: Add stream controller
 import 'package:rxdart/rxdart.dart';
 
+import 'utils/security_utils.dart';
+import 'screens/security_block_screen.dart';
+
 // for passing messages from event handler to the UI
 final _messageStreamController = BehaviorSubject<RemoteMessage>();
 
@@ -134,95 +137,103 @@ class MyHttpOverrides extends HttpOverrides {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  HttpOverrides.global = new MyHttpOverrides();
-//runApp(Myapp());
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-
-  // TODO: Request permission
-  final messaging = FirebaseMessaging.instance;
-
-  // Web/iOS app users need to grant permission to receive messages
-  final settings = await messaging.requestPermission(
-    alert: true,
-    announcement: false,
-    badge: true,
-    carPlay: false,
-    criticalAlert: false,
-    provisional: false,
-    sound: true,
-  );
-
-  if (kDebugMode) {
-    print('Permission granted: ${settings.authorizationStatus}');
-  }
-
- 
-  // TODO: Register with FCM
-  // use the registration token to send messages to users from your trusted server environment
-  String? token;
-
-  // Get FCM token with retry mechanism
-  token = await getTokenWithRetry();
   
-  if (token != null) {
-    if (kDebugMode) {
-      print('FCM Registration Token: $token');
-    }
-   MySharedPref().saveData(token, AppSettings.fcmId);
+  // Check for compromised device
+  bool isCompromised = await SecurityUtils.isDeviceCompromised();
+  
+  if (isCompromised && !kDebugMode) {
+    runApp(SecurityBlockScreen());
   } else {
+    HttpOverrides.global = new MyHttpOverrides();
+    //runApp(Myapp());
+    WidgetsFlutterBinding.ensureInitialized();
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+
+    // TODO: Request permission
+    final messaging = FirebaseMessaging.instance;
+
+    // Web/iOS app users need to grant permission to receive messages
+    final settings = await messaging.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
+
     if (kDebugMode) {
-      print('Failed to get FCM token after multiple attempts');
+      print('Permission granted: ${settings.authorizationStatus}');
     }
-    // Continue app initialization even if token retrieval fails
-    // The app can try to get the token again later
+
+   
+    // TODO: Register with FCM
+    // use the registration token to send messages to users from your trusted server environment
+    String? token;
+
+    // Get FCM token with retry mechanism
+    token = await getTokenWithRetry();
+    
+    if (token != null) {
+      if (kDebugMode) {
+        print('FCM Registration Token: $token');
+      }
+     MySharedPref().saveData(token, AppSettings.fcmId);
+    } else {
+      if (kDebugMode) {
+        print('Failed to get FCM token after multiple attempts');
+      }
+      // Continue app initialization even if token retrieval fails
+      // The app can try to get the token again later
+    }
+
+    // TODO: Set up foreground message handler
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      //LocalNotificationService.display(message);
+      print(message.toString());
+      if (kDebugMode) {
+        print('Handling a foreground message: ${message.messageId}');
+        print('Message data: ${message.data}');
+        print('Message notification: ${message.notification?.title}');
+        print('Message notification: ${message.notification?.body}');
+      }
+
+      _messageStreamController.sink.add(message);
+    });
+
+    // TODO: Set up background message handler
+    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
+    runApp(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => MySettingsListener()),
+        ],
+        child: MaterialApp(
+            theme: ThemeData(
+              fontFamily: appFontFmaily,
+            ),
+            debugShowCheckedModeBanner: false,
+            localizationsDelegates: [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: [
+              Locale('en', ''), // English, no country code
+            ],
+            home: ChangeNotifierProvider(
+              create: (BuildContext context) => MySettingsListener(),
+              child: SplashScreen(),
+            ),
+            routes: myroutes),
+      ),
+    );
   }
-
-  // TODO: Set up foreground message handler
-  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-    //LocalNotificationService.display(message);
-    print(message.toString());
-    if (kDebugMode) {
-      print('Handling a foreground message: ${message.messageId}');
-      print('Message data: ${message.data}');
-      print('Message notification: ${message.notification?.title}');
-      print('Message notification: ${message.notification?.body}');
-    }
-
-    _messageStreamController.sink.add(message);
-  });
-
-  // TODO: Set up background message handler
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => MySettingsListener()),
-      ],
-      child: MaterialApp(
-          theme: ThemeData(
-            fontFamily: appFontFmaily,
-          ),
-          debugShowCheckedModeBanner: false,
-          localizationsDelegates: [
-            AppLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          supportedLocales: [
-            Locale('en', ''), // English, no country code
-          ],
-          home: ChangeNotifierProvider(
-            create: (BuildContext context) => MySettingsListener(),
-            child: SplashScreen(),
-          ),
-          routes: myroutes),
-    ),
-  );
 }
 
 var myroutes = {
