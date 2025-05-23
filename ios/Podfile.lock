@@ -8,6 +8,7 @@ PODS:
     - Flutter
   - device_info_plus (0.0.1):
     - Flutter
+  - DTTJailbreakDetection (0.4.0)
   - Firebase/CoreOnly (10.12.0):
     - FirebaseCore (= 10.12.0)
   - Firebase/Messaging (10.12.0):
@@ -41,6 +42,9 @@ PODS:
     - GoogleUtilities/UserDefaults (~> 7.8)
     - nanopb (< 2.30910.0, >= 2.30908.0)
   - Flutter (1.0.0)
+  - flutter_jailbreak_detection (1.0.0):
+    - Flutter
+    - IOSSecuritySuite
   - FMDB (2.7.11):
     - FMDB/standard (= 2.7.11)
   - FMDB/standard (2.7.11)
@@ -87,6 +91,7 @@ PODS:
     - GoogleUtilities/Privacy
   - hash_password (0.0.1):
     - Flutter
+  - IOSSecuritySuite (2.1.0)
   - just_audio (0.0.1):
     - Flutter
   - MTBBarcodeScanner (5.0.11)
@@ -115,6 +120,9 @@ PODS:
   - sqflite (0.0.3):
     - Flutter
     - FMDB (>= 2.7.5)
+  - trust_fall (0.0.1):
+    - DTTJailbreakDetection
+    - Flutter
   - url_launcher_ios (0.0.1):
     - Flutter
   - video_player_avfoundation (0.0.1):
@@ -132,6 +140,7 @@ DEPENDENCIES:
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
   - Flutter (from `Flutter`)
+  - flutter_jailbreak_detection (from `.symlinks/plugins/flutter_jailbreak_detection/ios`)
   - fullscreen (from `.symlinks/plugins/fullscreen/ios`)
   - geolocator_apple (from `.symlinks/plugins/geolocator_apple/ios`)
   - google_maps_flutter_ios (from `.symlinks/plugins/google_maps_flutter_ios/ios`)
@@ -144,6 +153,7 @@ DEPENDENCIES:
   - qr_code_scanner (from `.symlinks/plugins/qr_code_scanner/ios`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
+  - trust_fall (from `.symlinks/plugins/trust_fall/ios`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
   - video_player_avfoundation (from `.symlinks/plugins/video_player_avfoundation/ios`)
   - wakelock_plus (from `.symlinks/plugins/wakelock_plus/ios`)
@@ -151,6 +161,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - DTTJailbreakDetection
     - Firebase
     - FirebaseCore
     - FirebaseCoreInternal
@@ -160,6 +171,7 @@ SPEC REPOS:
     - GoogleDataTransport
     - GoogleMaps
     - GoogleUtilities
+    - IOSSecuritySuite
     - MTBBarcodeScanner
     - nanopb
     - PromisesObjC
@@ -180,6 +192,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/firebase_messaging/ios"
   Flutter:
     :path: Flutter
+  flutter_jailbreak_detection:
+    :path: ".symlinks/plugins/flutter_jailbreak_detection/ios"
   fullscreen:
     :path: ".symlinks/plugins/fullscreen/ios"
   geolocator_apple:
@@ -204,6 +218,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/shared_preferences_foundation/ios"
   sqflite:
     :path: ".symlinks/plugins/sqflite/ios"
+  trust_fall:
+    :path: ".symlinks/plugins/trust_fall/ios"
   url_launcher_ios:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
   video_player_avfoundation:
@@ -218,6 +234,7 @@ SPEC CHECKSUMS:
   connectivity_plus: 413a8857dd5d9f1c399a39130850d02fe0feaf7e
   device_info: d7d233b645a32c40dfdc212de5cf646ca482f175
   device_info_plus: e5c5da33f982a436e103237c0c85f9031142abed
+  DTTJailbreakDetection: 5e356c5badc17995f65a83ed9483f787a0057b71
   Firebase: 07150e75d142fb9399f6777fa56a187b17f833a0
   firebase_core: 4a3246a02f828a01c74a2c26427037786d90f17f
   firebase_messaging: 0b4f7997f491343b90d9300af54fe55c72135833
@@ -226,6 +243,7 @@ SPEC CHECKSUMS:
   FirebaseInstallations: 913cf60d0400ebd5d6b63a28b290372ab44590dd
   FirebaseMessaging: bb2c4f6422a753038fe137d90ae7c1af57251316
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
+  flutter_jailbreak_detection: c5bf66ff6c0c4230769b6ba0bd63eb6ac4148a76
   FMDB: 57486c1117fd8e0e6b947b2f54c3f42bf8e57a4e
   fullscreen: d93e707e6b36120f20e64e2f814ee0726164e70b
   geolocator_apple: cc556e6844d508c95df1e87e3ea6fa4e58c50401
@@ -234,6 +252,7 @@ SPEC CHECKSUMS:
   GoogleMaps: 025272d5876d3b32604e5c080dc25eaf68764693
   GoogleUtilities: ea963c370a38a8069cc5f7ba4ca849a60b6d7d15
   hash_password: ffd87dd4cb6ee72d1da31d5c4032ff04da6f4d4f
+  IOSSecuritySuite: 45e8531b05ffa72b5661cbdb5b5b5648a8de1a84
   just_audio: baa7252489dbcf47a4c7cc9ca663e9661c99aafa
   MTBBarcodeScanner: f453b33c4b7dfe545d8c6484ed744d55671788cb
   nanopb: d4d75c12cd1316f4a64e3c6963f879ecd4b5e0d5
@@ -246,6 +265,7 @@ SPEC CHECKSUMS:
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   shared_preferences_foundation: 5b919d13b803cadd15ed2dc053125c68730e5126
   sqflite: 31f7eba61e3074736dff8807a9b41581e4f7f15a
+  trust_fall: 89fc4fbfe2ca9994ffa64185c6cc48225ca0204c
   url_launcher_ios: 08a3dfac5fb39e8759aeb0abbd5d9480f30fc8b4
   video_player_avfoundation: 81e49bb3d9fb63dccf9fa0f6d877dc3ddbeac126
   wakelock_plus: 8b09852c8876491e4b6d179e17dfe2a0b5f60d47
