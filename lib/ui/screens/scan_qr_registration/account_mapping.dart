@@ -487,6 +487,7 @@ class _AccountMappingState extends State<AccountMapping> {
     //String gg = await MySharedPref().getData(AppSettings.fcmId);
     String FCMToken = await MySharedPref().getData(AppSettings.fcmId);
     print("fcmId :  " + FCMToken);
+    
 
     /*  var parentDetails = {
       "name": "SITI KHALIDA",
@@ -512,7 +513,7 @@ class _AccountMappingState extends State<AccountMapping> {
       "DeviceUID": DeviceId,
       "DevicePlatform": DevicePlatform,
       "DeviceDetails": "1",
-      "FCMToken": FCMToken,
+      "FCMToken": FCMToken.isEmpty ? qrJson['MAppSeqId'] : FCMToken,
       "ForceToUpdate": 0
     };
     var paramData1 = {
@@ -520,7 +521,7 @@ class _AccountMappingState extends State<AccountMapping> {
       "DeviceUID": DeviceId,
       "DevicePlatform": DevicePlatform,
       "DeviceDetails": "1",
-      "FCMToken": FCMToken ?? '',
+      "FCMToken": FCMToken.isEmpty ? qrJson['MAppSeqId'] : FCMToken,
       "ForceToUpdate": 1
     };
     print('paramData -- ' + paramData.toString());
