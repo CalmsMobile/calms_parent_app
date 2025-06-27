@@ -163,6 +163,7 @@ class _QRRegistrationState extends State<QRRegistration> {
       //MySharedPref().saveData(jsonEncode(response['Table1'][0]), AppSettings.profileData);
       baseUrl = baseUrl.replaceAll("/api/", "/FS/");
       String? DeviceId = await PlatformDeviceId.getDeviceId;
+      print("device id --- "+DeviceId!);
       String DevicePlatform = "";
       if (defaultTargetPlatform == TargetPlatform.android) {
         DevicePlatform = "Android";
