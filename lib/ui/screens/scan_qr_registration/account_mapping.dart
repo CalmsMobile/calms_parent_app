@@ -526,9 +526,9 @@ class _AccountMappingState extends State<AccountMapping> {
     };
     print('paramData -- ' + paramData.toString());
     print('paramData1 -- ' + paramData1.toString());
-    String encParamData = CryptoEncryption(dataResponseModel['SecureKey'])
+    String encParamData = CryptoEncryption(dataResponseModel['Mob'])
         .encryptMyData(json.encode(paramData));
-    String encParamData1 = CryptoEncryption(dataResponseModel['SecureKey'])
+    String encParamData1 = CryptoEncryption(dataResponseModel['Mob'])
         .encryptMyData(json.encode(paramData1));
     var payload = {
       "Authorize": {

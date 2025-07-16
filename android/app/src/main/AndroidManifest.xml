@@ -3,8 +3,8 @@
 
     <!-- Add SDK version requirements -->
     <uses-sdk
-        android:minSdkVersion="21"
-        android:targetSdkVersion="34" />
+        android:minSdkVersion="29"
+        android:targetSdkVersion="36" />
 
     <application
         android:label="CALMS Parent"

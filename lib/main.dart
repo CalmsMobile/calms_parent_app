@@ -445,7 +445,7 @@ class _SplashScreenState extends State<SplashScreen> {
       "Token": token
     };
     var paramData = {"MAppDevSeqId": qrJson['MAppSeqId']};
-    String encParamData = CryptoEncryption(profileDataJson['SecureKey'])
+    String encParamData = CryptoEncryption(profileDataJson['Mob'])
         .encryptMyData(json.encode(paramData));
     var payload = {"Authorize": AuthorizePayload, "ParamData": encParamData};
     print("Payload == > " + payload.toString());
@@ -463,7 +463,7 @@ class _SplashScreenState extends State<SplashScreen> {
     res
         .then((value) => {
               verificationResponse(value, context, qrJson['ApiUrl'],
-                  profileDataJson['SecureKey'], qrJson['MAppSeqId'])
+                  profileDataJson['Mob'], qrJson['MAppSeqId'])
             })
         .onError((error, stackTrace) => {});
   }
@@ -477,7 +477,7 @@ class _SplashScreenState extends State<SplashScreen> {
       MySharedPref().saveData(apiUrl, AppSettings.Sp_Api_Url);
       MySharedPref().saveData(
           apiUrl.replaceAll("/api/", "/FS/"), AppSettings.Sp_Img_Base_Url);
-      MySharedPref().saveData(secureKey, AppSettings.Sp_SecureKey);
+      MySharedPref().saveData(secureKey, AppSettings.Sp_Mob);
       MySharedPref().saveData(MAppSeqId, AppSettings.Sp_MAppDevSeqId);
       MySharedPref().saveData(
           json.encode(AuthorizePayload), AppSettings.Sp_Payload_Authorize);

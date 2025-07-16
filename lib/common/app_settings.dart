@@ -23,7 +23,7 @@ class AppSettings {
   static String Sp_DeviceId = 'CPA_DEVICEID';
   static String Sp_Api_Url = 'CPA_API_URL';
   static String Sp_Img_Base_Url = 'CPA_IMG_BASE_URL';
-  static String Sp_SecureKey = 'CPA_SECUREKEY';
+  static String Sp_Mob = 'CPA_SECUREKEY';
   static String Sp_Payload_Authorize = 'CPA_AUTHORIZE';
   static String Sp_MAppDevSeqId = 'CPA_APP_SEQ_ID';
   static String Sp_AppTheme = 'CPA_APP_THEME';
