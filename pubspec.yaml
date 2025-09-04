@@ -23,7 +23,6 @@ dependencies:
       ref: master
   syncfusion_flutter_charts: ^21.1.41
   table_calendar: ^2.2.1
-  qr_code_scanner: ^1.0.1
   encrypt: ^5.0.1
   crypto: ^3.0.3
   hex: ^0.2.0
@@ -76,6 +75,7 @@ dependencies:
   focus_detector: ^2.0.1
   flutter_jailbreak_detection: ^1.10.0
   trust_fall: ^1.0.4
+  mobile_scanner: ^3.5.0
 
 #dependency_overrides:
 dev_dependencies:
