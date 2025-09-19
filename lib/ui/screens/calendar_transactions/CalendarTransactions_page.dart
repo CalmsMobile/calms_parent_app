@@ -197,26 +197,25 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                         border: Border.all(
                             color: HexColor(
                                 widget.arg['AppTheme_']['IconOutlineColor']),
-                            width: 2),
-                        color:  HexColor(
-                                widget.arg['AppTheme_']['IconBgColor']),
+                            width: 0.5),
+                        color: HexColor(widget.arg['AppTheme_']['IconBgColor']),
                         shape: BoxShape.circle,
                       ),
                       child: Padding(
-                          padding: EdgeInsets.all(3),
+                          padding: EdgeInsets.all(7),
                           child: Icon(
                             Icons.arrow_back_ios_new,
                             color: HexColor(
                                 widget.arg['AppTheme_']['IconOutlineColor']),
-                            size: 30,
+                            size: 25,
                           )))),
               Padding(
                 padding: EdgeInsets.only(left: 10),
                 child: Text(
                   "Calendar",
                   style: TextStyle(
-                      color:
-                          HexColor(widget.arg['AppTheme_']['AppHeaderFontColor']),
+                      color: HexColor(
+                          widget.arg['AppTheme_']['AppHeaderFontColor']),
                       fontSize: 20,
                       fontWeight: FontWeight.bold),
                 ),
@@ -293,7 +292,8 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                       Consumer<MySettingsListener>(
                           builder: (context, data, settingsDta) {
                         return Card(
-                          color:  HexColor(widget.arg['AppTheme_']['PanelBgColor']),
+                            color: HexColor(
+                                widget.arg['AppTheme_']['PanelBgColor']),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15.0),
                             ),
@@ -316,164 +316,186 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                             ));
                       }),
                       Consumer<MySettingsListener>(
-                            builder: (context, data, settingsDta) {
-                          return Container(
-                        margin:
-                            EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-                        padding: EdgeInsets.symmetric(vertical: 10),
-                        //color: Colors.white,
-                        child: Column(
-                          children: [
-                            Container(
-                              margin:
-                                  EdgeInsets.only(top: 0, left: 4, right: 4),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  RichText(
-                                    textAlign: TextAlign.center,
-                                    text: TextSpan(children: [
-                                      WidgetSpan(
-                                          child: Container(
-                                        width: 15,
-                                        height: 15,
-                                        padding: EdgeInsets.only(top: 0),
-                                        decoration: BoxDecoration(
-                                            color: HexColor(data.calendarColorCodes['Purchase']),
-                                            borderRadius:
-                                                BorderRadius.circular(60.0)),
-                                      )),
-                                      WidgetSpan(
-                                          child: Container(
-                                        padding:
-                                            EdgeInsets.only(bottom: 0, left: 5),
-                                        child: Text(
-                                          "Purchase",
-                                          style: TextStyle(
-                                              color: HexColor(widget.arg['AppTheme_']['SubTitleFontColor']),
-                                              fontSize: 12),
-                                        ),
-                                      )),
-                                    ]),
-                                  ),
-                                  RichText(
-                                    textAlign: TextAlign.center,
-                                    text: TextSpan(children: [
-                                      WidgetSpan(
-                                          child: Container(
-                                        width: 15,
-                                        height: 15,
-                                        padding: EdgeInsets.only(top: 0),
-                                        decoration: BoxDecoration(
-                                            color: HexColor(data.calendarColorCodes['Topup']),
-                                            borderRadius:
-                                                BorderRadius.circular(60.0)),
-                                      )),
-                                      WidgetSpan(
-                                          child: Container(
-                                        padding:
-                                            EdgeInsets.only(bottom: 0, left: 5),
-                                        child: Text(
-                                          "Top-up",
-                                          style: TextStyle(
-                                              color: HexColor(widget.arg['AppTheme_']['SubTitleFontColor']),
-                                              fontSize: 12),
-                                        ),
-                                      )),
-                                    ]),
-                                  ),
-                                  RichText(
-                                    textAlign: TextAlign.center,
-                                    text: TextSpan(children: [
-                                      WidgetSpan(
-                                          child: Container(
-                                        width: 15,
-                                        height: 15,
-                                        padding: EdgeInsets.only(top: 0),
-                                        decoration: BoxDecoration(
-                                            color: HexColor(data.calendarColorCodes['Holiday']),
-                                            borderRadius:
-                                                BorderRadius.circular(60.0)),
-                                      )),
-                                      WidgetSpan(
-                                          child: Container(
-                                        padding:
-                                            EdgeInsets.only(bottom: 0, left: 5),
-                                        child: Text(
-                                          "Holiday",
-                                          style: TextStyle(
-                                              color: HexColor(widget.arg['AppTheme_']['SubTitleFontColor']),
-                                              fontSize: 12),
-                                        ),
-                                      )),
-                                    ]),
-                                  ),
-                                  RichText(
-                                    textAlign: TextAlign.center,
-                                    text: TextSpan(children: [
-                                      WidgetSpan(
-                                          child: Container(
-                                        width: 15,
-                                        height: 15,
-                                        padding: EdgeInsets.only(top: 0),
-                                        decoration: BoxDecoration(
-                                            color: HexColor(data.calendarColorCodes['Present']),
-                                            borderRadius:
-                                                BorderRadius.circular(60.0)),
-                                      )),
-                                      WidgetSpan(
-                                          child: Container(
-                                        padding:
-                                            EdgeInsets.only(bottom: 0, left: 5),
-                                        child: Text(
-                                          "Present",
-                                          style: TextStyle(
-                                              color: HexColor(widget.arg['AppTheme_']['SubTitleFontColor']),
-                                              fontSize: 12),
-                                        ),
-                                      )),
-                                    ]),
-                                  ),
-                                   RichText(
-                                    textAlign: TextAlign.center,
-                                    text: TextSpan(children: [
-                                      WidgetSpan(
-                                          child: Container(
-                                        width: 15,
-                                        height: 15,
-                                        padding: EdgeInsets.only(top: 0),
-                                        decoration: BoxDecoration(
-                                            color: HexColor(data.calendarColorCodes['Absent']),
-                                            borderRadius:
-                                                BorderRadius.circular(60.0)),
-                                      )),
-                                      WidgetSpan(
-                                          child: Container(
-                                        padding:
-                                            EdgeInsets.only(bottom: 0, left: 5),
-                                        child: Text(
-                                          "Absent",
-                                          style: TextStyle(
-                                              color: HexColor(widget.arg['AppTheme_']['SubTitleFontColor']),
-                                              fontSize: 12),
-                                        ),
-                                      )),
-                                    ]),
-                                  ),
-                                
-                                ],
+                          builder: (context, data, settingsDta) {
+                        return Container(
+                          margin:
+                              EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                          padding: EdgeInsets.symmetric(vertical: 10),
+                          //color: Colors.white,
+                          child: Column(
+                            children: [
+                              Container(
+                                margin:
+                                    EdgeInsets.only(top: 0, left: 4, right: 4),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    RichText(
+                                      textAlign: TextAlign.center,
+                                      text: TextSpan(children: [
+                                        WidgetSpan(
+                                            child: Container(
+                                          width: 15,
+                                          height: 15,
+                                          padding: EdgeInsets.only(top: 0),
+                                          decoration: BoxDecoration(
+                                              color: HexColor(
+                                                  data.calendarColorCodes[
+                                                      'Purchase']),
+                                              borderRadius:
+                                                  BorderRadius.circular(60.0)),
+                                        )),
+                                        WidgetSpan(
+                                            child: Container(
+                                          padding: EdgeInsets.only(
+                                              bottom: 0, left: 5),
+                                          child: Text(
+                                            "Purchase",
+                                            style: TextStyle(
+                                                color: HexColor(
+                                                    widget.arg['AppTheme_']
+                                                        ['SubTitleFontColor']),
+                                                fontSize: 12),
+                                          ),
+                                        )),
+                                      ]),
+                                    ),
+                                    RichText(
+                                      textAlign: TextAlign.center,
+                                      text: TextSpan(children: [
+                                        WidgetSpan(
+                                            child: Container(
+                                          width: 15,
+                                          height: 15,
+                                          padding: EdgeInsets.only(top: 0),
+                                          decoration: BoxDecoration(
+                                              color: HexColor(data
+                                                  .calendarColorCodes['Topup']),
+                                              borderRadius:
+                                                  BorderRadius.circular(60.0)),
+                                        )),
+                                        WidgetSpan(
+                                            child: Container(
+                                          padding: EdgeInsets.only(
+                                              bottom: 0, left: 5),
+                                          child: Text(
+                                            "Top-up",
+                                            style: TextStyle(
+                                                color: HexColor(
+                                                    widget.arg['AppTheme_']
+                                                        ['SubTitleFontColor']),
+                                                fontSize: 12),
+                                          ),
+                                        )),
+                                      ]),
+                                    ),
+                                    RichText(
+                                      textAlign: TextAlign.center,
+                                      text: TextSpan(children: [
+                                        WidgetSpan(
+                                            child: Container(
+                                          width: 15,
+                                          height: 15,
+                                          padding: EdgeInsets.only(top: 0),
+                                          decoration: BoxDecoration(
+                                              color: HexColor(
+                                                  data.calendarColorCodes[
+                                                      'Holiday']),
+                                              borderRadius:
+                                                  BorderRadius.circular(60.0)),
+                                        )),
+                                        WidgetSpan(
+                                            child: Container(
+                                          padding: EdgeInsets.only(
+                                              bottom: 0, left: 5),
+                                          child: Text(
+                                            "Holiday",
+                                            style: TextStyle(
+                                                color: HexColor(
+                                                    widget.arg['AppTheme_']
+                                                        ['SubTitleFontColor']),
+                                                fontSize: 12),
+                                          ),
+                                        )),
+                                      ]),
+                                    ),
+                                    RichText(
+                                      textAlign: TextAlign.center,
+                                      text: TextSpan(children: [
+                                        WidgetSpan(
+                                            child: Container(
+                                          width: 15,
+                                          height: 15,
+                                          padding: EdgeInsets.only(top: 0),
+                                          decoration: BoxDecoration(
+                                              color: HexColor(
+                                                  data.calendarColorCodes[
+                                                      'Present']),
+                                              borderRadius:
+                                                  BorderRadius.circular(60.0)),
+                                        )),
+                                        WidgetSpan(
+                                            child: Container(
+                                          padding: EdgeInsets.only(
+                                              bottom: 0, left: 5),
+                                          child: Text(
+                                            "Present",
+                                            style: TextStyle(
+                                                color: HexColor(
+                                                    widget.arg['AppTheme_']
+                                                        ['SubTitleFontColor']),
+                                                fontSize: 12),
+                                          ),
+                                        )),
+                                      ]),
+                                    ),
+                                    RichText(
+                                      textAlign: TextAlign.center,
+                                      text: TextSpan(children: [
+                                        WidgetSpan(
+                                            child: Container(
+                                          width: 15,
+                                          height: 15,
+                                          padding: EdgeInsets.only(top: 0),
+                                          decoration: BoxDecoration(
+                                              color: HexColor(
+                                                  data.calendarColorCodes[
+                                                      'Absent']),
+                                              borderRadius:
+                                                  BorderRadius.circular(60.0)),
+                                        )),
+                                        WidgetSpan(
+                                            child: Container(
+                                          padding: EdgeInsets.only(
+                                              bottom: 0, left: 5),
+                                          child: Text(
+                                            "Absent",
+                                            style: TextStyle(
+                                                color: HexColor(
+                                                    widget.arg['AppTheme_']
+                                                        ['SubTitleFontColor']),
+                                                fontSize: 12),
+                                          ),
+                                        )),
+                                      ]),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                      );
-                            }),
-                            if (!hideBottomDetailsCards)
+                            ],
+                          ),
+                        );
+                      }),
+                      if (!hideBottomDetailsCards)
                         Consumer<MySettingsListener>(
                             builder: (context, data, settingsDta) {
                           return Card(
-                              color:  HexColor(widget.arg['AppTheme_']['PanelBgColor']),
+                              color: HexColor(
+                                  widget.arg['AppTheme_']['PanelBgColor']),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
                               elevation: 10,
                               shadowColor: Colors.black,
                               borderOnForeground: true,
@@ -481,17 +503,25 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                                   left: 20, right: 20, bottom: 20),
                               child: Column(
                                 children: [
-                                  ListTile(
-                                    title: Text("Transactions"),
-                                    //trailing: Text("(Last 30 days)"),
-                                    tileColor: HexColor(widget.arg['AppTheme_']
-                                        ['PanelHeaderBgColor']),
-                                    textColor: HexColor(widget.arg['AppTheme_']
-                                        ['PanelHeaderFontColor']),
+                                  Container(
+                                  decoration: BoxDecoration(
+                                  color: HexColor(widget.arg['AppTheme_']['PanelHeaderBgColor']),
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(15.0),
+                                    topRight: Radius.circular(15.0),
                                   ),
+                                  ),
+                                  child: ListTile(
+                                     visualDensity: VisualDensity(
+                                        vertical:
+                                            -2),
+                                  title: Text("Transactions"),
+                                  textColor: HexColor(widget.arg['AppTheme_']['PanelHeaderFontColor']),
+                                  ),
+                                ),
                                   Container(
                                     margin: EdgeInsets.only(
-                                        left: 0, right: 0, top: 10, bottom: 10),
+                                        left: 0, right: 0, top: 0, bottom: 10),
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -550,7 +580,11 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                         Consumer<MySettingsListener>(
                             builder: (context, data, settingsDta) {
                           return Card(
-                             color:  HexColor(widget.arg['AppTheme_']['PanelBgColor']),
+                              color: HexColor(
+                                  widget.arg['AppTheme_']['PanelBgColor']),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
                               elevation: 10,
                               shadowColor: Colors.black,
                               borderOnForeground: true,
@@ -558,17 +592,25 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                                   left: 20, right: 20, bottom: 20),
                               child: Column(
                                 children: [
-                                  ListTile(
-                                    title: Text("Attendance & Holiday"),
-                                    //trailing: Text("(Last 30 days)"),
-                                    tileColor: HexColor(widget.arg['AppTheme_']
-                                        ['PanelHeaderBgColor']),
-                                    textColor: HexColor(widget.arg['AppTheme_']
-                                        ['PanelHeaderFontColor']),
+                                  Container(
+                                  decoration: BoxDecoration(
+                                  color: HexColor(widget.arg['AppTheme_']['PanelHeaderBgColor']),
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(15.0),
+                                    topRight: Radius.circular(15.0),
                                   ),
+                                  ),
+                                  child: ListTile(
+                                     visualDensity: VisualDensity(
+                                        vertical:
+                                            -2),
+                                  title: Text("Attendance & Holiday"),
+                                  textColor: HexColor(widget.arg['AppTheme_']['PanelHeaderFontColor']),
+                                  ),
+                                ),
                                   Container(
                                     margin: EdgeInsets.only(
-                                        left: 0, right: 0, top: 10, bottom: 10),
+                                        left: 0, right: 0, top: 0, bottom: 10),
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -576,7 +618,8 @@ class _CalendarTransactionsPageState extends State<CalendarTransactionsPage> {
                                         if (data
                                             .calendarHolidaysList.isNotEmpty)
                                           HolidayListView(
-                                              data.calendarHolidaysList,widget.arg['AppTheme_'])
+                                              data.calendarHolidaysList,
+                                              widget.arg['AppTheme_'])
                                         else
                                           Container(
                                             margin: EdgeInsets.all(10),

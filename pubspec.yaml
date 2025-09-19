@@ -1,7 +1,7 @@
 name: calms_parent_latest
 description: A new Flutter project.
 publish_to: "none"
-version: 4.0.0+34
+version: 4.0.1+35
 
 environment:
   sdk: ">=2.19.6 <3.0.0"
@@ -75,7 +75,7 @@ dependencies:
   focus_detector: ^2.0.1
   flutter_jailbreak_detection: ^1.10.0
   trust_fall: ^1.0.4
-  mobile_scanner: ^3.5.0
+  mobile_scanner: 3.2.0
 
 #dependency_overrides:
 dev_dependencies:
@@ -120,6 +120,14 @@ flutter:
     - family: robotoBlack
       fonts:
         - asset: assets/fonts/Roboto/Roboto-Regular.ttf
+    - family: Aptos
+      fonts:
+        - asset: assets/fonts/Aptos/Aptos.ttf
+          weight: 500
+        - asset: assets/fonts/Aptos/Aptos-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Aptos/Aptos-Light.ttf
+          weight: 300
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf

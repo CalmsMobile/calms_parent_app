@@ -74,6 +74,7 @@ import 'package:rxdart/rxdart.dart';
 
 import 'utils/security_utils.dart';
 import 'screens/security_block_screen.dart';
+import 'common/widgets/fullscreen_wrapper.dart';
 
 // for passing messages from event handler to the UI
 final _messageStreamController = BehaviorSubject<RemoteMessage>();
@@ -138,6 +139,11 @@ class MyHttpOverrides extends HttpOverrides {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
+  SystemChrome.setEnabledSystemUIMode(
+    SystemUiMode.immersiveSticky,
+    overlays: [], // Start with both bars hidden
+  );
+
   // Check for compromised device
   bool isCompromised = await SecurityUtils.isDeviceCompromised();
   
@@ -212,9 +218,25 @@ void main() async {
         providers: [
           ChangeNotifierProvider(create: (_) => MySettingsListener()),
         ],
-        child: MaterialApp(
+        child: FullscreenWrapper(
+          child: MaterialApp(
             theme: ThemeData(
               fontFamily: appFontFmaily,
+              textTheme: const TextTheme(
+                displayLarge: TextStyle(fontFamily: appFontFmaily, fontSize: 96 * 1.3),
+                displayMedium: TextStyle(fontFamily: appFontFmaily, fontSize: 60 * 1.3),
+                displaySmall: TextStyle(fontFamily: appFontFmaily, fontSize: 48 * 1.3),
+                headlineMedium: TextStyle(fontFamily: appFontFmaily, fontSize: 34 * 1.3),
+                headlineSmall: TextStyle(fontFamily: appFontFmaily, fontSize: 24 * 1.3),
+                titleLarge: TextStyle(fontFamily: appFontFmaily, fontSize: 20 * 1.3),
+                titleMedium: TextStyle(fontFamily: appFontFmaily, fontSize: 16 * 1.3),
+                titleSmall: TextStyle(fontFamily: appFontFmaily, fontSize: 14 * 1.3),
+                bodyLarge: TextStyle(fontFamily: appFontFmaily, fontSize: 16 * 1.3),
+                bodyMedium: TextStyle(fontFamily: appFontFmaily, fontSize: 14 * 1.3),
+                bodySmall: TextStyle(fontFamily: appFontFmaily, fontSize: 12 * 1.3),
+                labelLarge: TextStyle(fontFamily: appFontFmaily, fontSize: 14 * 1.3),
+                labelSmall: TextStyle(fontFamily: appFontFmaily, fontSize: 10 * 1.3),
+              ),
             ),
             debugShowCheckedModeBanner: false,
             localizationsDelegates: [
@@ -231,6 +253,7 @@ void main() async {
               child: SplashScreen(),
             ),
             routes: myroutes),
+        ),
       ),
     );
   }
@@ -345,30 +368,47 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      localizationsDelegates: [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: [
-        Locale('en', ''), // English, no country code
-      ],
-      debugShowCheckedModeBanner: false,
-      //home: HomePage(familyPos, familyList, pageSwiped),
-      home: HomePage(),
-      theme: ThemeData(
-        fontFamily: appFontFmaily,
-        outlinedButtonTheme: OutlinedButtonThemeData(
-          style: OutlinedButton.styleFrom(
-            primary: Colors.blue,
-            shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(10))),
+    return FullscreenWrapper(
+      child: MaterialApp(
+        localizationsDelegates: [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: [
+          Locale('en', ''), // English, no country code
+        ],
+        debugShowCheckedModeBanner: false,
+        //home: HomePage(familyPos, familyList, pageSwiped),
+        home: HomePage(),
+        theme: ThemeData(
+          fontFamily: appFontFmaily,
+          textTheme: const TextTheme(
+            displayLarge: TextStyle(fontFamily: appFontFmaily, fontSize: 96 * 1.3),
+            displayMedium: TextStyle(fontFamily: appFontFmaily, fontSize: 60 * 1.3),
+            displaySmall: TextStyle(fontFamily: appFontFmaily, fontSize: 48 * 1.3),
+            headlineMedium: TextStyle(fontFamily: appFontFmaily, fontSize: 34 * 1.3),
+            headlineSmall: TextStyle(fontFamily: appFontFmaily, fontSize: 24 * 1.3),
+            titleLarge: TextStyle(fontFamily: appFontFmaily, fontSize: 20 * 1.3),
+            titleMedium: TextStyle(fontFamily: appFontFmaily, fontSize: 16 * 1.3),
+            titleSmall: TextStyle(fontFamily: appFontFmaily, fontSize: 14 * 1.3),
+            bodyLarge: TextStyle(fontFamily: appFontFmaily, fontSize: 16 * 1.3),
+            bodyMedium: TextStyle(fontFamily: appFontFmaily, fontSize: 14 * 1.3),
+            bodySmall: TextStyle(fontFamily: appFontFmaily, fontSize: 12 * 1.3),
+            labelLarge: TextStyle(fontFamily: appFontFmaily, fontSize: 14 * 1.3),
+            labelSmall: TextStyle(fontFamily: appFontFmaily, fontSize: 10 * 1.3),
+          ),
+          outlinedButtonTheme: OutlinedButtonThemeData(
+            style: OutlinedButton.styleFrom(
+              primary: Colors.blue,
+              shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(10))),
+            ),
           ),
         ),
+        routes: myroutes,
       ),
-      routes: myroutes,
     );
   }
 }
@@ -549,10 +589,8 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     //enterFullScreen(FullScreenMode.EMERSIVE_STICKY);
     SystemChrome.setEnabledSystemUIMode(
-      SystemUiMode.manual,
-      overlays: [
-        SystemUiOverlay.top, // Shows Status bar and hides Navigation bar
-      ],
+      SystemUiMode.immersiveSticky,
+      overlays: [],
     );
     super.initState();
     routingScreen();
@@ -560,59 +598,61 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: BoxConstraints.expand(),
-      decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage("assets/images/app_bg.png"),
-              fit: BoxFit.cover)),
-      child: new Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Container(
-            alignment: Alignment.center,
-            // margin: EdgeInsets.only(top: 50),
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            color: Colors.transparent,
-            child: Align(
+    return FullscreenWrapper(
+      child: Container(
+        constraints: BoxConstraints.expand(),
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage("assets/images/app_bg.png"),
+                fit: BoxFit.cover)),
+        child: new Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Container(
               alignment: Alignment.center,
-              child: Column(
-                children: [
-                  Image(
-                      width: 150,
-                      height: 150,
-                      image: AssetImage('assets/images/logo.png')),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  Text(
-                    "",
-                    style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    "",
-                    textAlign: TextAlign.center,
-                    style:
-                        TextStyle(fontSize: 20, fontWeight: FontWeight.normal),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Image(
-                      width: 200,
-                      height: 200,
-                      alignment: Alignment.bottomCenter,
-                      image:
-                          AssetImage('assets/images/welcome_bottom_img.png')),
-                ],
+              // margin: EdgeInsets.only(top: 50),
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              color: Colors.transparent,
+              child: Align(
+                alignment: Alignment.center,
+                child: Column(
+                  children: [
+                    Image(
+                        width: 150,
+                        height: 150,
+                        image: AssetImage('assets/images/logo.png')),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Text(
+                      "",
+                      style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      "",
+                      textAlign: TextAlign.center,
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.normal),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Image(
+                        width: 200,
+                        height: 200,
+                        alignment: Alignment.bottomCenter,
+                        image:
+                            AssetImage('assets/images/welcome_bottom_img.png')),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

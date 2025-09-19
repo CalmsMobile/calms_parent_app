@@ -5,4 +5,4 @@ const kTextLightColor = Color(0xFFACACAC);
 
 const kDefaultPaddin = 10.0;
 
-const appFontFmaily = 'robotoBlack';
+const appFontFmaily = 'Aptos';

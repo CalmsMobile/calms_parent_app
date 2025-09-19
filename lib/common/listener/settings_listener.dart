@@ -13,6 +13,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
@@ -146,8 +147,10 @@ class MySettingsListener with ChangeNotifier {
       UnmodifiableMapView(_driverDetails == null ? {} : _driverDetails);
 
   UnmodifiableMapView get appTheme => UnmodifiableMapView(_appTheme);
-   UnmodifiableMapView get calendarColorCodes => UnmodifiableMapView(_calendarColorCodes);
-   UnmodifiableMapView get paymentSetting => UnmodifiableMapView(_paymentSetting);
+  UnmodifiableMapView get calendarColorCodes =>
+      UnmodifiableMapView(_calendarColorCodes);
+  UnmodifiableMapView get paymentSetting =>
+      UnmodifiableMapView(_paymentSetting);
 
   updateEntryToDashboardFamilyList(List familyList, loginUserSeqId) {
     _familyList = familyList;
@@ -211,7 +214,7 @@ class MySettingsListener with ChangeNotifier {
     //list = [];
     List<Appointment> appointments = <Appointment>[];
     print(list);
-    
+
     if (colorCodes != {}) {
       print(colorCodes);
       this._calendarColorCodes = colorCodes;
@@ -323,7 +326,7 @@ class MySettingsListener with ChangeNotifier {
     print(jsonEncode(topupDetails));
     Navigator.of(context).pop();
     CommonUtil().MakeTransaction(context, topupHeader, topupDetails,
-        gatewayDetail, profileData, 0, 0, paymentFor, AppTheme_,0,0,0,0);
+        gatewayDetail, profileData, 0, 0, paymentFor, AppTheme_, 0, 0, 0, 0);
   }
 
   updateTopupPaymentProvidersList(List paymentProvidersList) {
@@ -332,7 +335,8 @@ class MySettingsListener with ChangeNotifier {
     print("_paymentProvidersList updated");
   }
 
-  updateMealOrderPaymentProvidersList(List paymentProvidersList,PaymentSetting) {
+  updateMealOrderPaymentProvidersList(
+      List paymentProvidersList, PaymentSetting) {
     //paymentProvidersList.removeWhere((element) => element['IsWallet'] == 1);
     _paymentProvidersList = paymentProvidersList;
     _paymentSetting = PaymentSetting;
@@ -404,7 +408,14 @@ class MySettingsListener with ChangeNotifier {
       }
       _cartList.add(cartData);
     }
-
+    // Add animation when updating cart
+    if (!isDelete) {
+      HapticFeedback.mediumImpact(); // Provide haptic feedback
+      MyCustomAlertDialog().showToast(context, "Added to cart");
+    } else {
+      HapticFeedback.lightImpact();
+      MyCustomAlertDialog().showToast(context, "Removed from cart"); 
+    }
     print(_cartList);
     notifyListeners();
   }
@@ -455,6 +466,9 @@ class MySettingsListener with ChangeNotifier {
             MaterialPageRoute(
                 builder: (context) =>
                     MealMenuPage(arguments, AppTheme_, poSetting)));
+      else
+        MyCustomAlertDialog().showCustomAlert(context,"Alert!",
+            "The meal for this configuration has not been uploaded. Please contact the school or try again later",false,(){Navigator.of(context).pop();},null,"Ok","");
     }
 
     //notifyListeners();
@@ -631,8 +645,18 @@ class MySettingsListener with ChangeNotifier {
     notifyListeners();
   }
 
-  updateOrderHeaderAndDetails(BuildContext context, gatewayDetail, profileData,
-      IsWallet, Balance, paymentFor, AppTheme_,actualOrderAmount,deductAmountFromWallet,orderAmount,walletSettingId) {
+  updateOrderHeaderAndDetails(
+      BuildContext context,
+      gatewayDetail,
+      profileData,
+      IsWallet,
+      Balance,
+      paymentFor,
+      AppTheme_,
+      actualOrderAmount,
+      deductAmountFromWallet,
+      orderAmount,
+      walletSettingId) {
     List orderHeader = [];
     List orderDetails = [];
     String currenFiltertDate =
@@ -723,8 +747,20 @@ class MySettingsListener with ChangeNotifier {
     print("==========orderDetails============");
     print(jsonEncode(orderDetails));
     Navigator.of(context).pop();
-    CommonUtil().MakeTransaction(context, orderHeader, orderDetails,
-        gatewayDetail, profileData, IsWallet, Balance, paymentFor, AppTheme_,actualOrderAmount,deductAmountFromWallet,orderAmount,walletSettingId);
+    CommonUtil().MakeTransaction(
+        context,
+        orderHeader,
+        orderDetails,
+        gatewayDetail,
+        profileData,
+        IsWallet,
+        Balance,
+        paymentFor,
+        AppTheme_,
+        actualOrderAmount,
+        deductAmountFromWallet,
+        orderAmount,
+        walletSettingId);
   }
 
   updateSettings(var settingDetails) {
