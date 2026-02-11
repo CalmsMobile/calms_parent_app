@@ -102,7 +102,7 @@ class _ActivityDetailsState extends State<ActivityDetails> {
                       horizontalTitleGap: 2,
                       contentPadding: EdgeInsets.zero,
                       onTap: () => {
-                        openMemberBottomSheet(context, familyList, (index) {
+                        openMemberBottomSheet(context, familyList,null, (index) {
                           print(index);
                           Navigator.pop(context);
                           setState(() {

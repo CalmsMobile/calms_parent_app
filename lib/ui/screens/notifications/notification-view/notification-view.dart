@@ -17,6 +17,8 @@ class NotificationView extends StatelessWidget {
     print(arguments['passData']);
     Map<String, dynamic> passData = jsonDecode(arguments['passData']);
     int pos = arguments['pos'];
+    String category = arguments['category'];
+    String imgBaseUrl = arguments['imgBaseUrl'];
     // updateReadStatus(passData, context, pos);
     return Scaffold(
       appBar: AppBar(
@@ -108,11 +110,10 @@ class NotificationView extends StatelessWidget {
                                       shape: RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(10))),
-                                  child: Image.network(passData["image"]),
+                                  child: Image.network(passData["ImgPathUrl"] != null?imgBaseUrl+passData["ImgPathUrl"]:AppSettings.avatarPlaceholder),
                                 ),
                               ),
-                              title: Text(
-                                "${passData["Title"]}",
+                              title: Text(category,
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold, fontSize: 18),
                               ),
@@ -180,7 +181,7 @@ class NotificationView extends StatelessWidget {
       };
 
       Future<Map<String, dynamic>> res = RestApiProvider().postMethod(data, '',
-          AppSettings.updateReadNotificationStatus, context, false, true);
+          'AppSettings.updateReadNotificationStatus', context, false, true);
       res
           .then((value) => {handleApiResponse(value, context, pos)})
           .onError((error, stackTrace) => {handleApiError(error, context)});

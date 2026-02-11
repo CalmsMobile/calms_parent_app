@@ -10,8 +10,10 @@ import 'package:calms_parent/provider/rest_api.dart';
 import 'package:calms_parent/ui/screens/scan_qr_registration/account_mapping.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:platform_device_id/platform_device_id.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:http/http.dart' as http;
 
 class QRRegistration extends StatefulWidget {
   const QRRegistration({Key? key}) : super(key: key);
@@ -46,7 +48,10 @@ class _QRRegistrationState extends State<QRRegistration> {
         isQrView = false;
       });
       if (kDebugMode) {
-        print("ENC: start");
+        print("QR: start");
+        var qrdata =
+            "D5qpk1C3xkIxgAIPyzivIXAY1+BrXWHUlQKXDwvQA+ZdYEMAODR6p8LO+xtwCb40mDM1KuLMvZxu7dYHbnj4vz2xIA0UFUraTm0CeyJet7mcA0J13k2dSiQDJPtLlTDk5kYp0xT+l6pIB8TI0DpuRDQzczYlTdoFpt0NJ+Rx0fB4RdyfSpYEDuvUaZ3W4egr";
+        processQRCode(qrdata);
       }
       // String inputdata =
       //     "{\"ApiUrl\":\"http://124.217.235.107:1001/api/\",\"CompanyId\":\"0\",\"HostId\":\"VijayCalms\", \"AppId\":\"1\", \"MAppId\":\"TAMSAPP\"}";
@@ -55,17 +60,14 @@ class _QRRegistrationState extends State<QRRegistration> {
       //   print("ENC: " + encryptdata);
       // }
       //Thila 2008
-      var qrdata =
-          '42Fcpk4wSQVW7uqmY3NPk5DhtVO+so0aZHgC+vkcvvzmHQwiU3DwLspssruFDNXeqq0bXjI9oA6VRH/wkdfs0Urnm79vDh8QtFFnxlIXlmJUAnqy7wrh6jxtbga1ChdBcaH3r6RIOelf2nqOCaHwoF3/t3eAiXzoHJHxRzz7NAGDTydXLCgNowFgcS3hrwv6';
+      //var qrdata = '42Fcpk4wSQVW7uqmY3NPk5DhtVO+so0aZHgC+vkcvvzmHQwiU3DwLspssruFDNXeqq0bXjI9oA6VRH/wkdfs0Urnm79vDh8QtFFnxlIXlmJUAnqy7wrh6jxtbga1ChdBcaH3r6RIOelf2nqOCaHwoF3/t3eAiXzoHJHxRzz7NAGDTydXLCgNowFgcS3hrwv6';
       //Izza 2008
       // var qrdata =
       //     '42Fcpk4wSQVW7uqmY3NPk5DhtVO+so0aZHgC+vkcvvwDSk2Xauc+GM9g2WoeS1MxYja1e6OHKdykTx1IK+zxI8pZJvcEgiTMWb0zUr5FSkKVnnyb4663l6C8EQHXXjesb+wz1SQGErkJGvDHukrb+AVoQDdPWsZ/Job4nK8s4dsWDC/RWjjPwrmG5e9K4XB5';
       //Siva
       // var qrdata =
-      //     "42Fcpk4wSQVW7uqmY3NPk5DhtVO+so0aZHgC+vkcvvwDSk2Xauc+GM9g2WoeS1MxYja1e6OHKdykTx1IK+zxI40aWqW+LuPORm9aLf6anldDIk6OvARK0znymQxl8IsvrKknkaE3MLLPVA+WB5oaJt+YaSgi/w+U+pspUihdiUyRcRcJ50qUTSF+SofC36CQ";
-      // var qrdata =
       //     "42Fcpk4wSQVW7uqmY3NPk5DhtVO+so0aZHgC+vkcvvzoiOlTwStG5SP1L7poLtlzGXOP1D3+nUTzUcrojygQd4SLPDdyAHscm39Bx/zau3iW6M100/9jhJCskTeb86CS8YeKkzmNX0mGndmnAMFqae+iraFeRJ1VK0Kxtht1Hb0R4nqLo5t4wOwd5qcOp+O0";
-      processQRCode(qrdata);
+
       return Future.value(false);
     } else {
       return Future.value(true);
@@ -81,16 +83,26 @@ class _QRRegistrationState extends State<QRRegistration> {
       String decryptdata = CryptoEncryption().decryption(qrData);
       if (kDebugMode) {
         print("DECRYPT: " + decryptdata);
+        //decryptdata ='{"MAppId":"PARENTAPP","MAppSeqId":"447","ApiUrl":"http://103.6.163.49:1001/api/","LocalApiUrl":"http://103.6.163.49:1001/api/"}';
       }
       if (decryptdata != "") {
         Map<String, dynamic> qrJson = jsonDecode(decryptdata);
-        var data = {'DeviceSeqId': qrJson["MAppSeqId"]};
+        var data = {'MAppDevSeqId': qrJson["MAppSeqId"]};
         print(data);
-        Future<Map<String, dynamic>> res = RestApiProvider().postMethod(data,
-            qrJson["ApiUrl"], AppSettings.validateQRCode, context, true, false);
-        res
-            .then((value) => {handleApiResponse(value, decryptdata)})
-            .onError((error, stackTrace) => {qrProcessError(error)});
+        if (qrJson['MAppId'] == "PARENTAPP") {
+          Future<Map<String, dynamic>> res = RestApiProvider().postData(data,
+              qrJson["ApiUrl"], AppSettings.GetQRInfo, context, true, false);
+          res
+              .then((value) =>
+                  {handleApiResponse(value, decryptdata, qrJson["ApiUrl"])})
+              .onError((error, stackTrace) => {qrProcessError(error)});
+        } else {
+          MyCustomAlertDialog().showCustomAlert(
+              context, "Notification", "Invalid QR code", true, () {
+            Navigator.pop(context);
+            resetQRData();
+          }, null);
+        }
       } else {
         MyCustomAlertDialog().showCustomAlert(
             context, "Notification", "Invalid QR code", true, () {
@@ -102,16 +114,18 @@ class _QRRegistrationState extends State<QRRegistration> {
   }
 
   void qrProcessError(error) {
+    print(error.toString());
     MyCustomAlertDialog()
         .showCustomAlert(context, "Notification", error.toString(), true, () {
       Navigator.pop(context);
-      resetQRData();
+      //resetQRData();
     }, null);
   }
 
-  void handleApiResponse(Map<String, dynamic> response, decryptdata) {
-    print('response >>' + jsonEncode(response));
-    if (response.containsKey("Code") && response['Code'] > 10) {
+  void handleApiResponse(
+      Map<String, dynamic> response, decryptdata, String baseUrl) async {
+    //print('response >>' + jsonEncode(response));
+    if (response.containsKey("code") && response['code'] > 10) {
       print("Error in response");
       MyCustomAlertDialog().showCustomAlert(
           context, "Notification", response["Description"], true, () {
@@ -119,10 +133,24 @@ class _QRRegistrationState extends State<QRRegistration> {
         resetQRData();
       }, null);
     } else {
-      MySharedPref().saveData(decryptdata, AppSettings.qrCodeData);
-      MySharedPref().saveData(jsonEncode(response), AppSettings.deviceDetails);
-      Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => new AccountMapping()));
+      //MySharedPref().saveData(jsonEncode(response), AppSettings.deviceDetails);
+      //print(response['Table1'][0]);
+      MySharedPref()
+          .saveData(jsonEncode(response['Table1'][0]), AppSettings.profileData);
+      baseUrl = baseUrl.replaceAll("/api/", "/FS/");
+      String? DeviceId = await PlatformDeviceId.getDeviceId;
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => AccountMapping(
+                  baseUrl: baseUrl,
+                  dataResponseModel: response['Table1'][0],
+                  decryptdata: decryptdata,
+                  DeviceId: DeviceId,
+                )),
+      );
+      //Navigator.pushReplacement(context,
+      //   MaterialPageRoute(builder: (context) => new AccountMapping()));
       // resetQRData();
     }
 

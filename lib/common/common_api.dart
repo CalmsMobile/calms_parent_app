@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:calms_parent/common/alert_dialog.dart';
 import 'package:calms_parent/common/app_settings.dart';
 import 'package:calms_parent/common/listener/settings_listener.dart';
@@ -8,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class CommonUtil {
-  var driverDetails_;
+  var profileData_;
   var driverData_;
 
   updateSettings(var settings, BuildContext context) {
@@ -19,24 +20,33 @@ class CommonUtil {
     context.read<MySettingsListener>().updateDriverDetails(driverDetails);
   }
 
-  Future<void> getAllNotification(
-      BuildContext context, int startPosition) async {
-    String driverDetails =
-        await MySharedPref().getData(AppSettings.parentDetails);
-    if (driverDetails != "") {
-      var driverDataList_ = jsonDecode(driverDetails);
-      List<dynamic> tableList = driverDataList_['Table'];
-      Map<String, dynamic> tableObj = tableList[0];
-      if (tableObj['Code'] == 10) {
-        var driverData_ = driverDataList_['Table1'][0];
-        var data = {
-          "DriverSeqId": driverData_["DriverSeqId"],
-          "Limit": 10,
-          "Start": startPosition,
-        };
+  Future<void> getAllNotification(BuildContext context, String apiURL,
+      int startPosition, profileData, decryptdata) async {
+    if (profileData != "") {
+      var profileData_ = jsonDecode(profileData);
+      print(profileData_);
+      Map<String, dynamic> qrJson = jsonDecode(decryptdata);
+      var payLoad = {
+        "Authorize": {"AuMAppDevSeqId": qrJson['MAppSeqId'], "AuDeviceUID": ""},
+        "FamilyId": profileData_['FamilyId'],
+        "Offset": 0,
+        "Rows": 100
+      };
+      //debugger();
+      print(payLoad.toString());
+      Future<Map<String, dynamic>> res = RestApiProvider().postData(
+          payLoad,
+          qrJson["ApiUrl"],
+          AppSettings.GetNotificationList,
+          context,
+          true,
+          false);
+      res
+          .then((value) => {handleApiResponse(value, context, startPosition,"")})
+          .onError((error, stackTrace) => {handleNotiApiError(error, context)});
 
-        Future<Map<String, dynamic>> res = RestApiProvider().postMethod(
-            data,
+      /* Future<Map<String, dynamic>> res = RestApiProvider().postMethod(
+            payLoad,
             '',
             AppSettings.getAllNotification,
             context,
@@ -45,22 +55,93 @@ class CommonUtil {
         res
             .then((value) => {handleApiResponse(value, context, startPosition)})
             .onError(
-                (error, stackTrace) => {handleNotiApiError(error, context)});
-      }
+                (error, stackTrace) => {handleNotiApiError(error, context)}); */
     }
   }
 
-  handleApiResponse(response, BuildContext context, int startPosition) {
-    if (response.containsKey("Code") && response['Code'] > 10) {
+  Future<void> getMemberFilterNotification(BuildContext context, String apiURL,
+      int startPosition, profileData, decryptdata, userId) async {
+    if (profileData != "") {
+      var profileData_ = jsonDecode(profileData);
+      print(profileData_);
+      Map<String, dynamic> qrJson = jsonDecode(decryptdata);
+      String familyId = profileData_['FamilyId'];
+      //if (userId == 0) {familyId = profileData_['FamilyId'];}
+
+      var payLoad = {
+        "Authorize": {"AuMAppDevSeqId": qrJson['MAppSeqId'], "AuDeviceUID": ""},
+        "RefUserSeqId": userId,
+        "FamilyId": familyId,
+        "NotificationType": "",
+        "Offset": 0,
+        "Rows": 100
+      };
+      //debugger();
+      print(payLoad.toString());
+      Future<Map<String, dynamic>> res = RestApiProvider().postData(
+          payLoad,
+          qrJson["ApiUrl"],
+          AppSettings.GetNotificationListWithFilter,
+          context,
+          true,
+          false);
+      res
+          .then((value) => {handleApiResponse(value, context, startPosition,"filter")})
+          .onError((error, stackTrace) => {handleNotiApiError(error, context)});
+    }
+  }
+
+  Future<void> getCtegoryFilterNotification(BuildContext context, String apiURL,
+      int startPosition, profileData, decryptdata, int categoryId) async {
+    if (profileData != "") {
+      var profileData_ = jsonDecode(profileData);
+      print(profileData_);
+      Map<String, dynamic> qrJson = jsonDecode(decryptdata);
+      String familyId = profileData_['FamilyId'];
+
+      var payLoad = {
+        "Authorize": {"AuMAppDevSeqId": qrJson['MAppSeqId'], "AuDeviceUID": ""},
+        "RefUserSeqId": 0,
+        "FamilyId": familyId,
+        "NotificationType": categoryId,
+        "Offset": 0,
+        "Rows": 100
+      };
+      //debugger();
+      print(payLoad.toString());
+      Future<Map<String, dynamic>> res = RestApiProvider().postData(
+          payLoad,
+          qrJson["ApiUrl"],
+          AppSettings.GetNotificationListWithFilter,
+          context,
+          true,
+          false);
+      res
+          .then((value) =>
+              {handleApiResponse(value, context, startPosition, "filter")})
+          .onError((error, stackTrace) => {handleNotiApiError(error, context)});
+    }
+  }
+
+  handleApiResponse(response, BuildContext context, int startPosition, Type) {
+    if (response.containsKey("code") && response['code'] > 10) {
       print("Error in response");
       MyCustomAlertDialog().showCustomAlert(
           context, "Notification", response["Description"], true, () {
         Navigator.pop(context);
       }, null);
     } else {
-      context
-          .read<MySettingsListener>()
-          .updateNotifiactionList(response['Table2'], startPosition);
+    print("response==="+response['Table2'].toString());
+    if(Type == "filter"){
+      response['Table3'] = [];
+      response['Table4'] = [];
+    }
+        context.read<MySettingsListener>().updateNotifiactionList(Type,
+            response['Table2'],
+            startPosition,
+            response['Table3'],
+            response['Table4']);
+      
     }
   }
 

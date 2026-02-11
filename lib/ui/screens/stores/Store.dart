@@ -343,7 +343,7 @@ class _StoresState extends State<Stores> {
                         horizontalTitleGap: 2,
                         contentPadding: EdgeInsets.zero,
                         onTap: () => {
-                          openMemberBottomSheet(context, familyList, (index) {
+                          openMemberBottomSheet(context, familyList,null, (index) {
                             Navigator.pop(context);
                             senderIndex = index;
                             setState(() {});
@@ -667,7 +667,7 @@ class _StoresState extends State<Stores> {
                         InkWell(
                           onTap: () {
                             if (senderIndex <= -1) {
-                              openMemberBottomSheet(context, familyList,
+                              openMemberBottomSheet(context, familyList,null,
                                   (studentindex) {
                                 senderIndex = studentindex;
                                 Navigator.of(context).pop();

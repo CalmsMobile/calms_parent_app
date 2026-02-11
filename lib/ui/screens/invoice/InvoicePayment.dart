@@ -365,7 +365,7 @@ class _InvoicePaymentState extends State<InvoicePayment> {
                       Flexible(
                         child: ListTile(
                           onTap: () => {
-                            openMemberBottomSheet(context, familyList, (index) {
+                            openMemberBottomSheet(context, familyList,null, (index) {
                               Navigator.pop(context);
                               senderIndex = index;
                               setState(() {});

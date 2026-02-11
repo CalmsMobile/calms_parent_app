@@ -5,6 +5,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../notifications/notifications.dart';
+
 class PinLock extends StatefulWidget {
   const PinLock({Key? key}) : super(key: key);
 
@@ -13,8 +15,21 @@ class PinLock extends StatefulWidget {
 }
 
 class _PinLockState extends State<PinLock> {
+  String appType = '';
   TextEditingController pinController = TextEditingController();
   TextEditingController confirmpinController = TextEditingController();
+  @override
+  void initState() {
+    // TODO: implement initState
+    initValues();
+    super.initState();
+  }
+
+  initValues() async {
+    appType = await MySharedPref().getData(AppSettings.Sp_Key_AppType);
+    print(appType);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,6 +40,13 @@ class _PinLockState extends State<PinLock> {
               child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Align(
+                alignment: Alignment.center,
+                child: Image(
+                    height: 100,
+                    width: 100,
+                    image: AssetImage("assets/images/create_pin_img.png")),
+              ),
               SizedBox(
                 height: 20,
               ),
@@ -37,7 +59,7 @@ class _PinLockState extends State<PinLock> {
                 height: 30,
               ),
               Text(
-                "Please create your 6 digit passcode to secure your app account.",
+                "Please create your 6 digit code to secure your wallet account.",
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 14, fontWeight: FontWeight.normal),
               ),
@@ -55,7 +77,7 @@ class _PinLockState extends State<PinLock> {
               Align(
                 alignment: Alignment.centerLeft,
                 child: Container(
-                  padding: EdgeInsets.only(top: 5.0, left: 0, right: 25),
+                  padding: EdgeInsets.only(top: 5.0, left: 0, right: 0),
                   child: TextField(
                     obscureText: true,
                     textInputAction: TextInputAction.done,
@@ -115,7 +137,7 @@ class _PinLockState extends State<PinLock> {
               Align(
                 alignment: Alignment.centerLeft,
                 child: Container(
-                  padding: EdgeInsets.only(top: 5.0, left: 0, right: 25),
+                  padding: EdgeInsets.only(top: 5.0, left: 0, right: 0),
                   child: TextField(
                     obscureText: true,
                     textInputAction: TextInputAction.done,
@@ -164,9 +186,33 @@ class _PinLockState extends State<PinLock> {
                 height: 40,
               ),
               SizedBox(
-                width: 220,
-                height: 45,
-                child: FlatButton(
+                  width: 150,
+                  height: 45,
+                  child: ElevatedButton(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text(
+                          "Create",
+                          style: TextStyle(
+                              fontSize: 18.0,
+                              fontFamily: "Montserrat",
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Icon(Icons.arrow_forward)
+                      ],
+                    ),
+                    onPressed: pinController.text.length == 6 &&
+                            confirmpinController.text == pinController.text
+                        ? _onButtonPressed
+                        : null,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blueAccent,
+                      textStyle: TextStyle(color: Colors.white),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(60.0)),
+                    ),
+                  ) /* FlatButton(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -192,9 +238,9 @@ class _PinLockState extends State<PinLock> {
                           width: 1.0,
                           color: Colors.grey),
                       borderRadius: new BorderRadius.circular(20.0)),
-                ),
-              ),
-              SizedBox(
+                ), */
+                  ),
+              /* SizedBox(
                 height: 25,
               ),
               RichText(
@@ -211,7 +257,7 @@ class _PinLockState extends State<PinLock> {
                           MaterialPageRoute(builder: (context) => MyApp()));
                     },
                 ),
-              ),
+              ), */
             ],
           )),
         ),
@@ -221,8 +267,13 @@ class _PinLockState extends State<PinLock> {
 
   _onButtonPressed() {
     MySharedPref().saveData(pinController.text, AppSettings.parentAppPIN);
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => MyApp()));
+    if (appType == AppSettings.appType_Notification) {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => Notifications()));
+    } else {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => MyApp()));
+    }
   }
 
   validatePassword(pinText) {

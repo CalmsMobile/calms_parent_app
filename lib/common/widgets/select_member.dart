@@ -1,5 +1,6 @@
 import 'package:calms_parent/common/HexColor.dart';
 import 'package:calms_parent/common/alert_dialog.dart';
+import 'package:calms_parent/common/app_settings.dart';
 import 'package:dropdown_button2/custom_dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
@@ -101,7 +102,9 @@ PreferredSizeWidget customBottomSheetActionBar(
   );
 }
 
-void openMemberBottomSheet(BuildContext buildContext, getfamilyList, callback) {
+void openMemberBottomSheet(
+    BuildContext buildContext, getfamilyList, imageBaseUrl, callback) {
+  print(getfamilyList.toString());
   showModalBottomSheet(
       context: buildContext,
       builder: (context) {
@@ -111,7 +114,7 @@ void openMemberBottomSheet(BuildContext buildContext, getfamilyList, callback) {
             children: <Widget>[
               AppBar(
                 title: Text(
-                  "Select",
+                  "Select Member",
                   style: TextStyle(color: Colors.black, fontSize: 16),
                 ),
                 elevation: 1,
@@ -138,13 +141,16 @@ void openMemberBottomSheet(BuildContext buildContext, getfamilyList, callback) {
                       ListTile(
                         leading: CircleAvatar(
                           backgroundColor: Colors.white,
-                          backgroundImage:
-                              NetworkImage(getfamilyList[index]['image']),
+                          backgroundImage: NetworkImage(
+                              getfamilyList[index]['UserImgPath'] != null
+                                  ? imageBaseUrl +
+                                      getfamilyList[index]['UserImgPath']
+                                  : AppSettings.avatarPlaceholder),
                           radius: 20,
                         ),
-                        title: new Text(getfamilyList[index]["name"]),
+                        title: new Text(getfamilyList[index]["Name"]),
                         subtitle: new Text(
-                          getfamilyList[index]["memberId"],
+                          getfamilyList[index]["MemberId"].toString(),
                           style: TextStyle(fontSize: 12),
                         ),
                         onTap: () {
@@ -160,6 +166,11 @@ void openMemberBottomSheet(BuildContext buildContext, getfamilyList, callback) {
 }
 
 void showCustomPaymentAlert(BuildContext buildContext) {
+  final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
+    backgroundColor: Colors.pinkAccent,
+    textStyle: TextStyle(color: Colors.white),
+  );
+
   showModalBottomSheet(
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(top: Radius.circular(60.0))),
@@ -314,18 +325,24 @@ void showCustomPaymentAlert(BuildContext buildContext) {
                         //     children: [],
                         //   ),
                         // ),
+
                         Container(
                           margin: EdgeInsets.only(top: 10),
                           padding: EdgeInsets.symmetric(horizontal: 20),
                           child: SizedBox(
                             width: double.infinity,
-                            child: RaisedButton(
+                            child: /* RaisedButton(
                               onPressed: () {},
                               child: Text(
                                 "Topup",
                                 style: TextStyle(color: Colors.white),
                               ),
                               color: Colors.pinkAccent,
+                            ), */
+                                ElevatedButton(
+                              style: raisedButtonStyle,
+                              onPressed: () {},
+                              child: Text('Topup'),
                             ),
                           ),
                         )

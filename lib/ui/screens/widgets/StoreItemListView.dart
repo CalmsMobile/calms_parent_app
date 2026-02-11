@@ -25,7 +25,7 @@ class StoreItemListView extends StatelessWidget {
                       leading: CircleAvatar(
                         backgroundColor: Colors.white,
                         backgroundImage:
-                            NetworkImage(storeItemList[index]['image'][0]),
+                            NetworkImage(storeItemList[index]['ImgPathUrl']),
                         radius: 30,
                       ),
                       title: Row(
@@ -34,7 +34,7 @@ class StoreItemListView extends StatelessWidget {
                           Flexible(
                             child: Container(
                               child: Text(
-                                storeItemList[index]['item_name'],
+                                storeItemList[index]['Name'],
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold, fontSize: 14),
@@ -57,7 +57,7 @@ class StoreItemListView extends StatelessWidget {
                                         color: Colors.red.shade500,
                                         fontSize: 14)),
                                 new TextSpan(
-                                    text: storeItemList[index]['price'],
+                                    text: storeItemList[index]['SellingPrice'].toString(),
                                     style: new TextStyle(fontSize: 14)),
                               ],
                             ),
@@ -68,7 +68,7 @@ class StoreItemListView extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "Category: " + storeItemList[index]['category'],
+                            "Category: " + storeItemList[index]['ItemCategory'],
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 10,

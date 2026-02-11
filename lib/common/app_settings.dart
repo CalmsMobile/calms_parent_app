@@ -1,8 +1,10 @@
 class AppSettings {
   //LOCAL STORAGE KEYS
   static String qrCodeData = 'CPA_QRCODE';
+  static String Sp_Key_AppType = 'CPA_APP_TYPE';
   static String mobileDeviceInfo = 'CPA_MOBILE_DEVICE_INFO';
   static String deviceDetails = 'CPA_DEVICE_DETAILS';
+  static String profileData = 'CPA_PROFILE_DETAILS';
   static String parentAppPIN = 'CPA_PIN_LOCK';
   static String parentDetails = 'CPA_DRIVER_DETAILS';
   static String deviceUID = 'CPA_DEVICE_UID';
@@ -25,28 +27,14 @@ class AppSettings {
       '/Handler/PortalImageHandler.ashx?ScreenType=45&RefSlno=';
 
   // API End Points
-  static String validateQRCode = "/VehicleTracking/ValidateQRCode";
-  static String login = "/VehicleTracking/login";
-  static String getAppSettings = "/VehicleTracking/GetAppSettings";
-  static String getDriverTrips = "/VehicleTracking/GetDriverTrips";
-  static String getDriverTripDetails = "/VehicleTracking/GetDriverTripDetails";
-  static String updateStudentOnBoardStatus =
-      "/VehicleTracking/updateStudentOnBoardStatus";
-  static String getAllNotification = "/VehicleTracking/getAllNotification";
-  static String deleteNotification = "/VehicleTracking/DeleteNotification";
-  static String updateReadNotificationStatus =
-      "/VehicleTracking/UpdateReadNotificationStatus";
-  static String syncDriverDetails = "/VehicleTracking/SyncDriverDetails";
-  static String startTrip = "/VehicleTracking/startTrip";
-  static String updateTripStatus = "/VehicleTracking/updateTripStatus";
-  static String updateLiveTracking = "/VehicleTracking/UpdateLiveTracking";
-  static String savePushNotificationId =
-      "/VehicleTracking/SavePushNotificationId";
-  static String updateTripSpeedViolation =
-      "/VehicleTracking/UpdateTripSpeedViolation";
-  static String changeDriverPassword = "/VehicleTracking/ChangeDriverPassword";
-  static String getTripStopList = "/VehicleTracking/GetTripStopList";
+ static String GetQRInfo = 'ParentApp/GetQRInfo';
+ static String RegisterParentApp = 'ParentApp/RegisterParentApp';
+ static String GetNotificationList = 'ParentApp/GetNotificationList';
+ static String GetNotificationListWithFilter = 'ParentApp/GetNotificationListWithFilter';
 
+static String avatarPlaceholder = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png";
   static String vapidKey =
       'BIEVELZisr_SbfStZljlwA4SKRuQU5N7o_8ylvJ_GJs5RvYKGLEX-iAQlyu7EWyIIEY3KDPGEzADra__rbMQLak';
+
+      static String appType_Notification = "NOTIFICATION";
 }

@@ -1,6 +1,7 @@
 // ignore_for_file: unnecessary_null_comparison
 
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:calms_parent/common/alert_dialog.dart';
@@ -204,6 +205,78 @@ class RestApiProvider {
     }
   }
 
+  Future<Map<String, dynamic>> postData(
+      data, apiURL, endPoint, context, showProgress, allowAuth) async {
+    apiURL = apiURL + endPoint;
+    ProgressDialog _progressDialog = ProgressDialog(context: context);
+    if (showProgress) {
+      _progressDialog.show(max: 100, msg: 'Loading...please wait...');
+    }
+    bool isConnected = false;
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile) {
+      // I am connected to a mobile network.
+      isConnected = true;
+    } else if (connectivityResult == ConnectivityResult.wifi) {
+      // I am connected to a wifi network.
+      isConnected = true;
+    }
+    String body = json.encode(data);
+
+    if (isConnected) {
+      final response = await http.post(
+        Uri.parse(apiURL),
+        headers: {"Content-Type": "application/json"},
+        body: body,
+      );
+
+      if (response.statusCode == 200) {
+        // If the server did return a 201 CREATED response,
+        // then parse the JSON.
+        if (showProgress) {
+          _progressDialog.close();
+        }
+        var jsonData = json.decode(response.body);
+        print(jsonData);
+        //Map<String, dynamic> map = jsonDecode(jsonData[0]['Data']);
+        List<dynamic> qrJson = jsonDecode(response.body) as List;
+        if (qrJson.length > 0 && qrJson[0]['Data'] != null) {
+          Map<String, dynamic> dataObj = jsonDecode(qrJson[0]['Data']);
+          if (dataObj.containsKey("Table")) {
+            List<dynamic> tableList = dataObj['Table'];
+            Map<String, dynamic> tableObj = tableList[0];
+            if (tableObj['code'] == 10 || tableObj['Code'] == 10) {
+              return Future<Map<String, dynamic>>.value(dataObj);
+            } else if (endPoint == AppSettings.RegisterParentApp &&
+                tableObj['code'] == 40 || tableObj['Code'] == 40) {
+              return Future<Map<String, dynamic>>.value(dataObj);
+            } else {
+              print("failed ${tableObj['code'] || tableObj['Code']} ");
+
+              return throw Exception(tableObj['description']);
+            }
+          } else {
+            throw Exception('Something went wrong.');
+          }
+        } else {
+          throw Exception('Something went wrong.');
+        }
+      } else {
+        // If the server did not return a 201 CREATED response,
+        // then throw an exception.
+        if (showProgress) {
+          _progressDialog.close();
+        }
+        throw Exception('Something went wrong.');
+      }
+    } else {
+      if (showProgress) {
+        _progressDialog.close();
+      }
+      throw Exception('Failed to connect network.');
+    }
+  }
+
   showlogedOutAlert(BuildContext context, String message) {
     MyCustomAlertDialog()
         .showCustomAlert(context, "Notification", message, false, () {
@@ -275,7 +348,7 @@ class RestApiProvider {
       'tags': build.tags,
       'type': build.type,
       'isPhysicalDevice': build.isPhysicalDevice,
-      'androidId': build.androidId,
+      'androidId': build.id,
       'systemFeatures': build.systemFeatures,
     };
   }

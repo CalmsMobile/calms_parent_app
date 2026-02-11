@@ -8,14 +8,14 @@ Widget userList(BuildContext context, int index, List<Map> details) {
     ListTile(
       leading: CircleAvatar(
         backgroundColor: Colors.white,
-        backgroundImage: NetworkImage(details[index]['image']),
+        backgroundImage: NetworkImage(details[index]['ImgPathUrl']),
         radius: 20,
       ),
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            details[index]['name'],
+            details[index]['Name'],
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
           ),
           new RichText(
@@ -34,7 +34,7 @@ Widget userList(BuildContext context, int index, List<Map> details) {
                         color: Colors.grey.shade500,
                         fontSize: 10)),
                 new TextSpan(
-                    text: details[index]['last_date'],
+                    text: details[index]['LastDate'],
                     style: new TextStyle(
                         color: Colors.grey.shade500, fontSize: 10)),
               ],
@@ -50,7 +50,7 @@ Widget userList(BuildContext context, int index, List<Map> details) {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Invoice No: " + details[index]['invoiceNo'],
+                "Invoice No: " + details[index]['InvoiceNo'],
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 10,
@@ -72,7 +72,7 @@ Widget userList(BuildContext context, int index, List<Map> details) {
                             color: Colors.red.shade500,
                             fontSize: 14)),
                     new TextSpan(
-                        text: details[index]['amount'],
+                        text: details[index]['PendingAmount'].toString(),
                         style: new TextStyle(fontSize: 14)),
                   ],
                 ),
@@ -80,7 +80,7 @@ Widget userList(BuildContext context, int index, List<Map> details) {
             ],
           ),
           Text(
-            "Category: " + details[index]['category'],
+            "Category: " ,
             style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 10,

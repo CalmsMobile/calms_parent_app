@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 
@@ -6,10 +7,18 @@ class MySettingsListener with ChangeNotifier {
   var _settingDetails;
   var _driverDetails;
   List _notificationList = [];
+  List _notificationCategoryList = [];
+  List _notificationMembersList = [];
 
   UnmodifiableListView<dynamic> get notificationList =>
       UnmodifiableListView(_notificationList);
   get size => _notificationList.length;
+
+  UnmodifiableListView<dynamic> get notificationCategoryList =>
+      UnmodifiableListView(_notificationCategoryList);
+
+  UnmodifiableListView<dynamic> get notificationMembersList =>
+      UnmodifiableListView(_notificationMembersList);
 
   UnmodifiableMapView get mysettingDetails =>
       UnmodifiableMapView(_settingDetails);
@@ -32,11 +41,17 @@ class MySettingsListener with ChangeNotifier {
     notifyListeners();
   }
 
-  updateNotifiactionList(List notiListClone, int startPosition) {
-    if (startPosition == 0) {
+  updateNotifiactionList(Type, List notiListClone, int startPosition,
+      List familyList, List categoryList) {
+    //if (startPosition == 0) {
       _notificationList = notiListClone;
-    } else {
+      print("_notificationList "+_notificationList.toString());
+    /* } else {
       _notificationList.addAll(notiListClone);
+    } */
+    if (Type != "filter") {
+      if (familyList != null) _notificationMembersList = familyList;
+      if (categoryList != null) _notificationCategoryList = categoryList;
     }
 
     notifyListeners();

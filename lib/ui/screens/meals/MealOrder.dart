@@ -2,6 +2,7 @@ import 'package:calms_parent/common/HexColor.dart';
 import 'package:calms_parent/common/alert_dialog.dart';
 import 'package:calms_parent/common/constants.dart';
 import 'package:calms_parent/common/date_util.dart';
+import 'package:calms_parent/common/json_responses.dart';
 import 'package:calms_parent/common/widgets/select_member.dart';
 import 'package:calms_parent/ui/screens/activities/Activities.dart';
 import 'package:calms_parent/ui/screens/meals/meal_pager.dart';
@@ -563,55 +564,8 @@ class _MealOrderState extends State<MealOrder> {
   List mealList_ = [];
   bool searchEnable = false;
   var selectedTab = 'Breakfast';
-  List<Map> familyList = [
-    {
-      "name": "HAZIM",
-      "category": "STUDENT",
-      "memberId": "M1003",
-      "email": "",
-      "balance": "108",
-      "familtid": "FMY0001",
-      "relationship": "",
-      "grade": "Grade1",
-      "year": "Year1",
-      "class": "Class1",
-      "contact": "0123467589",
-      "desc": "Member account does not exist in MFP software",
-      "image": "https://randomuser.me/api/portraits/men/10.jpg"
-    },
-    {
-      "name": "MARIE LIM",
-      "category": "STUDENT",
-      "memberId": "M1004",
-      "email": "",
-      "balance": "0",
-      "familtid": "FMY0001",
-      "relationship": "",
-      "grade": "Grade2",
-      "year": "Year2",
-      "class": "Class2",
-      "contact": "",
-      "desc": "",
-      "image": "https://randomuser.me/api/portraits/men/13.jpg"
-    },
-    {
-      "name": "Danny",
-      "category": "STAFF",
-      "memberId": "M1005",
-      "email": "",
-      "balance": "30.00",
-      "familtid": "FMY0001",
-      "relationship": "",
-      "grade": "",
-      "year": "",
-      "class": "",
-      "department": "Sales Dept",
-      "job_title": "Assistant Sales Manager",
-      "contact": "",
-      "desc": "",
-      "image": "https://cdn-icons-png.flaticon.com/512/219/219983.png"
-    },
-  ];
+  List<Map> familyList = [];
+  
   int senderIndex = 2;
   var sortList = ["Recent First", "Low to High", "High to Low"];
 
@@ -627,6 +581,7 @@ class _MealOrderState extends State<MealOrder> {
   void initState() {
     super.initState();
     mealList_ = mealList;
+    familyList = JsonResponses.familyList;
 
     initDates();
   }
@@ -740,7 +695,7 @@ class _MealOrderState extends State<MealOrder> {
             if (familyList.length > 0 && senderIndex > -1)
               Container(
                 height: 30,
-                width: 140,
+                width: 150,
                 margin: EdgeInsets.only(right: 10),
                 child: Row(
                   children: [
@@ -749,7 +704,7 @@ class _MealOrderState extends State<MealOrder> {
                           horizontalTitleGap: 2,
                           contentPadding: EdgeInsets.zero,
                           onTap: () => {
-                                openMemberBottomSheet(context, familyList,
+                                openMemberBottomSheet(context, familyList,null,
                                     (index) {
                                   Navigator.pop(context);
                                   senderIndex = index;
@@ -758,16 +713,16 @@ class _MealOrderState extends State<MealOrder> {
                               },
                           title: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                familyList[senderIndex]['name'],
+                                familyList[senderIndex]['Name'],
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                     fontSize: 12, fontWeight: FontWeight.bold),
                               ),
                               Text(
-                                familyList[senderIndex]['memberId'],
+                                familyList[senderIndex]['RefUserSeqId'].toString(),
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                     color: Colors.grey,
@@ -777,12 +732,12 @@ class _MealOrderState extends State<MealOrder> {
                             ],
                           ),
                           trailing: SizedBox(
-                            width: 40,
+                            width: 50,
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(60.0),
                               child: FadeInImage(
                                 image: NetworkImage(
-                                    familyList[senderIndex]['image']),
+                                   familyList[senderIndex]['ImgPathUrl']),
                                 placeholder:
                                     AssetImage("assets/images/user.png"),
                                 imageErrorBuilder:
@@ -970,9 +925,9 @@ class _MealOrderState extends State<MealOrder> {
                       setState(() {
                         selectedTermValue = value as String;
                         packageList = [
-                          {"name": "Lunch Only", "amount": "230"},
-                          {"name": "Breakfast Only", "amount": "230"},
-                          {"name": "Lunch & Breakfast", "amount": "450.00"}
+                          {"name": "Lunch Only", "amount": "300"},
+                          {"name": "Breakfast Only", "amount": "330"},
+                          {"name": "Lunch & Breakfast", "amount": "350.00"}
                         ];
                       });
                     },
@@ -1270,7 +1225,7 @@ class _MealOrderState extends State<MealOrder> {
 
   void onCartClick(int index) {
     if (senderIndex <= -1) {
-      openMemberBottomSheet(context, familyList, (studentindex) {
+      openMemberBottomSheet(context, familyList,null, (studentindex) {
         senderIndex = studentindex;
         Navigator.of(context).pop();
         setState(() {});

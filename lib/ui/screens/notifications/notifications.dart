@@ -1,4 +1,8 @@
 import 'dart:convert';
+import 'package:expendable_fab/expendable_fab.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
+import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:provider/provider.dart';
 
 import 'package:calms_parent/common/alert_dialog.dart';
@@ -7,10 +11,15 @@ import 'package:calms_parent/common/common_api.dart';
 import 'package:calms_parent/common/date_util.dart';
 import 'package:calms_parent/common/listener/settings_listener.dart';
 import 'package:calms_parent/common/my_shared_pref.dart';
+import 'package:calms_parent/common/HexColor.dart';
 import 'package:calms_parent/provider/rest_api.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_html/flutter_html.dart';
 import 'package:scroll_edge_listener/scroll_edge_listener.dart';
+
+import '../../../common/json_responses.dart';
+import '../../../common/widgets/select_member.dart';
+import '../settings/app_settings.dart';
 
 class Notifications extends StatefulWidget {
   const Notifications({Key? key}) : super(key: key);
@@ -21,15 +30,41 @@ class Notifications extends StatefulWidget {
 
 class _NotificationsState extends State<Notifications> {
   late ScrollController controller;
-  var appSettings_;
+  var profileData_;
   var studentImageURL;
   int startPosition = 0;
   var notificationList = [];
   var notificationListClone = [];
+  //List<Map> familyList = [];
+  // List<Map> NotificationCategoryList = [];
+  int senderIndex = 1;
+  late String profileData;
+  late String qrData;
+  late String apiURL;
+  late String imgBaseUrl;
+  var appBarTitle = "Notifications";
+
+  var filterMemberImagePath =
+      'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
+
   @override
   void initState() {
     super.initState();
     initValues();
+    //familyList = JsonResponses.familyList;
+    //NotificationCategoryList = JsonResponses.notificationCategoryList;
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      //LocalNotificationService.display(message);
+      print(message.toString());
+      if (kDebugMode) {
+        print('Handling a foreground message: ${message.messageId}');
+        print('Message data: ${message.data}');
+        print('Message notification: ${message.notification?.title}');
+        print('Message notification: ${message.notification?.body}');
+      }
+      initValues();
+      //_messageStreamController.sink.add(message);
+    });
   }
 
   @override
@@ -39,17 +74,18 @@ class _NotificationsState extends State<Notifications> {
   }
 
   Future<void> initValues() async {
-    String appSettings =
-        await MySharedPref().getData(AppSettings.parentAppSettings);
+    profileData = await MySharedPref().getData(AppSettings.profileData);
 
-    if (appSettings != "") {
-      var appSett = jsonDecode(appSettings);
-      appSettings_ = jsonDecode(appSett["Table1"][0]["SettingDetail"]);
-      print(appSettings_);
+    if (profileData != "") {
+      //var profileData = jsonDecode(profileData);
+      //profileData_ = jsonDecode(profileData["Table1"][0]["SettingDetail"]);
+      //print(profileData_);
 
-      String qrData = await MySharedPref().getData(AppSettings.qrCodeData);
+      qrData = await MySharedPref().getData(AppSettings.qrCodeData);
       Map<String, dynamic> qrJson = jsonDecode(qrData);
-      String apiURL = qrJson['ApiUrl'];
+      apiURL = qrJson['ApiUrl'];
+      imgBaseUrl = apiURL.replaceAll("/api/", "/FS/");
+
       // controller = ScrollController()..addListener(_scrollListener);
       setState(() {
         studentImageURL =
@@ -57,9 +93,10 @@ class _NotificationsState extends State<Notifications> {
         print(studentImageURL);
       });
 
-      CommonUtil().getAllNotification(context, startPosition);
+      CommonUtil().getAllNotification(
+          context, apiURL, startPosition, profileData, qrData);
     } else {
-      List list = [
+      /* List list = [
         {
           "Data": {
             "Table": [
@@ -233,9 +270,11 @@ class _NotificationsState extends State<Notifications> {
           }
         }
       ];
-      context
-          .read<MySettingsListener>()
-          .updateNotifiactionList(list[0]["Data"]["Table2"], startPosition);
+      context.read<MySettingsListener>().updateNotifiactionList(
+          list[0]["Data"]["Table2"],
+          startPosition,
+          familyList,
+          NotificationCategoryList); */
     }
   }
 
@@ -245,7 +284,7 @@ class _NotificationsState extends State<Notifications> {
     };
 
     Future<Map<String, dynamic>> res = RestApiProvider().postMethod(
-        data, '', AppSettings.deleteNotification, context, true, true);
+        data, '', 'AppSettings.deleteNotification', context, true, true);
     res
         .then((value) => {handleApiResponse(value, notifiation["PNHistory"])})
         .onError((error, stackTrace) => {handleApiError(error)});
@@ -273,29 +312,119 @@ class _NotificationsState extends State<Notifications> {
     }, null);
   }
 
+  late DateTime _selectedDate;
+  //Method for showing the date picker
+  void _pickDateDialog() {
+    showDatePicker(
+            context: context,
+            initialDate: DateTime.now(),
+            //which date will display when user open the picker
+            firstDate: DateTime(2022),
+            //what will be the previous supported year in picker
+            lastDate: DateTime
+                .now()) //what will be the up to supported date in picker
+        .then((pickedDate) {
+      //then usually do the future job
+      if (pickedDate == null) {
+        //if user tap cancel then this function will stop
+        return;
+      }
+      setState(() {
+        //for rebuilding the ui
+        _selectedDate = pickedDate;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    //var familyList = context.read<MySettingsListener>().notificationMembersList;
+
     return Scaffold(
       appBar: AppBar(
-        title: ListTile(
-          contentPadding: EdgeInsets.zero,
-          title: Align(
-            alignment: Alignment(-1.2, 0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Notifications",
-                  textAlign: TextAlign.start,
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                      color: Colors.white),
-                ),
-              ],
-            ),
-          ),
+        toolbarHeight: 70,
+        iconTheme: IconThemeData(
+          color: Color.fromARGB(255, 255, 255, 255), //change your color here
         ),
+        elevation: 0,
+        backgroundColor: HexColor("#cfe2f3"),
+        //titleSpacing: -5,
+        centerTitle: true,
+        automaticallyImplyLeading: false,
+        title: Text(
+          appBarTitle,
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+        ),
+        leading: Padding(
+            padding: const EdgeInsets.all(2),
+            child: InkWell(
+                onTap: () {
+                  openMemberBottomSheet(
+                      context,
+                      context
+                          .read<MySettingsListener>()
+                          .notificationMembersList,
+                      imgBaseUrl, (index) {
+                    Navigator.pop(context);
+                    senderIndex = index;
+                    setState(() {
+                      if (context
+                                  .read<MySettingsListener>()
+                                  .notificationMembersList[senderIndex]
+                              ['UserImgPath'] !=
+                          null) {
+                        filterMemberImagePath = imgBaseUrl +
+                            context
+                                    .read<MySettingsListener>()
+                                    .notificationMembersList[senderIndex]
+                                ['UserImgPath'];
+                      }
+
+                      CommonUtil().getMemberFilterNotification(
+                          context,
+                          apiURL,
+                          startPosition,
+                          profileData,
+                          qrData,
+                          context
+                                  .read<MySettingsListener>()
+                                  .notificationMembersList[senderIndex]
+                              ['UserSeqId']);
+                      // print(context.read<MySettingsListener>().notificationMembersList[senderIndex]['UserImgPath']);
+                    });
+                  });
+                },
+                child: Container(
+                  width: 50,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                        image: NetworkImage(filterMemberImagePath),
+                        fit: BoxFit.fill),
+                  ),
+                ))),
+        actions: [
+          Padding(
+              padding: const EdgeInsets.only(right: 10),
+              child: IconButton(
+                icon: Icon(
+                  Icons.settings,
+                  size: 35,
+                  color: Colors.black54,
+                ),
+                //tooltip: 'Open shopping cart',
+                onPressed: () {
+                  // handle the press
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AppSettingsPage(),
+                    ),
+                  );
+                },
+              ))
+        ],
       ),
       body: SafeArea(
         child: ScrollEdgeListener(
@@ -323,7 +452,12 @@ class _NotificationsState extends State<Notifications> {
                             itemCount: data.notificationList.length,
                             itemBuilder: (BuildContext context, int index1) {
                               return _makeCard(
-                                  context, index1, data.notificationList);
+                                  context,
+                                  index1,
+                                  data.notificationList,
+                                  context
+                                      .read<MySettingsListener>()
+                                      .notificationCategoryList);
                             });
                       }),
                     ],
@@ -334,10 +468,118 @@ class _NotificationsState extends State<Notifications> {
           ),
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => openFilterCategoryBottomSheet(context,
+            context.read<MySettingsListener>().notificationCategoryList,
+            (index) {
+          Navigator.pop(context);
+          //senderIndex = index;
+          setState(() {
+            String categoryName = context
+                .read<MySettingsListener>()
+                .notificationCategoryList[index]["category"];
+            int id = context
+                .read<MySettingsListener>()
+                .notificationCategoryList[index]["notificationtype"];
+            print("++++++++" + id.toString());
+
+            appBarTitle = categoryName;
+
+            CommonUtil().getCtegoryFilterNotification(
+                context, apiURL, startPosition, profileData, qrData, id);
+          });
+        }),
+        child: const Icon(Icons.filter_alt),
+      ),
+      /* floatingActionButton: ExpendableFab(
+        distance: 75.0,
+        children: [
+          ActionButton(
+            onPressed: () =>
+                openMemberBottomSheet(context, familyList, (index) {
+              Navigator.pop(context);
+              senderIndex = index;
+              setState(() {});
+            }),
+            icon: const Icon(Icons.person_2_rounded),
+          ),
+          ActionButton(
+            onPressed: () => openFilterCategoryBottomSheet(context, NotificationCategoryList, (index) {
+              Navigator.pop(context);
+              //senderIndex = index;
+              setState(() {
+                appBarTitle = NotificationCategoryList[index]["Name"];
+              });
+            }),
+            icon: const Icon(Icons.category_rounded),
+          ),
+        ],
+      ),
+     */
     );
   }
 
-  Widget _makeCard(BuildContext context, int index1, List notificationList) {
+  void openFilterCategoryBottomSheet(
+      BuildContext buildContext, NotificationCategoryList, callback) {
+    print("NotificationCategoryList" + NotificationCategoryList[0]["category"]);
+    showModalBottomSheet(
+        context: buildContext,
+        builder: (context) {
+          return SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                AppBar(
+                  title: Text(
+                    "Filter Category",
+                    style: TextStyle(color: Colors.black, fontSize: 16),
+                  ),
+                  elevation: 1,
+                  backgroundColor: Colors.white,
+                  automaticallyImplyLeading: false,
+                  actions: [
+                    IconButton(
+                      icon: Icon(Icons.close_sharp, color: Colors.black),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ],
+                ),
+                ListView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: NotificationCategoryList.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Column(children: <Widget>[
+                        new Divider(
+                          height: 0.1,
+                        ),
+                        ListTile(
+                          title: new Text(
+                              NotificationCategoryList[index]["category"]),
+                          onTap: () {
+                            callback(index);
+                          },
+                        ),
+                      ]);
+                    })
+              ],
+            ),
+          );
+        });
+  }
+
+  Widget _makeCard(BuildContext context, int index1, List notificationList,
+      List categoryList) {
+    String getCategoryById(NotificationType) {
+      List data = categoryList
+          .where((element) => element['notificationtype'] == NotificationType)
+          .toList();
+      //print(data[0]['category']);
+      return data[0]['category'];
+    }
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -358,7 +600,7 @@ class _NotificationsState extends State<Notifications> {
               }
               return null;
             },
-            key: Key("${notificationList[index1]["PNHistory"].toString()}"),
+            key: Key("${notificationList[index1]["PushSeqId"].toString()}"),
             direction: DismissDirection.endToStart,
             child: Container(
               // color: HexColor("#eaedf6"),
@@ -369,7 +611,10 @@ class _NotificationsState extends State<Notifications> {
                     '/NotificationView',
                     arguments: {
                       'pos': index1,
-                      'passData': jsonEncode(notificationList[index1])
+                      'passData': jsonEncode(notificationList[index1]),
+                      'category': getCategoryById(
+                          notificationList[index1]["NotificationType"]),
+                      'imgBaseUrl': imgBaseUrl
                     },
                   );
                 },
@@ -386,7 +631,7 @@ class _NotificationsState extends State<Notifications> {
                             child: ListTile(
                               // horizontalTitleGap: 0,
                               minVerticalPadding: -4,
-                              trailing: SizedBox(
+                              /* trailing: SizedBox(
                                 width: 20,
                                 height: 20,
                                 child: ClipPath(
@@ -398,21 +643,37 @@ class _NotificationsState extends State<Notifications> {
                                             ["IsRead"]
                                         ? "assets/images/read_message.png"
                                         : "assets/images/unread_message.png")),
-                              ),
+                              ), */
                               leading: SizedBox(
-                                width: 45,
-                                height: 45,
-                                child: ClipPath(
+                                  width: 45,
+                                  height: 45,
+                                  child: CircleAvatar(
+                                    backgroundColor: Colors.white,
+                                    backgroundImage: NetworkImage(
+                                        notificationList[index1]
+                                                    ["ImgPathUrl"] !=
+                                                ""
+                                            ? imgBaseUrl +
+                                                notificationList[index1]
+                                                    ["ImgPathUrl"]
+                                            : AppSettings.avatarPlaceholder),
+                                    radius: 20,
+                                  ) /* ClipPath(
                                   clipper: ShapeBorderClipper(
                                       shape: RoundedRectangleBorder(
                                           borderRadius:
-                                              BorderRadius.circular(10))),
-                                  child: Image.network(
-                                      notificationList[index1]["image"]),
-                                ),
-                              ),
+                                              BorderRadius.circular(50))),
+                                  child: Image.network(notificationList[index1]
+                                              ["ImgPathUrl"] !=
+                                          null
+                                      ? imgBaseUrl +
+                                          notificationList[index1]["ImgPathUrl"]
+                                      : AppSettings.avatarPlaceholder),
+                                ), */
+                                  ),
                               title: Text(
-                                "${notificationList[index1]["Title"]}",
+                                getCategoryById(notificationList[index1]
+                                    ["NotificationType"]),
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                               subtitle: Text(
@@ -463,16 +724,16 @@ class _NotificationsState extends State<Notifications> {
                                                   "dd MMM")
                                           : "",
                                       style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.normal,
+                                          color: Colors.grey),
                                     ),
                                     TextSpan(
                                       text: " at ",
                                       style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.grey),
                                     ),
                                     TextSpan(
                                       text: notificationList[index1]
@@ -485,9 +746,9 @@ class _NotificationsState extends State<Notifications> {
                                                   "hh:mm a")
                                           : "",
                                       style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.grey),
                                     ),
                                   ],
                                 ),
@@ -506,7 +767,7 @@ class _NotificationsState extends State<Notifications> {
                     ),
                     clipper: ShapeBorderClipper(
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(3))),
+                            borderRadius: BorderRadius.circular(10))),
                   ),
                 ),
               ),

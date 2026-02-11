@@ -17,6 +17,10 @@ class MyCustomAlertDialog {
       enableDrag: false,
       isScrollControlled: false,
       builder: (context) {
+        final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
+          backgroundColor: Colors.pinkAccent,
+          textStyle: TextStyle(color: Colors.white),
+        );
         return SizedBox(
           height: _okPress == null ? 100 : 150,
           child: Column(
@@ -57,7 +61,7 @@ class MyCustomAlertDialog {
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   child: SizedBox(
                     width: double.infinity,
-                    child: RaisedButton(
+                    child: /* RaisedButton(
                       onPressed: () {
                         _okPress();
                       },
@@ -66,6 +70,13 @@ class MyCustomAlertDialog {
                         style: TextStyle(color: Colors.white),
                       ),
                       color: Colors.pinkAccent,
+                    ), */
+                        ElevatedButton(
+                      style: raisedButtonStyle,
+                      onPressed: () {
+                        _okPress();
+                      },
+                      child: Text('Proceed'),
                     ),
                   ),
                 )
