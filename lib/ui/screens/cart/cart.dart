@@ -90,17 +90,17 @@ class _CartPageState extends State<CartPage> {
                             border: Border.all(
                                 color: HexColor(
                                     widget.AppTheme_['IconOutlineColor']),
-                                width: 2),
+                                width: 0.5),
                             color: HexColor(widget.AppTheme_['IconBgColor']),
                             shape: BoxShape.circle,
                           ),
                           child: Padding(
-                              padding: EdgeInsets.all(3),
+                              padding: EdgeInsets.all(7),
                               child: Icon(
                                 Icons.arrow_back_ios_new,
                                 color: HexColor(
                                     widget.AppTheme_['IconOutlineColor']),
-                                size: 30,
+                                size: 25,
                               )))),
                   Padding(
                     padding: EdgeInsets.only(left: 10),
@@ -740,18 +740,33 @@ class _CartPageState extends State<CartPage> {
                                     ),
                                     onPressed: data.cartTotal > 0
                                         ? () {
-                                          if(data.paymentSetting['MixedModePayment']){
-
-                                          }
-                                            showPaymentSelectOptionForOrder(
+                                            if (data.paymentProvidersList == null || 
+                                                data.paymentProvidersList.isEmpty) {
+                                              MyCustomAlertDialog().showCustomAlert(
                                                 context,
-                                                "Choose payment type",
-                                                data.paymentProvidersList,
-                                                data.paymentSetting,
-                                                data.cartTotal,
-                                                widget.profileData,
-                                                AppSettings.paymentTypeOrder,
-                                                widget.AppTheme_);
+                                                "Error",
+                                                "No payment options available",
+                                                true,
+                                                () {
+                                                  Navigator.pop(context);
+                                                },
+                                                null,
+                                                "Ok",
+                                                ""
+                                              );
+                                              return;
+                                            }
+                                            
+                                            showPaymentSelectOptionForOrder(
+                                              context,
+                                              "Choose payment type",
+                                              data.paymentProvidersList,
+                                              Map<String, dynamic>.from(data.paymentSetting ?? {}),
+                                              data.cartTotal,
+                                              widget.profileData,
+                                              AppSettings.paymentTypeOrder,
+                                              widget.AppTheme_
+                                            );
                                           }
                                         : null,
                                     style: ElevatedButton.styleFrom(

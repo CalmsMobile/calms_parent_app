@@ -43,7 +43,7 @@ class HolidayListView extends StatelessWidget {
                                           HexColor(holidayList[index]['color']),
                                       fontWeight: FontWeight.bold,
                                       overflow: TextOverflow.ellipsis,
-                                      fontSize: 15),
+                                      fontSize: 17),
                                 ),
                                 if (holidayList[index]['description'] != null)
                                   Text(
@@ -53,7 +53,7 @@ class HolidayListView extends StatelessWidget {
                                             AppTheme_['ContentFontColor']),
                                         fontWeight: FontWeight.normal,
                                         overflow: TextOverflow.ellipsis,
-                                        fontSize: 12),
+                                        fontSize: 14),
                                   ),
                                 if (holidayList[index]['start'] != null &&
                                     holidayList[index]['end'] != null)
@@ -67,7 +67,7 @@ class HolidayListView extends StatelessWidget {
                                             AppTheme_['ContentFontColor']),
                                         fontWeight: FontWeight.normal,
                                         overflow: TextOverflow.ellipsis,
-                                        fontSize: 12),
+                                        fontSize: 14),
                                   ),
                               ],
                             ),

@@ -72,16 +72,16 @@ class _MealOrderState extends State<MealOrder> {
                     decoration: BoxDecoration(
                       border: Border.all(
                           color: HexColor(widget.AppTheme_['IconOutlineColor']),
-                          width: 2),
+                          width: 0.5),
                       color: HexColor(widget.AppTheme_['IconBgColor']),
                       shape: BoxShape.circle,
                     ),
                     child: Padding(
-                        padding: EdgeInsets.all(3),
+                        padding: EdgeInsets.all(7),
                         child: Icon(
                           Icons.arrow_back_ios_new,
                           color: HexColor(widget.AppTheme_['IconOutlineColor']),
-                          size: 30,
+                          size: 25,
                         )))),
             Padding(
               padding: EdgeInsets.only(left: 10),
@@ -160,17 +160,17 @@ class _MealOrderState extends State<MealOrder> {
                               border: Border.all(
                                   color:
                                       HexColor(widget.AppTheme_['IconOutlineColor']),
-                                  width: 2),
+                                  width: 0.5),
                               color: HexColor(widget.AppTheme_['IconBgColor']),
                               shape: BoxShape.circle,
                             ),
                             child: Padding(
-                                padding: EdgeInsets.all(3),
+                                padding: EdgeInsets.all(7),
                                 child: Icon(
                                   Icons.shopping_cart_outlined,
                                   color:
                                       HexColor(widget.AppTheme_['IconOutlineColor']),
-                                  size: 30,
+                                  size: 25,
                                 )))),
                     Consumer<MySettingsListener>(
                         builder: (context, data, settingsDta) {

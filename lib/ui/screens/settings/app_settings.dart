@@ -51,17 +51,17 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
                         border: Border.all(
                             color:
                                 HexColor(widget.AppTheme_['IconOutlineColor']),
-                            width: 2),
+                            width: 0.5),
                         color: HexColor(widget.AppTheme_['IconBgColor']),
                         shape: BoxShape.circle,
                       ),
                       child: Padding(
-                          padding: EdgeInsets.all(3),
+                          padding: EdgeInsets.all(7),
                           child: Icon(
                             Icons.arrow_back_ios_new,
                             color:
                                 HexColor(widget.AppTheme_['IconOutlineColor']),
-                            size: 30,
+                            size: 25,
                           )))),
               Padding(
                 padding: EdgeInsets.only(left: 10),
@@ -96,6 +96,9 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
                   children: [
                     Card(
                         color:  HexColor(widget.AppTheme_['PanelBgColor']),
+                        shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
                         elevation: 10,
                         shadowColor: Colors.black,
                         borderOnForeground: true,
@@ -103,14 +106,25 @@ class _AppSettingsPageState extends State<AppSettingsPage> {
                             EdgeInsets.only(left: 20, right: 20, bottom: 20,top: 20),
                         child: Column(
                           children: [
-                            ListTile(
-                              title: Text("General Settings"),
-                              //trailing: Text("(Last 30 days)"),
-                              tileColor: HexColor(
-                                  widget.AppTheme_['PanelHeaderBgColor']),
-                              textColor: HexColor(
-                                  widget.AppTheme_['PanelHeaderFontColor']),
-                            ),
+                            Container(
+                                  decoration: BoxDecoration(
+                                    color: HexColor(
+                                         widget.AppTheme_['PanelHeaderBgColor']),
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(15.0),
+                                      topRight: Radius.circular(15.0),
+                                    ),
+                                  ),
+                                  child: ListTile(
+                                    visualDensity: VisualDensity(
+                                        vertical:
+                                            -2), // Further reduces vertical padding
+                                    title: Text("General Settings"),
+                                    textColor: HexColor(
+                                        widget.AppTheme_['PanelHeaderFontColor']),
+                                  ),
+                                ),
+                           
                             Container(
                               margin: EdgeInsets.only(
                                   left: 10, right: 10, top: 10, bottom: 10),

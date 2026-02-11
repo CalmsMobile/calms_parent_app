@@ -309,16 +309,16 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         decoration: BoxDecoration(
                           border: Border.all(
                               color: HexColor(AppTheme_['IconOutlineColor']),
-                              width: 2),
+                              width: 0.5),
                           color: HexColor(AppTheme_['IconBgColor']),
                           shape: BoxShape.circle,
                         ),
                         child: Padding(
-                            padding: EdgeInsets.all(3),
+                            padding: EdgeInsets.all(7),
                             child: Icon(
                               Icons.notifications_outlined,
                               color: HexColor(AppTheme_['IconOutlineColor']),
-                              size: 30,
+                              size: 25,
                             ))));
               }),
               Stack(
@@ -338,16 +338,16 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           decoration: BoxDecoration(
                             border: Border.all(
                                 color: HexColor(AppTheme_['IconOutlineColor']),
-                                width: 2),
+                                width: 0.5),
                             color: HexColor(AppTheme_['IconBgColor']),
                             shape: BoxShape.circle,
                           ),
                           child: Padding(
-                              padding: EdgeInsets.all(3),
+                              padding: EdgeInsets.all(7),
                               child: Icon(
                                 Icons.shopping_cart_outlined,
                                 color: HexColor(AppTheme_['IconOutlineColor']),
-                                size: 30,
+                                size: 25,
                               )))),
                   Consumer<MySettingsListener>(
                       builder: (context, data, settingsDta) {
@@ -390,16 +390,16 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       decoration: BoxDecoration(
                         border: Border.all(
                             color: HexColor(AppTheme_['IconOutlineColor']),
-                            width: 2),
+                            width: 0.5),
                         color: HexColor(AppTheme_['IconBgColor']),
                         shape: BoxShape.circle,
                       ),
                       child: Padding(
-                          padding: EdgeInsets.all(3),
+                          padding: EdgeInsets.all(7),
                           child: Icon(
                             Icons.settings_outlined,
                             color: HexColor(AppTheme_['IconOutlineColor']),
-                            size: 30,
+                            size: 25,
                           )))),
             ]),
           ),
@@ -513,7 +513,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                                     border: Border.all(
                                                         color: HexColor(AppTheme_[
                                                             'IconOutlineColor']),
-                                                        width: 4.0,
+                                                        width: 1.0,
                                                         style: BorderStyle
                                                             .solid), //Border.all
 
@@ -682,6 +682,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           builder: (context, data, settingsDta) {
                         return Card(
                             color: HexColor(AppTheme_['PanelBgColor']),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
                             elevation: 10,
                             shadowColor: Colors.black,
                             borderOnForeground: true,
@@ -689,17 +692,28 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                 left: 20, right: 20, bottom: 20),
                             child: Column(
                               children: [
-                                ListTile(
-                                  title: Text("Recent Transactions"),
-                                  trailing: Text("(Last 30 days)"),
-                                  tileColor:
-                                      HexColor(AppTheme_['PanelHeaderBgColor']),
-                                  textColor: HexColor(
-                                      AppTheme_['PanelHeaderFontColor']),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: HexColor(
+                                        AppTheme_['PanelHeaderBgColor']),
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(15.0),
+                                      topRight: Radius.circular(15.0),
+                                    ),
+                                  ),
+                                  child: ListTile(
+                                    visualDensity: VisualDensity(
+                                        vertical:
+                                            -2), // Further reduces vertical padding
+                                    title: Text("Recent Transactions"),
+                                    trailing: Text("(Last 30 days)"),
+                                    textColor: HexColor(
+                                        AppTheme_['PanelHeaderFontColor']),
+                                  ),
                                 ),
                                 Container(
                                   margin: EdgeInsets.only(
-                                      left: 0, right: 0, top: 10, bottom: 10),
+                                      left: 0, right: 0, top: 0, bottom: 10),
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -732,18 +746,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                                   color: Colors.transparent,
                                                   child: Image.asset(AppSettings
                                                       .imgAssetNoTxn)),
-                                              /* Container(
-                                                  alignment: Alignment.center,
-                                                  margin: EdgeInsets.only(
-                                                      top: 10, bottom: 10),
-                                                  child: Text(
-                                                    "",
-                                                    style: TextStyle(
-                                                        fontSize: 18,
-                                                        fontWeight:
-                                                            FontWeight.normal),
-                                                  ),
-                                                ), */
                                             ],
                                           ),
                                         ),
@@ -753,418 +755,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                               ],
                             ));
                       }),
-                      /*  //TRANSACTION SUMMARY
-                        Consumer<MySettingsListener>(
-                            builder: (context, data, settingsDta) {
-                         
-                            return Card(
-                                /*  shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15.0),
-                                ), */
-                                elevation: 10,
-                                shadowColor: Colors.black,
-                                borderOnForeground: true,
-                                margin: EdgeInsets.only(
-                                    left: 20, right: 20, bottom: 20),
-                                child: Column(
-                                  children: [
-                                    ListTile(
-                                      title: Text("Transaction Summary"),
-                                      trailing: Text("(Last 30 days)"),
-                                      tileColor: HexColor(
-                                          AppTheme_['SecondaryBgColor']),
-                                      textColor: HexColor(
-                                          AppTheme_['SecondaryFrColor']),
-                                    ),
-                                    Container(
-                                      margin: EdgeInsets.all(10),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                           if (data.dashboardSpendingList.isNotEmpty) 
-                                          TransactionSummery(
-                                              data.dashboardSpendingList,
-                                              profileData['CurrencyCode'])
-                                              else 
-                                              Container(
-                                            margin: EdgeInsets.all(10),
-                                            width: double.infinity,
-                                            child: Column(
-                                              children: [
-                                                Container(
-                                                    padding: EdgeInsets.only(
-                                                        left: 10.0,
-                                                        top: 10.0,
-                                                        bottom: 10.0),
-                                                    margin: EdgeInsets.zero,
-                                                    height: 100,
-                                                    color: Colors.transparent,
-                                                    child: Image.asset(AppSettings
-                                                        .imgAssetNoTxn)),
-                                                /* Container(
-                                                  alignment: Alignment.center,
-                                                  margin: EdgeInsets.only(
-                                                      top: 10, bottom: 10),
-                                                  child: Text(
-                                                    "",
-                                                    style: TextStyle(
-                                                        fontSize: 18,
-                                                        fontWeight:
-                                                            FontWeight.normal),
-                                                  ),
-                                                ), */
-                                              ],
-                                            ),
-                                          ),
-                                      
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ));
-                          
-                        }),
-                         */ /* Consumer<MySettingsListener>(
-                            builder: (context, data, settingsDta) {
-                           
-                            return Card(
-                              /* shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15.0),
-                              ), */
-                              elevation: 10,
-                              shadowColor: Colors.black,
-                              borderOnForeground: true,
-                              margin: EdgeInsets.only(
-                                  left: 20, right: 20, bottom: 20),
-                              child: Container(
-                                child: Column(
-                                  children: [
-                                    ListTile(
-                                      title: Text("Outstanding"),
-                                      //trailing: Text("(Last 30 days)"),
-                                      tileColor: HexColor(
-                                          AppTheme_['SecondaryBgColor']),
-                                      textColor: HexColor(
-                                          AppTheme_['SecondaryFrColor']),
-                                    ),
-                                    Column(
-                                      children: <Widget>[
-                                        if(data.dashboardOutStandingList.isNotEmpty)
-                                        Container(
-                                          width: double.infinity,
-                                          margin: EdgeInsets.only(top: 10),
-                                          padding: EdgeInsets.zero,
-                                          child: ListView.builder(
-                                              padding: EdgeInsets.zero,
-                                              shrinkWrap: true,
-                                              physics: NeverScrollableScrollPhysics(
-                                                  parent:
-                                                      AlwaysScrollableScrollPhysics()),
-                                              itemCount: data
-                                                  .dashboardOutStandingList
-                                                  .length,
-                                              itemBuilder:
-                                                  (BuildContext context,
-                                                      int index) {
-                                                return outStandingList(
-                                                    context,
-                                                    index,
-                                                    data
-                                                        .dashboardOutStandingList,
-                                                    profileData[
-                                                        'CurrencyCode']);
-                                              }),
-                                        )
-                                      else
-                                      Container(
-                                            margin: EdgeInsets.all(10),
-                                            width: double.infinity,
-                                            child: Column(
-                                              children: [
-                                                Container(
-                                                    padding: EdgeInsets.only(
-                                                        left: 10.0,
-                                                        top: 10.0,
-                                                        bottom: 10.0),
-                                                    margin: EdgeInsets.zero,
-                                                    height: 100,
-                                                    color: Colors.transparent,
-                                                    child: Image.asset(AppSettings
-                                                        .imgAssetNoTxn)),
-                                                /* Container(
-                                                  alignment: Alignment.center,
-                                                  margin: EdgeInsets.only(
-                                                      top: 10, bottom: 10),
-                                                  child: Text(
-                                                    "",
-                                                    style: TextStyle(
-                                                        fontSize: 18,
-                                                        fontWeight:
-                                                            FontWeight.normal),
-                                                  ),
-                                                ), */
-                                              ],
-                                            ),
-                                          ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          
-                        }),
- */
-                      /* Align(
-                          alignment: Alignment.centerLeft,
-                          child: Container(
-                              padding: EdgeInsets.only(
-                                  left: 10.0, top: 10.0, bottom: 10.0),
-                              width: double.infinity,
-                              color: Colors.grey.shade200,
-                              child: Text(
-                                "PURCHASE SUGGESTION",
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.bold),
-                              )),
-                        ), */
-                      /*Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0),
-                        ),
-                        borderOnForeground: true,
-                        margin: EdgeInsets.only(left: 20, right: 20),
-                        child: Container(
-                          margin: EdgeInsets.all(10),
-                          child: Column(children: [
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: InkWell(
-                                child: Container(
-                                    padding: EdgeInsets.only(
-                                        left: 10.0,
-                                        top: 10.0,
-                                        bottom: 10.0,
-                                        right: 20),
-                                    width: double.infinity,
-                                    color: Colors.transparent,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          "STORE ITEM(S)",
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        Icon(storeCollapse
-                                            ? Icons.arrow_drop_down
-                                            : Icons.arrow_drop_up)
-                                      ],
-                                    )),
-                                onTap: () {
-                                  storeCollapse = !storeCollapse;
-                                  setState(() {});
-                                },
-                              ),
-                            ),
-                            if (storeCollapse)
-                              StoreItemListView(widget.storeItem),
-                             Align(
-                      alignment: Alignment.centerLeft,
-                      child: InkWell(
-                        child: Container(
-                            padding: EdgeInsets.only(
-                                left: 10.0, top: 10.0, bottom: 10.0, right: 20),
-                            width: double.infinity,
-                            color: Colors.grey.shade100,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "UPCOMING ACTIVITIES",
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Icon(activitiesCollapse
-                                    ? Icons.arrow_drop_down
-                                    : Icons.arrow_drop_up)
-                              ],
-                            )),
-                        onTap: () {
-                          activitiesCollapse = !activitiesCollapse;
-                          setState(() {});
-                        },
-                      ),
-                    ),
-                    if (activitiesCollapse)
-                      UpcomingActivityListView(widget.upcomingActivities),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Container(
-                          padding: EdgeInsets.only(
-                              left: 10.0, top: 10.0, bottom: 10.0),
-                          margin: EdgeInsets.zero,
-                          width: double.infinity,
-                          color: Colors.grey.shade200,
-                          child: Text(
-                            "RECENT ACITIVITIES",
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                          )),
-                    ),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: InkWell(
-                        child: Container(
-                            padding: EdgeInsets.only(
-                                left: 10.0, top: 10.0, bottom: 10.0, right: 20),
-                            margin: EdgeInsets.zero,
-                            width: double.infinity,
-                            color: Colors.grey.shade100,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "TOPUP",
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Icon(topupCollapse
-                                    ? Icons.arrow_drop_down
-                                    : Icons.arrow_drop_up)
-                              ],
-                            )),
-                        onTap: () {
-                          topupCollapse = !topupCollapse;
-                          setState(() {});
-                        },
-                      ),
-                    ),
-                    if (topupCollapse) TopupListView(widget.topupList),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: InkWell(
-                        child: Container(
-                            padding: EdgeInsets.only(
-                                left: 10.0, top: 10.0, bottom: 10.0, right: 20),
-                            margin: EdgeInsets.zero,
-                            width: double.infinity,
-                            color: Colors.grey.shade100,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "PURCHASE",
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Icon(purchaseCollapse
-                                    ? Icons.arrow_drop_down
-                                    : Icons.arrow_drop_up)
-                              ],
-                            )),
-                        onTap: () {
-                          purchaseCollapse = !purchaseCollapse;
-                          setState(() {});
-                        },
-                      ),
-                    ),
-                    if (purchaseCollapse) PurchaseListView(widget.purchaseList), 
-                          ]),
-                        ),
-                      ),*/
                     ],
                   ),
                   SizedBox(
                     height: 10,
                   ),
-                  /* Column(
-                  children: <Widget>[
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Container(
-                          padding: EdgeInsets.only(
-                              left: 10.0, top: 10.0, bottom: 10.0),
-                          margin: EdgeInsets.zero,
-                          width: double.infinity,
-                          color: Colors.grey.shade200,
-                          child: Text(
-                            "PHOTO GALLERY",
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                          )),
-                    ),
-                    CarouselSlider(
-                      items: [
-                        //1st Image of Slider
-                        Container(
-                          margin: EdgeInsets.all(6.0),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8.0),
-                            image: DecorationImage(
-                              image: NetworkImage(
-                                  "https://i.pinimg.com/originals/4b/92/28/4b92281a7861003034b632b4ab5ed741.jpg"),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-
-                        //2nd Image of Slider
-                        Container(
-                          margin: EdgeInsets.all(6.0),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8.0),
-                            image: DecorationImage(
-                              image: NetworkImage(
-                                  "https://images.adsttc.com/media/images/615a/fa1e/1248/3401/6477/b865/newsletter/tali-hankou-library-083.jpg?1633352237"),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                      ],
-
-                      //Slider Container properties
-                      options: CarouselOptions(
-                        height: 180.0,
-                        enlargeCenterPage: true,
-                        autoPlay: true,
-                        aspectRatio: 16 / 9,
-                        autoPlayCurve: Curves.fastOutSlowIn,
-                        enableInfiniteScroll: true,
-                        autoPlayAnimationDuration: Duration(milliseconds: 800),
-                        viewportFraction: 0.7,
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Container(
-                          padding: EdgeInsets.only(
-                              left: 10.0, top: 10.0, bottom: 10.0),
-                          width: double.infinity,
-                          color: Colors.grey.shade200,
-                          child: Text(
-                            "SCHOOL CALENDAR",
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                          )),
-                    ),
-                    Container(
-                      height: 525,
-                      child: getCalendarView(
-                          context,
-                          new RandomColorModel()._getCalendarDataSource(),
-                          calendarTapped,
-                          _appointmentDetails),
-                    ),
-                  ],
-                ),
-               */
                 ],
               )))),
     );

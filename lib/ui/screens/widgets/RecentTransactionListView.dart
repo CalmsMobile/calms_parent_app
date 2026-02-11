@@ -54,7 +54,7 @@ class RecentTransactionListView extends StatelessWidget {
                                           HexColor(recentList[index]['color']),
                                       fontWeight: FontWeight.bold,
                                       overflow: TextOverflow.ellipsis,
-                                      fontSize: 15),
+                                      fontSize: 17),
                                 ),
                                 if (recentList[index]['PackageName'] != null)
                                   Text(
@@ -64,7 +64,7 @@ class RecentTransactionListView extends StatelessWidget {
                                             AppTheme_['ContentFontColor']),
                                         fontWeight: FontWeight.normal,
                                         overflow: TextOverflow.ellipsis,
-                                        fontSize: 12),
+                                        fontSize: 14),
                                   ),
                                 if (recentList[index]['ThroughBy'] != null)
                                   Text(
@@ -74,7 +74,7 @@ class RecentTransactionListView extends StatelessWidget {
                                             AppTheme_['ContentFontColor']),
                                         fontWeight: FontWeight.normal,
                                         overflow: TextOverflow.ellipsis,
-                                        fontSize: 12),
+                                        fontSize: 14),
                                   ),
                                 Text(
                                   "Done by: ${recentList[index]['DoneBy']}",
@@ -83,7 +83,7 @@ class RecentTransactionListView extends StatelessWidget {
                                           AppTheme_['ContentFontColor']),
                                       fontWeight: FontWeight.normal,
                                       overflow: TextOverflow.ellipsis,
-                                      fontSize: 12),
+                                      fontSize: 14),
                                 ),
                                 Text(
                                   "Trans. Date: ${DateUtil().convertStringFromDateformat(recentList[index]['CreatedOn'], "dd-MM-yyyy hh:mm a")}",
@@ -92,7 +92,7 @@ class RecentTransactionListView extends StatelessWidget {
                                           AppTheme_['ContentFontColor']),
                                       overflow: TextOverflow.ellipsis,
                                       fontWeight: FontWeight.normal,
-                                      fontSize: 12),
+                                      fontSize: 14),
                                 ),
                               ],
                             ),
@@ -139,53 +139,56 @@ class RecentTransactionListView extends StatelessWidget {
                 }),
           ),
           if (showMore)
-            InkWell(
+            Container(
+              margin: EdgeInsets.only(top: 10),
+              child: InkWell(
               onTap: () async {
                 Navigator.of(context).push(MaterialPageRoute<void>(
-                  fullscreenDialog: true,
-                  builder: (BuildContext context) {
-                    return Scaffold(
-                        appBar: AppBar(
-                          backgroundColor:
-                              HexColor(AppTheme_['AppHeaderBgColor']),
-                          title: Text(title),
-                          leading: IconButton(
-                            icon: Icon(Icons.close,
-                                color: HexColor(AppTheme_['IconOutlineColor'])),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                          ),
-                        ),
-                        body: Container(
-                            constraints: BoxConstraints.expand(),
-                            decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                              begin: Alignment.topRight,
-                              end: Alignment.bottomLeft,
-                              colors: [
-                                Colors.white,
-                                Colors.white,
-                              ],
-                            )),
-                            child: SizedBox(
-                                height: MediaQuery.of(context).size.height,
-                                child: SingleChildScrollView(
-                                  child: RecentTransactionListView(recentList,
-                                      CurrencyCode, AppTheme_, false, title),
-                                ))));
-                  },
+                fullscreenDialog: true,
+                builder: (BuildContext context) {
+                  return Scaffold(
+                    appBar: AppBar(
+                    backgroundColor:
+                      HexColor(AppTheme_['AppHeaderBgColor']),
+                    title: Text(title),
+                    leading: IconButton(
+                      icon: Icon(Icons.close,
+                        color: HexColor(AppTheme_['IconOutlineColor'])),
+                      onPressed: () {
+                      Navigator.of(context).pop();
+                      },
+                    ),
+                    ),
+                    body: Container(
+                      constraints: BoxConstraints.expand(),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                      begin: Alignment.topRight,
+                      end: Alignment.bottomLeft,
+                      colors: [
+                        Colors.white,
+                        Colors.white,
+                      ],
+                      )),
+                      child: SizedBox(
+                        height: MediaQuery.of(context).size.height,
+                        child: SingleChildScrollView(
+                        child: RecentTransactionListView(recentList,
+                          CurrencyCode, AppTheme_, false, title),
+                        ))));
+                },
                 ));
               },
               child: Text(
-                'Show More',
+                'Show more',
                 style: TextStyle(
-                  color: HexColor(AppTheme_['ButtonBgColor']),
-                  fontSize: 16.0,
-                  fontFamily: "Montserrat",
-                  fontWeight: FontWeight.bold,
-                  decoration: TextDecoration.underline,
+                color: HexColor(AppTheme_['ButtonBgColor']),
+                fontSize: 14.0,
+                fontFamily: "Montserrat",
+                fontWeight: FontWeight.bold,
+                decoration: TextDecoration.underline,
                 ),
+              ),
               ),
             ),
         ],

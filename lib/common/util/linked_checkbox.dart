@@ -24,21 +24,25 @@ class LinkedLabelCheckbox extends StatelessWidget {
     return Padding(
       padding: padding,
       child: SizedBox(
-        height: 25,
+        height: 35, // Increased from 25
         child: Row(
           children: <Widget>[
-            Checkbox(
-              tristate: true,
-              shape: CircleBorder(),
-              value: value,
-              onChanged: (bool? newValue) {
-                if (newValue != null) {
-                  onChanged(newValue);
-                } else {
-                  onChanged(false);
-                }
-              },
+            Transform.scale(
+              scale: 1.3, // Scales up the checkbox by 30%
+              child: Checkbox(
+                tristate: true,
+                shape: CircleBorder(),
+                value: value,
+                onChanged: (bool? newValue) {
+                  if (newValue != null) {
+                    onChanged(newValue);
+                  } else {
+                    onChanged(false);
+                  }
+                },
+              ),
             ),
+            const SizedBox(width: 8), // Added spacing
             Expanded(
               child: RichText(
                 text: isDisableTextClick
@@ -46,6 +50,7 @@ class LinkedLabelCheckbox extends StatelessWidget {
                         text: label,
                         style: TextStyle(
                           color: Colors.blueAccent,
+                          fontSize: 16, // Increased font size
                         ),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
@@ -56,6 +61,7 @@ class LinkedLabelCheckbox extends StatelessWidget {
                         text: label,
                         style: TextStyle(
                           color: Colors.blueAccent,
+                          fontSize: 16, // Increased font size
                           decoration: TextDecoration.underline,
                         ),
                         recognizer: TapGestureRecognizer()

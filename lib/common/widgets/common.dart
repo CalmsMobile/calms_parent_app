@@ -737,13 +737,31 @@ void showPaymentSelectOptionForTopup(BuildContext buildContext, titleText,
 
 void showPaymentSelectOptionForOrder(
     BuildContext buildContext,
-    titleText,
+    String titleText,
     List paymentList,
-    paymentSetting,
-    orderAmount,
-    profileData,
-    paymentFor,
-    AppTheme_) {
+    Map<String, dynamic> paymentSetting,
+    double orderAmount,
+    Map<String, dynamic> profileData,
+    String paymentFor,
+    Map<String, dynamic> AppTheme_) {
+  
+  // Add validation
+  if (paymentList == null || paymentList.isEmpty) {
+    MyCustomAlertDialog().showCustomAlert(
+      buildContext,
+      "Error",
+      "No payment options available",
+      true,
+      () {
+        Navigator.pop(buildContext);
+      },
+      null,
+      "Ok",
+      ""
+    );
+    return;
+  }
+
   var selectedPaymentMethod = {};
   var checkedValue = false;
   var disableGatewayPayments = false;
@@ -752,11 +770,20 @@ void showPaymentSelectOptionForOrder(
   var actualOrderAmount = orderAmount;
   var deductAmountFromWallet = 0.0;
   var selectWallet = false;
+  
   List pl = List.from(paymentList);
-  if (paymentSetting['MixedModePayment']) {
-    walletPayment =
-        paymentList.where((element) => element['IsWallet'] == 1).toList()[0];
-    pl.removeWhere((element) => element['IsWallet'] == 1);
+
+  // Safely check MixedModePayment
+  if (paymentSetting != null && paymentSetting['MixedModePayment'] == true) {
+    var walletPayments = paymentList.where((element) => 
+        element != null && element['IsWallet'] == 1).toList();
+    
+    if (walletPayments.isNotEmpty) {
+      walletPayment = walletPayments[0];
+      pl.removeWhere((element) => 
+          element != null && element['IsWallet'] == 1);
+    }
+
     // orderAmount = 65;
      if (paymentSetting['MustDetectFromWallet']) {
       disableWallet = true;
@@ -824,38 +851,36 @@ void showPaymentSelectOptionForOrder(
                                 enabled: disableWallet ? false : true,
                                 horizontalTitleGap: -8,
                                 title: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        walletPayment["Name"],
-                                        style: TextStyle(fontSize: 22),
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      walletPayment["Name"] ?? "Wallet",  // Add null check
+                                      style: TextStyle(fontSize: 22),
+                                    ),
+                                    Text(
+                                      "${profileData['CurrencyCode']} ${(walletPayment["Balance"] ?? 0.0).toStringAsFixed(2)}",
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: HexColor(AppSettings.colorCurrencyCode),
+                                        fontWeight: FontWeight.bold
                                       ),
-                                      Text(
-                                        "${profileData['CurrencyCode']} " +
-                                            walletPayment["Balance"]
-                                                .toStringAsFixed(2),
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            color: HexColor(
-                                                AppSettings.colorCurrencyCode),
-                                            fontWeight: FontWeight.bold),
-                                      )
-                                    ]),
+                                    )
+                                  ]
+                                ),
                                 leading: Icon(
                                   Icons.check_box_rounded,
                                   size: 25,
-                                  color: selectWallet
-                                      ? HexColor(AppTheme_['IconOutlineColor'])
-                                      : Color.fromARGB(102, 158, 158, 158),
+                                  color: selectWallet 
+                                    ? HexColor(AppTheme_['IconOutlineColor'])
+                                    : Color.fromARGB(102, 158, 158, 158),
                                 ),
                                 trailing: Container(
                                   height: 45,
                                   width: 45,
-                                  child: walletPayment["ImgPathUrl"] != ""
-                                      ? Image.network(
-                                          walletPayment["ImgPathUrl"])
-                                      : null,
+                                  child: walletPayment["ImgPathUrl"] != null && 
+                                         walletPayment["ImgPathUrl"].toString().isNotEmpty
+                                    ? Image.network(walletPayment["ImgPathUrl"])
+                                    : null,
                                 ),
                                 onTap: () {
                                   setState(() {

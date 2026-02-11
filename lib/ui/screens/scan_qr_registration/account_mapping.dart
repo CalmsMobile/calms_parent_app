@@ -482,11 +482,12 @@ class _AccountMappingState extends State<AccountMapping> {
     print(decryptdata);
     print("DeviceId " + DeviceId);
     if (kDebugMode) {
-      DeviceId = "Test333";
+      //DeviceId = "Test333";
     }
     //String gg = await MySharedPref().getData(AppSettings.fcmId);
     String FCMToken = await MySharedPref().getData(AppSettings.fcmId);
     print("fcmId :  " + FCMToken);
+    
 
     /*  var parentDetails = {
       "name": "SITI KHALIDA",
@@ -512,7 +513,7 @@ class _AccountMappingState extends State<AccountMapping> {
       "DeviceUID": DeviceId,
       "DevicePlatform": DevicePlatform,
       "DeviceDetails": "1",
-      "FCMToken": FCMToken,
+      "FCMToken": FCMToken.isEmpty ? qrJson['MAppSeqId'] : FCMToken,
       "ForceToUpdate": 0
     };
     var paramData1 = {
@@ -520,12 +521,14 @@ class _AccountMappingState extends State<AccountMapping> {
       "DeviceUID": DeviceId,
       "DevicePlatform": DevicePlatform,
       "DeviceDetails": "1",
-      "FCMToken": FCMToken,
+      "FCMToken": FCMToken.isEmpty ? qrJson['MAppSeqId'] : FCMToken,
       "ForceToUpdate": 1
     };
-    String encParamData = CryptoEncryption(dataResponseModel['SecureKey'])
+    print('paramData -- ' + paramData.toString());
+    print('paramData1 -- ' + paramData1.toString());
+    String encParamData = CryptoEncryption(dataResponseModel['Mob'])
         .encryptMyData(json.encode(paramData));
-    String encParamData1 = CryptoEncryption(dataResponseModel['SecureKey'])
+    String encParamData1 = CryptoEncryption(dataResponseModel['Mob'])
         .encryptMyData(json.encode(paramData1));
     var payload = {
       "Authorize": {
@@ -606,6 +609,15 @@ class _AccountMappingState extends State<AccountMapping> {
           context,
           "Notification",
           'It appears that the app does not have full permission for notifications. Please close the app, relaunch it, and try again. If the issue persists, please uninstall and reinstall the app, then try once more',
+          true, () {
+        Navigator.pop(context);
+        //resetQRData();
+      }, null, "Ok", "");
+    }else{
+      MyCustomAlertDialog().showCustomAlert(
+          context,
+          "Notification",
+          'Something went wrong, please try again later',
           true, () {
         Navigator.pop(context);
         //resetQRData();

@@ -372,10 +372,15 @@ class _NotificationsState extends State<Notifications>
                     tabs: [
                       for (int i = 0; i < widget.categoryList.length; i++)
                         Row(
-                          children: [
+                            children: [
                             //Icon(Icons.trip_origin, color: Color.fromARGB(255, 255, 184, 3), size: 10,),
                             //SizedBox(width: 5,),
-                            Tab(text: widget.categoryList[i]['category']),
+                            Tab(
+                              child: Text(
+                              widget.categoryList[i]['category'],
+                              style: TextStyle(fontSize: 16),
+                              )
+                            ),
                           ],
                         )
                     ],
@@ -425,17 +430,17 @@ class _NotificationsState extends State<Notifications>
                               border: Border.all(
                                   color:
                                       HexColor(AppTheme_['IconOutlineColor']),
-                                  width: 2),
+                                  width: 0.5),
                               color:  HexColor(AppTheme_['IconBgColor']),
                               shape: BoxShape.circle,
                             ),
                             child: Padding(
-                                padding: EdgeInsets.all(3),
+                                padding: EdgeInsets.all(7),
                                 child: Icon(
                                   Icons.arrow_back_ios_new,
                                   color:
                                       HexColor(AppTheme_['IconOutlineColor']),
-                                  size: 30,
+                                  size: 25,
                                 )))),
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -496,28 +501,6 @@ class _NotificationsState extends State<Notifications>
                   ],
                 ),
                 actions: [
-                  /* if (filtered)
-                    IconButton(
-                      icon: Icon(Icons.close_sharp, color: Colors.black),
-                      onPressed: () {
-                        //Navigator.pop(context);
-                        setState(() {
-                          appBarTitle = "All Notifications";
-                          filtered = false;
-                        });
-                        CommonUtil().getCtegoryFilterNotification(
-                            context,
-                            apiURL,
-                            startPosition,
-                            profileData,
-                            qrData,
-                            widget.categoryList[selectedtypeIndex]
-                                ['notificationtype'],
-                            "",
-                            "");
-                      },
-                    ),
-                     */
                   Container(
                     height: 30,
                     width: 50,
@@ -624,18 +607,18 @@ class _NotificationsState extends State<Notifications>
                                   border: Border.all(
                                       color: HexColor(
                                           AppTheme_['IconOutlineColor']),
-                                      width: 2),
+                                      width: 0.5),
                                   color: HexColor(
                                           AppTheme_['IconBgColor']),
                                   shape: BoxShape.circle,
                                 ),
                                 child: Padding(
-                                    padding: EdgeInsets.all(3),
+                                    padding: EdgeInsets.all(7),
                                     child: Icon(
                                       Icons.shopping_cart_outlined,
                                       color: HexColor(
                                           AppTheme_['IconOutlineColor']),
-                                      size: 30,
+                                      size: 25,
                                     )))),
                         Consumer<MySettingsListener>(
                             builder: (context, data, settingsDta) {
@@ -680,17 +663,17 @@ class _NotificationsState extends State<Notifications>
                               border: Border.all(
                                   color:
                                       HexColor(AppTheme_['IconOutlineColor']),
-                                  width: 2),
+                                  width: 0.5),
                               color: HexColor(AppTheme_['IconBgColor']),
                               shape: BoxShape.circle,
                             ),
                             child: Padding(
-                                padding: EdgeInsets.all(3),
+                                padding: EdgeInsets.all(7),
                                 child: Icon(
                                   Icons.settings_outlined,
                                   color:
                                       HexColor(AppTheme_['IconOutlineColor']),
-                                  size: 30,
+                                  size: 25,
                                 )))),
                 ]),
             extendBodyBehindAppBar: false,
